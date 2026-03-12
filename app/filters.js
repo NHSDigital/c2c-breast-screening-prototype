@@ -1,44 +1,45 @@
-/**
- * @param {Environment} env
- */
-module.exports = function (env) {
-  const filters = {}
+// app/filters.js
 
-  /* ------------------------------------------------------------------
-    add your methods to the filters obj below this comment block:
-    @example:
+ const fs = require('fs')
+ const path = require('path')
 
-    filters.sayHi = function(name) {
-        return 'Hi ' + name + '!'
-    }
+ module.exports = function (env) {
+   /* eslint-disable-line func-names,no-unused-vars */
+   /**
+    * Instantiate object used to store the methods registered as a
+    * 'filter' (of the same name) within nunjucks. You can override
+    * gov.uk core filters by creating filter methods of the same name.
+    *
+    * @type {object}
+    */
+   const filters = {}
 
-    Which in your templates would be used as:
+   // Get all files from utils directory
+   const utilsPath = path.join(__dirname, 'lib/utils')
+   //const filtersPath = path.join(__dirname, 'filters')
 
-    {{ 'Paul' | sayHi }} => 'Hi Paul'
+   //const folderPaths = [utilsPath, filtersPath]
+  const folderPaths = [utilsPath]
 
-    Notice the first argument of your filters method is whatever
-    gets 'piped' via '|' to the filter.
+   try {
+     folderPaths.forEach((folderPath) => {
+       const files = fs.readdirSync(folderPath)
 
-    Filters can take additional arguments, for example:
+       files.forEach((file) => {
+         if (path.extname(file) === '.js') {
+           const module = require(path.join(folderPath, file))
 
-    filters.sayHi = function(name,tone) {
-      return (tone == 'formal' ? 'Greetings' : 'Hi') + ' ' + name + '!'
-    }
+           Object.entries(module).forEach(([name, func]) => {
+             if (typeof func === 'function') {
+               filters[name] = func
+             }
+           })
+         }
+       })
+     })
+   } catch (err) {
+     console.warn('Error loading filters:', err)
+   }
 
-    Which would be used like this:
-
-    {{ 'Joel' | sayHi('formal') }} => 'Greetings Joel!'
-    {{ 'Gemma' | sayHi }} => 'Hi Gemma!'
-
-    For more on filters and how to write them see the Nunjucks
-    documentation.
-
-  ------------------------------------------------------------------ */
-
-  /* keep the following line to return your filters to the app  */
-  return filters
-}
-
-/**
- * @import { Environment } from 'nunjucks'
- */
+   return filters
+ }

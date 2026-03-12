@@ -1,4 +1,14 @@
 // Import NHS.UK frontend library
-@import "nhsuk-frontend/dist/nhsuk";
+@forward "nhsuk-frontend/dist/nhsuk/nhsuk";
+
+// Stolen Manage prototype components :P
+// https://github.com/NHSDigital/manage-breast-screening-prototype
+
+@forward "components/secondary-navigation";
 
 // Add your custom CSS/Sass styles below.
+.app-card-editable {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
