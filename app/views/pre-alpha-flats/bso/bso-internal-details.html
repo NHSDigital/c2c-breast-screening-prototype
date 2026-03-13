@@ -26,75 +26,28 @@
 {% endblock %}
 
 {% block header %}
-  {{ header({
-    account: {
-      items: [
-        {
-          text: "West Berkshire BSO"
-        },
-        {
-          href: "#",
-          text: "Thomas Pynchon",
-          icon: true
-        },
-        {
-          href: "/",
-          text: "Log out"
-        }
-      ]
-    },
-    service: {
-      text: serviceName,
-      href: "/"
-    },
-    navigation: {
-      items: [
-        {
-          href: "#",
-          text: "Dashboard"
-        },
-        {
-          href: "#",
-          text: "Manage batches"
-        },
-        {
-          href: "#",
-          text: "Manage clinics"
-        },
-        {
-          href: "#",
-          text: "Manage other stuff"
-        },
-        {
-          href: "#",
-          text: "Reports"
-        }
-      ]
-    }
-  }) }}
+  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
 {% endblock %}
 
 <!-- For adding a breadcrumb or back link -->
 <!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
 {% block beforeContent %}
-
-{{ breadcrumb({
-  items: [
-    {
-      href: "#",
-      text: "Home"
-    },
-    {
-      href: "#",
-      text: "Manage other stuff"
-    },
-    {
-      href: "#",
-      text: "Organisation"
-    }
-  ]
-}) }}
-
+  {{ breadcrumb({
+    items: [
+      {
+        href: "#",
+        text: "Home"
+      },
+      {
+        href: "#",
+        text: "Manage other stuff"
+      },
+      {
+        href: "#",
+        text: "Organisation"
+      }
+    ]
+  }) }}
 {% endblock %}
 
 <!-- For adding page content -->
@@ -172,16 +125,25 @@
     <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
       {% call card({
         clickable: true,
-        heading: "4",
+        heading: "1",
         headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
       }) %}
-        <a href="#/applicants" class="nhsuk-card__link">Breast screening units</a>
+        <a href="#/applicants" class="nhsuk-card__link">Static unit</a>
       {% endcall %}
     </li>
     <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
       {% call card({
         clickable: true,
-        heading: "8",
+        heading: "2",
+        headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
+      }) %}
+        <a href="#/applicants" class="nhsuk-card__link">Mobile units</a>
+      {% endcall %}
+    </li>
+    <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
+      {% call card({
+        clickable: true,
+        heading: "13",
         headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
       }) %}
         <a href="#/jobs" class="nhsuk-card__link">Locations</a>
@@ -206,6 +168,47 @@
   <script src="geo-bso-west-berks.js"></script>
 
   <script>
+
+    function addLandmarks(landmarks, map) {
+      const layerGroup = L.layerGroup().addTo(map);
+
+      landmarks.forEach(landmark => {
+        const icon = landmarkIcons[landmark.type];
+
+        const marker = L.marker([landmark.lat, landmark.lng], { icon })
+          .bindPopup(`
+            <strong>${landmark.name}</strong><br>
+            <em>${landmark.type}</em><br>
+            ${landmark.description}
+          `);
+
+        layerGroup.addLayer(marker);
+      });
+
+      return layerGroup; // return so you can remove/toggle the layer later
+    }
+
+    const landmarkIcons = {
+      orgLocation: L.icon({
+        iconUrl: '/assets/images/org.svg',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      }),
+      static: L.icon({
+        iconUrl: '/assets/images/static.svg',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      }),
+      mobile: L.icon({
+        iconUrl: '/assets/images/mobile.svg',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+      })
+    };
+
     const apiKey = 't9ErutMVGdziLrLqJbCM049xw5550C0e';
 
     const mapOptions = {
@@ -213,16 +216,9 @@
       scrollWheelZoom: false
     };
 
-    // Define coordinates for the pins
-    const locations = [
-      { coords: [51.4488563, -0.9560350999999999], name: 'West Berks BSS' }
-    ];
-
     const map = L.map('app-map');
 
-    locations.forEach(loc => {
-      L.marker(loc.coords).addTo(map);
-    });
+    const landmarkLayer = addLandmarks(landmarks, map);
 
     // Load and display vector tile layer on the map.
     const gl = L.maplibreGL({
@@ -237,7 +233,7 @@
         fillOpacity: 0.3
       },
       pointToLayer: (feature, latlng) =>
-        L.circleMarker(latlng, { radius: 7, fillColor: '#378ADD', color: '#185FA5', weight: 1.5, fillOpacity: 0.8 }),
+        L.circleMarker(latlng, { radius: 7, fillColor: '#005EB8', color: '#005EB8', weight: 1.5, fillOpacity: 0.3 }),
       onEachFeature: (feature, layer) => {
         if (feature.properties) {
           layer.bindPopup(
