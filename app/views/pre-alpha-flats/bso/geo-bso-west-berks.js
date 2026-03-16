@@ -20,6 +20,6 @@ const geojsonData = {
 const landmarks = [
   { lat: 51.4488563, lng: -0.9560350999999999, type: 'orgLocation', name: 'West Berks breast screening office' },
   { lat: 51.4488563, lng: -0.9560350999999999, type: 'static', name: 'West Berks central breast screening unit' },
-  { lat: 51.5081, lng: -0.0759, type: 'mobile', name: 'Mobile breast screening unit 1' },
-  { lat: 51.5055, lng: -0.0754, type: 'mobile', name: 'Mobile breast screening unit 2' }
+  { lat: 51.37597, lng: -1.06001, type: 'mobile', name: 'Mobile breast screening unit 1' },
+  { lat: 51.53874, lng: -0.90797, type: 'mobile', name: 'Mobile breast screening unit 2' }
 ];

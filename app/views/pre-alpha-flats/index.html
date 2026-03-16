@@ -17,11 +17,25 @@
   service name is needed. You can also reuse this variable
   within the <h1>, where they are the same.
 -->
-{% set pageName = "C2C pre alpha flats" %}
+{% set pageName = "Manage other stuff" %}
+
+{% block header %}
+  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+{% endblock %}
 
 <!-- For adding a breadcrumb or back link -->
 <!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
 {% block beforeContent %}
+
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    }
+  ]
+}) }}
+
 {% endblock %}
 
 <!-- For adding page content -->
@@ -29,26 +43,33 @@
 {% block content %}
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-
-      <!-- Add your content here -->
-      <!-- Styles and components can be found at https://service-manual.nhs.uk/design-system -->
-
-      <h1 class="nhsuk-heading-xl">
-        {{ serviceName }}
-      </h1>
-
-      <h2 class="nhsuk-heading-m">March 2026</h2>
-      <p>Mat note: first rounds of flats based on "easy win" building blocks. Cheap sketches to provoke.</p>
-
-      <ol>
-        <li>
-          <a href="/pre-alpha-flats/bso/bso-public-details">Object: BSO organisation</a>
-        </li>
-        <li>
-          <a href="/pre-alpha-flats/unit/unit-listing">Object: unit</a>
-        </li>
-      </ol>
-
+      {{ card({
+        clickable: true,
+        href: "/pre-alpha-flats/bso/bso-public-details",
+        heading: "Breast screening office (BSO)",
+        headingClasses: "nhsuk-heading-m",
+        description: "Manage your organisation details"
+      }) }}
     </div>
   </div>
+  <ul class="nhsuk-grid-row nhsuk-card-group">
+    <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+      {{ card({
+        clickable: true,
+        href: "/pre-alpha-flats/unit/unit-listing",
+        heading: "Breast screening units",
+        headingClasses: "nhsuk-heading-m",
+        description: "Manage the screening units that make up your BSO"
+      }) }}
+    </li>
+    <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+      {{ card({
+        clickable: true,
+        href: "/pre-alpha-flats/location/location-listing",
+        heading: "Manage locations",
+        headingClasses: "nhsuk-heading-m",
+        description: "Manage the static and mobile locations available to your units"
+      }) }}
+    </li>
+  </ul>
 {% endblock %}

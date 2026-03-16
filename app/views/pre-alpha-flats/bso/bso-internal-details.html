@@ -39,12 +39,8 @@
         text: "Home"
       },
       {
-        href: "#",
+        href: "/pre-alpha-flats/",
         text: "Manage other stuff"
-      },
-      {
-        href: "#",
-        text: "Organisation"
       }
     ]
   }) }}
@@ -165,60 +161,17 @@
   <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
   <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.0/leaflet-maplibre-gl.js"></script>
 
+  <script src="/assets/javascript/map-scripts.js"></script>
   <script src="geo-bso-west-berks.js"></script>
 
   <script>
 
-    function addLandmarks(landmarks, map) {
-      const layerGroup = L.layerGroup().addTo(map);
-
-      landmarks.forEach(landmark => {
-        const icon = landmarkIcons[landmark.type];
-
-        const marker = L.marker([landmark.lat, landmark.lng], { icon })
-          .bindPopup(`
-            <strong>${landmark.name}</strong><br>
-            <em>${landmark.type}</em><br>
-            ${landmark.description}
-          `);
-
-        layerGroup.addLayer(marker);
-      });
-
-      return layerGroup; // return so you can remove/toggle the layer later
-    }
-
-    const landmarkIcons = {
-      orgLocation: L.icon({
-        iconUrl: '/assets/images/org.svg',
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32]
-      }),
-      static: L.icon({
-        iconUrl: '/assets/images/static.svg',
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32]
-      }),
-      mobile: L.icon({
-        iconUrl: '/assets/images/mobile.svg',
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32]
-      })
-    };
-
     const apiKey = 't9ErutMVGdziLrLqJbCM049xw5550C0e';
 
-    const mapOptions = {
-      attributionControl: false,
-      scrollWheelZoom: false
-    };
-
-    const map = L.map('app-map');
-
-    const landmarkLayer = addLandmarks(landmarks, map);
+    landmarks.forEach(({ lat, lng, type, name }) => {
+      const icon = landmarkIcons[type] || landmarkIcons.default;
+      L.marker([lat, lng], { icon }).bindPopup(name).addTo(map);
+    });
 
     // Load and display vector tile layer on the map.
     const gl = L.maplibreGL({
