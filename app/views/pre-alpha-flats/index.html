@@ -1,0 +1,75 @@
+<!-- Use this page as the index for your project -->
+
+<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
+
+<!-- Extends the layout from /app/views/layout.html -->
+{% extends 'layout.html' %}
+<!--
+  In /app/views/layout.html you can:
+    - change the header and footer
+    - add custom CSS and JavaScript
+-->
+
+<!--
+  Use this to set the page name which will appear at the
+  start of the <title> tag, followed by the service name.
+  This is often not needed on the homepage, where only the
+  service name is needed. You can also reuse this variable
+  within the <h1>, where they are the same.
+-->
+{% set pageName = "Manage other stuff" %}
+
+{% block header %}
+  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+{% endblock %}
+
+<!-- For adding a breadcrumb or back link -->
+<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
+{% block beforeContent %}
+
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    }
+  ]
+}) }}
+
+{% endblock %}
+
+<!-- For adding page content -->
+<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      {{ card({
+        clickable: true,
+        href: "/pre-alpha-flats/bso/bso-public-details",
+        heading: "Breast screening office (BSO)",
+        headingClasses: "nhsuk-heading-m",
+        description: "Manage your organisation details"
+      }) }}
+    </div>
+  </div>
+  <ul class="nhsuk-grid-row nhsuk-card-group">
+    <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+      {{ card({
+        clickable: true,
+        href: "/pre-alpha-flats/unit/unit-listing",
+        heading: "Breast screening units",
+        headingClasses: "nhsuk-heading-m",
+        description: "Manage the screening units that make up your BSO"
+      }) }}
+    </li>
+    <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+      {{ card({
+        clickable: true,
+        href: "/pre-alpha-flats/location/location-listing",
+        heading: "Manage locations",
+        headingClasses: "nhsuk-heading-m",
+        description: "Manage the static and mobile locations available to your units"
+      }) }}
+    </li>
+  </ul>
+{% endblock %}

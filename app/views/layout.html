@@ -7,9 +7,16 @@
 <!-- Extends the prototype kit template which in turn extends the NHS.UK frontend template -->
 {% extends "prototype-kit-template.njk" %}
 
+<!--
+  Stolen Manage prototype components :P
+  https://github.com/NHSDigital/manage-breast-screening-prototype
+-->
+{%- from '_components/secondary-navigation/macro.njk' import appSecondaryNavigation %}
+
 {% block head %}
   <!-- Add your custom CSS or Sass in /app/assets/sass/main.scss -->
   <link href="/assets/sass/main.css" rel="stylesheet">
+  {% block customStyles %}{% endblock %}
 {% endblock %}
 
 <!-- Edit the header -->

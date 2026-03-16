@@ -1,0 +1,194 @@
+<!-- Use this page as the index for your project -->
+
+<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
+
+<!-- Extends the layout from /app/views/layout.html -->
+{% extends 'layout.html' %}
+<!--
+  In /app/views/layout.html you can:
+    - change the header and footer
+    - add custom CSS and JavaScript
+-->
+
+<!--
+  Use this to set the page name which will appear at the
+  start of the <title> tag, followed by the service name.
+  This is often not needed on the homepage, where only the
+  service name is needed. You can also reuse this variable
+  within the <h1>, where they are the same.
+-->
+{% set pageName = "Camberwell Building" %}
+
+{% block customStyles %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css" />
+{% endblock %}
+
+{% block header %}
+  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+{% endblock %}
+
+<!-- For adding a breadcrumb or back link -->
+<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/pre-alpha-flats/",
+      text: "Manage other stuff"
+    },
+    {
+      href: "/pre-alpha-flats/location/location-listing",
+      text: "Locations"
+    }
+  ]
+}) }}
+{% endblock %}
+
+<!-- For adding page content -->
+<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full app-card-editable">
+        <div>
+          <h1 class="nhsuk-heading-l">
+            Camberwell building
+          </h1>
+        </div>
+        <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+    </div>
+  </div>
+
+  {% set secondaryNavItems = [] %}
+
+  {% for item in [
+    { href: 'location-location-details', label: 'Location details', selected: 'true' },
+    { href: 'location-travel-and-transport', label: 'Travel and transport' }
+  ] %}
+    {% set secondaryNavItems = secondaryNavItems | push({
+      text: item.label | safe,
+      href: item.href | trim,
+      current: true if item.selected == 'true'
+    }) %}
+  {% endfor %}
+
+  {{ appSecondaryNavigation({
+    visuallyHiddenTitle: "Secondary menu",
+    items: secondaryNavItems
+  }) }}
+
+  {% set addressHtml %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-one-half">
+        <p>
+          104 Denmark Hill<br>
+          London<br>
+          SE5 8RX
+        </p>
+        {{ summaryList({
+          rows: [
+            {
+              key: {
+                text: "Latitude"
+              },
+              value: {
+                text: "51.4712253052667"
+              }
+            },
+            {
+              key: {
+                text: "Longitude"
+              },
+              value: {
+                text: "-0.09312137796810355"
+              }
+            }
+          ]
+        }) }}
+        <p class="nhsuk-u-margin-bottom-0">
+          <a href="#">Open in Google maps</a>
+        </p>
+        <p class="nhsuk-body-s">Links open a new tab or window</p>
+      </div>
+      <div class="nhsuk-grid-column-one-half">
+        <div class="app-map-container" id="app-map" style="aspect-ratio: 4 / 3;"></div>
+      </div>
+    </div>
+  {% endset %}
+  {% call card({
+    headingHtml: '
+      <div class="app-card-editable nhsuk-u-margin-bottom-4">
+        <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Address</h2>
+        <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
+      </div>
+    '
+  }) %}
+    {{ addressHtml | safe }}
+  {% endcall %}
+
+
+  {% set insetTextHtml %}
+    <p><b>Note:</b> these details appear verbatim in public communications</p>
+  {% endset %}
+  {% set notesHtml %}
+    {{ insetText({
+      html: insetTextHtml,
+      classes: "nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4"
+    }) }}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
+        <p>
+          Located on the first floor, lift access is available.
+        </p>
+        <p>
+          Use the intercom to gain access.
+        </p>
+      </div>
+    </div>
+  {% endset %}
+  {% call card({
+    headingHtml: '
+      <div class="app-card-editable nhsuk-u-margin-bottom-4">
+        <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Location notes for participants:</h2>
+        <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
+      </div>
+    '
+  }) %}
+    {{ notesHtml | safe }}
+  {% endcall %}
+{% endblock %}
+
+{% block bodyEnd %}
+  <script src="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.0/leaflet-maplibre-gl.js"></script>
+
+  <script src="/assets/javascript/map-scripts.js"></script>
+
+  <script>
+    const apiKey = 't9ErutMVGdziLrLqJbCM049xw5550C0e';
+
+    const landmarks = [
+      { lat: 51.4712253052667, lng: -0.09312137796810355, type: 'location', name: 'Camberwell Building' }
+    ];
+
+    landmarks.forEach(({ lat, lng, type, name }) => {
+      const icon = landmarkIcons[type] || landmarkIcons.default;
+      L.marker([lat, lng], { icon }).bindPopup(name).addTo(map);
+    });
+
+    // Load and display vector tile layer on the map.
+    const gl = L.maplibreGL({
+        style: 'https://api.os.uk/maps/vector/v1/vts/resources/styles?srs=3857&key=' + apiKey
+    }).addTo(map);
+
+    map.setView([landmarks[0].lat, landmarks[0].lng], 13);
+
+  </script>
+{% endblock %}

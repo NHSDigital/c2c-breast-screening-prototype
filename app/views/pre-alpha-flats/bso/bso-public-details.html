@@ -1,0 +1,209 @@
+<!-- Use this page as the index for your project -->
+
+<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
+
+<!-- Extends the layout from /app/views/layout.html -->
+{% extends 'layout.html' %}
+<!--
+  In /app/views/layout.html you can:
+    - change the header and footer
+    - add custom CSS and JavaScript
+-->
+
+<!--
+  Use this to set the page name which will appear at the
+  start of the <title> tag, followed by the service name.
+  This is often not needed on the homepage, where only the
+  service name is needed. You can also reuse this variable
+  within the <h1>, where they are the same.
+-->
+{% set pageName = "West Berkshire Screening Service" %}
+
+{% block header %}
+  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+{% endblock %}
+
+<!-- For adding a breadcrumb or back link -->
+<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/pre-alpha-flats/",
+      text: "Manage other stuff"
+    }
+  ]
+}) }}
+{% endblock %}
+
+<!-- For adding page content -->
+<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full app-card-editable">
+        <div>
+          <span class="nhsuk-caption-m">BSO ID: WBBSS-p33ps</span>
+          <h1 class="nhsuk-heading-l">
+            West Berkshire Screening Service
+          </h1>
+        </div>
+        <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+    </div>
+  </div>
+
+  {% set secondaryNavItems = [] %}
+
+  {% for item in [
+    { href: 'bso-public-details', label: 'Public details', selected: 'true' },
+    { href: 'bso-internal-details', label: 'Internal details' }
+  ] %}
+    {% set secondaryNavItems = secondaryNavItems | push({
+      text: item.label | safe,
+      href: item.href | trim,
+      current: true if item.selected == 'true'
+    }) %}
+  {% endfor %}
+
+  {{ appSecondaryNavigation({
+    visuallyHiddenTitle: "Secondary menu",
+    items: secondaryNavItems
+  }) }}
+
+
+
+    {% set insetTextHtml %}
+      <p><b>Note:</b> these details appear verbatim in public communications</p>
+    {% endset %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-full">
+        {{ insetText({
+          html: insetTextHtml,
+          classes: "nhsuk-u-margin-top-0"
+        }) }}
+      </div>
+    </div>
+    
+    {% set contactHtml %}
+      {{ summaryList({
+        rows: [
+          {
+            key: {
+              text: "Address"
+            },
+            value: {
+              html: "Royal Berkshire Hospital<br>
+                21a Craven Road<br>
+                Reading<br>
+                Berkshire<br>
+                RG1 5LE"
+            },
+            actions: {
+              items: [
+                {
+                  href: "#",
+                  text: "Change",
+                  visuallyHiddenText: "address"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Telephone"
+            },
+            value: {
+              text: "0118 322 8282"
+            },
+            actions: {
+              items: [
+                {
+                  href: "#",
+                  text: "Change",
+                  visuallyHiddenText: "telephone"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Web address"
+            },
+            value: {
+              html: "https://www.royalberkshire.nhs.uk/services-and-departments/radiology/breast-screening",
+              classes: "nhsuk-u-text-break-word"
+            },
+            actions: {
+              items: [
+                {
+                  href: "#",
+                  text: "Change",
+                  visuallyHiddenText: "web address"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+    {% endset %}
+    {% call card({
+      headingHtml: '
+        <h2 class="nhsuk-heading-s">Contact details</h2>
+      '
+    }) %}
+      {{ contactHtml | safe }}
+    {% endcall %}
+    
+    {% set hoursHtml %}
+      {{ summaryList({
+        rows: [
+          {
+            key: {
+              text: "Monday to Friday"
+            },
+            value: {
+              text: "8.30am to 4.30pm"
+            }
+          },
+          {
+            key: {
+              text: "Saturday and Sunday"
+            },
+            value: {
+              text: "Closed"
+            }
+          }
+        ]
+      }) }}
+    {% endset %}
+    {% call card({
+      headingHtml: '
+        <div class="app-card-editable nhsuk-u-margin-bottom-4">
+          <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Office hours</h2>
+          <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
+        </div>
+      '
+    }) %}
+      {{ hoursHtml | safe }}
+    {% endcall %}
+
+    {% set facilitiesHtml %}
+      <ul class="nhsuk-list nhsuk-list--bullet">
+        <li>Braille translator service</li>
+        <li>Text relay</li>
+      </ul>
+    {% endset %}
+    {% call card({
+      headingHtml: '
+        <div class="app-card-editable nhsuk-u-margin-bottom-4">
+          <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Office facilities</h2>
+          <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
+        </div>
+      '
+    }) %}
+      {{ facilitiesHtml | safe }}
+    {% endcall %}
+{% endblock %}

@@ -1,0 +1,207 @@
+<!-- Use this page as the index for your project -->
+
+<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
+
+<!-- Extends the layout from /app/views/layout.html -->
+{% extends 'layout.html' %}
+<!--
+  In /app/views/layout.html you can:
+    - change the header and footer
+    - add custom CSS and JavaScript
+-->
+
+<!--
+  Use this to set the page name which will appear at the
+  start of the <title> tag, followed by the service name.
+  This is often not needed on the homepage, where only the
+  service name is needed. You can also reuse this variable
+  within the <h1>, where they are the same.
+-->
+{% set pageName = "West Berkshire Screening Service" %}
+
+{% block customStyles %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css" />
+{% endblock %}
+
+{% block header %}
+  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+{% endblock %}
+
+<!-- For adding a breadcrumb or back link -->
+<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
+{% block beforeContent %}
+  {{ breadcrumb({
+    items: [
+      {
+        href: "#",
+        text: "Home"
+      },
+      {
+        href: "/pre-alpha-flats/",
+        text: "Manage other stuff"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+<!-- For adding page content -->
+<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
+{% block content %}
+  <div class="app-card-editable">
+    <div>
+      <span class="nhsuk-caption-m">BSO ID: WBBSS-p33ps</span>
+      <h1 class="nhsuk-heading-l">
+        West Berkshire Screening Service
+      </h1>
+    </div>
+    <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+  </div>
+
+  {% set secondaryNavItems = [] %}
+
+  {% for item in [
+    { href: 'bso-public-details', label: 'Public details' },
+    { href: 'bso-internal-details', label: 'Internal details', selected: 'true' }
+  ] %}
+    {% set secondaryNavItems = secondaryNavItems | push({
+      text: item.label | safe,
+      href: item.href | trim,
+      current: true if item.selected == 'true'
+    }) %}
+  {% endfor %}
+
+  {{ appSecondaryNavigation({
+    visuallyHiddenTitle: "Secondary menu",
+    items: secondaryNavItems
+  }) }}
+
+
+  <div class="app-card-editable">
+    <h2 class="nhsuk-heading-m">Office contacts</h2>
+    <p class="nhsuk-u-padding-right-5"><a href="#">Add new contacts</a></p>
+  </div>
+
+  {{ summaryList({
+    card: {
+      headingHtml: '
+        <div class="app-card-editable nhsuk-u-margin-bottom-4">
+          <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Angela Carter</h2>
+          <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
+        </div>
+      '
+    },
+    rows: [
+      {
+        key: {
+          text: "Role"
+        },
+        value: {
+          text: "Office administrator"
+        }
+      },
+      {
+        classes: "nhsuk-summary-list__row--no-border",
+        key: {
+          text: "Contact details"
+        },
+        value: {
+          html: "
+            <p>angela.carter@nhs.net</p>
+            <p>1234 567 890 ext 99</p>"
+        }
+      }
+    ]
+  }) }}
+
+  <h2 class="nhsuk-heading-m">BSO area</h2>
+
+  <ul class="nhsuk-grid-row nhsuk-card-group">
+    <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
+      {% call card({
+        clickable: true,
+        heading: "1",
+        headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
+      }) %}
+        <a href="#/applicants" class="nhsuk-card__link">Static unit</a>
+      {% endcall %}
+    </li>
+    <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
+      {% call card({
+        clickable: true,
+        heading: "2",
+        headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
+      }) %}
+        <a href="#/applicants" class="nhsuk-card__link">Mobile units</a>
+      {% endcall %}
+    </li>
+    <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
+      {% call card({
+        clickable: true,
+        heading: "13",
+        headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
+      }) %}
+        <a href="#/jobs" class="nhsuk-card__link">Locations</a>
+      {% endcall %}
+    </li>
+  </ul>
+
+  {% call card({
+    headingHtml: ' '
+  }) %}
+    <div class="app-map-container" id="app-map" style="aspect-ratio: 4 / 3;"></div>
+  {% endcall %}
+
+{% endblock %}
+
+{% block bodyEnd %}
+  <script src="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.0/leaflet-maplibre-gl.js"></script>
+
+  <script src="/assets/javascript/map-scripts.js"></script>
+  <script src="geo-bso-west-berks.js"></script>
+
+  <script>
+
+    const apiKey = 't9ErutMVGdziLrLqJbCM049xw5550C0e';
+
+    landmarks.forEach(({ lat, lng, type, name }) => {
+      const icon = landmarkIcons[type] || landmarkIcons.default;
+      L.marker([lat, lng], { icon }).bindPopup(name).addTo(map);
+    });
+
+    // Load and display vector tile layer on the map.
+    const gl = L.maplibreGL({
+        style: 'https://api.os.uk/maps/vector/v1/vts/resources/styles?srs=3857&key=' + apiKey
+    }).addTo(map);
+
+    const geojsonLayer = L.geoJSON(geojsonData, {
+      style: {
+        color: '#185FA5',
+        weight: 2,
+        fillColor: '#378ADD',
+        fillOpacity: 0.3
+      },
+      pointToLayer: (feature, latlng) =>
+        L.circleMarker(latlng, { radius: 7, fillColor: '#005EB8', color: '#005EB8', weight: 1.5, fillOpacity: 0.3 }),
+      onEachFeature: (feature, layer) => {
+        if (feature.properties) {
+          layer.bindPopup(
+            Object.entries(feature.properties)
+              .map(([k, v]) => `<b>${k}:</b> ${v}`)
+              .join('<br>')
+          );
+        }
+      }
+    }).addTo(map);
+
+    // Fit map bounds to the data
+    if (geojsonLayer.getBounds().isValid()) {
+      map.fitBounds(geojsonLayer.getBounds(), { padding: [30, 30] });
+    }
+
+  </script>
+{% endblock %}

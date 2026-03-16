@@ -1,0 +1,123 @@
+<!-- Use this page as the index for your project -->
+
+<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
+
+<!-- Extends the layout from /app/views/layout.html -->
+{% extends 'layout.html' %}
+<!--
+  In /app/views/layout.html you can:
+    - change the header and footer
+    - add custom CSS and JavaScript
+-->
+
+<!--
+  Use this to set the page name which will appear at the
+  start of the <title> tag, followed by the service name.
+  This is often not needed on the homepage, where only the
+  service name is needed. You can also reuse this variable
+  within the <h1>, where they are the same.
+-->
+{% set pageName = "West Berks mobile screening unit name" %}
+
+{% block header %}
+  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+{% endblock %}
+
+<!-- For adding a breadcrumb or back link -->
+<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/pre-alpha-flats/",
+      text: "Manage other stuff"
+    },
+    {
+      href: "/pre-alpha-flats/unit/unit-listing",
+      text: "Units"
+    }
+  ]
+}) }}
+{% endblock %}
+
+<!-- For adding page content -->
+<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full app-card-editable">
+        <div>
+          <span class="nhsuk-caption-m">Mobile unit</span>
+          <h1 class="nhsuk-heading-l">
+            West Berks mobile screening unit
+          </h1>
+        </div>
+        <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full app-card-editable">
+      <div>
+        <span class="nhsuk-caption-s">Current location:</span>
+        <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+          Camberwell building
+        </h2>
+        <p class="nhsuk-body-s">
+          104 Denmark Hill, London, SE5 8RX
+        </p>
+      </div>
+      <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+    </div>
+  </div>
+
+  {% set secondaryNavItems = [] %}
+
+  {% for item in [
+    { href: 'unit-public-details', label: 'Public details' },
+    { href: 'unit-internal-details', label: 'Internal details', selected: 'true' }
+  ] %}
+    {% set secondaryNavItems = secondaryNavItems | push({
+      text: item.label | safe,
+      href: item.href | trim,
+      current: true if item.selected == 'true'
+    }) %}
+  {% endfor %}
+
+  {{ appSecondaryNavigation({
+    visuallyHiddenTitle: "Secondary menu",
+    items: secondaryNavItems
+  }) }}
+
+  {% set internalHtml %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-full app-card-editable">
+        <div>
+          <span class="nhsuk-caption-s">Unit nickname:</span>
+          <h3 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+            Mandy
+          </h3>
+          <p class="nhsuk-body-s">
+            ID: AN-SKIT-p33ps
+          </p>
+        </div>
+        <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+      </div>
+    </div>
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
+        <p>This unit has <b>2</b> modalities</p>
+        <p>
+          Short description or something to help a user identify the unit in other scenarios, for example an interface asking you to "choose a unit".
+        </p>
+      </div>
+    </div>
+  {% endset %}
+  {{ card({
+    headingHtml: ' ',
+    descriptionHtml: internalHtml
+  }) }}
+{% endblock %}

@@ -1,0 +1,206 @@
+<!-- Use this page as the index for your project -->
+
+<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
+
+<!-- Extends the layout from /app/views/layout.html -->
+{% extends 'layout.html' %}
+<!--
+  In /app/views/layout.html you can:
+    - change the header and footer
+    - add custom CSS and JavaScript
+-->
+
+<!--
+  Use this to set the page name which will appear at the
+  start of the <title> tag, followed by the service name.
+  This is often not needed on the homepage, where only the
+  service name is needed. You can also reuse this variable
+  within the <h1>, where they are the same.
+-->
+{% set pageName = "Camberwell Building" %}
+
+{% block header %}
+  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+{% endblock %}
+
+<!-- For adding a breadcrumb or back link -->
+<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/pre-alpha-flats/",
+      text: "Manage other stuff"
+    },
+    {
+      href: "/pre-alpha-flats/location/location-listing",
+      text: "Locations"
+    }
+  ]
+}) }}
+{% endblock %}
+
+<!-- For adding page content -->
+<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full app-card-editable">
+        <div>
+          <h1 class="nhsuk-heading-l">
+            Camberwell building
+          </h1>
+        </div>
+        <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+    </div>
+  </div>
+
+  {% set secondaryNavItems = [] %}
+
+  {% for item in [
+    { href: 'location-location-details', label: 'Location details' },
+    { href: 'location-travel-and-transport', label: 'Travel and transport', selected: 'true' }
+  ] %}
+    {% set secondaryNavItems = secondaryNavItems | push({
+      text: item.label | safe,
+      href: item.href | trim,
+      current: true if item.selected == 'true'
+    }) %}
+  {% endfor %}
+
+  {{ appSecondaryNavigation({
+    visuallyHiddenTitle: "Secondary menu",
+    items: secondaryNavItems
+  }) }}
+
+  {% set insetTextHtml %}
+    <p><b>Note:</b> these details appear verbatim in public communications</p>
+  {% endset %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {{ insetText({
+        html: insetTextHtml,
+        classes: "nhsuk-u-margin-top-0"
+      }) }}
+    </div>
+  </div>
+
+  {% set parkingHtml %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
+        <p>
+          Pay-and-display car park nearby with disabled spaces
+        </p>
+      </div>
+    </div>
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
+        <p class="nhsuk-u-margin-bottom-0">
+          <a href="#">Link to parking provider</a><br>
+          <a href="#">Open in Google maps</a>
+        </p>
+        <p class="nhsuk-body-s">Links open a new tab or window</p>
+      </div>
+    </div>
+  {% endset %}
+  {% call card({
+    headingHtml: '
+      <div class="app-card-editable nhsuk-u-margin-bottom-4">
+        <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Car parking</h2>
+        <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
+      </div>
+    '
+  }) %}
+    {{ parkingHtml | safe }}
+  {% endcall %}
+
+  {% set busHtml %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
+        <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">Valmar Road</h3>
+        <p class="nhsuk-u-margin-bottom-2">
+          <a href="https://tfl.gov.uk/bus/stop/490G00014004/valmar-road/" target="_blank">More details on Transport for London website</a><br>
+          <a href="https://maps.app.goo.gl/SYuJrPRKe37TRPe78" target="_blank">Open in Google maps</a>
+        </p>
+        <p class="nhsuk-body-s">Links open a new tab or window</p>
+      </div>
+    </div>
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
+        <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">Coldharbour Lane</h3>
+        <p class="nhsuk-u-margin-bottom-2">
+          <a href="https://tfl.gov.uk/bus/stop/490G00005464/coldharbour-lane/" target="_blank">More details on Transport for London website</a><br>
+          <a href="https://maps.app.goo.gl/NnnNuLdiB72gUhXD9" target="_blank">Open in Google maps</a>
+        </p>
+        <p class="nhsuk-body-s">Links open a new tab or window</p>
+      </div>
+    </div>
+  {% endset %}
+  {% call card({
+    headingHtml: '
+      <div class="app-card-editable nhsuk-u-margin-bottom-4">
+        <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Bus stops nearby</h2>
+        <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
+      </div>
+    '
+  }) %}
+    {{ busHtml | safe }}
+  {% endcall %}
+
+  {% set busHtml %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
+        <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">Denmark Hill</h3>
+        <p class="nhsuk-u-margin-bottom-2">
+          <a href="https://www.nationalrail.co.uk/stations/denmark-hill/" target="_blank">More details on National Rail website</a><br>
+          <a href="https://maps.app.goo.gl/qJ99b8Kz8D8n6RV8A" target="_blank">Open in Google maps</a>
+        </p>
+        <p class="nhsuk-body-s">Links open a new tab or window</p>
+      </div>
+    </div>
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
+        <h3 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">Loughborough Junction</h3>
+        <p class="nhsuk-u-margin-bottom-2">
+          <a href="https://www.nationalrail.co.uk/stations/loughborough-junction/" target="_blank">More details on National Rail website</a><br>
+          <a href="https://maps.app.goo.gl/TotLNWxaiDZ9A4DSA" target="_blank">Open in Google maps</a>
+        </p>
+        <p class="nhsuk-body-s">Links open a new tab or window</p>
+      </div>
+    </div>
+  {% endset %}
+  {% call card({
+    headingHtml: '
+      <div class="app-card-editable nhsuk-u-margin-bottom-4">
+        <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Rail stations nearby</h2>
+        <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
+      </div>
+    '
+  }) %}
+    {{ busHtml | safe }}
+  {% endcall %}
+
+  {% set otherHtml %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-two-thirds">
+        <ul>
+          <li>Bicycle parking with 200 meters</li>
+          <li>Cycle hire scheme docking stations within 500 meters</li>
+        </ul>
+      </div>
+    </div>
+  {% endset %}
+  {% call card({
+    headingHtml: '
+      <div class="app-card-editable nhsuk-u-margin-bottom-4">
+        <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Other means</h2>
+        <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
+      </div>
+    '
+  }) %}
+    {{ otherHtml | safe }}
+  {% endcall %}
+{% endblock %}
