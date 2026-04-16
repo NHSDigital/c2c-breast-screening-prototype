@@ -17,7 +17,7 @@
   service name is needed. You can also reuse this variable
   within the <h1>, where they are the same.
 -->
-{% set pageName = "Camberwell Building" %}
+{% set pageName = "West Berkshire Screening Service" %}
 
 {% block customStyles %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css" />
@@ -26,49 +26,44 @@
 {% endblock %}
 
 {% block header %}
-  {% include "pre-alpha-bso/_includes/primary-navigation.html" %}
+  {% include "../_includes/primary-navigation.html" %}
 {% endblock %}
 
 <!-- For adding a breadcrumb or back link -->
 <!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
 {% block beforeContent %}
-{{ breadcrumb({
-  items: [
-    {
-      href: "#",
-      text: "Home"
-    },
-    {
-      href: "/pre-alpha-bso/",
-      text: "Manage other stuff"
-    },
-    {
-      href: "/pre-alpha-bso/location/location-listing",
-      text: "Locations"
-    }
-  ]
-}) }}
+  {{ breadcrumb({
+    items: [
+      {
+        href: "#",
+        text: "Home"
+      },
+      {
+        href: "/bso-objects/",
+        text: "Manage other stuff"
+      }
+    ]
+  }) }}
 {% endblock %}
 
 <!-- For adding page content -->
 <!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
 {% block content %}
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full app-card-editable">
-        <div>
-          <h1 class="nhsuk-heading-l">
-            Camberwell building
-          </h1>
-        </div>
-        <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+  <div class="app-card-editable">
+    <div>
+      <span class="nhsuk-caption-m">BSO ID: WBBSS-p33ps</span>
+      <h1 class="nhsuk-heading-l">
+        West Berkshire Screening Service
+      </h1>
     </div>
+    <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
   </div>
 
   {% set secondaryNavItems = [] %}
 
   {% for item in [
-    { href: 'location-location-details', label: 'Location details', selected: 'true' },
-    { href: 'location-travel-and-transport', label: 'Travel and transport' }
+    { href: 'bso-public-details', label: 'Public details' },
+    { href: 'bso-internal-details', label: 'Internal details', selected: 'true' }
   ] %}
     {% set secondaryNavItems = secondaryNavItems | push({
       text: item.label | safe,
@@ -82,85 +77,82 @@
     items: secondaryNavItems
   }) }}
 
-  {% set addressHtml %}
-    <div class="nhsuk-grid-row">
-      <div class="nhsuk-grid-column-one-half">
-        <p>
-          104 Denmark Hill<br>
-          London<br>
-          SE5 8RX
-        </p>
-        {{ summaryList({
-          rows: [
-            {
-              key: {
-                text: "Latitude"
-              },
-              value: {
-                text: "51.4712253052667"
-              }
-            },
-            {
-              key: {
-                text: "Longitude"
-              },
-              value: {
-                text: "-0.09312137796810355"
-              }
-            }
-          ]
-        }) }}
-        <p class="nhsuk-u-margin-bottom-0">
-          <a href="#">Open in Google maps</a>
-        </p>
-        <p class="nhsuk-body-s">Links open a new tab or window</p>
-      </div>
-      <div class="nhsuk-grid-column-one-half">
-        <div class="app-map-container" id="app-map" style="aspect-ratio: 4 / 3;"></div>
-      </div>
-    </div>
-  {% endset %}
+
+  <div class="app-card-editable">
+    <h2 class="nhsuk-heading-m">Office contacts</h2>
+    <p class="nhsuk-u-padding-right-5"><a href="#">Add new contacts</a></p>
+  </div>
+
+  {{ summaryList({
+    card: {
+      headingHtml: '
+        <div class="app-card-editable nhsuk-u-margin-bottom-4">
+          <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Angela Carter</h2>
+          <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
+        </div>
+      '
+    },
+    rows: [
+      {
+        key: {
+          text: "Role"
+        },
+        value: {
+          text: "Office administrator"
+        }
+      },
+      {
+        classes: "nhsuk-summary-list__row--no-border",
+        key: {
+          text: "Contact details"
+        },
+        value: {
+          html: "
+            <p>angela.carter@nhs.net</p>
+            <p>1234 567 890 ext 99</p>"
+        }
+      }
+    ]
+  }) }}
+
+  <h2 class="nhsuk-heading-m">BSO area</h2>
+
+  <ul class="nhsuk-grid-row nhsuk-card-group">
+    <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
+      {% call card({
+        clickable: true,
+        heading: "1",
+        headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
+      }) %}
+        <a href="#/applicants" class="nhsuk-card__link">Static unit</a>
+      {% endcall %}
+    </li>
+    <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
+      {% call card({
+        clickable: true,
+        heading: "2",
+        headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
+      }) %}
+        <a href="#/applicants" class="nhsuk-card__link">Mobile units</a>
+      {% endcall %}
+    </li>
+    <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
+      {% call card({
+        clickable: true,
+        heading: "13",
+        headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
+      }) %}
+        <a href="#/jobs" class="nhsuk-card__link">Locations</a>
+      {% endcall %}
+    </li>
+  </ul>
+
   {% call card({
-    headingHtml: '
-      <div class="app-card-editable nhsuk-u-margin-bottom-4">
-        <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Address</h2>
-        <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
-      </div>
-    '
+    headingHtml: ' '
   }) %}
-    {{ addressHtml | safe }}
+    <div class="app-map-container" id="app-map" style="aspect-ratio: 4 / 3;"></div>
   {% endcall %}
 
-
-  {% set insetTextHtml %}
-    <p><b>Note:</b> these details appear verbatim in public communications</p>
-  {% endset %}
-  {% set notesHtml %}
-    {{ insetText({
-      html: insetTextHtml,
-      classes: "nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4"
-    }) }}
-    <div class="nhsuk-grid-row">
-      <div class="nhsuk-grid-column-two-thirds">
-        <p>
-          Located on the first floor, lift access is available.
-        </p>
-        <p>
-          Use the intercom to gain access.
-        </p>
-      </div>
-    </div>
-  {% endset %}
-  {% call card({
-    headingHtml: '
-      <div class="app-card-editable nhsuk-u-margin-bottom-4">
-        <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Location notes for participants:</h2>
-        <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
-      </div>
-    '
-  }) %}
-    {{ notesHtml | safe }}
-  {% endcall %}
 {% endblock %}
 
 {% block bodyEnd %}
@@ -219,12 +211,11 @@
     });
   </script>
 
-  <script>
-    const apiKey = 'lWF9hAvJ3ALTasfGgV8MqmfAWJ2L9fhU';
+  <script src="geo-bso-west-berks.js"></script>
 
-    const landmarks = [
-      { lat: 51.4712253052667, lng: -0.09312137796810355, type: 'location', name: 'Camberwell Building' }
-    ];
+  <script>
+
+    const apiKey = 'lWF9hAvJ3ALTasfGgV8MqmfAWJ2L9fhU';
 
     landmarks.forEach(({ lat, lng, type, name }) => {
       const icon = landmarkIcons[type] || landmarkIcons.default;
@@ -236,7 +227,30 @@
         style: 'https://api.os.uk/maps/vector/v1/vts/resources/styles?srs=3857&key=' + apiKey
     }).addTo(map);
 
-    map.setView([landmarks[0].lat, landmarks[0].lng], 13);
+    const geojsonLayer = L.geoJSON(geojsonData, {
+      style: {
+        color: '#185FA5',
+        weight: 2,
+        fillColor: '#378ADD',
+        fillOpacity: 0.3
+      },
+      pointToLayer: (feature, latlng) =>
+        L.circleMarker(latlng, { radius: 7, fillColor: '#005EB8', color: '#005EB8', weight: 1.5, fillOpacity: 0.3 }),
+      onEachFeature: (feature, layer) => {
+        if (feature.properties) {
+          layer.bindPopup(
+            Object.entries(feature.properties)
+              .map(([k, v]) => `<b>${k}:</b> ${v}`)
+              .join('<br>')
+          );
+        }
+      }
+    }).addTo(map);
+
+    // Fit map bounds to the data
+    if (geojsonLayer.getBounds().isValid()) {
+      map.fitBounds(geojsonLayer.getBounds(), { padding: [30, 30] });
+    }
 
   </script>
 {% endblock %}
