@@ -57,7 +57,7 @@
       <span class="nhsuk-caption-m">Standard (NTDD) batch imported 1st January 2026</span>
     </div>
   </div>
-  
+
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-one-quarter">
       <div class="nhsuk-card nhsuk-card--clickable">
@@ -80,18 +80,18 @@
   </div>
 
 </section>
-  
+
 <hr class="nhsuk-u-margin-0 nhsuk-u-margin-bottom-4">
-  
+
 <section>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-  
+
       <h2 class="nhsuk-heading-m">Participant breakdown</h2>
-    
+
       <figure class="app-chart-bar-segmented-horizontal">
         <figcaption class="nhsuk-u-visually-hidden">Participant breakdown by type</figcaption>
-        
+
         <style>
           /* Each row takes up an equal share — adjust flex values to reflect real proportions */
           tbody tr:nth-child(1) {
@@ -104,7 +104,7 @@
             flex: 5;
           }
         </style>
-    
+
         <table aria-describedby="chart-key" class="nhsuk-u-margin-bottom-4">
           <thead class="nhsuk-u-visually-hidden">
             <tr>
@@ -148,7 +148,7 @@
             </tr>
           </tbody>
         </table>
-    
+
         <ul id="chart-key" aria-label="Chart key" class="nhsuk-list nhsuk-u-margin-0 app-chart-bar-segmented-horizontal--legend">
           <li>
             <div class="swatch hatching--standard" aria-hidden="true"></div>
@@ -172,11 +172,11 @@
             </div>
           </li>
         </ul>
-    
+
       </figure>
     </div>
   </div>
-  
+
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
       <h3 class="nhsuk-heading-s">Participant distribution by next test due date</h3>
@@ -210,9 +210,9 @@
     </div>
   </div>
 </section>
-  
+
 <hr class="nhsuk-u-margin-0 nhsuk-u-margin-bottom-4">
-  
+
 <section>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
@@ -232,7 +232,7 @@
       -->
     </div>
   </div>
-  
+
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
       <a href="#" class="nhsuk-u-font-size-19">Standard</a>
@@ -240,16 +240,19 @@
   </div>
   <div class="nhsuk-grid-row nhsuk-u-margin-bottom-3">
     <div class="nhsuk-grid-column-two-thirds">
-      <div class="app-simple-progress-bar --standard" style="--percentage: 0%;">
-        <span class="nhsuk-u-visually-hidden">0% appointed</span>
+      <div class="app-simple-progress-bar --standard nhsuk-u-padding-top-2" style="--percentage: 0%;">
+        {{ tag({
+          text: "0% appointed",
+          classes: "nhsuk-tag--green nhsuk-u-margin-left-2"
+        }) }}
       </div>
     </div>
     <div class="nhsuk-grid-column-one-third">
-      <p class="nhsuk-u-margin-0">0 of 1970 appointed</p>
+      <p class="nhsuk-u-margin-0 nhsuk-u-padding-top-2">0 of 1970 appointed</p>
     </div>
   </div>
-  
-  
+
+
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
       <a href="#" class="nhsuk-u-font-size-19">Special requirements</a>
@@ -257,17 +260,20 @@
   </div>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      <div class="app-simple-progress-bar --special" style="--percentage: 0%;">
-        <span class="nhsuk-u-visually-hidden">0% appointed</span>
+      <div class="app-simple-progress-bar --special nhsuk-u-padding-top-2" style="--percentage: 0%;">
+        {{ tag({
+          text: "0% appointed",
+          classes: "nhsuk-tag--orange nhsuk-u-margin-left-2"
+        }) }}
       </div>
     </div>
     <div class="nhsuk-grid-column-one-third">
-      <p class="nhsuk-u-margin-0">0 of 12 appointed</p>
+      <p class="nhsuk-u-margin-0 nhsuk-u-padding-top-2">0 of 12 appointed</p>
     </div>
   </div>
-  
-  
-  
+
+
+
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
       <h2 class="nhsuk-heading-s nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-2">Reconciliation</h2>
@@ -276,16 +282,19 @@
   </div>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      <div class="app-simple-progress-bar --vhr" style="--percentage: 0%;">
-        <span class="nhsuk-u-visually-hidden">0% reconciled</span>
+      <div class="app-simple-progress-bar --vhr nhsuk-u-padding-top-2" style="--percentage: 0%;">
+        {{ tag({
+          text: "0% reconciled",
+          classes: "nhsuk-tag--red nhsuk-u-margin-left-2"
+        }) }}
       </div>
     </div>
     <div class="nhsuk-grid-column-one-third">
-      <p class="nhsuk-u-margin-0">0 of 5 reconciled</p>
+      <p class="nhsuk-u-margin-0 nhsuk-u-padding-top-2">0 of 5 reconciled</p>
     </div>
   </div>
 </section>
-  
+
 <hr class="nhsuk-u-margin-0 nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-4">
 
 <section>
