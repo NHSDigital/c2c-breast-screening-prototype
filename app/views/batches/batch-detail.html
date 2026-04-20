@@ -1,0 +1,287 @@
+
+{% extends 'layout.html' %}
+
+
+{% set pageName = "West Berks mobile screening unit name" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage batches", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/batches/",
+      text: "Manage batches"
+    }
+  ]
+}) }}
+{% endblock %}
+
+<!-- For adding page content -->
+<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
+{% block content %}
+
+<section>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-6">
+      <span class="nhsuk-caption-m">BDE-NTDD-202601011200</span>
+      <div class="app-card-editable">
+        <h1 class="nhsuk-heading-l nhsuk-u-margin-bottom-1">
+          Harrogate Practices Feb-March 2026 Round 13
+        </h1>
+        <p class="nhsuk-u-padding-right-5 nhsuk-u-margin-bottom-1"><a href="#">Change</a></p>
+      </div>
+      <span class="nhsuk-caption-m">Standard (NTDD) batch imported 1st January 2026</span>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-one-quarter">
+      <div class="nhsuk-card nhsuk-card--clickable">
+        <div class="nhsuk-card__content nhsuk-u-padding-3">
+          <h2 class="nhsuk-card__heading nhsuk-u-font-size-36 nhsuk-u-margin-bottom-1">
+            <span role="text">
+              1987
+            </span>
+          </h2>
+          <a href="#" class="nhsuk-card__link">total participants</a>
+        </div>
+      </div>
+    </div>
+    <div class="nhsuk-grid-column-three-quarters">
+      <ul class="nhsuk-list">
+        <li><a href="#">16 postal outcodes</a></li>
+        <li><a href="#">4 GP practices</a></li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<hr class="nhsuk-u-margin-0 nhsuk-u-margin-bottom-4">
+
+<section>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h2 class="nhsuk-heading-l">Participant breakdown</h2>
+
+      <figure class="app-chart-bar-segmented-horizontal">
+        <figcaption class="nhsuk-u-visually-hidden">Participant breakdown by type</figcaption>
+
+        <style>
+          /* Each row takes up an equal share — adjust flex values to reflect real proportions */
+          tbody tr:nth-child(1) {
+            flex: 80;
+          }
+          tbody tr:nth-child(2) {
+            flex: 15;
+          }
+          tbody tr:nth-child(3) {
+            flex: 5;
+          }
+        </style>
+
+        <table aria-describedby="chart-key" class="nhsuk-u-margin-bottom-4">
+          <thead class="nhsuk-u-visually-hidden">
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hatching--standard">
+              <td class="nhsuk-u-visually-hidden">
+                Standard
+              </td>
+              <td>
+                {{ tag({
+                  text: "1970",
+                  classes: "nhsuk-tag--green nhsuk-u-margin-left-2"
+                }) }}
+              </td>
+            </tr>
+            <tr class="hatching--special">
+              <td class="nhsuk-u-visually-hidden">
+                Special Requirements
+              </td>
+              <td>
+                {{ tag({
+                  text: "12",
+                  classes: "nhsuk-tag--orange nhsuk-u-margin-left-2"
+                }) }}
+              </td>
+            </tr>
+            <tr class="hatching--high-risk">
+              <td class="nhsuk-u-visually-hidden">
+                Very High Risk
+              </td>
+              <td>
+                {{ tag({
+                  text: "5",
+                  classes: "nhsuk-tag--red nhsuk-u-margin-left-2"
+                }) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ul id="chart-key" aria-label="Chart key" class="nhsuk-list nhsuk-u-margin-0 app-chart-bar-segmented-horizontal--legend">
+          <li>
+            <div class="swatch hatching--standard" aria-hidden="true"></div>
+            <div>
+              <a href="#">1970 standard</a><br>
+              <span class="key-label nhsuk-body-s">ready to import</span>
+            </div>
+          </li>
+          <li>
+            <div class="swatch hatching--special" aria-hidden="true"></div>
+            <div>
+              <a href="#">12 special requirements</a><br>
+              <span class="key-label nhsuk-body-s">reasonable adjustments etc.</span>
+            </div>
+          </li>
+          <li>
+            <div class="swatch hatching--high-risk" aria-hidden="true"></div>
+            <div>
+              <a href="#">5 very high risk (VHR)</a><br>
+              <span class="key-label nhsuk-body-s">ready to reconcile</span>
+            </div>
+          </li>
+        </ul>
+
+      </figure>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h3 class="nhsuk-heading-s">Participant distribution by next test due date</h3>
+    </div>
+  </div>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="app-batch-overview-sparkline">
+        <svg viewBox="0 0 960 64" width="960" height="64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block;">
+          <defs>
+            <clipPath id="clip"><rect width="960" height="64"/></clipPath>
+          </defs>
+          <polygon points="0,64 0,26 96,24 192,10 288,28 384,38 480,12 576,30 672,40 768,26 864,24 960,24 960,64" fill="rgba(0,94,184,0.25)" clip-path="url(#clip)"/>
+          <polyline points="0,26 96,24 192,10 288,28 384,38 480,12 576,30 672,40 768,26 864,24 960,24" fill="none" stroke="#005eb8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#clip)"/>
+        </svg>
+      </div>
+      <div class="app-u-one-left-one-right nhsuk-u-margin-top-3">
+        <div>
+          <span class="nhsuk-caption-s">Earliest next test due date:</span>
+          <h3 class="nhsuk-heading-xs nhsuk-u-font-weight-normal">
+            28 February 2026
+          </h3>
+        </div>
+        <div>
+          <span class="nhsuk-caption-s">Latest:</span>
+          <h3 class="nhsuk-heading-xs nhsuk-u-font-weight-normal">
+            31 March 2026
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="nhsuk-u-margin-0 nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-4">
+
+<section>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h2 class="nhsuk-heading-l">Batch progress</h2>
+      <div class="app-simple-progress-bar --generic nhsuk-u-padding-top-2" style="--percentage: 0%;">
+        {{ tag({
+          text: "0 of 1987 dealt with",
+          classes: "nhsuk-tag--blue nhsuk-u-margin-left-2"
+        }) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
+      <h2 class="nhsuk-heading-s nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-2">Appointed</h2>
+      <a href="#" class="nhsuk-u-font-size-19">Standard</a>
+    </div>
+  </div>
+  <div class="nhsuk-grid-row nhsuk-u-margin-bottom-3">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="app-simple-progress-bar --standard nhsuk-u-padding-top-2" style="--percentage: 0%;">
+        {{ tag({
+          text: "0% appointed",
+          classes: "nhsuk-tag--green nhsuk-u-margin-left-2"
+        }) }}
+      </div>
+    </div>
+    <div class="nhsuk-grid-column-one-third">
+      <p class="nhsuk-u-margin-0 nhsuk-u-padding-top-2">0 of 1970 appointed</p>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
+      <a href="#" class="nhsuk-u-font-size-19">Special requirements</a>
+    </div>
+  </div>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="app-simple-progress-bar --special nhsuk-u-padding-top-2" style="--percentage: 0%;">
+        {{ tag({
+          text: "0% appointed",
+          classes: "nhsuk-tag--orange nhsuk-u-margin-left-2"
+        }) }}
+      </div>
+    </div>
+    <div class="nhsuk-grid-column-one-third">
+      <p class="nhsuk-u-margin-0 nhsuk-u-padding-top-2">0 of 12 appointed</p>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
+      <h2 class="nhsuk-heading-s nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-2">Reconciled</h2>
+      <a href="#" class="nhsuk-u-font-size-19">Very high risk (VHR)</a>
+    </div>
+  </div>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="app-simple-progress-bar --vhr nhsuk-u-padding-top-2" style="--percentage: 0%;">
+        {{ tag({
+          text: "0% reconciled",
+          classes: "nhsuk-tag--red nhsuk-u-margin-left-2"
+        }) }}
+      </div>
+    </div>
+    <div class="nhsuk-grid-column-one-third">
+      <p class="nhsuk-u-margin-0 nhsuk-u-padding-top-2">0 of 5 reconciled</p>
+    </div>
+  </div>
+</section>
+
+<hr class="nhsuk-u-margin-0 nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-4">
+
+<section>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      {% call details({
+        summaryHtml: '<h2 class="nhsuk-body-m">Clinics associated with this batch</h2>'
+      }) %}
+        <p>No clinics associated with this batch</p>
+      {% endcall %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,22 +1,7 @@
-<!-- Use this page as the index for your project -->
 
-<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
-
-<!-- Extends the layout from /app/views/layout.html -->
 {% extends 'layout.html' %}
-<!--
-  In /app/views/layout.html you can:
-    - change the header and footer
-    - add custom CSS and JavaScript
--->
 
-<!--
-  Use this to set the page name which will appear at the
-  start of the <title> tag, followed by the service name.
-  This is often not needed on the homepage, where only the
-  service name is needed. You can also reuse this variable
-  within the <h1>, where they are the same.
--->
+
 {% set pageName = "West Berks mobile screening unit name" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
@@ -24,8 +9,6 @@
   {{ primaryNavigation("Manage batches", serviceName) }}
 {% endblock %}
 
-<!-- For adding a breadcrumb or back link -->
-<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
 {% block beforeContent %}
 {{ breadcrumb({
   items: [
@@ -88,7 +71,7 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
 
-      <h2 class="nhsuk-heading-m">Participant breakdown</h2>
+      <h2 class="nhsuk-heading-l">Participant breakdown</h2>
 
       <figure class="app-chart-bar-segmented-horizontal">
         <figcaption class="nhsuk-u-visually-hidden">Participant breakdown by type</figcaption>
@@ -212,47 +195,40 @@
   </div>
 </section>
 
-<hr class="nhsuk-u-margin-0 nhsuk-u-margin-bottom-4">
+<hr class="nhsuk-u-margin-0 nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-4">
 
 <section>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-      <h2 class="nhsuk-heading-m">Batch progress</h2>
-      <!--
-      <div class="app-u-one-left-one-right app-simple-progress-bar" style="--percentage: 0%;">
-        <div>
-          <h3 class="nhsuk-heading-s">
-            0%
-            <span class="nhsuk-caption-m">appointed</span>
-          </h3>
-        </div>
-        <div>
-          num of total num
-        </div>
+      <h2 class="nhsuk-heading-l">Batch progress</h2>
+      <div class="app-simple-progress-bar --generic nhsuk-u-padding-top-2" style="--percentage: 99%;">
+        {{ tag({
+          text: "1970 of 1987 dealt with",
+          classes: "nhsuk-tag--blue nhsuk-u-margin-left-2"
+        }) }}
       </div>
-      -->
     </div>
   </div>
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
+      <h2 class="nhsuk-heading-s nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-2">Appointed</h2>
       <a href="#" class="nhsuk-u-font-size-19">Standard</a>
     </div>
   </div>
   <div class="nhsuk-grid-row nhsuk-u-margin-bottom-3">
     <div class="nhsuk-grid-column-two-thirds">
-      <div class="app-simple-progress-bar --standard nhsuk-u-padding-top-2" style="--percentage: 0%;">
+      <div class="app-simple-progress-bar --standard nhsuk-u-padding-top-2" style="--percentage: 100%;">
         {{ tag({
-          text: "0% appointed",
+          text: "100% appointed",
           classes: "nhsuk-tag--green nhsuk-u-margin-left-2"
         }) }}
       </div>
     </div>
     <div class="nhsuk-grid-column-one-third">
-      <p class="nhsuk-u-margin-0 nhsuk-u-padding-top-2">0 of 1970 appointed</p>
+      <p class="nhsuk-u-margin-0 nhsuk-u-padding-top-2">1970 of 1970 appointed</p>
     </div>
   </div>
-
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
@@ -273,11 +249,9 @@
     </div>
   </div>
 
-
-
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
-      <h2 class="nhsuk-heading-s nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-2">Reconciliation</h2>
+      <h2 class="nhsuk-heading-s nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-2">Reconciled</h2>
       <a href="#" class="nhsuk-u-font-size-19">Very high risk (VHR)</a>
     </div>
   </div>
@@ -304,7 +278,7 @@
       {% call details({
         summaryHtml: '<h2 class="nhsuk-body-m">Clinics associated with this batch</h2>'
       }) %}
-        <p>...</p>
+        <p>No clinics associated with this batch</p>
       {% endcall %}
     </div>
   </div>

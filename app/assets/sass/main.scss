@@ -17,6 +17,7 @@
 // Batch (for now) view bar charts and legends
 
 :root {
+  --generic-chart-hatch: repeating-linear-gradient(45deg, #005eb8, #005eb8 1px, #ccdff1 1px, #ccdff1 12px);
   --standard-chart-hatch: repeating-linear-gradient(45deg, #004c23, #004c23 1px, #cce5d8 1px, #cce5d8 12px);
   --special-chart-hatch: repeating-linear-gradient(-45deg, #4d3708, #4d3708 1px, #ffdc8e 1px, #ffdc8e 12px);
   --vhr-chart-hatch-1: repeating-linear-gradient(-45deg, #6b140e, #6b140e 1px, transparent 1px, transparent 12px);
@@ -87,7 +88,16 @@
 
 .app-simple-progress-bar {
   width: 100%;
+  min-width: 200px;
   height: 3rem;
+
+  &.--thin {
+    height: auto;
+  }
+
+  &.--generic {
+    background: var(--generic-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
 
   &.--standard {
     background: var(--standard-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
