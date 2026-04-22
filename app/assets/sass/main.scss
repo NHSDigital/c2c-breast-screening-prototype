@@ -40,7 +40,7 @@
   tbody {
     display: flex;
     width: 100%;
-    height: 3rem;
+    //height: 3rem;
     overflow: hidden;
   }
   /* Each row becomes a segment, sized by its proportion of the total */
@@ -49,6 +49,10 @@
     align-items: center;
     justify-content: left;
     overflow: hidden;
+  }
+  /* Each row becomes a segment, sized by its proportion of the total */
+  tbody td {
+    padding: 0;
   }
 }
 .app-chart-bar-segmented-horizontal--legend {
@@ -89,7 +93,6 @@
 .app-simple-progress-bar {
   width: 100%;
   min-width: 200px;
-  height: 3rem;
 
   &.--thin {
     height: auto;
