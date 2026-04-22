@@ -19,8 +19,9 @@
 -->
 {% set pageName = "Camberwell Building" %}
 
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+  {{ primaryNavigation("Manage other stuff", serviceName) }}
 {% endblock %}
 
 <!-- For adding a breadcrumb or back link -->
@@ -33,11 +34,11 @@
       text: "Home"
     },
     {
-      href: "/pre-alpha-flats/",
+      href: "/bso-objects/",
       text: "Manage other stuff"
     },
     {
-      href: "/pre-alpha-flats/location/location-listing",
+      href: "/bso-objects/location/location-listing",
       text: "Locations"
     }
   ]

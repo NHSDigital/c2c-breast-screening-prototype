@@ -1,5 +1,6 @@
 // Import NHS.UK frontend library
 @forward "nhsuk-frontend/dist/nhsuk/nhsuk";
+@use "nhsuk-frontend/dist/nhsuk/core" as *;
 
 // Stolen Manage prototype components :P
 // https://github.com/NHSDigital/manage-breast-screening-prototype
@@ -11,4 +12,100 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+}
+
+// Batch (for now) view bar charts and legends
+
+:root {
+  --generic-chart-hatch: repeating-linear-gradient(45deg, #005eb8, #005eb8 1px, #ccdff1 1px, #ccdff1 12px);
+  --standard-chart-hatch: repeating-linear-gradient(45deg, #004c23, #004c23 1px, #cce5d8 1px, #cce5d8 12px);
+  --special-chart-hatch: repeating-linear-gradient(-45deg, #4d3708, #4d3708 1px, #ffdc8e 1px, #ffdc8e 12px);
+  --vhr-chart-hatch-1: repeating-linear-gradient(-45deg, #6b140e, #6b140e 1px, transparent 1px, transparent 12px);
+  --vhr-chart-hatch-2: repeating-linear-gradient(45deg, #6b140e, #6b140e 1px, #f7d4d1 1px, #f7d4d1 12px);
+}
+
+.hatching--standard {
+  background: var(--standard-chart-hatch)
+}
+.hatching--special {
+  background: var(--special-chart-hatch),
+}
+.hatching--high-risk {
+  background: var(--vhr-chart-hatch-1), var(--vhr-chart-hatch-2)
+}
+
+.app-chart-bar-segmented-horizontal {
+  margin: 0;
+  /* Turn the table tbody into a single horizontal bar */
+  tbody {
+    display: flex;
+    width: 100%;
+    height: 3rem;
+    overflow: hidden;
+  }
+  /* Each row becomes a segment, sized by its proportion of the total */
+  tbody tr {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    overflow: hidden;
+  }
+}
+.app-chart-bar-segmented-horizontal--legend {
+  @include nhsuk-media-query($from: tablet) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-start;
+
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+  .swatch {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+}
+
+.app-batch-overview-sparkline {
+  background-color: #fff;
+}
+.app-u-one-left-one-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.app-simple-progress-bar {
+  width: 100%;
+  min-width: 200px;
+  height: 3rem;
+
+  &.--thin {
+    height: auto;
+  }
+
+  &.--generic {
+    background: var(--generic-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
+
+  &.--standard {
+    background: var(--standard-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
+  &.--special {
+    background: var(--special-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
+  &.--vhr {
+    background: var(--vhr-chart-hatch-1) 0 0 / var(--percentage) 100% no-repeat, var(--vhr-chart-hatch-2) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
 }
