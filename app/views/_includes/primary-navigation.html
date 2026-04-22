@@ -1,0 +1,55 @@
+{% from 'header/macro.njk' import header %}
+
+{% macro primaryNavigation(activeItem, serviceName) %}
+  {{ header({
+    account: {
+      items: [
+        {
+          text: "West Berkshire BSO"
+        },
+        {
+          href: "#",
+          text: "Thomas Pynchon",
+          icon: true
+        },
+        {
+          href: "/",
+          text: "Log out"
+        }
+      ]
+    },
+    service: {
+      text: serviceName,
+      href: "/"
+    },
+    navigation: {
+      items: [
+        {
+          href: "#",
+          text: "Dashboard",
+          active: activeItem === "Dashboard"
+        },
+        {
+          href: "/batches/",
+          text: "Manage batches",
+          active: activeItem === "Manage batches"
+        },
+        {
+          href: "#",
+          text: "Manage clinics",
+          active: activeItem === "Manage clinics"
+        },
+        {
+          href: "/bso-objects/",
+          text: "Manage other stuff",
+          active: activeItem === "Manage other stuff"
+        },
+        {
+          href: "#",
+          text: "Reports",
+          active: activeItem === "Reports"
+        }
+      ]
+    }
+  }) }}
+{% endmacro %}

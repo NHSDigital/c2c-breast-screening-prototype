@@ -17,53 +17,59 @@
   service name is needed. You can also reuse this variable
   within the <h1>, where they are the same.
 -->
-{% set pageName = "Units" %}
+{% set pageName = "Manage other stuff" %}
 
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+  {{ primaryNavigation("Manage other stuff", serviceName) }}
 {% endblock %}
 
 <!-- For adding a breadcrumb or back link -->
 <!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
 {% block beforeContent %}
+
 {{ breadcrumb({
   items: [
     {
       href: "#",
       text: "Home"
-    },
-    {
-      href: "/pre-alpha-flats/",
-      text: "Manage other stuff"
     }
   ]
 }) }}
+
 {% endblock %}
 
 <!-- For adding page content -->
 <!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
 {% block content %}
-  <h1 class="nhsuk-heading-xl">
-    Breast screening units
-  </h1>
-
-  <ul class="nhsuk-grid-row nhsuk-card-group">
-    <li class="nhsuk-grid-column-two-thirds nhsuk-card-group__item">
-
-      {% set cardHeadingHtml %}
-        <span class="nhsuk-caption-m">Mobile unit: Mandy - AN-SKIT-p33ps</span>
-        <h2 class="nhsuk-heading-m"><a class="nhsuk-card__link" href="/pre-alpha-flats/unit/unit-public-details">West Berks mobile screening unit</a></h2>
-      {% endset %}
-
-      {% set cardDescriptionHtml %}
-        <p>Short description or something to help a user identify the unit in other scenarios, for example an interface asking you to "choose a unit".</p>
-      {% endset %}
-
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
       {{ card({
         clickable: true,
-        secondary: true,
-        headingHtml: cardHeadingHtml,
-        descriptionHtml: cardDescriptionHtml
+        href: "/bso-objects/bso/bso-public-details",
+        heading: "Breast screening office (BSO)",
+        headingClasses: "nhsuk-heading-m",
+        description: "Manage your organisation details"
+      }) }}
+    </div>
+  </div>
+  <ul class="nhsuk-grid-row nhsuk-card-group">
+    <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+      {{ card({
+        clickable: true,
+        href: "/bso-objects/unit/unit-listing",
+        heading: "Breast screening units",
+        headingClasses: "nhsuk-heading-m",
+        description: "Manage the screening units that make up your BSO"
+      }) }}
+    </li>
+    <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+      {{ card({
+        clickable: true,
+        href: "/bso-objects/location/location-listing",
+        heading: "Manage locations",
+        headingClasses: "nhsuk-heading-m",
+        description: "Manage the static and mobile locations available to your units"
       }) }}
     </li>
   </ul>

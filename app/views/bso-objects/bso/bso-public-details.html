@@ -19,8 +19,9 @@
 -->
 {% set pageName = "West Berkshire Screening Service" %}
 
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+  {{ primaryNavigation("Manage other stuff", serviceName) }}
 {% endblock %}
 
 <!-- For adding a breadcrumb or back link -->
@@ -33,7 +34,7 @@
       text: "Home"
     },
     {
-      href: "/pre-alpha-flats/",
+      href: "/bso-objects/",
       text: "Manage other stuff"
     }
   ]

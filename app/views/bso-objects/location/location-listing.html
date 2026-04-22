@@ -19,8 +19,9 @@
 -->
 {% set pageName = "Units" %}
 
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+  {{ primaryNavigation("Manage other stuff", serviceName) }}
 {% endblock %}
 
 <!-- For adding a breadcrumb or back link -->
@@ -33,7 +34,7 @@
       text: "Home"
     },
     {
-      href: "/pre-alpha-flats/",
+      href: "/bso-objects/",
       text: "Manage other stuff"
     }
   ]
@@ -51,7 +52,7 @@
     <li class="nhsuk-grid-column-two-thirds nhsuk-card-group__item">
 
       {% set cardHeadingHtml %}
-        <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-3"><a class="nhsuk-card__link" href="/pre-alpha-flats/location/location-location-details">Camberwell building</a></h2>
+        <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-3"><a class="nhsuk-card__link" href="/bso-objects/location/location-location-details">Camberwell building</a></h2>
       {% endset %}
 
       {% set cardDescriptionHtml %}

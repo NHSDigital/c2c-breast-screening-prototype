@@ -19,8 +19,9 @@
 -->
 {% set pageName = "West Berks mobile screening unit name" %}
 
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {% include "pre-alpha-flats/_includes/primary-navigation.html" %}
+  {{ primaryNavigation("Manage other stuff", serviceName) }}
 {% endblock %}
 
 <!-- For adding a breadcrumb or back link -->
@@ -33,11 +34,11 @@
       text: "Home"
     },
     {
-      href: "/pre-alpha-flats/",
+      href: "/bso-objects/",
       text: "Manage other stuff"
     },
     {
-      href: "/pre-alpha-flats/unit/unit-listing",
+      href: "/bso-objects/unit/unit-listing",
       text: "Units"
     }
   ]
@@ -58,7 +59,7 @@
         <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
     </div>
   </div>
-  
+
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full app-card-editable">
       <div>
@@ -77,8 +78,8 @@
   {% set secondaryNavItems = [] %}
 
   {% for item in [
-    { href: 'unit-public-details', label: 'Public details', selected: 'true' },
-    { href: 'unit-internal-details', label: 'Internal details' }
+    { href: 'unit-public-details', label: 'Public details' },
+    { href: 'unit-internal-details', label: 'Internal details', selected: 'true' }
   ] %}
     {% set secondaryNavItems = secondaryNavItems | push({
       text: item.label | safe,
@@ -92,60 +93,32 @@
     items: secondaryNavItems
   }) }}
 
-
-
-    {% set insetTextHtml %}
-      <p><b>Note:</b> these details appear verbatim in public communications</p>
-    {% endset %}
+  {% set internalHtml %}
     <div class="nhsuk-grid-row">
-      <div class="nhsuk-grid-column-full">
-        {{ insetText({
-          html: insetTextHtml,
-          classes: "nhsuk-u-margin-top-0"
-        }) }}
+      <div class="nhsuk-grid-column-full app-card-editable">
+        <div>
+          <span class="nhsuk-caption-s">Unit nickname:</span>
+          <h3 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+            Mandy
+          </h3>
+          <p class="nhsuk-body-s">
+            ID: AN-SKIT-p33ps
+          </p>
+        </div>
+        <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
       </div>
     </div>
-
-    {% set facilitiesHtml %}
-      <ul class="nhsuk-list nhsuk-list--bullet">
-        <li>Toilets</li>
-        <li>Accessible toilet</li>
-        <li>Bring a companion or carer</li>
-        <li>Induction loop</li>
-        <li>Waiting area</li>
-        <li>Wheelchair access</li>
-      </ul>
-    {% endset %}
-    {% call card({
-      headingHtml: '
-        <div class="app-card-editable nhsuk-u-margin-bottom-4">
-          <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Facilities available:</h2>
-          <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
-        </div>
-      '
-    }) %}
-      {{ facilitiesHtml | safe }}
-    {% endcall %}
-    
-    
-    {% set notesHtml %}
     <div class="nhsuk-grid-row">
       <div class="nhsuk-grid-column-two-thirds">
-          <p>
-            Our waiting area has 4 chairs, space for 1 wheelchair, and is heated.
-          </p>
-          <p>
-            Please arrive no more than 10 minutes before the time on your invitation.
-          </p>
-        </div>
-    {% endset %}
-    {{ card({
-      headingHtml: '
-        <div class="app-card-editable nhsuk-u-margin-bottom-4">
-          <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-0">Before-you-go notes for screening participants:</h2>
-          <p class="nhsuk-u-margin-bottom-0"><a href="#">Change</a></p>
-        </div>
-      ',
-      descriptionHtml: notesHtml
-    }) }}
+        <p>This unit has <b>2</b> modalities</p>
+        <p>
+          Short description or something to help a user identify the unit in other scenarios, for example an interface asking you to "choose a unit".
+        </p>
+      </div>
+    </div>
+  {% endset %}
+  {{ card({
+    headingHtml: ' ',
+    descriptionHtml: internalHtml
+  }) }}
 {% endblock %}

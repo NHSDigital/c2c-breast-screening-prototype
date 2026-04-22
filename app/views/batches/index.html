@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Manage batches" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage batches", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    }
+  ]
+}) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="app-card-editable">
+    <h1 class="nhsuk-heading-l">Batches in progress</h1>
+
+    {{ button({
+      text: "Import a new batch",
+      href: "#",
+      classes: "nhsuk-button--secondary"
+    }) }}
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+
+      {% set batch %}
+        <a href="/batches/batch-detail-in-progress">
+          Harrogate Practices Feb-March 2026 Round 13<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">BDE-NTDD-202601011200</span>
+        </a>
+      {% endset %}
+
+      {% set progress %}
+        <div class="app-simple-progress-bar --generic --thin" style="--percentage: 99%;">
+          {{ tag({
+            text: "99%",
+            classes: "nhsuk-tag--blue nhsuk-u-margin-1"
+          }) }}
+        </div>
+      {% endset %}
+
+
+      {% set batch_new %}
+        <a href="/batches/batch-detail">
+          Harrogate Practices Feb-March 2026 Round 13<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">BDE-NTDD-202601011200</span>
+        </a>
+      {% endset %}
+
+      {% set progress_new %}
+        <div class="app-simple-progress-bar --generic --thin" style="--percentage: 0%;">
+          {{ tag({
+            text: "0%",
+            classes: "nhsuk-tag--blue nhsuk-u-margin-1"
+          }) }}
+        </div>
+      {% endset %}
+
+      {{ table({
+        firstCellIsHeader: true,
+        head: [
+          {
+            text: "Batch"
+          },
+          {
+            text: "Type"
+          },
+          {
+            text: "Participants",
+            format: "numeric"
+          },
+          {
+            text: "Progress"
+          }
+        ],
+        rows: [
+          [
+            {
+              html: batch_new
+            },
+            {
+              text: "Standard (NTDD)"
+            },
+            {
+              text: "1987",
+              format: "numeric"
+            },
+            {
+              html: progress_new
+            }
+          ],
+          [
+            {
+              html: batch
+            },
+            {
+              text: "Standard (NTDD)"
+            },
+            {
+              text: "1987",
+              format: "numeric"
+            },
+            {
+              html: progress
+            }
+          ]
+        ]
+      }) }}
+
+
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h2 class="nhsuk-u-visually-hidden">Completed batches</h2>
+      <p>
+        <a href="#">View completed batches</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}
