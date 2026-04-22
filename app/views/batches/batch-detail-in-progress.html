@@ -31,14 +31,14 @@
 <section>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-6">
-      <span class="nhsuk-caption-m">BDE-NTDD-202601011200</span>
+      <span class="nhsuk-caption-m">BDE-NTDD-20260201</span>
       <div class="app-card-editable">
         <h1 class="nhsuk-heading-l nhsuk-u-margin-bottom-1">
-          Harrogate Practices Feb-March 2026 Round 13
+          Malton Practices Apr-May 26 NTDD RD 13
         </h1>
         <p class="nhsuk-u-padding-right-5 nhsuk-u-margin-bottom-1"><a href="#">Change</a></p>
       </div>
-      <span class="nhsuk-caption-m">Imported 1st January 2026</span>
+      <span class="nhsuk-caption-m">Imported 2 February 2026</span>
     </div>
   </div>
 
@@ -48,7 +48,7 @@
         <div class="nhsuk-card__content nhsuk-u-padding-3">
           <h2 class="nhsuk-card__heading nhsuk-u-font-size-36 nhsuk-u-margin-bottom-1">
             <span role="text">
-              1987
+              715
             </span>
           </h2>
           <a href="#" class="nhsuk-card__link">total participants</a>
@@ -58,8 +58,8 @@
     <div class="nhsuk-grid-column-three-quarters">
       <ul class="nhsuk-list">
         <li>Standard (NTDD) batch</li>
-        <li><a href="#">16 postal outcodes</a></li>
-        <li><a href="#">4 GP practices</a></li>
+        <li><a href="#">8 postal outcodes</a></li>
+        <li><a href="#">2 GP practices</a></li>
       </ul>
     </div>
   </div>
@@ -80,13 +80,13 @@
         <style>
           /* Each row takes up an equal share — adjust flex values to reflect real proportions */
           tbody tr:nth-child(1) {
-            flex: 80;
+            flex: 98;
           }
           tbody tr:nth-child(2) {
-            flex: 15;
+            flex: 1;
           }
           tbody tr:nth-child(3) {
-            flex: 5;
+            flex: 1;
           }
         </style>
 
@@ -104,9 +104,10 @@
               </td>
               <td class="nhsuk-u-padding-2">
                 {{ tag({
-                  text: "1970",
+                  text: "700",
                   classes: "nhsuk-tag--green"
                 }) }}
+                <span class="nhsuk-u-visually-hidden">700</span>
               </td>
             </tr>
             <tr class="hatching--special">
@@ -115,9 +116,10 @@
               </td>
               <td class="nhsuk-u-padding-2">
                 {{ tag({
-                  text: "12",
+                  text: "10",
                   classes: "nhsuk-tag--orange"
                 }) }}
+                <span class="nhsuk-u-visually-hidden">10</span>
               </td>
             </tr>
             <tr class="hatching--high-risk">
@@ -129,23 +131,107 @@
                   text: "5",
                   classes: "nhsuk-tag--red"
                 }) }}
+                <span class="nhsuk-u-visually-hidden">5</span>
               </td>
             </tr>
           </tbody>
         </table>
 
+        <!--
+        <style>
+            table.bar-chart {
+              border-collapse: collapse;
+              width: 100%;
+            }
+
+            table.bar-chart tbody {
+              display: flex;
+              flex-direction: row;
+              align-items: flex-end;
+              gap: 24px;
+              height: 100px;
+            }
+
+            table.bar-chart tbody tr {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: flex-end;
+              flex: 1;
+              height: 100%;
+              position: relative;
+            }
+
+            table.bar-chart tbody tr::before {
+              content: '';
+              display: block;
+              width: 100%;
+              height: calc(var(--value) / var(--max) * 100%);
+            }
+            tbody tr:nth-child(1)::before {
+              background: var(--standard-chart-hatch);
+            }
+            tbody tr:nth-child(2)::before {
+              background: var(--special-chart-hatch);
+            }
+            tbody tr:nth-child(3)::before {
+              background: var(--vhr-chart-hatch-1), var(--vhr-chart-hatch-2);
+            }
+            table.bar-chart tbody td.bar-label {
+            }
+
+            table.bar-chart tbody td.bar-value {
+            }
+          </style>
+          <table class="bar-chart" aria-describedby="chart-key">
+            <thead class="nhsuk-u-visually-hidden">
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="--value: 700; --max: 700;">
+                <td class="bar-value">
+                  {{ tag({
+                    text: "700 standard",
+                    classes: "nhsuk-tag--green"
+                  }) }}
+                </td>
+              </tr>
+              <tr style="--value: 10; --max: 700;">
+                <td class="bar-value">
+                  {{ tag({
+                    text: "10 special requirements",
+                    classes: "nhsuk-tag--orange"
+                  }) }}
+                </td>
+              </tr>
+              <tr style="--value: 5; --max: 700;">
+                <td class="bar-value">
+                  {{ tag({
+                    text: "5 very high risk (VHR)",
+                    classes: "nhsuk-tag--red"
+                  }) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        -->
+
+
         <ul id="chart-key" aria-label="Chart key" class="nhsuk-list nhsuk-u-margin-0 app-chart-bar-segmented-horizontal--legend">
           <li>
             <div class="swatch hatching--standard" aria-hidden="true"></div>
             <div>
-              <a href="#">1970 standard</a><br>
+              <a href="#">700 standard</a><br>
               <span class="key-label nhsuk-body-s">ready to appoint</span>
             </div>
           </li>
           <li>
             <div class="swatch hatching--special" aria-hidden="true"></div>
             <div>
-              <a href="#">12 special requirements</a><br>
+              <a href="#">10 special requirements</a><br>
               <span class="key-label nhsuk-body-s">reasonable adjustments etc.</span>
             </div>
           </li>
@@ -182,13 +268,13 @@
         <div>
           <span class="nhsuk-caption-s">Earliest next test due date:</span>
           <h3 class="nhsuk-heading-xs nhsuk-u-font-weight-normal">
-            28 February 2026
+            6 April 2026
           </h3>
         </div>
         <div>
           <span class="nhsuk-caption-s">Latest:</span>
           <h3 class="nhsuk-heading-xs nhsuk-u-font-weight-normal">
-            31 March 2026
+            27 May 2026
           </h3>
         </div>
       </div>
@@ -202,9 +288,9 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
       <h2 class="nhsuk-heading-l">Batch progress</h2>
-      <div class="app-simple-progress-bar --generic nhsuk-u-padding-2" style="--percentage: 99%;">
+      <div class="app-simple-progress-bar --generic nhsuk-u-padding-2" style="--percentage: 98%;">
         {{ tag({
-          text: "1970 of 1987 dealt with",
+          text: "704 of 715 dealt with",
           classes: "nhsuk-tag--blue"
         }) }}
       </div>
@@ -221,7 +307,7 @@
     <div class="nhsuk-grid-column-two-thirds">
       <div class="app-simple-progress-bar --standard nhsuk-u-padding-2" style="--percentage: 100%;">
         {{ tag({
-          text: "1970 of 1970 appointed",
+          text: "700 of 700 appointed",
           classes: "nhsuk-tag--green"
         }) }}
       </div>
@@ -235,9 +321,9 @@
   </div>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      <div class="app-simple-progress-bar --special nhsuk-u-padding-2" style="--percentage: 0%;">
+      <div class="app-simple-progress-bar --special nhsuk-u-padding-2" style="--percentage: 40%;">
         {{ tag({
-          text: "0 of 12 appointed",
+          text: "4 of 10 appointed",
           classes: "nhsuk-tag--orange"
         }) }}
       </div>

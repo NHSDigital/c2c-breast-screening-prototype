@@ -34,36 +34,32 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
 
-
-      {% set batch %}
-        <a href="/batches/batch-detail-in-progress">
+      {% set batch_new %}
+        <a href="/batches/batch-detail">
           Harrogate Practices Feb-March 2026 Round 13<br>
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">BDE-NTDD-202601011200</span>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">BYO-NTDD-20260101</span>
         </a>
       {% endset %}
-
-      {% set progress %}
-        <div class="app-simple-progress-bar --generic --thin" style="--percentage: 99%;">
+      {% set progress_new %}
+        <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 0%;">
           {{ tag({
-            text: "99%",
-            classes: "nhsuk-tag--blue nhsuk-u-margin-1"
+            text: "0 of 610",
+            classes: "nhsuk-tag--blue"
           }) }}
         </div>
       {% endset %}
 
-
-      {% set batch_new %}
-        <a href="/batches/batch-detail">
-          Harrogate Practices Feb-March 2026 Round 13<br>
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">BDE-NTDD-202601011200</span>
+      {% set batch %}
+        <a href="/batches/batch-detail-in-progress">
+          Malton Practices Apr-May 26 NTDD RD 13<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">BYO-NTDD-20260201</span>
         </a>
       {% endset %}
-
-      {% set progress_new %}
-        <div class="app-simple-progress-bar --generic --thin" style="--percentage: 0%;">
+      {% set progress %}
+        <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 98%;">
           {{ tag({
-            text: "0%",
-            classes: "nhsuk-tag--blue nhsuk-u-margin-1"
+            text: "704 of 715",
+            classes: "nhsuk-tag--blue"
           }) }}
         </div>
       {% endset %}
@@ -94,7 +90,7 @@
               text: "Standard (NTDD)"
             },
             {
-              text: "1987",
+              text: "610",
               format: "numeric"
             },
             {
@@ -109,7 +105,7 @@
               text: "Standard (NTDD)"
             },
             {
-              text: "1987",
+              text: "715",
               format: "numeric"
             },
             {
