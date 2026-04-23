@@ -80,6 +80,22 @@
   }
 }
 
+.app-segmented-cards {
+  .nhsuk-card__content {
+    display: flex;
+    gap: 8px;
+    @include nhsuk-responsive-padding(3);
+  }
+  .swatch {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+}
+
 .app-batch-overview-sparkline {
   background-color: #fff;
 }
