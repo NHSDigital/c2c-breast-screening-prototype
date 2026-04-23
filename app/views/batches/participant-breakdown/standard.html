@@ -1,0 +1,93 @@
+
+{% extends 'layout.html' %}
+
+
+{% set pageName = "West Berks mobile screening unit name" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage batches", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/batches/",
+      text: "Manage batches"
+    },
+    {
+      href: "/batches/batch-detail-in-progress",
+      text: "Malton Practices Apr-May 26 NTDD RD 13"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="nhsuk-heading-l">
+    <span class="nhsuk-caption-l">Malton Practices Apr-May 26 NTDD RD 13</span>
+    Standard participants
+  </h1>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="app-simple-progress-bar --standard nhsuk-u-padding-2 nhsuk-u-margin-bottom-4" style="--percentage: 100%;">
+        {{ tag({
+          text: "700 of 700 appointed",
+          classes: "nhsuk-tag--green"
+        }) }}
+      </div>
+      <p>
+        <a href="#">View all participants</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="app-simple-progress-bar --standard nhsuk-u-padding-2 nhsuk-u-margin-bottom-4" style="--percentage: 50%;">
+        {{ tag({
+          text: "350 of 700 appointed",
+          classes: "nhsuk-tag--green"
+        }) }}
+      </div>
+      <div>
+        {{ button({
+          text: "Appoint participants",
+          href: "#",
+          classes: ""
+        }) }}
+      </div>
+      <p>
+        <a href="#">View all participants</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="app-simple-progress-bar --standard nhsuk-u-padding-2 nhsuk-u-margin-bottom-4" style="--percentage: 0%;">
+        {{ tag({
+          text: "0 of 700 appointed",
+          classes: "nhsuk-tag--green"
+        }) }}
+      </div>
+      <div>
+        {{ button({
+          text: "Appoint participants",
+          href: "#",
+          classes: ""
+        }) }}
+      </div>
+      <p>
+        <a href="#">View all participants</a>
+      </p>
+    </div>
+  </div>
+
+{% endblock %}
