@@ -1,23 +1,6 @@
-<!-- Use this page as the index for your project -->
-
-<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
-
-<!-- Extends the layout from /app/views/layout.html -->
 {% extends 'layout.html' %}
-<!--
-  In /app/views/layout.html you can:
-    - change the header and footer
-    - add custom CSS and JavaScript
--->
 
-<!--
-  Use this to set the page name which will appear at the
-  start of the <title> tag, followed by the service name.
-  This is often not needed on the homepage, where only the
-  service name is needed. You can also reuse this variable
-  within the <h1>, where they are the same.
--->
-{% set pageName = "Camberwell Building" %}
+{% set pageName = "Worthing Hospital, Lyndhurst Road, Worthing, BN11 2DH" %}
 
 {% block customStyles %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css" />
@@ -30,8 +13,6 @@
   {{ primaryNavigation("Manage other stuff", serviceName) }}
 {% endblock %}
 
-<!-- For adding a breadcrumb or back link -->
-<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
 {% block beforeContent %}
 {{ breadcrumb({
   items: [
@@ -44,7 +25,7 @@
       text: "Manage other stuff"
     },
     {
-      href: "/bso-objects/location/location-listing",
+      href: "/bso-objects/locations/",
       text: "Locations"
     }
   ]
@@ -58,7 +39,7 @@
     <div class="nhsuk-grid-column-full app-card-editable">
         <div>
           <h1 class="nhsuk-heading-l">
-            Camberwell building
+            Worthing Hospital
           </h1>
         </div>
         <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
@@ -68,7 +49,7 @@
   {% set secondaryNavItems = [] %}
 
   {% for item in [
-    { href: 'location-location-details', label: 'Location details', selected: 'true' },
+    { href: 'location-details', label: 'Location details', selected: 'true' },
     { href: 'location-travel-and-transport', label: 'Travel and transport' }
   ] %}
     {% set secondaryNavItems = secondaryNavItems | push({
@@ -87,9 +68,10 @@
     <div class="nhsuk-grid-row">
       <div class="nhsuk-grid-column-one-half">
         <p>
-          104 Denmark Hill<br>
-          London<br>
-          SE5 8RX
+          Worthing Hospital<br>
+          Lyndhurst Road<br>
+          Worthing<br>
+          BN11 2DH
         </p>
         {{ summaryList({
           rows: [
@@ -98,7 +80,7 @@
                 text: "Latitude"
               },
               value: {
-                text: "51.4712253052667"
+                text: "50.817976594630125"
               }
             },
             {
@@ -106,7 +88,7 @@
                 text: "Longitude"
               },
               value: {
-                text: "-0.09312137796810355"
+                text: "-0.36331999221959543"
               }
             }
           ]
@@ -224,7 +206,7 @@
     const apiKey = 'lWF9hAvJ3ALTasfGgV8MqmfAWJ2L9fhU';
 
     const landmarks = [
-      { lat: 51.4712253052667, lng: -0.09312137796810355, type: 'location', name: 'Camberwell Building' }
+      { lat: 50.817976594630125, lng: -0.36331999221959543, type: 'location', name: 'Worthing Hospital' }
     ];
 
     landmarks.forEach(({ lat, lng, type, name }) => {
