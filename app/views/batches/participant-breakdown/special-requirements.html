@@ -1,0 +1,103 @@
+
+{% extends 'layout.html' %}
+
+
+{% set pageName = "West Berks mobile screening unit name" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage batches", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/batches/",
+      text: "Manage batches"
+    },
+    {
+      href: "/batches/batch-detail-in-progress",
+      text: "Malton Practices Apr-May 26 NTDD RD 13"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="nhsuk-heading-l">
+    <span class="nhsuk-caption-l">Malton Practices Apr-May 26 NTDD RD 13</span>
+    Participants with special requirements
+  </h1>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="app-simple-progress-bar --special nhsuk-u-padding-2 nhsuk-u-margin-bottom-4" style="--percentage: 0%;">
+        {{ tag({
+          text: "0 of 10 appointed",
+          classes: "nhsuk-tag--orange"
+        }) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      {% set select %}
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="selectUser" name="selectUser" type="checkbox" value="userID">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="selectUser">
+            <span class="nhsuk-u-visually-hidden">Select name</span>
+          </label>
+        </div>
+      {% endset %}
+
+      {{ table({
+        firstCellIsHeader: false,
+        classes: "nhsuk-u-font-size-14",
+        head: [
+          {
+            text: "Name"
+          },
+          {
+            text: "Date of birth"
+          },
+          {
+            text: "NHS number"
+          },
+          {
+            text: "Next test due date"
+          },
+          {
+            text: "Requirement"
+          }
+        ],
+        rows: [
+          [
+            {
+              html: '<a href="#">Olga Tokarczuk</a>'
+            },
+            {
+              html: "1 January 1967<br>(00 years old)"
+            },
+            {
+              text: "943 579 7881"
+            },
+            {
+              text: "1 May 2026"
+            },
+            {
+              text: "Sanitise these"
+            }
+          ]
+        ]
+      }) }}
+    </div>
+  </div>
+
+{% endblock %}
