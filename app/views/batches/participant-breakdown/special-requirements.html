@@ -48,6 +48,15 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
 
+      {% set select %}
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="selectUser" name="selectUser" type="checkbox" value="userID">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="selectUser">
+            <span class="nhsuk-u-visually-hidden">Select name</span>
+          </label>
+        </div>
+      {% endset %}
+
       {{ table({
         firstCellIsHeader: false,
         classes: "nhsuk-u-font-size-14",
@@ -62,13 +71,10 @@
             text: "NHS number"
           },
           {
-            text: "Next test due date (NTDD)"
+            text: "Next test due date"
           },
           {
             text: "Requirement"
-          },
-          {
-            text: "Select"
           }
         ],
         rows: [
@@ -87,21 +93,10 @@
             },
             {
               text: "Sanitise these"
-            },
-            {
-              text: "checkbox"
             }
           ]
         ]
       }) }}
-    </div>
-  </div>
-
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      <p>
-        <a href="#">Appoint selected participants</a>
-      </p>
     </div>
   </div>
 
