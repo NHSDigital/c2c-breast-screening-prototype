@@ -4,7 +4,7 @@
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Manage batches", serviceName) }}
+  {{ primaryNavigation("Manage batches", serviceName, bsoName) }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -22,7 +22,7 @@
 
 {% block content %}
   <div class="app-card-editable">
-    <h1 class="nhsuk-heading-l">Batches in progress</h1>
+    <h1 class="nhsuk-heading-l">Manage batches</h1>
 
     {{ button({
       text: "Import a new batch",
@@ -34,31 +34,76 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
 
-      {% set batch_new %}
+      {% set batch_1 %}
         <a href="/batches/batch-detail">
-          Harrogate Practices Feb-March 2026 Round 13<br>
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">BYO-NTDD-20260101</span>
+          Crawley - Pound Hill<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">HWO-standard-20251209</span>
         </a>
       {% endset %}
-      {% set progress_new %}
+      {% set batch_1_progress %}
         <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 0%;">
           {{ tag({
-            text: "0 of 610",
+            text: "0 of 2172",
             classes: "nhsuk-tag--blue"
           }) }}
         </div>
       {% endset %}
 
-      {% set batch %}
+      {% set batch_2 %}
         <a href="/batches/batch-detail-in-progress">
-          Malton Practices Apr-May 26 NTDD RD 13<br>
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">BYO-NTDD-20260201</span>
+          Chichester - Parklands<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">HWO-standard-20251212</span>
         </a>
       {% endset %}
-      {% set progress %}
-        <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 98%;">
+      {% set batch_2_progress %}
+        <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 97%;">
           {{ tag({
-            text: "704 of 715",
+            text: "1306 of 1352",
+            classes: "nhsuk-tag--blue"
+          }) }}
+        </div>
+      {% endset %}
+
+      {% set failsafe %}
+        <a href="#">
+          February failsafe<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">HWO-failsafe-20260115</span>
+        </a>
+      {% endset %}
+      {% set failsafe_progress %}
+        <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 0%;">
+          {{ tag({
+            text: "0 of 308",
+            classes: "nhsuk-tag--blue"
+          }) }}
+        </div>
+      {% endset %}
+
+      {% set auto %}
+        <a href="#">
+          Aged over 71 - slippage 03-Feb-2026 11:00<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">HWO-auto-slippage-2020203-1100</span>
+        </a>
+      {% endset %}
+      {% set auto_progress %}
+        <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 0%;">
+          {{ tag({
+            text: "0 of 2",
+            classes: "nhsuk-tag--blue"
+          }) }}
+        </div>
+      {% endset %}
+
+      {% set auto_2 %}
+        <a href="#">
+          Aged 53 - never invited 03-Feb-2026 11:00<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">HWO-auto-never-invited-2020203-1100</span>
+        </a>
+      {% endset %}
+      {% set auto_2_progress %}
+        <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 0%;">
+          {{ tag({
+            text: "0 of 4",
             classes: "nhsuk-tag--blue"
           }) }}
         </div>
@@ -84,32 +129,77 @@
         rows: [
           [
             {
-              html: batch_new
+              html: failsafe
             },
             {
-              text: "Standard (NTDD)"
+              text: "Failsafe"
             },
             {
-              text: "610",
+              text: "308",
               format: "numeric"
             },
             {
-              html: progress_new
+              html: failsafe_progress
             }
           ],
           [
             {
-              html: batch
+              html: auto
             },
             {
-              text: "Standard (NTDD)"
+              text: "Auto"
             },
             {
-              text: "715",
+              text: "2",
               format: "numeric"
             },
             {
-              html: progress
+              html: auto_progress
+            }
+          ],
+          [
+            {
+              html: auto_2
+            },
+            {
+              text: "Auto"
+            },
+            {
+              text: "4",
+              format: "numeric"
+            },
+            {
+              html: auto_2_progress
+            }
+          ],
+          [
+            {
+              html: batch_1
+            },
+            {
+              text: "Standard"
+            },
+            {
+              text: "2172",
+              format: "numeric"
+            },
+            {
+              html: batch_1_progress
+            }
+          ],
+          [
+            {
+              html: batch_2
+            },
+            {
+              text: "Standard"
+            },
+            {
+              text: "1352",
+              format: "numeric"
+            },
+            {
+              html: batch_2_progress
             }
           ]
         ]
