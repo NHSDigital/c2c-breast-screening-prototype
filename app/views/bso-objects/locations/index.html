@@ -1,31 +1,12 @@
-<!-- Use this page as the index for your project -->
-
-<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
-
-<!-- Extends the layout from /app/views/layout.html -->
 {% extends 'layout.html' %}
-<!--
-  In /app/views/layout.html you can:
-    - change the header and footer
-    - add custom CSS and JavaScript
--->
 
-<!--
-  Use this to set the page name which will appear at the
-  start of the <title> tag, followed by the service name.
-  This is often not needed on the homepage, where only the
-  service name is needed. You can also reuse this variable
-  within the <h1>, where they are the same.
--->
-{% set pageName = "Units" %}
+{% set pageName = "Locations" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
   {{ primaryNavigation("Manage other stuff", serviceName) }}
 {% endblock %}
 
-<!-- For adding a breadcrumb or back link -->
-<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
 {% block beforeContent %}
 {{ breadcrumb({
   items: [
@@ -41,12 +22,15 @@
 }) }}
 {% endblock %}
 
-<!-- For adding page content -->
-<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
 {% block content %}
-  <h1 class="nhsuk-heading-xl">
-    Locations
-  </h1>
+  <div class="app-card-editable">
+    <h1 class="nhsuk-heading-l">Locations</h1>
+    {{ button({
+      text: "Add a new location",
+      href: "#",
+      classes: "nhsuk-button--secondary"
+    }) }}
+  </div>
 
   {{ table({
     firstCellIsHeader: true,
@@ -57,9 +41,6 @@
       },
       {
         text: "Address"
-      },
-      {
-        text: "Unit here now"
       }
     ],
     rows: [
@@ -69,9 +50,6 @@
         },
         {
           html: "TBC"
-        },
-        {
-          html: "n"
         }
       ],
       [
@@ -80,9 +58,6 @@
         },
         {
           html: "Tesco Superstore, Hammonds Farm, Jane Murray Way, Burgess Hill, RH15 9QT"
-        },
-        {
-          html: "n"
         }
       ],
       [
@@ -91,9 +66,6 @@
         },
         {
           html: "St Richard’s Hospital, Spitalfield Lane, Chichester, PO19 6SE"
-        },
-        {
-          html: "y"
         }
       ],
       [
@@ -102,9 +74,6 @@
         },
         {
           html: "K2 Leisure Centre, Pease Pottage Hill, Crawley, RH11 9BQ"
-        },
-        {
-          html: "n"
         }
       ],
       [
@@ -113,9 +82,6 @@
         },
         {
           html: "Princess Royal Hospital, Lewes Road, Haywards Heath, RH16 4EX"
-        },
-        {
-          html: "y"
         }
       ],
       [
@@ -124,9 +90,6 @@
         },
         {
           html: "Horsham Hospital, Hurst Road, Horsham, RH12 2DR"
-        },
-        {
-          html: "y"
         }
       ],
       [
@@ -135,9 +98,6 @@
         },
         {
           html: "Tesco Superstore, Broad Piece, Wick, Littlehampton, BN17 5RA"
-        },
-        {
-          html: "n"
         }
       ],
       [
@@ -146,9 +106,6 @@
         },
         {
           html: "Southlands Hospital, Upper Shoreham Road, Shoreham-by-Sea, BN43 6TQ"
-        },
-        {
-          html: "y"
         }
       ],
       [
@@ -157,20 +114,14 @@
         },
         {
           html: "Storrington Library, Ryecroft Lane, Storrington, Pulborough, RH20 4PA"
-        },
-        {
-          html: "n"
         }
       ],
       [
         {
-          html: '<a href="/bso-objects/locations/location-details">Worthing</a>'
+          html: '<a href="/bso-objects/locations/location-details">Worthing hospital</a>'
         },
         {
           html: "Worthing Hospital, Lyndhurst Road, Worthing, BN11 2DH"
-        },
-        {
-          html: "y"
         }
       ]
     ]

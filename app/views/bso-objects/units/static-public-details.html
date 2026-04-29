@@ -1,31 +1,12 @@
-<!-- Use this page as the index for your project -->
-
-<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
-
-<!-- Extends the layout from /app/views/layout.html -->
 {% extends 'layout.html' %}
-<!--
-  In /app/views/layout.html you can:
-    - change the header and footer
-    - add custom CSS and JavaScript
--->
 
-<!--
-  Use this to set the page name which will appear at the
-  start of the <title> tag, followed by the service name.
-  This is often not needed on the homepage, where only the
-  service name is needed. You can also reuse this variable
-  within the <h1>, where they are the same.
--->
-{% set pageName = "West Berks mobile screening unit name" %}
+{% set pageName = "West Sussex Breast Care Centre" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
   {{ primaryNavigation("Manage other stuff", serviceName) }}
 {% endblock %}
 
-<!-- For adding a breadcrumb or back link -->
-<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
 {% block beforeContent %}
 {{ breadcrumb({
   items: [
@@ -38,8 +19,8 @@
       text: "Manage other stuff"
     },
     {
-      href: "/bso-objects/unit/unit-listing",
-      text: "Units"
+      href: "/bso-objects/units",
+      text: "Breast screening units"
     }
   ]
 }) }}
@@ -51,9 +32,9 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full app-card-editable">
         <div>
-          <span class="nhsuk-caption-m">Mobile unit</span>
+          <span class="nhsuk-caption-m">“Home base” - Static unit HWO-static-1</span>
           <h1 class="nhsuk-heading-l">
-            West Berks mobile screening unit
+            West Sussex Breast Care Centre
           </h1>
         </div>
         <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
@@ -63,12 +44,12 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full app-card-editable">
       <div>
-        <span class="nhsuk-caption-s">Current location:</span>
+        <span class="nhsuk-caption-m">Location:</span>
         <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
-          Camberwell building
+          Worthing hospital
         </h2>
-        <p class="nhsuk-body-s">
-          104 Denmark Hill, London, SE5 8RX
+        <p class="nhsuk-body-m">
+          Lyndhurst Road, Worthing, BN11 2DH
         </p>
       </div>
       <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
@@ -78,8 +59,8 @@
   {% set secondaryNavItems = [] %}
 
   {% for item in [
-    { href: 'unit-public-details', label: 'Public details', selected: 'true' },
-    { href: 'unit-internal-details', label: 'Internal details' }
+    { href: 'static-public-details', label: 'Public details', selected: 'true' },
+    { href: 'static-internal-details', label: 'Internal details' }
   ] %}
     {% set secondaryNavItems = secondaryNavItems | push({
       text: item.label | safe,

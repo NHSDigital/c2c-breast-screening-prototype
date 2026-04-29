@@ -1,0 +1,109 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "West Berks mobile screening unit name" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage other stuff", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/bso-objects/",
+      text: "Manage other stuff"
+    },
+    {
+      href: "/bso-objects/units",
+      text: "Breast screening units"
+    }
+  ]
+}) }}
+{% endblock %}
+
+<!-- For adding page content -->
+<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full app-card-editable">
+        <div>
+          <span class="nhsuk-caption-m">“Home base” - Static unit HWO-static-1</span>
+          <h1 class="nhsuk-heading-l">
+            West Sussex Breast Care Centre
+          </h1>
+        </div>
+        <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full app-card-editable">
+      <div>
+        <span class="nhsuk-caption-m">Location:</span>
+        <h2 class="nhsuk-heading-s nhsuk-u-margin-bottom-1">
+          Worthing hospital
+        </h2>
+        <p class="nhsuk-body-m">
+          Lyndhurst Road, Worthing, BN11 2DH
+        </p>
+      </div>
+      <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+    </div>
+  </div>
+
+  {% set secondaryNavItems = [] %}
+
+  {% for item in [
+    { href: 'static-public-details', label: 'Public details' },
+    { href: 'static-internal-details', label: 'Internal details', selected: 'true' }
+  ] %}
+    {% set secondaryNavItems = secondaryNavItems | push({
+      text: item.label | safe,
+      href: item.href | trim,
+      current: true if item.selected == 'true'
+    }) %}
+  {% endfor %}
+
+  {{ appSecondaryNavigation({
+    visuallyHiddenTitle: "Secondary menu",
+    items: secondaryNavItems
+  }) }}
+
+  {% set internalHtml %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-full">
+        {{ summaryList({
+          rows: [
+            {
+              key: {
+                text: "Modalities available"
+              },
+              value: {
+                text: "2"
+              },
+              actions: {
+                items: [
+                  {
+                    href: "#",
+                    text: "Change",
+                    visuallyHiddenText: "number of modalities"
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+
+      </div>
+    </div>
+  {% endset %}
+  {{ card({
+    headingHtml: ' ',
+    descriptionHtml: internalHtml
+  }) }}
+{% endblock %}
