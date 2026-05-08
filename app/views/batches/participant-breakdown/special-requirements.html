@@ -2,7 +2,7 @@
 {% extends 'layout.html' %}
 
 
-{% set pageName = "West Berks mobile screening unit name" %}
+{% set pageName = "" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -36,26 +36,21 @@
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      <div class="app-simple-progress-bar --special nhsuk-u-padding-2 nhsuk-u-margin-bottom-4" style="--percentage: 0%;">
+      <div class="app-simple-progress-bar --special nhsuk-u-padding-2 nhsuk-u-margin-bottom-4" style="--percentage: 50%;">
         {{ tag({
-          text: "0 of 10 appointed",
+          text: "6 of 12 appointed",
           classes: "nhsuk-tag--orange"
         }) }}
       </div>
     </div>
   </div>
 
+  <hr class="nhsuk-u-margin-0 nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-4">
+
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
 
-      {% set select %}
-        <div class="nhsuk-checkboxes__item">
-          <input class="nhsuk-checkboxes__input" id="selectUser" name="selectUser" type="checkbox" value="userID">
-          <label class="nhsuk-label nhsuk-checkboxes__label" for="selectUser">
-            <span class="nhsuk-u-visually-hidden">Select name</span>
-          </label>
-        </div>
-      {% endset %}
+      <h2 class="nhsuk-heading-m">Participants needing appointments</h2>
 
       {{ table({
         firstCellIsHeader: false,
@@ -110,33 +105,19 @@
             { html: '14 March 1959<br><span class="nhsuk-u-secondary-text-colour">(67 years old)</span>' },
             { text: '2 May 2026' },
             { text: 'Vision, hearing' }
-          ],
-          [
-            { html: '<a href="#">Maureen Anand</a><br><span class="nhsuk-u-secondary-text-colour" style="text-wrap: nowrap;">NHS: 943 579 7881</span>' },
-            { html: '16 December 1968<br><span class="nhsuk-u-secondary-text-colour">(57 years old)</span>' },
-            { text: '27 May 2026' },
-            { text: 'Implanted medical devices' }
-          ],
-          [
-            { html: '<a href="#">Olga Tokarczuk</a><br><span class="nhsuk-u-secondary-text-colour" style="text-wrap: nowrap;">NHS: 943 579 7881</span>' },
-            { html: '1 January 1967<br><span class="nhsuk-u-secondary-text-colour">(00 years old)</span>' },
-            { text: '1 May 2026' },
-            { text: 'Physical restriction' }
-          ],
-          [
-            { html: '<a href="#">Patricia Ngozi</a><br><span class="nhsuk-u-secondary-text-colour" style="text-wrap: nowrap;">NHS: 943 579 7881</span>' },
-            { html: '9 July 1973<br><span class="nhsuk-u-secondary-text-colour">(52 years old)</span>' },
-            { text: '19 May 2026' },
-            { text: 'Social, emotional and mental health' }
-          ],
-          [
-            { html: '<a href="#">Susan Patel</a><br><span class="nhsuk-u-secondary-text-colour" style="text-wrap: nowrap;">NHS: 943 579 7881</span>' },
-            { html: '28 August 1963<br><span class="nhsuk-u-secondary-text-colour">(62 years old)</span>' },
-            { text: '2 May 2026' },
-            { text: 'Language' }
           ]
         ]
       }) }}
+
+
+      <h2 class="nhsuk-heading-m">Participants with appointments</h2>
+
+      {% call details({
+        summaryText: "Show participants with appointments"
+      }) %}
+        <p>What is useful here?</p>
+      {% endcall %}
+
     </div>
   </div>
 
