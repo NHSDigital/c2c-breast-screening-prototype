@@ -242,11 +242,15 @@
 
 <section>
   <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-two-thirds">
+    <div class="nhsuk-grid-column-full">
       {% call details({
         summaryHtml: '<h2 class="nhsuk-body-m">Clinics associated with this batch</h2>'
       }) %}
-        <p>No clinics associated with this batch</p>
+
+
+
+        {% include "_includes/clinics/clinic-listing-table.html"%}
+
       {% endcall %}
     </div>
   </div>
