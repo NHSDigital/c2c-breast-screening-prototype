@@ -37,13 +37,13 @@
       {% set batch_1 %}
         <a href="/batches/batch-detail">
           Crawley - Pound Hill<br>
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">HWO-standard-20251209</span>
         </a>
+        <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-standard-20251209</span>
       {% endset %}
       {% set batch_1_progress %}
         <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 0%;">
           {{ tag({
-            text: "0 of 2172",
+            text: "0 of 2172 appointed",
             classes: "nhsuk-tag--blue"
           }) }}
         </div>
@@ -52,13 +52,13 @@
       {% set batch_2 %}
         <a href="/batches/batch-detail-in-progress">
           Chichester - Parklands<br>
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">HWO-standard-20251212</span>
         </a>
+        <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-standard-20251212</span>
       {% endset %}
       {% set batch_2_progress %}
         <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 97%;">
           {{ tag({
-            text: "1306 of 1352",
+            text: "1306 of 1352 appointed",
             classes: "nhsuk-tag--blue"
           }) }}
         </div>
@@ -67,13 +67,13 @@
       {% set failsafe %}
         <a href="#">
           February failsafe<br>
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">HWO-failsafe-20260115</span>
         </a>
+        <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-failsafe-20260115</span>
       {% endset %}
       {% set failsafe_progress %}
         <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 0%;">
           {{ tag({
-            text: "0 of 308",
+            text: "0 of 308 appointed",
             classes: "nhsuk-tag--blue"
           }) }}
         </div>
@@ -82,13 +82,13 @@
       {% set auto %}
         <a href="#">
           Aged over 71 - slippage 03-Feb-2026 11:00<br>
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">HWO-auto-slippage-2020203-1100</span>
         </a>
+        <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-auto-slippage-2020203-1100</span>
       {% endset %}
       {% set auto_progress %}
         <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 0%;">
           {{ tag({
-            text: "0 of 2",
+            text: "0 of 2 appointed",
             classes: "nhsuk-tag--blue"
           }) }}
         </div>
@@ -97,30 +97,26 @@
       {% set auto_2 %}
         <a href="#">
           Aged 53 - never invited 03-Feb-2026 11:00<br>
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal">HWO-auto-never-invited-2020203-1100</span>
         </a>
+        <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-auto-never-invited-2020203-1100</span>
       {% endset %}
       {% set auto_2_progress %}
         <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1" style="--percentage: 0%;">
           {{ tag({
-            text: "0 of 4",
+            text: "0 of 4 appointed",
             classes: "nhsuk-tag--blue"
           }) }}
         </div>
       {% endset %}
 
       {{ table({
-        firstCellIsHeader: true,
+        firstCellIsHeader: false,
         head: [
           {
             text: "Batch"
           },
           {
             text: "Type"
-          },
-          {
-            text: "Participants",
-            format: "numeric"
           },
           {
             text: "Progress"
@@ -135,10 +131,6 @@
               text: "Failsafe"
             },
             {
-              text: "308",
-              format: "numeric"
-            },
-            {
               html: failsafe_progress
             }
           ],
@@ -148,10 +140,6 @@
             },
             {
               text: "Auto"
-            },
-            {
-              text: "2",
-              format: "numeric"
             },
             {
               html: auto_progress
@@ -165,10 +153,6 @@
               text: "Auto"
             },
             {
-              text: "4",
-              format: "numeric"
-            },
-            {
               html: auto_2_progress
             }
           ],
@@ -180,10 +164,6 @@
               text: "Standard"
             },
             {
-              text: "2172",
-              format: "numeric"
-            },
-            {
               html: batch_1_progress
             }
           ],
@@ -193,10 +173,6 @@
             },
             {
               text: "Standard"
-            },
-            {
-              text: "1352",
-              format: "numeric"
             },
             {
               html: batch_2_progress
