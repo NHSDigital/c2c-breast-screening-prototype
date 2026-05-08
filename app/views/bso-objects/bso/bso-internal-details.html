@@ -17,7 +17,7 @@
   service name is needed. You can also reuse this variable
   within the <h1>, where they are the same.
 -->
-{% set pageName = "West Berkshire Screening Service" %}
+{% set pageName = "West Sussex Breast Screening Service" %}
 
 {% block customStyles %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css" />
@@ -50,14 +50,16 @@
 <!-- For adding page content -->
 <!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
 {% block content %}
-  <div class="app-card-editable">
-    <div>
-      <span class="nhsuk-caption-m">BSO ID: WBBSS-p33ps</span>
-      <h1 class="nhsuk-heading-l">
-        West Berkshire Screening Service
-      </h1>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full"><!-- .app-card-editable -->
+        <div>
+          <span class="nhsuk-caption-m">BSO ID: HWO-p33ps</span>
+          <h1 class="nhsuk-heading-l">
+            {{ pageName }}
+          </h1>
+        </div>
+        <!--<p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>-->
     </div>
-    <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
   </div>
 
   {% set secondaryNavItems = [] %}
@@ -125,25 +127,25 @@
         heading: "1",
         headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
       }) %}
-        <a href="#/applicants" class="nhsuk-card__link">Static unit</a>
+        <a href="#" class="nhsuk-card__link">Static unit</a>
       {% endcall %}
     </li>
     <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
       {% call card({
         clickable: true,
-        heading: "2",
+        heading: "4",
         headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
       }) %}
-        <a href="#/applicants" class="nhsuk-card__link">Mobile units</a>
+        <a href="#" class="nhsuk-card__link">Mobile units</a>
       {% endcall %}
     </li>
     <li class="nhsuk-grid-column-one-third nhsuk-card-group__item">
       {% call card({
         clickable: true,
-        heading: "13",
+        heading: "11",
         headingClasses: "nhsuk-u-font-size-48 nhsuk-u-margin-bottom-1"
       }) %}
-        <a href="#/jobs" class="nhsuk-card__link">Locations</a>
+        <a href="/bso-objects/locations/" class="nhsuk-card__link">Locations</a>
       {% endcall %}
     </li>
   </ul>
@@ -212,7 +214,7 @@
     });
   </script>
 
-  <script src="geo-bso-west-berks.js"></script>
+  <script src="geo-bso-west-sussex.js"></script>
 
   <script>
 

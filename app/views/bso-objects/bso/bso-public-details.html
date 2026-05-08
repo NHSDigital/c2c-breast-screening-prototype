@@ -17,7 +17,7 @@
   service name is needed. You can also reuse this variable
   within the <h1>, where they are the same.
 -->
-{% set pageName = "West Berkshire Screening Service" %}
+{% set pageName = "West Sussex Breast Screening Service" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -45,14 +45,14 @@
 <!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
 {% block content %}
   <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full app-card-editable">
+    <div class="nhsuk-grid-column-full"><!-- .app-card-editable -->
         <div>
-          <span class="nhsuk-caption-m">BSO ID: WBBSS-p33ps</span>
+          <span class="nhsuk-caption-m">BSO ID: HWO-p33ps</span>
           <h1 class="nhsuk-heading-l">
-            West Berkshire Screening Service
+            {{ pageName }}
           </h1>
         </div>
-        <p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>
+        <!--<p class="nhsuk-u-padding-right-5"><a href="#">Change</a></p>-->
     </div>
   </div>
 
@@ -96,11 +96,11 @@
               text: "Address"
             },
             value: {
-              html: "Royal Berkshire Hospital<br>
-                21a Craven Road<br>
-                Reading<br>
-                Berkshire<br>
-                RG1 5LE"
+              html: "West Sussex Breast Care Centre<br>
+                Worthing Hospital<br>
+                Lyndhurst Road<br>
+                Worthing<br>
+                BN11 2DH"
             },
             actions: {
               items: [
@@ -117,7 +117,7 @@
               text: "Telephone"
             },
             value: {
-              text: "0118 322 8282"
+              text: "01903 239757"
             },
             actions: {
               items: [
@@ -134,7 +134,7 @@
               text: "Web address"
             },
             value: {
-              html: "https://www.royalberkshire.nhs.uk/services-and-departments/radiology/breast-screening",
+              html: "https://www.uhsussex.nhs.uk/services/breast-care/breast-care-in-west-sussex/screening/",
               classes: "nhsuk-u-text-break-word"
             },
             actions: {
@@ -166,7 +166,7 @@
               text: "Monday to Friday"
             },
             value: {
-              text: "8.30am to 4.30pm"
+              html: "9am to 12pm<br>1pm to 4.30pm"
             }
           },
           {
@@ -193,8 +193,8 @@
 
     {% set facilitiesHtml %}
       <ul class="nhsuk-list nhsuk-list--bullet">
-        <li>Braille translator service</li>
-        <li>Text relay</li>
+        <li>Professional interpreting services available on request</li>
+        <li>Signlive for British Sign Language</li>
       </ul>
     {% endset %}
     {% call card({

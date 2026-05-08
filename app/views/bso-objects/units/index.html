@@ -1,0 +1,136 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Units" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage other stuff", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/bso-objects/",
+      text: "Manage other stuff"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="app-card-editable">
+    <h1 class="nhsuk-heading-l">Breast screening units</h1>
+
+    {{ button({
+      text: "Add a new unit",
+      href: "#",
+      classes: "nhsuk-button--secondary"
+    }) }}
+  </div>
+
+  {{ table({
+    firstCellIsHeader: false,
+    classes: "",
+    head: [
+      {
+        text: "Unit nickname"
+      },
+      {
+        text: "Public name"
+      },
+      {
+        text: "ID"
+      },
+      {
+        text: "Type"
+      }
+    ],
+    rows: [
+      [
+        {
+          html: '
+            <a href="/bso-objects/units/static-public-details">Home base</a>
+          '
+        },
+        {
+          text: 'West Sussex Breast Care Centre'
+        },
+        {
+          text: "HWO-static-1"
+        },
+        {
+          text: "Static"
+        }
+      ],
+      [
+        {
+          html: '
+            <a href="#">Alpha Van</a>
+          '
+        },
+        {
+          text: 'West Sussex Mobile Screening Unit'
+        },
+        {
+          text: "HWO-mobile-1"
+        },
+        {
+          text: "Mobile"
+        }
+      ],
+      [
+        {
+          html: '
+            <a href="#">Beta Van</a>
+          '
+        },
+        {
+          text: 'West Sussex Mobile Screening Unit'
+        },
+        {
+          text: "HWO-mobile-2"
+        },
+        {
+          text: "Mobile"
+        }
+      ],
+      [
+        {
+          html: '
+            <a href="#">Gamma Van</a>
+          '
+        },
+        {
+          text: 'West Sussex Mobile Screening Unit'
+        },
+        {
+          text: "HWO-mobile-3"
+        },
+        {
+          text: "Mobile"
+        }
+      ],
+      [
+        {
+          html: '
+            <a href="#">Delta Van</a>
+          '
+        },
+        {
+          text: 'West Sussex Mobile Screening Unit'
+        },
+        {
+          text: "HWO-mobile-4"
+        },
+        {
+          text: "Mobile"
+        }
+      ]
+    ]
+  }) }}
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Locations" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage other stuff", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/bso-objects/",
+      text: "Manage other stuff"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="app-card-editable">
+    <h1 class="nhsuk-heading-l">Locations</h1>
+    {{ button({
+      text: "Add a new location",
+      href: "#",
+      classes: "nhsuk-button--secondary"
+    }) }}
+  </div>
+
+  {{ table({
+    firstCellIsHeader: true,
+    classes: "",
+    head: [
+      {
+        text: "Name"
+      },
+      {
+        text: "Address"
+      }
+    ],
+    rows: [
+      [
+        {
+          html: '<a href="#">Bognor Regis</a>'
+        },
+        {
+          html: "TBC"
+        }
+      ],
+      [
+        {
+          html: '<a href="#">Burgess Hill</a>'
+        },
+        {
+          html: "Tesco Superstore, Hammonds Farm, Jane Murray Way, Burgess Hill, RH15 9QT"
+        }
+      ],
+      [
+        {
+          html: '<a href="#">Chichester</a>'
+        },
+        {
+          html: "St Richard’s Hospital, Spitalfield Lane, Chichester, PO19 6SE"
+        }
+      ],
+      [
+        {
+          html: '<a href="#">Crawley</a>'
+        },
+        {
+          html: "K2 Leisure Centre, Pease Pottage Hill, Crawley, RH11 9BQ"
+        }
+      ],
+      [
+        {
+          html: '<a href="#">Haywards Heath</a>'
+        },
+        {
+          html: "Princess Royal Hospital, Lewes Road, Haywards Heath, RH16 4EX"
+        }
+      ],
+      [
+        {
+          html: '<a href="#">Horsham</a>'
+        },
+        {
+          html: "Horsham Hospital, Hurst Road, Horsham, RH12 2DR"
+        }
+      ],
+      [
+        {
+          html: '<a href="#">Littlehampton</a>'
+        },
+        {
+          html: "Tesco Superstore, Broad Piece, Wick, Littlehampton, BN17 5RA"
+        }
+      ],
+      [
+        {
+          html: '<a href="#">Shoreham-by-Sea</a>'
+        },
+        {
+          html: "Southlands Hospital, Upper Shoreham Road, Shoreham-by-Sea, BN43 6TQ"
+        }
+      ],
+      [
+        {
+          html: '<a href="#">Storrington</a>'
+        },
+        {
+          html: "Storrington Library, Ryecroft Lane, Storrington, Pulborough, RH20 4PA"
+        }
+      ],
+      [
+        {
+          html: '<a href="/bso-objects/locations/location-details">Worthing hospital</a>'
+        },
+        {
+          html: "Worthing Hospital, Lyndhurst Road, Worthing, BN11 2DH"
+        }
+      ]
+    ]
+  }) }}
+
+{% endblock %}

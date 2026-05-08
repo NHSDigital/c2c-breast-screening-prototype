@@ -31,137 +31,96 @@
 <section>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-6">
-      <span class="nhsuk-caption-m">BDE-NTDD-20260101</span>
+      <span class="nhsuk-caption-m">HWO-standard-20251209</span>
       <div class="app-card-editable">
         <h1 class="nhsuk-heading-l nhsuk-u-margin-bottom-1">
-          Harrogate Practices Feb-March 2026 Round 13
+          Crawley - Pound Hill
         </h1>
-        <p class="nhsuk-u-padding-right-5 nhsuk-u-margin-bottom-1"><a href="#">Change</a></p>
+        <p class="nhsuk-u-padding-right-5 nhsuk-u-margin-bottom-1"><a href="#">Edit batch name</a></p>
       </div>
-      <span class="nhsuk-caption-m">Imported 1 January 2026</span>
     </div>
   </div>
 
   <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-grid-column-one-third">
       <div class="nhsuk-card nhsuk-card--clickable">
-        <div class="nhsuk-card__content nhsuk-u-padding-3">
+        <div class="nhsuk-card__content">
           <h2 class="nhsuk-card__heading nhsuk-u-font-size-36 nhsuk-u-margin-bottom-1">
             <span role="text">
-              610
+              2172
             </span>
           </h2>
-          <a href="#" class="nhsuk-card__link">total participants</a>
+          <a href="#" class="nhsuk-card__link nhsuk-u-font-size-19">total participants</a>
         </div>
       </div>
     </div>
-    <div class="nhsuk-grid-column-three-quarters">
-      <ul class="nhsuk-list">
-        <li>Standard (NTDD) batch</li>
-        <li><a href="#">16 postal outcodes</a></li>
-        <li><a href="#">4 GP practices</a></li>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h2 class="nhsuk-heading-m">Participant breakdown</h2>
+      <ul class="nhsuk-grid-row nhsuk-card-group app-segmented-cards">
+        <li class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">
+          {% call card({
+            clickable: true
+          }) %}
+            <div class="swatch hatching--standard" aria-hidden="true"></div>
+            <div>
+              <a href="#" class="nhsuk-card__link">2150 standard</a>
+            </div>
+          {% endcall %}
+        </li>
+        <li class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">
+          {% call card({
+            clickable: true
+          }) %}
+            <div class="swatch hatching--special" aria-hidden="true"></div>
+            <div>
+              <a href="#" class="nhsuk-card__link">12 special requirements</a>
+            </div>
+          {% endcall %}
+        </li>
+        <li class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">
+          {% call card({
+            clickable: true
+          }) %}
+            <div class="swatch hatching--ceased" aria-hidden="true"></div>
+            <div>
+              <a href="#" class="nhsuk-card__link">5 ceased</a>
+            </div>
+          {% endcall %}
+        </li>
+        <li class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">
+          {% call card({
+            clickable: true
+          }) %}
+            <div class="swatch hatching--high-risk" aria-hidden="true"></div>
+            <div>
+              <a href="#" class="nhsuk-card__link">5 very high risk (VHR)</a>
+            </div>
+          {% endcall %}
+        </li>
       </ul>
     </div>
   </div>
 
-</section>
-
-<hr class="nhsuk-u-margin-0 nhsuk-u-margin-bottom-4">
-
-<section>
   <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-
-      <h2 class="nhsuk-heading-l">Participant breakdown</h2>
-
-      <figure class="app-chart-bar-segmented-horizontal">
-        <figcaption class="nhsuk-u-visually-hidden">Participant breakdown by type</figcaption>
-
-        <style>
-          /* Each row takes up an equal share — adjust flex values to reflect real proportions */
-          tbody tr:nth-child(1) {
-            flex: 92;
-          }
-          tbody tr:nth-child(2) {
-            flex: 7;
-          }
-          tbody tr:nth-child(3) {
-            flex: 1;
-          }
-        </style>
-
-        <table aria-describedby="chart-key" class="nhsuk-u-margin-bottom-4">
-          <thead class="nhsuk-u-visually-hidden">
-            <tr>
-              <th scope="col">Category</th>
-              <th scope="col">Count</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="hatching--standard">
-              <td class="nhsuk-u-visually-hidden">
-                Standard
-              </td>
-              <td class="nhsuk-u-padding-2">
-                {{ tag({
-                  text: "560",
-                  classes: "nhsuk-tag--green"
-                }) }}
-              </td>
-            </tr>
-            <tr class="hatching--special">
-              <td class="nhsuk-u-visually-hidden">
-                Special Requirements
-              </td>
-              <td class="nhsuk-u-padding-2">
-                {{ tag({
-                  text: "40",
-                  classes: "nhsuk-tag--orange"
-                }) }}
-              </td>
-            </tr>
-            <tr class="hatching--high-risk">
-              <td class="nhsuk-u-visually-hidden">
-                Very High Risk
-              </td>
-              <td class="nhsuk-u-padding-2">
-                {{ tag({
-                  text: "10",
-                  classes: "nhsuk-tag--red"
-                }) }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <ul id="chart-key" aria-label="Chart key" class="nhsuk-list nhsuk-u-margin-0 app-chart-bar-segmented-horizontal--legend">
-          <li>
-            <div class="swatch hatching--standard" aria-hidden="true"></div>
-            <div>
-              <a href="#">560 standard</a><br>
-              <span class="key-label nhsuk-body-s">ready to appoint</span>
-            </div>
-          </li>
-          <li>
-            <div class="swatch hatching--special" aria-hidden="true"></div>
-            <div>
-              <a href="#">40 special requirements</a><br>
-              <span class="key-label nhsuk-body-s">reasonable adjustments etc.</span>
-            </div>
-          </li>
-          <li>
-            <div class="swatch hatching--high-risk" aria-hidden="true"></div>
-            <div>
-              <a href="#">10 very high risk (VHR)</a><br>
-              <span class="key-label nhsuk-body-s">ready to reconcile</span>
-            </div>
-          </li>
+    <div class="nhsuk-grid-column-two-thirds">
+      {% call details({
+        summaryHtml: '<h2 class="nhsuk-body-m">Further batch information</h2>'
+      }) %}
+        <p>Participants in this batch represent:</p>
+        <ul class="nhsuk-list">
+          <li><a href="#">16 postal outcodes</a></li>
+          <li><a href="#">4 GP practices</a></li>
         </ul>
-
-      </figure>
+        <p>Batch imported 11 December 2025</p>
+      {% endcall %}
     </div>
   </div>
 
+<!--
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
       <h3 class="nhsuk-heading-s">Participant distribution by next test due date</h3>
@@ -194,9 +153,10 @@
       </div>
     </div>
   </div>
+-->
 </section>
 
-<hr class="nhsuk-u-margin-0 nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-4">
+<hr class="nhsuk-u-margin-0 nhsuk-u-margin-bottom-4">
 
 <section>
   <div class="nhsuk-grid-row">
@@ -204,7 +164,7 @@
       <h2 class="nhsuk-heading-l">Batch progress</h2>
       <div class="app-simple-progress-bar --generic nhsuk-u-padding-2" style="--percentage: 0%;">
         {{ tag({
-          text: "0 of 610 dealt with",
+          text: "0 of 2172 dealt with",
           classes: "nhsuk-tag--blue"
         }) }}
       </div>
@@ -221,7 +181,7 @@
     <div class="nhsuk-grid-column-two-thirds">
       <div class="app-simple-progress-bar --standard nhsuk-u-padding-2" style="--percentage: 0%;">
         {{ tag({
-          text: "0 of 560 appointed",
+          text: "0 of 2150 appointed",
           classes: "nhsuk-tag--green"
         }) }}
       </div>
@@ -237,7 +197,7 @@
     <div class="nhsuk-grid-column-two-thirds">
       <div class="app-simple-progress-bar --special nhsuk-u-padding-2" style="--percentage: 0%;">
         {{ tag({
-          text: "0 of 40 appointed",
+          text: "0 of 12 appointed",
           classes: "nhsuk-tag--orange"
         }) }}
       </div>
@@ -247,6 +207,22 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
       <h2 class="nhsuk-heading-s nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-2">Reconciled</h2>
+      <a href="#" class="nhsuk-u-font-size-19">Ceased</a>
+    </div>
+  </div>
+  <div class="nhsuk-grid-row nhsuk-u-margin-bottom-3">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="app-simple-progress-bar --ceased nhsuk-u-padding-2" style="--percentage: 0%;">
+        {{ tag({
+          text: "0 of 5 reconciled",
+          classes: "nhsuk-tag--grey"
+        }) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full nhsuk-u-margin-bottom-2">
       <a href="#" class="nhsuk-u-font-size-19">Very high risk (VHR)</a>
     </div>
   </div>
@@ -254,7 +230,7 @@
     <div class="nhsuk-grid-column-two-thirds">
       <div class="app-simple-progress-bar --vhr nhsuk-u-padding-2" style="--percentage: 0%;">
         {{ tag({
-          text: "0 of 10 reconciled",
+          text: "0 of 5 reconciled",
           classes: "nhsuk-tag--red"
         }) }}
       </div>

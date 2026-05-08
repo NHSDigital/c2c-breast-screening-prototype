@@ -20,6 +20,7 @@
   --generic-chart-hatch: repeating-linear-gradient(45deg, #005eb8, #005eb8 1px, #ccdff1 1px, #ccdff1 12px);
   --standard-chart-hatch: repeating-linear-gradient(45deg, #004c23, #004c23 1px, #cce5d8 1px, #cce5d8 12px);
   --special-chart-hatch: repeating-linear-gradient(-45deg, #4d3708, #4d3708 1px, #ffdc8e 1px, #ffdc8e 12px);
+  --ceased-chart-hatch: repeating-linear-gradient(90deg, #354550, #354550 1px, #dbe0e3 1px, #dbe0e3 12px);
   --vhr-chart-hatch-1: repeating-linear-gradient(-45deg, #6b140e, #6b140e 1px, transparent 1px, transparent 12px);
   --vhr-chart-hatch-2: repeating-linear-gradient(45deg, #6b140e, #6b140e 1px, #f7d4d1 1px, #f7d4d1 12px);
 }
@@ -28,7 +29,10 @@
   background: var(--standard-chart-hatch)
 }
 .hatching--special {
-  background: var(--special-chart-hatch),
+  background: var(--special-chart-hatch)
+}
+.hatching--ceased {
+  background: var(--ceased-chart-hatch)
 }
 .hatching--high-risk {
   background: var(--vhr-chart-hatch-1), var(--vhr-chart-hatch-2)
@@ -124,6 +128,9 @@
   }
   &.--special {
     background: var(--special-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
+  &.--ceased {
+    background: var(--ceased-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
   }
   &.--vhr {
     background: var(--vhr-chart-hatch-1) 0 0 / var(--percentage) 100% no-repeat, var(--vhr-chart-hatch-2) 0 0 / var(--percentage) 100% no-repeat,#fff;
