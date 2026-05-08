@@ -114,9 +114,10 @@
 .app-simple-progress-bar {
   width: 100%;
   min-width: 200px;
+  outline: 1px solid #aeb7bd;
 
   &.--thin {
-    height: auto;
+    min-height: 19px;
   }
 
   &.--generic {
