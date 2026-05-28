@@ -1,0 +1,367 @@
+<!-- Use this page as the index for your project -->
+
+<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
+
+<!-- Extends the layout from /app/views/layout.html -->
+{% extends 'layout.html' %}
+<!--
+  In /app/views/layout.html you can:
+    - change the header and footer
+    - add custom CSS and JavaScript
+-->
+
+<!--
+  Use this to set the page name which will appear at the
+  start of the <title> tag, followed by the service name.
+  This is often not needed on the homepage, where only the
+  service name is needed. You can also reuse this variable
+  within the <h1>, where they are the same.
+-->
+{% set pageName = "" %}
+
+<!-- For adding a breadcrumb or back link -->
+<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
+{% block beforeContent %}
+{% endblock %}
+
+<!-- For adding page content -->
+<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
+{% block content %}
+<style>
+  .slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; }
+
+  .slot {
+    background-color: #fff;
+    border: 2px solid #212b32;
+    padding: 10px 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .slot:hover { background: var(--color-background-secondary); }
+  .slot.selected {
+    border: 2px solid #212b32;
+    outline: 4px solid #ffeb3b;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 2px #212b32;
+  }
+  .slot.is-hold { background: transparent; border-style: dashed; }
+  .slot.is-merged { border-left: 2px solid red; }
+  .slot-end { font-size: 14px; margin-top: 2px; }
+  .slot-tag { font-size: 11px; margin-top: 4px; font-weight: 500; }
+  .slot-attrs { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 4px; }
+
+  .side-panel { display: none; }
+  .side-panel.visible { display: block; }
+  .panel-item { display: block; cursor: pointer; }
+  .panel-item.disabled { opacity: 0.38; cursor: default; pointer-events: none; }
+
+  .attr-modal-bg { position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.35); display: none; align-items: center; justify-content: center; }
+  .attr-modal-bg.visible { display: flex; }
+  .attr-modal { background: var(--color-background-primary); border-radius: var(--border-radius-lg); padding: 1.25rem 1.5rem; width: 320px; border: 0.5px solid var(--color-border-secondary); }
+  .attr-modal h3 { font-size: 16px; font-weight: 500; margin: 0 0 4px; color: var(--color-text-primary); }
+  .attr-modal p { font-size: 13px; color: var(--color-text-secondary); margin: 0 0 1rem; }
+  .attr-list { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-wrap: wrap; gap: 6px; min-height: 32px; }
+  .attr-list li { display: flex; align-items: center; gap: 4px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 4px 10px; font-size: 13px; color: var(--color-text-primary); }
+  .attr-list li button { background: none; border: none; cursor: pointer; color: var(--color-text-secondary); padding: 0; line-height: 1; font-size: 14px; }
+  .attr-list li button:hover { color: var(--color-text-danger); }
+  .attr-add-row { display: flex; gap: 8px; }
+  .attr-add-row input { flex: 1; font-size: 14px; }
+  .attr-add-row button { font-size: 13px; white-space: nowrap; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 1rem; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 1rem; }
+</style>
+
+
+
+
+  <style>
+
+  #form-grid {
+    display: grid; grid-template-columns: repeat(2, 120px) auto; gap: 12px; align-items: start;
+  }
+  </style>
+
+  <h1 class="nhsuk-heading-l">Session setup</h1>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <div id="form-grid">
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="start-time">
+            Start time
+          </label>
+          <input class="nhsuk-input nhsuk-input--width-5" type="time" id="start-time" value="09:00">
+        </div>
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="end-time">
+            End time
+          </label>
+          <input class="nhsuk-input nhsuk-input--width-5" type="time" id="end-time" value="17:00">
+        </div>
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label" for="slot-length">
+            Slot length, in minutes
+          </label>
+          <input class="nhsuk-input nhsuk-input--width-2" type="number" id="slot-length" value="6" min="1" max="720" step="1">
+        </div>
+      </div>
+      <div id="slot-len-error">Enter a whole number between 1 and 720</div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row nhsuk-card-group nhsuk-u-visually-hidden">
+    <div class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">
+    </div>
+    <div class="nhsuk-grid-column-one-quarter nhsuk-card-group__item">
+      <div class="nhsuk-card">
+        <div class="nhsuk-card__content">
+          <span class="nhsuk-u-font-size-36" id="hold-slots">0</span> held
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div id="slots-container"></div>
+      <p class="nhsuk-hint nhsuk-u-font-size-14 nhsuk-u-margin-top-4">Click to select · Shift+click for a range · ⌘/Ctrl+click for multiple</p>
+    </div>
+    <div class="nhsuk-grid-column-one-third">
+      <div class="nhsuk-card">
+        <div class="nhsuk-card__content">
+          <span class="nhsuk-u-font-size-26" id="available-slots">0</span> available of <span id="total-slots">0</span>
+        </div>
+      </div>
+      <div class="side-panel" id="side-panel">
+        <h3 class="nhsuk-heading-s">With selected:</h3>
+        <ul class="nhsuk-list">
+          <li><a class="panel-item" id="panel-hold">Hold</a></li>
+          <li><a class="panel-item" id="panel-unhold" style="display:none">Remove hold</a></li>
+          <li><a class="panel-item" id="panel-merge">Merge</a></li>
+          <!--<a class="panel-item" id="panel-attrs">Add attributes</a>-->
+        </ul>
+        <hr>
+        <a class="panel-item" id="panel-deselect">Deselect all</a>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="attr-modal-bg" id="attr-modal-bg">
+    <div class="attr-modal">
+      <h3>Special attributes</h3>
+      <p id="attr-modal-desc">Applying to selected slot(s)</p>
+      <ul class="attr-list" id="attr-list"></ul>
+      <div class="attr-add-row">
+        <input type="text" id="attr-input" placeholder="Add attribute (e.g. VIP, Walk-in)">
+        <button id="attr-add-btn"><i class="ti ti-plus" aria-hidden="true"></i> Add</button>
+      </div>
+      <div class="modal-actions">
+        <button id="attr-cancel">Cancel</button>
+        <button id="attr-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <script type="text/javascript">
+  let slotData = [];
+  let selectedIndices = new Set();
+  let lastClickedIndex = null;
+
+  function parseMinutes(t) { if(!t) return null; const [h,m]=t.split(':').map(Number); return h*60+m; }
+  function formatTime(m) { const h=Math.floor(m/60)%24,mn=m%60; return `${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}`; }
+  function formatDuration(m) { if(m<60) return `${m}m`; const h=Math.floor(m/60),mn=m%60; return mn===0?`${h}h`:`${h}h ${mn}m`; }
+
+  function isConsecutive(indices) {
+    if(indices.length < 2) return false;
+    const sorted=[...indices].sort((a,b)=>a-b);
+    for(let i=1;i<sorted.length;i++) if(sorted[i]!==sorted[i-1]+1) return false;
+    return true;
+  }
+
+  function render() {
+    const startVal=document.getElementById('start-time').value;
+    const endVal=document.getElementById('end-time').value;
+    const slotInput=document.getElementById('slot-length');
+    const errorEl=document.getElementById('slot-len-error');
+    const container=document.getElementById('slots-container');
+    const rawVal=slotInput.value.trim();
+    const slotLen=parseInt(rawVal,10);
+    const isValid=rawVal!==''&&Number.isInteger(slotLen)&&slotLen>=1&&slotLen<=720&&String(slotLen)===rawVal;
+    if(!isValid) { errorEl.style.display='block'; container.innerHTML=''; setStats(); return; }
+    errorEl.style.display='none';
+    const startMins=parseMinutes(startVal), endMins=parseMinutes(endVal);
+    if(!startVal||!endVal||endMins<=startMins) {
+      container.innerHTML='<div>Set a valid start time before end time.</div>';
+      setStats(); return;
+    }
+    const totalMins=endMins-startMins;
+    const slotCount=Math.floor(totalMins/slotLen);
+    if(slotCount===0) { container.innerHTML='<div>No complete slots fit in this window.</div>'; setStats(); return; }
+
+    const prevData=[...slotData];
+    slotData=[];
+    for(let i=0;i<slotCount;i++) {
+      const s=startMins+i*slotLen, e=s+slotLen;
+      const key=`${formatTime(s)}-${formatTime(e)}`;
+      const prev=prevData.find(d=>d.key===key)||{};
+      slotData.push({ idx:i, start:s, end:e, key,
+        hold:prev.hold||false, merged:prev.merged||false, mergedEnd:prev.mergedEnd||null,
+        attrs:prev.attrs||[], mergedSkip:prev.mergedSkip||false });
+    }
+    selectedIndices=new Set([...selectedIndices].filter(i=>i<slotCount));
+    renderGrid();
+    setStats(totalMins, slotLen);
+  }
+
+  function renderGrid() {
+    const container=document.getElementById('slots-container');
+    const grid=document.createElement('div'); grid.className='slots-grid';
+    slotData.forEach((sd,i)=>{
+      if(sd.mergedSkip) return;
+      const div=document.createElement('div');
+      const classes=['slot'];
+      if(selectedIndices.has(i)) classes.push('selected');
+      if(sd.merged) classes.push('is-merged');
+      else if(sd.hold) classes.push('is-hold');
+      div.className=classes.join(' ');
+      const endTime=sd.mergedEnd||formatTime(sd.end);
+      div.innerHTML=`<div class="slot-time">${formatTime(sd.start)}</div><div class="slot-end">to ${endTime}</div>`;
+      if(sd.merged) div.innerHTML+=`<div class="slot-tag" style="color:var(--color-text-success)">Merged</div>`;
+      else if(sd.hold) div.innerHTML+=`<div class="slot-tag">Held</div>`;
+      if(sd.attrs&&sd.attrs.length) {
+        const row=document.createElement('div'); row.className='slot-attrs';
+        sd.attrs.forEach(a=>{ const p=document.createElement('span'); p.textContent=a; row.appendChild(p); });
+        div.appendChild(row);
+      }
+      div.addEventListener('click', e=>handleSlotClick(e,i));
+      grid.appendChild(div);
+    });
+    container.innerHTML=''; container.appendChild(grid);
+    updatePanel();
+    console.log(slotData);
+  }
+
+  function handleSlotClick(e, i) {
+    if(e.shiftKey && lastClickedIndex!==null) {
+      const lo=Math.min(lastClickedIndex,i), hi=Math.max(lastClickedIndex,i);
+      for(let j=lo;j<=hi;j++) selectedIndices.add(j);
+    } else if(e.metaKey||e.ctrlKey) {
+      if(selectedIndices.has(i)) selectedIndices.delete(i); else selectedIndices.add(i);
+    } else {
+      if(selectedIndices.size===1&&selectedIndices.has(i)) {
+        selectedIndices.clear();
+      } else {
+        selectedIndices.clear(); selectedIndices.add(i);
+      }
+    }
+    lastClickedIndex=i;
+    renderGrid();
+  }
+
+  function updatePanel() {
+    const panel=document.getElementById('side-panel');
+    const n=selectedIndices.size;
+    if(n===0) { panel.classList.remove('visible'); return; }
+    panel.classList.add('visible');
+    const sel=[...selectedIndices].sort((a,b)=>a-b);
+    const anyHold=sel.some(i=>slotData[i]?.hold);
+    document.getElementById('panel-hold').style.display=anyHold?'none':'flex';
+    document.getElementById('panel-unhold').style.display=anyHold?'flex':'none';
+    const consec=isConsecutive(sel);
+    document.getElementById('panel-merge').classList.toggle('disabled', !consec);
+  }
+
+  function setStats(totalMins, slotLen) {
+    const count=slotData.filter(s=>!s.mergedSkip).length;
+    const holdC=slotData.filter(s=>!s.mergedSkip&&s.hold).length;
+    const avail=count-holdC;
+    document.getElementById('total-slots').textContent=count||'—';
+    document.getElementById('available-slots').textContent=count?avail:'—';
+    document.getElementById('hold-slots').textContent=holdC;
+  }
+
+  function commit() {
+    renderGrid();
+    const startMins=parseMinutes(document.getElementById('start-time').value);
+    const endMins=parseMinutes(document.getElementById('end-time').value);
+    const slotLen=parseInt(document.getElementById('slot-length').value,10);
+    setStats(endMins-startMins, slotLen);
+  }
+
+  document.getElementById('panel-hold').addEventListener('click',()=>{
+    [...selectedIndices].forEach(i=>{ if(slotData[i]) slotData[i].hold=true; });
+    selectedIndices.clear(); commit();
+  });
+  document.getElementById('panel-unhold').addEventListener('click',()=>{
+    [...selectedIndices].forEach(i=>{ if(slotData[i]) slotData[i].hold=false; });
+    selectedIndices.clear(); commit();
+  });
+  document.getElementById('panel-merge').addEventListener('click',()=>{
+    const sel=[...selectedIndices].sort((a,b)=>a-b);
+    if(!isConsecutive(sel)) return;
+    const first=sel[0], last=sel[sel.length-1];
+    slotData[first].merged=true;
+    slotData[first].mergedEnd=formatTime(slotData[last].end);
+    for(let j=first+1;j<=last;j++) slotData[j].mergedSkip=true;
+    selectedIndices.clear(); commit();
+  });
+  document.getElementById('panel-deselect').addEventListener('click',()=>{ selectedIndices.clear(); renderGrid(); });
+
+  let attrTargetSlots=[];
+  /*document.getElementById('panel-attrs').addEventListener('click',()=>{
+    attrTargetSlots=[...selectedIndices];
+    const existing=[...new Set(attrTargetSlots.flatMap(i=>slotData[i]?.attrs||[]))];
+    const list=document.getElementById('attr-list'); list.innerHTML='';
+    existing.forEach(a=>addAttrTag(a));
+    document.getElementById('attr-input').value='';
+    const n=attrTargetSlots.length;
+    document.getElementById('attr-modal-desc').textContent=`Applying to ${n} slot${n!==1?'s':''}`;
+    document.getElementById('attr-modal-bg').classList.add('visible');
+    setTimeout(()=>document.getElementById('attr-input').focus(),50);
+  });*/
+
+  function addAttrTag(val) {
+    if(!val.trim()) return;
+    const list=document.getElementById('attr-list');
+    const existing=[...list.querySelectorAll('li')].map(li=>li.dataset.val);
+    if(existing.includes(val)) return;
+    const li=document.createElement('li'); li.dataset.val=val;
+    li.innerHTML=`${val}<button aria-label="Remove ${val}"><i class="ti ti-x" aria-hidden="true"></i></button>`;
+    li.querySelector('button').addEventListener('click',()=>li.remove());
+    list.appendChild(li);
+  }
+
+  document.getElementById('attr-add-btn').addEventListener('click',()=>{
+    const inp=document.getElementById('attr-input');
+    addAttrTag(inp.value.trim()); inp.value=''; inp.focus();
+  });
+  document.getElementById('attr-input').addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();document.getElementById('attr-add-btn').click();} });
+  document.getElementById('attr-cancel').addEventListener('click',()=>{
+    document.getElementById('attr-modal-bg').classList.remove('visible');
+    selectedIndices.clear(); renderGrid();
+  });
+  document.getElementById('attr-save').addEventListener('click',()=>{
+    const tags=[...document.getElementById('attr-list').querySelectorAll('li')].map(li=>li.dataset.val);
+    attrTargetSlots.forEach(i=>{ if(slotData[i]) slotData[i].attrs=tags; });
+    document.getElementById('attr-modal-bg').classList.remove('visible');
+    selectedIndices.clear(); commit();
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){
+      selectedIndices.clear(); renderGrid();
+      document.getElementById('attr-modal-bg').classList.remove('visible');
+    }
+  });
+
+  document.getElementById('start-time').addEventListener('input',render);
+  document.getElementById('end-time').addEventListener('input',render);
+  document.getElementById('slot-length').addEventListener('input',render);
+  render();
+  </script>
+{% endblock %}
