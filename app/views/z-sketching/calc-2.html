@@ -1,31 +1,10 @@
-<!-- Use this page as the index for your project -->
-
-<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
-
-<!-- Extends the layout from /app/views/layout.html -->
 {% extends 'layout.html' %}
-<!--
-  In /app/views/layout.html you can:
-    - change the header and footer
-    - add custom CSS and JavaScript
--->
 
-<!--
-  Use this to set the page name which will appear at the
-  start of the <title> tag, followed by the service name.
-  This is often not needed on the homepage, where only the
-  service name is needed. You can also reuse this variable
-  within the <h1>, where they are the same.
--->
 {% set pageName = "" %}
 
-<!-- For adding a breadcrumb or back link -->
-<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
 {% block beforeContent %}
 {% endblock %}
 
-<!-- For adding page content -->
-<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
 {% block content %}
 <style>
   .slots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; }
@@ -136,8 +115,9 @@
         <h3 class="nhsuk-heading-s">With selected:</h3>
         <ul class="nhsuk-list">
           <li><a class="panel-item" id="panel-hold">Hold</a></li>
-          <li><a class="panel-item" id="panel-unhold" style="display:none">Remove hold</a></li>
+          <li><a class="panel-item" id="panel-unhold">Remove hold</a></li>
           <li><a class="panel-item" id="panel-merge">Merge</a></li>
+          <li><a class="panel-item" id="panel-unmerge">Unmerge</a></li>
           <!--<a class="panel-item" id="panel-attrs">Add attributes</a>-->
         </ul>
         <hr>
@@ -168,20 +148,43 @@
 
 {% block pageScripts %}
   <script type="text/javascript">
-  let slotData = [];
-  let selectedIndices = new Set();
-  let lastClickedIndex = null;
+    let slotData = [];
+    let selectedIndices = new Set();
+    let lastClickedIndex = null;
 
-  function parseMinutes(t) { if(!t) return null; const [h,m]=t.split(':').map(Number); return h*60+m; }
-  function formatTime(m) { const h=Math.floor(m/60)%24,mn=m%60; return `${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}`; }
-  function formatDuration(m) { if(m<60) return `${m}m`; const h=Math.floor(m/60),mn=m%60; return mn===0?`${h}h`:`${h}h ${mn}m`; }
+    function parseMinutes(t) { if(!t) return null; const [h,m]=t.split(':').map(Number); return h*60+m; }
+    function formatTime(m) { const h=Math.floor(m/60)%24,mn=m%60; return `${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}`; }
+    function formatDuration(m) { if(m<60) return `${m}m`; const h=Math.floor(m/60),mn=m%60; return mn===0?`${h}h`:`${h}h ${mn}m`; }
 
-  function isConsecutive(indices) {
-    if(indices.length < 2) return false;
-    const sorted=[...indices].sort((a,b)=>a-b);
-    for(let i=1;i<sorted.length;i++) if(sorted[i]!==sorted[i-1]+1) return false;
-    return true;
-  }
+    function isConsecutive(indices) {
+      if(indices.length < 2) return false;
+      const sorted=[...indices].sort((a,b)=>a-b);
+      for(let i=1;i<sorted.length;i++) if(sorted[i]!==sorted[i-1]+1) return false;
+      return true;
+    }
+
+    function unmergeAt(index) {
+      const slot = slotData[index];
+      const parentIndex = slot.isMergedInto ?? index;
+      const parent = slotData[parentIndex];
+
+      if (!parent.merged) return;
+
+      const span = parent.span;
+
+      for (let j = parentIndex; j < parentIndex + span; j++) {
+        if (!slotData[j]) continue;
+
+        slotData[j].merged = false;
+        slotData[j].span = 1;
+        slotData[j].isMergedInto = undefined;
+        slotData[j].mergedEnd = null;
+      }
+    }
+
+    function resolveToMergeHead(i) {
+      return slotData[i].isMergedInto ?? i;
+    }
 
   function render() {
     const startVal=document.getElementById('start-time').value;
@@ -209,9 +212,18 @@
       const s=startMins+i*slotLen, e=s+slotLen;
       const key=`${formatTime(s)}-${formatTime(e)}`;
       const prev=prevData.find(d=>d.key===key)||{};
-      slotData.push({ idx:i, start:s, end:e, key,
-        hold:prev.hold||false, merged:prev.merged||false, mergedEnd:prev.mergedEnd||null,
-        attrs:prev.attrs||[], mergedSkip:prev.mergedSkip||false });
+      slotData.push({
+        idx: i,
+        start: s,
+        end: e,
+        key,
+        hold: prev.hold || false,
+        merged: prev.merged || false,
+        span: prev.span || 1,
+        isMergedInto: prev.isMergedInto ?? undefined,
+        mergedEnd: prev.mergedEnd || null,
+        attrs: prev.attrs || []
+      });
     }
     selectedIndices=new Set([...selectedIndices].filter(i=>i<slotCount));
     renderGrid();
@@ -220,65 +232,104 @@
 
   function renderGrid() {
     const container=document.getElementById('slots-container');
-    const grid=document.createElement('div'); grid.className='slots-grid';
-    slotData.forEach((sd,i)=>{
-      if(sd.mergedSkip) return;
-      const div=document.createElement('div');
-      const classes=['slot'];
-      if(selectedIndices.has(i)) classes.push('selected');
-      if(sd.merged) classes.push('is-merged');
-      else if(sd.hold) classes.push('is-hold');
-      div.className=classes.join(' ');
-      const endTime=sd.mergedEnd||formatTime(sd.end);
-      div.innerHTML=`<div class="slot-time">${formatTime(sd.start)}</div><div class="slot-end">to ${endTime}</div>`;
-      if(sd.merged) div.innerHTML+=`<div class="slot-tag" style="color:var(--color-text-success)">Merged</div>`;
-      else if(sd.hold) div.innerHTML+=`<div class="slot-tag">Held</div>`;
-      if(sd.attrs&&sd.attrs.length) {
-        const row=document.createElement('div'); row.className='slot-attrs';
-        sd.attrs.forEach(a=>{ const p=document.createElement('span'); p.textContent=a; row.appendChild(p); });
-        div.appendChild(row);
+    const grid=document.createElement('div');
+    grid.className='slots-grid';
+    slotData.forEach((sd, i) => {
+      // skip children (but NOT using mergedSkip anymore)
+      if (sd.isMergedInto !== undefined) return;
+
+      const div = document.createElement('div');
+
+      const classes = ['slot'];
+      if (selectedIndices.has(i)) classes.push('selected');
+      if (sd.merged) classes.push('is-merged');
+      else if (sd.hold) classes.push('is-hold');
+
+      div.className = classes.join(' ');
+
+      // KEY: span across grid
+      div.style.gridColumn = `span ${sd.span || 1}`;
+
+      const endTime = sd.merged
+        ? sd.mergedEnd
+        : formatTime(sd.end);
+
+      div.innerHTML = `
+        <div class="slot-time">${formatTime(sd.start)}</div>
+        <div class="slot-end">to ${endTime}</div>
+      `;
+
+      if (sd.merged) {
+        div.innerHTML += `<div class="slot-tag">Merged (${sd.span})</div>`;
+      } else if (sd.hold) {
+        div.innerHTML += `<div class="slot-tag">Held</div>`;
       }
-      div.addEventListener('click', e=>handleSlotClick(e,i));
+
+      div.addEventListener('click', e => handleSlotClick(e, i));
       grid.appendChild(div);
     });
-    container.innerHTML=''; container.appendChild(grid);
+    container.innerHTML='';
+    container.appendChild(grid);
     updatePanel();
-    console.log(slotData);
   }
 
   function handleSlotClick(e, i) {
-    if(e.shiftKey && lastClickedIndex!==null) {
-      const lo=Math.min(lastClickedIndex,i), hi=Math.max(lastClickedIndex,i);
-      for(let j=lo;j<=hi;j++) selectedIndices.add(j);
-    } else if(e.metaKey||e.ctrlKey) {
-      if(selectedIndices.has(i)) selectedIndices.delete(i); else selectedIndices.add(i);
+    if(e.shiftKey && lastClickedIndex !== null) {
+      const lo = Math.min(lastClickedIndex, i);
+      const hi = Math.max(lastClickedIndex, i);
+      for(let j = lo; j <= hi; j++) {
+        selectedIndices.add(resolveToMergeHead(j));
+      }
+    } else if(e.metaKey || e.ctrlKey) {
+      const head = resolveToMergeHead(i);
+      if(selectedIndices.has(head)) selectedIndices.delete(head);
+      else selectedIndices.add(head);
     } else {
-      if(selectedIndices.size===1&&selectedIndices.has(i)) {
+      const head = resolveToMergeHead(i);
+      if(selectedIndices.size === 1 && selectedIndices.has(head)) {
         selectedIndices.clear();
       } else {
-        selectedIndices.clear(); selectedIndices.add(i);
+        selectedIndices.clear();
+        selectedIndices.add(head);
       }
     }
-    lastClickedIndex=i;
+
+    lastClickedIndex = i;
     renderGrid();
   }
 
   function updatePanel() {
-    const panel=document.getElementById('side-panel');
-    const n=selectedIndices.size;
-    if(n===0) { panel.classList.remove('visible'); return; }
+    const sel = [...selectedIndices].sort((a,b)=>a-b);
+    const panel = document.getElementById('side-panel');
+
+    if (sel.length === 0) {
+      panel.classList.remove('visible');
+      return;
+    }
     panel.classList.add('visible');
-    const sel=[...selectedIndices].sort((a,b)=>a-b);
-    const anyHold=sel.some(i=>slotData[i]?.hold);
-    document.getElementById('panel-hold').style.display=anyHold?'none':'flex';
-    document.getElementById('panel-unhold').style.display=anyHold?'flex':'none';
-    const consec=isConsecutive(sel);
-    document.getElementById('panel-merge').classList.toggle('disabled', !consec);
+
+    const canMerge =
+      isConsecutive(sel) &&
+      sel.every(i => isSlotFree(i));
+
+    document.getElementById('panel-merge').classList.toggle('disabled', !canMerge);
+
+    const hasMerged = sel.some(i => {
+      const s = slotData[i];
+      return s.merged || s.isMergedInto !== undefined;
+    });
+
+    document.getElementById('panel-unmerge').classList.toggle('disabled', !hasMerged);
+
+    const anyHold = sel.some(i => slotData[i]?.hold);
+
+    document.getElementById('panel-hold').style.display = anyHold ? 'none' : 'flex';
+    document.getElementById('panel-unhold').style.display = anyHold ? 'flex' : 'none';
   }
 
   function setStats(totalMins, slotLen) {
-    const count=slotData.filter(s=>!s.mergedSkip).length;
-    const holdC=slotData.filter(s=>!s.mergedSkip&&s.hold).length;
+    const count = slotData.length;
+    const holdC=slotData.filter(s=>s.hold).length;
     const avail=count-holdC;
     document.getElementById('total-slots').textContent=count||'—';
     document.getElementById('available-slots').textContent=count?avail:'—';
@@ -301,14 +352,46 @@
     [...selectedIndices].forEach(i=>{ if(slotData[i]) slotData[i].hold=false; });
     selectedIndices.clear(); commit();
   });
-  document.getElementById('panel-merge').addEventListener('click',()=>{
-    const sel=[...selectedIndices].sort((a,b)=>a-b);
-    if(!isConsecutive(sel)) return;
-    const first=sel[0], last=sel[sel.length-1];
-    slotData[first].merged=true;
-    slotData[first].mergedEnd=formatTime(slotData[last].end);
-    for(let j=first+1;j<=last;j++) slotData[j].mergedSkip=true;
-    selectedIndices.clear(); commit();
+
+  function isSlotFree(i) {
+    const s = slotData[i];
+    return !s.merged && s.isMergedInto === undefined;
+  }
+
+  document.getElementById('panel-merge').addEventListener('click', () => {
+    const sel = [...selectedIndices].sort((a,b)=>a-b);
+
+    if (!isConsecutive(sel)) return;
+
+    const canMerge = sel.every(i => isSlotFree(i));
+    if (!canMerge) return;
+
+    const first = sel[0];
+    const last = sel[sel.length - 1];
+    const span = sel.length;
+
+    // reset (important when reusing slots)
+    for (let j = first; j <= last; j++) {
+      slotData[j].merged = false;
+      slotData[j].span = 1;
+      slotData[j].isMergedInto = undefined;
+    }
+
+    slotData[first].merged = true;
+    slotData[first].span = span;
+    slotData[first].mergedEnd = formatTime(slotData[last].end);
+
+    for (let j = first + 1; j <= last; j++) {
+      slotData[j].isMergedInto = first;
+    }
+
+    selectedIndices.clear();
+    commit();
+  });
+  document.getElementById('panel-unmerge').addEventListener('click', () => {
+    [...selectedIndices].forEach(i => unmergeAt(i));
+    selectedIndices.clear();
+    commit();
   });
   document.getElementById('panel-deselect').addEventListener('click',()=>{ selectedIndices.clear(); renderGrid(); });
 
