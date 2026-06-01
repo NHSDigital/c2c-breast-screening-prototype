@@ -37,12 +37,6 @@
   .side-panel.visible { display: block; }
   .panel-item { display: block; cursor: pointer; }
   .panel-item.disabled { opacity: 0.38; cursor: default; pointer-events: none; }
-</style>
-
-
-
-
-  <style>
 
   #form-grid {
     display: grid; grid-template-columns: repeat(2, 120px) auto; gap: 12px; align-items: start;
@@ -71,7 +65,7 @@
           <label class="nhsuk-label" for="slot-length">
             Slot length, in minutes
           </label>
-          <input class="nhsuk-input nhsuk-input--width-2" type="number" id="slot-length" value="6" min="1" max="720" step="1">
+          <input class="nhsuk-input nhsuk-input--width-2" type="number" id="slot-length" value="8" min="1" max="720" step="1">
         </div>
       </div>
       <div id="slot-len-error">Enter a whole number between 1 and 720</div>
@@ -90,13 +84,13 @@
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-three-quarters">
+      <p class="nhsuk-hint nhsuk-u-font-size-14 nhsuk-u-margin-bottom-2">Click to select · Shift+click for a range · ⌘/Ctrl+click for multiple</p>
       <div id="slots-container"></div>
-      <p class="nhsuk-hint nhsuk-u-font-size-14 nhsuk-u-margin-top-4">Click to select · Shift+click for a range · ⌘/Ctrl+click for multiple</p>
     </div>
     <div class="nhsuk-grid-column-one-quarter">
       <div class="nhsuk-card">
         <div class="nhsuk-card__content">
-          <span class="nhsuk-u-font-size-26" id="available-slots">0</span> available of <span id="total-slots">0</span>
+          <span class="nhsuk-u-font-size-26" id="available-slots">0</span> available to book of <span id="total-slots">0</span>
         </div>
       </div>
       <div class="side-panel" id="side-panel">
@@ -108,7 +102,6 @@
           <li><a class="panel-item" id="panel-unmerge">Unmerge</a></li>
         </ul>
         <hr>
-        <a class="panel-item" id="panel-deselect">Deselect all</a>
       </div>
     </div>
   </div>
@@ -286,8 +279,9 @@
     }
 
     function setStats(totalMins, slotLen) {
-      const count = slotData.length;
-      const holdC = slotData.filter(s => s.hold).length;
+      const heads = slotData.filter(s => s.isMergedInto === undefined);
+      const count = heads.length;
+      const holdC = heads.filter(s => s.hold).length;
       const avail = count - holdC;
       document.getElementById('total-slots').textContent = count || '—';
       document.getElementById('available-slots').textContent = count ? avail : '—';
@@ -410,17 +404,17 @@
       panel.classList.add('visible');
 
       const canMerge = isConsecutive(sel) && sel.every(i => isSlotFree(i));
-      document.getElementById('panel-merge').classList.toggle('disabled', !canMerge);
-
       const hasMerged = sel.some(i => {
         const s = slotData[i];
         return s.merged || s.isMergedInto !== undefined;
       });
-      document.getElementById('panel-unmerge').classList.toggle('disabled', !hasMerged);
-
       const anyHold = sel.some(i => slotData[i]?.hold);
-      document.getElementById('panel-hold').style.display = anyHold ? 'none' : 'flex';
-      document.getElementById('panel-unhold').style.display = anyHold ? 'flex' : 'none';
+      const allHold = sel.every(i => slotData[i]?.hold);
+
+      document.getElementById('panel-hold').classList.toggle('disabled', !sel.length || allHold);
+      document.getElementById('panel-unhold').classList.toggle('disabled', !sel.length || !anyHold);
+      document.getElementById('panel-merge').classList.toggle('disabled', !canMerge);
+      document.getElementById('panel-unmerge').classList.toggle('disabled', !hasMerged);
     }
 
     // ========== EVENT HANDLERS ==========
@@ -482,12 +476,6 @@
       [...selectedIndices].forEach(i => unmergeAt(i));
       selectedIndices.clear();
       commit();
-    });
-
-    // Panel actions - Deselect
-    document.getElementById('panel-deselect').addEventListener('click', () => {
-      selectedIndices.clear();
-      renderGrid();
     });
 
     // Global keyboard events
