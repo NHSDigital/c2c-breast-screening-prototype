@@ -1,0 +1,610 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Day clinic view" %}
+
+{% block customStyles %}
+<style type="text/css">
+  .app-slot-listing {
+    border: 1px solid #aeb7bd;
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .--hold {
+    background-color: #f0f4f5;
+    border-style: dashed;
+  }
+  .--merged-start {
+    border-bottom: 1px dashed #aeb7bd;
+    margin-bottom: 0 !important;
+  }
+  .--merged-mid {
+    border-top: 0;
+    border-bottom: 1px dashed #aeb7bd;
+    margin-bottom: 0 !important;
+    min-height: 16px;
+  }
+  .--merged-end {
+    border-top: 0;
+    min-height: 16px;
+  }
+  .app-slot-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 3rem;
+    align-items: top;
+  }
+  .app-slot-row :last-child {
+    margin-left: auto;
+  }
+  .app-slot-row .nhsuk-button--small {
+    margin-bottom: 0;
+  }
+</style>
+{% endblock %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage clinics", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/clinics/",
+      text: "Manage clinics"
+    },
+    {
+      href: "calendar-layout",
+      text: "Worthing C2C test 1"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h1 class="nhsuk-heading-m">
+        <span class="nhsuk-caption-m">HWO-NNN-standard-20260501</span>
+        <a href="calendar-layout">Worthing C2C test 1</a>
+      </h1>
+    </div>
+  </div>
+
+  <hr class="nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
+
+  <!--
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+      <dl class="nhsuk-summary-list">
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Unit and location
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            Home base <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-static-1</span><br>
+            Worthing <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">Worthing Hospital</span>
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> screening unit and location</span></a>
+          </dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Clinic timeframe
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            1 day
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> clinic timeframe</span></a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+  -->
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h2 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-m">Day view</span>
+        1 September 2026
+      </h2>
+      {% set secondaryNavItems = [] %}
+      {% for item in [
+        { href: '#', label: 'One modality name (42 slots available)', selected: 'true' },
+        { href: '#', label: 'Another modality name (0 slots available)' }
+      ] %}
+        {% set secondaryNavItems = secondaryNavItems | push({
+          text: item.label | safe,
+          href: item.href | trim,
+          current: true if item.selected == 'true'
+        }) %}
+      {% endfor %}
+
+      {{ appSecondaryNavigation({
+        visuallyHiddenTitle: "Secondary menu",
+        items: secondaryNavItems
+      }) }}
+      <div class="app-card-editable">
+        <h4 class="nhsuk-heading-s">
+          <span class="nhsuk-caption-m">Morning session</span>  
+          08:30 to 12:30
+        </h4>
+      </div>
+      <details class="nhsuk-details nhsuk-expander">
+        <summary class="nhsuk-details__summary">
+          <span class="nhsuk-details__summary-text">
+            18 slots available of 21
+          </span>
+        </summary>
+        <div class="nhsuk-details__text">
+          <ul class="nhsuk-list">
+            <li class="nhsuk-list-item app-slot-listing --hold">
+              <div class="app-slot-row">
+                <span>08:30</span>
+                <span>Held</span>
+                <span>
+                  <a href="#" class="nhsuk-font-size-16">Release hold</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing --merged-start">
+              <div class="app-slot-row">
+                <span>08:40</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing --merged-mid">
+              <span class="nhsuk-u-visually-hidden">08:50</span>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing --merged-end">
+              <span class="nhsuk-u-visually-hidden">09:00</span>
+            </li>
+            
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>09:10</span>
+                <a href="#">
+                  Billie Joanne Marquardt<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 999 054 3666</span>
+                </a>
+                <span>
+                  <a href="#" class="nhsuk-font-size-16">Rebook</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            
+            <li class="nhsuk-list-item app-slot-listing --merged-start">
+              <div class="app-slot-row">
+                <span>09:20</span>
+                <a href="#">
+                  Luna Michelle Powalski<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 999 054 3666</span>
+                </a>
+                <span>
+                  <strong class="nhsuk-tag nhsuk-tag--yellow">
+                    Special appointment
+                  </strong>
+                </span>
+                <span>
+                  <a href="#" class="nhsuk-font-size-16">Rebook</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing --merged-end">
+              <div class="app-slot-row">
+                <span class="nhsuk-u-visually-hidden">09:30</span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>09:40</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>09:50</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>10:00</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>10:10</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>10:20</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>10:30</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>10:40</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>10:50</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>11:00</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>11:10</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>11:20</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>11:30</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>11:40</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>11:50</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>12:00</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>12:10</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>12:20</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="app-card-editable">
+        <h4 class="nhsuk-heading-s">
+          <span class="nhsuk-caption-m">Afternoon session</span>  
+          13:30 to 17:30
+        </h4>
+      </div>
+      <details class="nhsuk-details nhsuk-expander">
+        <summary class="nhsuk-details__summary">
+          <span class="nhsuk-details__summary-text">
+            24 slots available of 24
+          </span>
+        </summary>
+        <div class="nhsuk-details__text">
+          <ul class="nhsuk-list">
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>13:30</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>13:40</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>13:50</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>14:00</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>14:10</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>14:20</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>14:30</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>14:40</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>14:50</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>15:00</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>15:10</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>15:20</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>15:30</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>15:40</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>15:50</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>16:00</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>16:10</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>16:20</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>16:30</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>16:40</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>16:50</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>17:00</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>17:10</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>17:20</span>
+                <span>
+                  <a href="#">Book</a>
+                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+{% endblock %}

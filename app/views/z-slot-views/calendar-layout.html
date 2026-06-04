@@ -1,0 +1,263 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Calendar view" %}
+
+{% block customStyles %}
+<style type="text/css">
+  .app-full-viewport-width {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    border: solid #d8dde0;
+    border-width: 2px 0;
+    padding: 1.5rem 0 0 0;
+  }
+  .app-full-viewport-width .calendar-table {
+    width: calc(100% - 4rem);
+    margin: 0 auto 2rem auto;
+  }
+  .calendar-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #d8dde0;
+  }
+  .calendar-table th,
+  .calendar-table td {
+    width: 14.2857%;
+    padding: 0.75rem;
+    vertical-align: top;
+    border-width: 1px;
+  }
+  .calendar-table td {
+    background-color: #fff;
+  }
+  .calendar-table td.calendar-table-capacity {
+    background-color: #fff;
+    background-image:
+      linear-gradient(to top, rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
+      var(--generic-chart-hatch);
+    background-size:
+      100% 100%,
+      100% calc(var(--percentage, 0%));
+    background-position:
+      left top,
+      left bottom;
+    background-repeat:
+      no-repeat,
+      no-repeat;
+  }
+  .calendar-table td.calendar-table-no-data {
+    background-color: transparent;
+  }
+  .calendar-table-date {
+    display: block;
+  }
+</style>
+{% endblock %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage clinics", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/clinics/",
+      text: "Manage clinics"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h1 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-m">HWO-NNN-standard-20260501</span>
+        Worthing C2C test 1
+      </h1>
+    </div>
+  </div>
+
+<!--   <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+      <dl class="nhsuk-summary-list">
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Unit and location
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            Home base <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-static-1</span><br>
+            Worthing <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">Worthing Hospital</span>
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> screening unit and location</span></a>
+          </dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Clinic timeframe
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            1 day
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> clinic timeframe</span></a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div> -->
+
+
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <!-- <div class="app-full-viewport-width"> -->
+        <table class="nhsuk-table nhsuk-table--no-border calendar-table">
+          <caption class="nhsuk-table__caption nhsuk-table__caption--m">September 2026</caption>
+          <thead class="nhsuk-table__head">
+            <tr class="nhsuk-table__row">
+              <th scope="col" class="nhsuk-table__header">Monday</th>
+              <th scope="col" class="nhsuk-table__header">Tuesday</th>
+              <th scope="col" class="nhsuk-table__header">Wednesday</th>
+              <th scope="col" class="nhsuk-table__header">Thursday</th>
+              <th scope="col" class="nhsuk-table__header">Friday</th>
+              <th scope="col" class="nhsuk-table__header">Saturday</th>
+              <th scope="col" class="nhsuk-table__header">Sunday</th>
+            </tr>
+          </thead>
+          <tbody class="nhsuk-table__body">
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-capacity" style="--percentage: 6.7777%;">
+                <a href="day-clinic">
+                  <span class="calendar-table-date nhsuk-u-font-size-14">1</span>
+                  42 slots available
+                </a>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-capacity" style="--percentage: 100%;">
+                <span class="calendar-table-date nhsuk-u-font-size-14">2</span>
+                0 slots available
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">3</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">4</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">5</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">6</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">7</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">8</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">9</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">10</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">11</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">12</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">13</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">14</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">15</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">16</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">17</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">18</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">19</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">20</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">21</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">22</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">23</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">24</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">25</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">26</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">27</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">28</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">29</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date nhsuk-u-font-size-14">30</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <!-- </div> -->
+    </div>
+  </div>
+{% endblock %}
