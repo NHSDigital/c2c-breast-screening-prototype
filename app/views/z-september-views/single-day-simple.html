@@ -32,7 +32,7 @@
     <div class="nhsuk-grid-column-full">
       <h1 class="nhsuk-heading-m">
         <span class="nhsuk-caption-m">HWO-NNN-standard-20260501</span>
-        <a href="calendar-layout">Worthing C2C test 1</a>
+        Worthing C2C test
       </h1>
     </div>
   </div>
@@ -45,22 +45,6 @@
         <span class="nhsuk-caption-m">Day view</span>
         1 September 2026
       </h2>
-      {% set secondaryNavItems = [] %}
-      {% for item in [
-        { href: '#', label: 'One modality name (42 slots available)', selected: 'true' },
-        { href: '#', label: 'Another modality name (0 slots available)' }
-      ] %}
-        {% set secondaryNavItems = secondaryNavItems | push({
-          text: item.label | safe,
-          href: item.href | trim,
-          current: true if item.selected == 'true'
-        }) %}
-      {% endfor %}
-
-      {{ appSecondaryNavigation({
-        visuallyHiddenTitle: "Secondary menu",
-        items: secondaryNavItems
-      }) }}
       <div class="app-card-editable">
         <h4 class="nhsuk-heading-s">
           <span class="nhsuk-caption-m">Morning session</span>  
@@ -70,224 +54,273 @@
       <details class="nhsuk-details nhsuk-expander">
         <summary class="nhsuk-details__summary">
           <span class="nhsuk-details__summary-text">
-            18 slots available of 21
+            24 slots available of 24
           </span>
         </summary>
         <div class="nhsuk-details__text">
           <ul class="nhsuk-list">
-            <li class="nhsuk-list-item app-slot-listing --hold">
+            <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>08:30</span>
-                <span>Held</span>
-                <span class="app-slot-row-controls">
-                  <a href="#" class="nhsuk-font-size-16">Release hold</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Billie Joanne Marquardt<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 999 054 3666</span>
                 </span>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing --merged-start">
-              <div class="app-slot-row">
-                <span>08:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
+                -->
               </div>
             </li>
-            <li class="nhsuk-list-item app-slot-listing --merged-mid">
-              <span class="nhsuk-u-visually-hidden">08:50</span>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>08:40</span>
+                <!--
+                <span>
+                  Alice Marie Gregory<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 943 582 7164</span>
+                </span>
+                -->
+              </div>
             </li>
-            <li class="nhsuk-list-item app-slot-listing --merged-end">
-              <span class="nhsuk-u-visually-hidden">09:00</span>
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>08:50</span>
+                <!--
+                <span>
+                  Daphne Hart<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 821 374 0952</span>
+                </span>
+                -->
+              </div>
             </li>
-            
+            <li class="nhsuk-list-item app-slot-listing">
+              <div class="app-slot-row">
+                <span>09:00</span>
+                <!--
+                <span>
+                  Martin O'Neill<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 702 195 4836</span>
+                </span>
+                -->
+              </div>
+            </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>09:10</span>
-                <a href="#">
-                  Billie Joanne Marquardt<br>
-                  <span class="nhsuk-u-secondary-text-colour">NHS: 999 054 3666</span>
-                </a>
-                <span class="app-slot-row-controls">
-                  <a href="#" class="nhsuk-font-size-16">Rebook</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Susan Carter<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 614 287 9305</span>
                 </span>
+                -->
               </div>
             </li>
-            
-            <li class="nhsuk-list-item app-slot-listing --merged-start">
+            <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>09:20</span>
-                <a href="#">
-                  Luna Michelle Powalski<br>
-                  <span class="nhsuk-u-secondary-text-colour">NHS: 999 054 3666</span>
-                </a>
+                <!--
                 <span>
-                  <strong class="nhsuk-tag nhsuk-tag--yellow">
-                    Special appointment
-                  </strong>
+                  Oliver Barnes<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 505 463 1129</span>
                 </span>
-                <span class="app-slot-row-controls">
-                  <a href="#" class="nhsuk-font-size-16">Rebook</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
+                -->
               </div>
             </li>
-            <li class="nhsuk-list-item app-slot-listing --merged-end">
+            <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
-                <span class="nhsuk-u-visually-hidden">09:30</span>
+                <span>09:30</span>
+                <!--
+                <span>
+                  Rachel Price<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 336 774 2201</span>
+                </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>09:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Henry Wallace<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 223 546 8870</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>09:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Fiona Lambert<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 410 559 3322</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>10:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Gordon Mills<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 196 804 7753</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>10:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Elaine Fox<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 378 290 4601</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>10:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Trevor King<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 957 613 2084</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>10:30</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Nadia Singh<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 604 118 9756</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>10:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  John Reed<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 842 039 6617</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>10:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Laura White<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 731 259 1148</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>11:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Marcus Young<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 665 880 3320</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>11:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Naomi Bell<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 548 901 7732</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>11:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Peter Long<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 439 216 5087</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>11:30</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Catherine Wood<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 329 487 9901</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>11:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Victor Hale<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 214 603 1774</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>11:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Imogen Frost<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 188 905 6423</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>12:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Darren Moss<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 977 332 1108</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>12:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Sophie Hartley<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 861 427 5930</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>12:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Ethan Cole<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 750 218 3446</span>
                 </span>
+                -->
               </div>
             </li>
           </ul>
@@ -315,217 +348,265 @@
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>13:30</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Megan Price<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 642 109 8875</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>13:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Miles Ford<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 531 678 2209</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>13:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Zoe Grant<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 419 502 6683</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>14:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Aaron Miles<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 308 244 1196</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>14:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Bethany Cross<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 297 883 4455</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>14:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Callum Morris<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 186 771 9002</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>14:30</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Helena Rowe<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 075 439 3321</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>14:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Dylan Nash<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 964 210 5587</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>14:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Faye Turner<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 853 619 4470</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>15:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Leon Grant<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 742 908 2233</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>15:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Nora Blake<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 631 776 9904</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>15:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Owen Lee<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 520 665 8805</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>15:30</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Priya Desai<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 419 554 7706</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>15:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Quentin Park<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 308 443 6607</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>15:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Rosa Kirk<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 197 332 5508</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>16:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Shane Boyd<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 086 221 4409</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>16:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Tara Voss<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 975 110 3310</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>16:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Uma Jha<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 864 009 2201</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>16:30</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Victor Dean<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 753 898 1192</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>16:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Wendy Fox<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 642 787 0083</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>16:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Xavier Holt<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 531 676 9974</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>17:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Yasmin Noor<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 420 565 8865</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>17:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Zachary Moon<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 319 454 7756</span>
                 </span>
+                -->
               </div>
             </li>
             <li class="nhsuk-list-item app-slot-listing">
               <div class="app-slot-row">
                 <span>17:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
+                <!--
+                <span>
+                  Abigail Stone<br>
+                  <span class="nhsuk-u-secondary-text-colour">NHS: 208 343 6647</span>
                 </span>
+                -->
               </div>
             </li>
           </ul>
