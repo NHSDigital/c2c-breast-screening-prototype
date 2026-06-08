@@ -4,7 +4,7 @@
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Manage clinics", serviceName, bsoName) }}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -16,7 +16,7 @@
     },
     {
       href: "/clinics/",
-      text: "Manage clinics"
+      text: "Clinics"
     },
     {
       href: "clinic-detail",
