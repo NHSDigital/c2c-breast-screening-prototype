@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "Manage batches" %}
+{% set pageName = "Batches" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Manage batches", serviceName, bsoName) }}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -22,7 +22,7 @@
 
 {% block content %}
   <div class="app-card-editable">
-    <h1 class="nhsuk-heading-l">Manage batches</h1>
+    <h1 class="nhsuk-heading-l">Batches</h1>
 
     {{ button({
       text: "Import a new batch",

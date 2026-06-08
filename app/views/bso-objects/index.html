@@ -17,11 +17,11 @@
   service name is needed. You can also reuse this variable
   within the <h1>, where they are the same.
 -->
-{% set pageName = "Manage other stuff" %}
+{% set pageName = "Organisation" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Manage other stuff", serviceName) }}
+  {{ primaryNavigation("Organisation", serviceName) }}
 {% endblock %}
 
 <!-- For adding a breadcrumb or back link -->
@@ -67,7 +67,7 @@
       {{ card({
         clickable: true,
         href: "/bso-objects/locations/",
-        heading: "Manage locations",
+        heading: "Locations",
         headingClasses: "nhsuk-heading-m",
         description: "The locations available to your units"
       }) }}

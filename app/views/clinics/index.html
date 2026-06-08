@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "Manage clinics" %}
+{% set pageName = "Clinics" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Manage clinics", serviceName, bsoName) }}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -22,7 +22,7 @@
 
 {% block content %}
   <div class="app-card-editable">
-    <h1 class="nhsuk-heading-l">Manage clinics</h1>
+    <h1 class="nhsuk-heading-l">Clinics</h1>
 
     {{ button({
       text: "Create a new clinic",
