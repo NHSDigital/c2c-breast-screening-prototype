@@ -5,6 +5,8 @@
 // Stolen Manage prototype components :P
 // https://github.com/NHSDigital/manage-breast-screening-prototype
 
+@forward "components/calendar-table";
+@forward "components/day-listing";
 @forward "components/secondary-navigation";
 
 // Add your custom CSS/Sass styles below.

@@ -1,0 +1,54 @@
+// Import NHS.UK frontend library
+@use "nhsuk-frontend/dist/nhsuk/core" as *;
+
+.app-full-viewport-width {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  border: solid #d8dde0;
+  border-width: 2px 0;
+  padding: 1.5rem 0 0 0;
+}
+.app-full-viewport-width .calendar-table {
+  width: calc(100% - 4rem);
+  margin: 0 auto 2rem auto;
+}
+.calendar-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: 1px solid #d8dde0;
+}
+.calendar-table th,
+.calendar-table td {
+  width: 14.2857%;
+  padding: 0.75rem;
+  vertical-align: top;
+  border-width: 1px;
+}
+.calendar-table td {
+  @include nhsuk-font(16);
+  background-color: #fff;
+}
+.calendar-table td.calendar-table-capacity {
+  background-color: #fff;
+  background-image:
+    linear-gradient(to top, rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
+    var(--generic-chart-hatch);
+  background-size:
+    100% 100%,
+    100% calc(var(--percentage, 0%));
+  background-position:
+    left top,
+    left bottom;
+  background-repeat:
+    no-repeat,
+    no-repeat;
+}
+.calendar-table td.calendar-table-no-data {
+  background-color: transparent;
+}
+.calendar-table-date {
+  font-weight: bold;
+  display: block;
+}

@@ -1,0 +1,312 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Calendar view" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage clinics", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    },
+    {
+      href: "/clinics/",
+      text: "Manage clinics"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h1 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-m">HWO-NNN-standard-20260501</span>
+        Worthing C2C test 1
+      </h1>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+      <dl class="nhsuk-summary-list">
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Unit and location
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            Home base <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-static-1</span><br>
+            Worthing <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">Worthing Hospital</span>
+          </dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Clinic timeframe
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            1 day
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <!-- <div class="app-full-viewport-width"> -->
+        <table class="nhsuk-table nhsuk-table--no-border calendar-table">
+          <caption class="nhsuk-table__caption nhsuk-table__caption--m">September 2026</caption>
+          <thead class="nhsuk-table__head">
+            <tr class="nhsuk-table__row">
+              <th scope="col" class="nhsuk-table__header">Monday</th>
+              <th scope="col" class="nhsuk-table__header">Tuesday</th>
+              <th scope="col" class="nhsuk-table__header">Wednesday</th>
+              <th scope="col" class="nhsuk-table__header">Thursday</th>
+              <th scope="col" class="nhsuk-table__header">Friday</th>
+              <th scope="col" class="nhsuk-table__header">Saturday</th>
+              <th scope="col" class="nhsuk-table__header">Sunday</th>
+            </tr>
+          </thead>
+          <tbody class="nhsuk-table__body">
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-capacity" style="--percentage: 6.7777%;">
+                <a href="day-slot-view">
+                  <span class="calendar-table-date">1</span>
+                  42 available<br>of 45
+                </a>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-capacity" style="--percentage: 100%;">
+                <a href="#">
+                  <span class="calendar-table-date">2</span>
+                  0 available<br>of 50
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">3</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">4</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">5</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">6</span>
+                </a>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">7</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">8</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">9</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">10</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">11</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">12</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">13</span>
+                </a>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">14</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">15</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">16</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">17</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">18</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">19</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">20</span>
+                </a>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">21</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">22</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">23</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">24</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">25</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">26</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">27</span>
+                </a>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">28</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">29</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <a href="#">
+                  <span class="calendar-table-date">30</span>
+                </a>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      <!-- </div> -->
+    </div>
+  </div>
+
+  <hr class="nhsuk-u-margin-0 nhsuk-u-margin-bottom-4">
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% call details({
+        summaryHtml: '<h2 class="nhsuk-body-m">Batches associated with this clinic</h2>'
+      }) %}
+
+      {% set batch_1 %}
+        <a href="#">
+          Worthing C2C batch test 1<br>
+        </a>
+        <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-standard-20260821</span>
+      {% endset %}
+      {% set batch_1_progress %}
+        <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: 5%;"></div>
+        <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">2 of 40 appointed</span>
+      {% endset %}
+
+      {{ table({
+        firstCellIsHeader: false,
+        head: [
+          {
+            text: "Batch"
+          },
+          {
+            text: "Type"
+          },
+          {
+            text: "Progress"
+          }
+        ],
+        rows: [
+          [
+            {
+              html: batch_1
+            },
+            {
+              text: "Standard"
+            },
+            {
+              html: batch_1_progress
+            }
+          ]
+        ]
+      }) }}
+
+      {% endcall %}
+    </div>
+  </div>
+{% endblock %}
