@@ -19,9 +19,46 @@
   <style type="text/css">
     .app-flow-flex {
       display: flex;
-      gap: 1rem;
-      align-items: center;
+      gap: 2rem;
+      align-items: stretch; /* allow children to match heights */
     }
+
+    .app-flow-arrow {
+      position: relative;
+      transform: translateX(calc(-50% + 14px));
+      color: #fff;
+      background: #4c6272;
+      padding: 0.3rem 0 0.3rem 0.75rem;
+      z-index: 1;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .app-flow-arrow::after {
+      content: "";
+      position: absolute;
+      right: -28px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 28px solid transparent;
+      border-bottom: 28px solid transparent;
+      border-left: 28px solid #4c6272;
+    }
+
+      /* Make the cards fill the flex item's cross size and allow their content to stretch */
+      .app-flow-flex > .nhsuk-card {
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+      }
+
+      .app-flow-flex > .nhsuk-card .nhsuk-card__content {
+        flex: 1 1 auto;
+      }
+      .app-flow-flex > .app-flow-arrow {
+        align-self: center;
+      }
   </style>
 
   <div class="nhsuk-grid-row">
@@ -43,14 +80,14 @@
             <div class="nhsuk-u-font-size-36 nhsuk-u-margin-bottom-2">
               XX participants
             </div>
-            <div class="nhsuk-body nhsuk-secondary-text">
-              in NAME group
+            <div class="nhsuk-body nhsuk-u-secondary-text-colour">
+              from NAME group
             </div>
           </div>
         </div>
 
-        <div class="nhsuk-body">
-          <b>into</b>
+        <div class="nhsuk-body-s app-flow-arrow">
+          into
         </div>
 
         <div class="nhsuk-card nhsuk-u-margin-bottom-0">
@@ -58,8 +95,11 @@
             <div class="nhsuk-u-font-size-36 nhsuk-u-margin-bottom-2">
               XX slots
             </div>
-            <div class="nhsuk-body nhsuk-secondary-text">
-              available in NAME clinic
+            <div class="nhsuk-body nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-2">
+              in CLINIC NAME on 1 September 2026
+            </div>
+            <div class="nhsuk-body-s nhsuk-u-secondary-text-colour">
+              Unit name at location name
             </div>
           </div>
         </div>
