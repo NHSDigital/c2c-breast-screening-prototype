@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Day clinic view" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "#",
+    text: "Back"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+  <style type="text/css">
+    .app-flow-flex {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+  </style>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h1 class="nhsuk-heading-l">
+        Autoflow™ participants into slots
+      </h1>
+      <p>You’re about to automatically book:</p>
+    </div>
+  </div>
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <div class="app-flow-flex nhsuk-u-margin-bottom-6">
+
+        <div class="nhsuk-card nhsuk-u-margin-bottom-0">
+          <div class="nhsuk-card__content">
+            <div class="nhsuk-card__heading nhsuk-heading-m nhsuk-u-margin-bottom-2">
+              XX participants
+            </div>
+            <p class="nhsuk-card__text">
+              in NAME group
+            </p>
+          </div>
+        </div>
+
+        <div class="nhsuk-body nhsuk-u-margin-bottom-0">
+          <b>into</b>
+        </div>
+
+        <div class="nhsuk-card nhsuk-u-margin-bottom-0">
+          <div class="nhsuk-card__content">
+            <div class="nhsuk-card__heading nhsuk-heading-m nhsuk-u-margin-bottom-2">
+              XX slots
+            </div>
+            <p class="nhsuk-card__text">
+              available in NAME clinic
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      {{ button({
+        text: "Confirm and book"
+      }) }}
+      <p>
+        or
+        <a href="#">cancel and go back</a>
+      </p>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}

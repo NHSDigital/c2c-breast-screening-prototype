@@ -1,0 +1,29 @@
+{% from 'header/macro.njk' import header %}
+
+{% macro primaryNavigation(activeItem, serviceName, bsoName) %}
+  {{ header({
+    account: {
+      items: [
+        {
+          text: "West Sussex BSO"
+        },
+        {
+          href: "#",
+          text: "Thomas Pynchon",
+          icon: true
+        },
+        {
+          href: "/",
+          text: "Log out"
+        }
+      ]
+    },
+    service: {
+      text: "Cohort to clinic",
+      href: "/"
+    },
+    navigation: {
+      items: []
+    }
+  }) }}
+{% endmacro %}
