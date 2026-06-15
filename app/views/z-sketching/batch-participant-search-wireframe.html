@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[WIREFRAME] Search participants — Batch BSS_BATCH_20260526</title>
+
+  <style>
+    /* ══════════════════════════════════════════════════════════════════
+       WIREFRAME DESIGN TOKENS — greyscale only, no brand colour
+    ══════════════════════════════════════════════════════════════════ */
+    :root {
+      --wf-black:       #111111;
+      --wf-dark:        #333333;
+      --wf-mid:         #666666;
+      --wf-light:       #999999;
+      --wf-rule:        #aaaaaa;
+      --wf-border:      #888888;
+      --wf-border-dark: #444444;
+      --wf-bg:          #f5f5f5;
+      --wf-white:       #ffffff;
+      --wf-shade:       #e8e8e8;
+      --wf-shade-dark:  #d4d4d4;
+      --wf-hatching:    repeating-linear-gradient(
+                          -45deg,
+                          transparent 0px, transparent 4px,
+                          rgba(0,0,0,0.06) 4px, rgba(0,0,0,0.06) 5px
+                        );
+      --wf-font:        "Courier New", Courier, "Lucida Console", monospace;
+      --wf-font-ui:     Arial, Helvetica, sans-serif;
+      --s1: 4px;  --s2: 8px;  --s3: 16px;
+      --s4: 24px; --s5: 32px; --s6: 40px; --s7: 48px;
+    }
+
+    /* ── RESET ────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { font-size: 15px; }
+    body  {
+      font-family: var(--wf-font-ui);
+      color: var(--wf-dark);
+      background: var(--wf-bg);
+      line-height: 1.5;
+    }
+    a { color: var(--wf-dark); text-decoration: underline; }
+
+    /* ── WIREFRAME WATERMARK ──────────────────────────────────────── */
+    body::before {
+      content: "WIREFRAME — LOW FIDELITY PROTOTYPE";
+      position: fixed; top: 0; left: 0; right: 0;
+      background: var(--wf-black); color: var(--wf-bg);
+      font-family: var(--wf-font); font-size: 11px; font-weight: bold;
+      letter-spacing: 0.12em; text-align: center;
+      padding: 4px 0; z-index: 9999; pointer-events: none;
+    }
+    body { padding-top: 22px; }
+
+    /* ── VISUALLY HIDDEN ──────────────────────────────────────────── */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      margin: -1px; padding: 0; overflow: hidden;
+      clip: rect(0,0,0,0); border: 0;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       HEADER — hatched dark bar
+    ══════════════════════════════════════════════════════════════════ */
+    .wf-header {
+      background: var(--wf-dark);
+      background-image: var(--wf-hatching);
+      border-bottom: 3px solid var(--wf-black);
+    }
+    .wf-header__inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: var(--s2) var(--s3);
+      display: flex; align-items: center; gap: var(--s4);
+    }
+    .wf-logo-box {
+      width: 44px; height: 44px;
+      border: 2px solid var(--wf-white);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--wf-font); font-size: 12px; font-weight: bold;
+      color: var(--wf-white); flex-shrink: 0;
+    }
+    .wf-logo-text { color: var(--wf-white); line-height: 1.3; }
+    .wf-logo-text strong { display: block; font-size: 15px; font-family: var(--wf-font); }
+    .wf-logo-text span   { font-size: 12px; opacity: 0.7; font-family: var(--wf-font); }
+    .wf-nav { margin-left: auto; display: flex; gap: var(--s4); list-style: none; }
+    .wf-nav a {
+      color: var(--wf-white); font-family: var(--wf-font); font-size: 12px;
+      text-decoration: none; opacity: 0.8;
+      border-bottom: 1px dashed rgba(255,255,255,0.4);
+      padding-bottom: 1px;
+    }
+    .wf-nav a:hover { opacity: 1; border-bottom-style: solid; }
+
+    /* ── PHASE BANNER ─────────────────────────────────────────────── */
+    .wf-banner {
+      background: var(--wf-white); border-bottom: 1px dashed var(--wf-border);
+      padding: var(--s1) var(--s3);
+    }
+    .wf-banner__inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; gap: var(--s2);
+      font-size: 12px; font-family: var(--wf-font); color: var(--wf-mid);
+    }
+    .wf-tag {
+      display: inline-block;
+      border: 1.5px solid var(--wf-dark); background: var(--wf-shade-dark);
+      font-family: var(--wf-font); font-size: 10px; font-weight: bold;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 1px 6px; color: var(--wf-dark);
+    }
+
+    /* ── BREADCRUMB ───────────────────────────────────────────────── */
+    .wf-breadcrumb {
+      background: var(--wf-white); border-bottom: 1px dashed var(--wf-border);
+      padding: var(--s1) var(--s3);
+    }
+    .wf-breadcrumb ol {
+      max-width: 1200px; margin: 0 auto; list-style: none;
+      display: flex; flex-wrap: wrap; font-size: 12px;
+      font-family: var(--wf-font); gap: 0;
+    }
+    .wf-breadcrumb li { display: flex; align-items: center; }
+    .wf-breadcrumb li + li::before {
+      content: " / "; color: var(--wf-light);
+      margin: 0 6px; white-space: pre;
+    }
+    .wf-breadcrumb a { color: var(--wf-dark); }
+    .wf-breadcrumb .current { color: var(--wf-mid); }
+
+    /* ══════════════════════════════════════════════════════════════════
+       MAIN
+    ══════════════════════════════════════════════════════════════════ */
+    .wf-main {
+      max-width: 1200px; margin: 0 auto;
+      padding: var(--s5) var(--s3) var(--s7);
+    }
+
+    /* ── TYPOGRAPHY ───────────────────────────────────────────────── */
+    .wf-h1 {
+      font-family: var(--wf-font); font-size: 28px; font-weight: bold;
+      color: var(--wf-black); line-height: 1.2; margin-bottom: var(--s2);
+      border-bottom: 3px solid var(--wf-black); padding-bottom: var(--s1);
+    }
+    .wf-meta {
+      font-family: var(--wf-font); font-size: 13px; color: var(--wf-mid);
+      margin-bottom: var(--s5);
+    }
+    .wf-meta strong { color: var(--wf-dark); }
+    .wf-h2 {
+      font-family: var(--wf-font); font-size: 18px; font-weight: bold;
+      color: var(--wf-black); line-height: 1.3;
+    }
+    .wf-small { font-size: 12px; font-family: var(--wf-font); }
+
+    /* ── ANNOTATION LABEL ─────────────────────────────────────────── */
+    .wf-ann {
+      display: inline-block;
+      font-family: var(--wf-font); font-size: 10px; color: var(--wf-mid);
+      border: 1px dashed var(--wf-rule); padding: 1px 5px;
+      margin-bottom: var(--s1); letter-spacing: 0.04em;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       FORM ELEMENTS
+    ══════════════════════════════════════════════════════════════════ */
+    .wf-label {
+      display: block; font-family: var(--wf-font); font-size: 13px;
+      font-weight: bold; color: var(--wf-dark); margin-bottom: var(--s1);
+    }
+    .wf-hint {
+      display: block; font-family: var(--wf-font); font-size: 11px;
+      color: var(--wf-mid); margin-bottom: var(--s2);
+    }
+    .wf-input {
+      height: 38px; width: 100%;
+      border: 2px solid var(--wf-border-dark); background: var(--wf-white);
+      font-family: var(--wf-font); font-size: 13px; color: var(--wf-dark);
+      padding: 0 var(--s2);
+    }
+    .wf-input:focus {
+      outline: 2px dashed var(--wf-dark); outline-offset: 2px;
+    }
+    .wf-input::placeholder { color: var(--wf-light); font-style: italic; }
+    .wf-input--error { border-color: var(--wf-black); border-style: dashed; }
+    .wf-select {
+      height: 38px; width: 100%;
+      border: 2px solid var(--wf-border-dark); background: var(--wf-white);
+      font-family: var(--wf-font); font-size: 13px; color: var(--wf-dark);
+      padding: 0 var(--s2);
+    }
+    .wf-select:focus { outline: 2px dashed var(--wf-dark); outline-offset: 2px; }
+    .wf-error-msg {
+      display: block; font-family: var(--wf-font); font-size: 12px;
+      font-weight: bold; color: var(--wf-dark);
+      border-left: 3px solid var(--wf-dark); padding-left: var(--s1);
+      margin-top: var(--s1);
+    }
+    .wf-form-group { display: flex; flex-direction: column; }
+
+    /* ══════════════════════════════════════════════════════════════════
+       BUTTONS
+    ══════════════════════════════════════════════════════════════════ */
+    .wf-btn {
+      display: inline-flex; align-items: center; gap: var(--s2);
+      height: 38px; padding: 0 var(--s4);
+      border: 2px solid var(--wf-dark); background: var(--wf-dark);
+      color: var(--wf-white); font-family: var(--wf-font); font-size: 13px;
+      font-weight: bold; cursor: pointer; white-space: nowrap;
+      text-decoration: none; letter-spacing: 0.02em;
+    }
+    .wf-btn:hover { background: var(--wf-black); border-color: var(--wf-black); }
+    .wf-btn:focus { outline: 2px dashed var(--wf-dark); outline-offset: 3px; }
+    .wf-btn:active { transform: translateY(1px); }
+    .wf-btn--secondary {
+      background: var(--wf-white); color: var(--wf-dark);
+      border-style: dashed;
+    }
+    .wf-btn--secondary:hover { background: var(--wf-shade); }
+    .wf-btn--ghost {
+      background: transparent; color: var(--wf-dark);
+      border: 1px dashed var(--wf-border);
+      height: 32px; font-size: 12px;
+    }
+    .wf-btn--ghost:hover { background: var(--wf-shade); }
+
+    /* ══════════════════════════════════════════════════════════════════
+       SEARCH CARD
+    ══════════════════════════════════════════════════════════════════ */
+    .wf-search-card {
+      background: var(--wf-white);
+      border: 2px solid var(--wf-border-dark);
+      padding: var(--s4);
+      margin-bottom: var(--s5);
+      max-width: 640px;
+      position: relative;
+    }
+    .wf-search-card::before {
+      content: "SEARCH COMPONENT";
+      position: absolute; top: -11px; left: var(--s3);
+      font-family: var(--wf-font); font-size: 9px; font-weight: bold;
+      color: var(--wf-mid); background: var(--wf-bg);
+      padding: 0 4px; letter-spacing: 0.08em;
+    }
+    .wf-search-row { display: flex; gap: 0; margin-top: var(--s2); }
+    .wf-search-row .wf-input {
+      border-right: none; flex: 1; min-width: 0;
+    }
+    .wf-search-row .wf-btn-search {
+      display: inline-flex; align-items: center; gap: var(--s1);
+      height: 38px; padding: 0 var(--s4);
+      background: var(--wf-dark); color: var(--wf-white);
+      border: 2px solid var(--wf-dark); font-family: var(--wf-font);
+      font-size: 13px; font-weight: bold; cursor: pointer; white-space: nowrap;
+    }
+    .wf-search-row .wf-btn-search:hover { background: var(--wf-black); }
+    .wf-search-row .wf-btn-search:focus { outline: 2px dashed var(--wf-dark); outline-offset: 2px; }
+    .wf-btn-clear {
+      display: inline-flex; align-items: center; height: 36px;
+      padding: 0 var(--s4); margin-top: var(--s3);
+      background: var(--wf-white); color: var(--wf-dark);
+      border: 1px dashed var(--wf-border-dark);
+      font-family: var(--wf-font); font-size: 13px; font-weight: bold;
+      cursor: pointer;
+    }
+    .wf-btn-clear:hover { background: var(--wf-shade); }
+    .wf-btn-clear:focus { outline: 2px dashed var(--wf-dark); outline-offset: 2px; }
+
+    /* ══════════════════════════════════════════════════════════════════
+       RESULTS SECTION
+    ══════════════════════════════════════════════════════════════════ */
+    #js-results-section { display: none; }
+    #js-results-section.visible { display: block; }
+
+    .wf-results-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      flex-wrap: wrap; gap: var(--s2); margin-bottom: var(--s3);
+      padding-bottom: var(--s2); border-bottom: 2px solid var(--wf-dark);
+    }
+    .wf-results-count {
+      font-family: var(--wf-font); font-size: 12px; color: var(--wf-mid);
+    }
+    .wf-results-count strong { color: var(--wf-dark); }
+
+    .wf-no-results {
+      background: var(--wf-white); border: 2px dashed var(--wf-border-dark);
+      padding: var(--s5) var(--s4); text-align: center;
+    }
+    .wf-no-results__title {
+      font-family: var(--wf-font); font-size: 16px; font-weight: bold;
+      color: var(--wf-dark); margin-bottom: var(--s2);
+    }
+    .wf-no-results__body {
+      font-family: var(--wf-font); font-size: 12px; color: var(--wf-mid);
+    }
+
+    /* TABLE META */
+    .wf-table-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: var(--s2); margin-bottom: var(--s2);
+      font-family: var(--wf-font); font-size: 11px; color: var(--wf-mid);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       TABLE
+    ══════════════════════════════════════════════════════════════════ */
+    .wf-table-wrap {
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      border: 2px solid var(--wf-border-dark); background: var(--wf-white);
+    }
+    .wf-table {
+      width: 100%; border-collapse: collapse;
+      font-family: var(--wf-font); font-size: 12px;
+      min-width: 700px;
+    }
+    .wf-table thead { background: var(--wf-shade-dark); }
+    .wf-table thead tr { border-bottom: 3px solid var(--wf-dark); }
+    .wf-table th {
+      padding: var(--s2) var(--s3); font-size: 11px; font-weight: bold;
+      color: var(--wf-dark); text-align: left; vertical-align: bottom;
+      white-space: nowrap;
+      border-right: 1px dashed var(--wf-rule); position: relative;
+      cursor: pointer; user-select: none; padding-right: 26px;
+    }
+    .wf-table th:first-child { cursor: default; padding-right: var(--s2); width: 44px; text-align: center; }
+    .wf-table th:last-child { border-right: none; }
+    .wf-table th:not(:first-child):hover { background: var(--wf-shade); }
+    .wf-table th:focus { outline: 2px dashed var(--wf-dark); outline-offset: -2px; }
+    .sort-arrows { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 2px; }
+    .sort-arrows__up, .sort-arrows__down { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; display: block; }
+    .sort-arrows__up   { border-bottom: 5px solid var(--wf-rule); }
+    .sort-arrows__down { border-top:    5px solid var(--wf-rule); }
+    [aria-sort="ascending"]  .sort-arrows__up   { border-bottom-color: var(--wf-dark); }
+    [aria-sort="descending"] .sort-arrows__down { border-top-color:    var(--wf-dark); }
+
+    .wf-table tbody tr:nth-child(even) { background: var(--wf-shade); }
+    .wf-table tbody tr:hover           { background: var(--wf-shade-dark); }
+    .wf-table tbody tr.row--selected   { background: var(--wf-shade-dark) !important; border-left: 3px solid var(--wf-dark); }
+    .wf-table td {
+      padding: var(--s2) var(--s3); font-size: 12px; color: var(--wf-dark);
+      vertical-align: middle; border-bottom: 1px dashed var(--wf-rule);
+      border-right: 1px dashed var(--wf-rule); line-height: 1.4;
+    }
+    .wf-table td:first-child { text-align: center; border-right: 1px solid var(--wf-border); }
+    .wf-table td:last-child  { border-right: none; }
+    .wf-table tbody tr:last-child td { border-bottom: none; }
+
+    /* Checkbox */
+    .wf-checkbox {
+      width: 18px; height: 18px; border: 2px solid var(--wf-dark);
+      cursor: pointer; accent-color: var(--wf-dark); display: block; margin: 0 auto;
+    }
+    .wf-checkbox:focus { outline: 2px dashed var(--wf-dark); outline-offset: 2px; }
+
+    /* Link in table */
+    .wf-table-link {
+      color: var(--wf-dark); text-decoration: underline;
+      font-family: var(--wf-font); font-size: 12px;
+      border-bottom: 1px dashed var(--wf-mid);
+    }
+
+    /* HIGHLIGHT */
+    mark { background: var(--wf-shade-dark); color: var(--wf-black); padding: 0 1px; font-weight: bold; }
+
+    /* EMPTY STATE */
+    .wf-table-empty {
+      padding: var(--s6) var(--s3); text-align: center;
+      font-family: var(--wf-font); font-size: 13px; color: var(--wf-mid);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       PAGINATION
+    ══════════════════════════════════════════════════════════════════ */
+    .nhsuk-pagination {
+      display: flex; align-items: center; justify-content: center;
+      margin-top: var(--s5); gap: 0; flex-wrap: wrap;
+    }
+    .nhsuk-pagination__previous,
+    .nhsuk-pagination__next {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-family: var(--wf-font); font-size: 12px; font-weight: bold;
+      color: var(--wf-dark); text-decoration: none;
+      padding: var(--s1) var(--s2); background: none; border: none; cursor: pointer;
+      border-bottom: 1px dashed var(--wf-border-dark);
+    }
+    .nhsuk-pagination__previous:hover, .nhsuk-pagination__next:hover { color: var(--wf-black); }
+    .nhsuk-pagination__previous:focus, .nhsuk-pagination__next:focus { outline: 2px dashed var(--wf-dark); outline-offset: 2px; }
+    .nhsuk-pagination__previous--disabled, .nhsuk-pagination__next--disabled {
+      color: var(--wf-light); cursor: not-allowed; border-bottom: none; pointer-events: none;
+    }
+    .nhsuk-pagination__title { font-family: var(--wf-font); font-size: 12px; }
+    .nhsuk-pagination__list { display: flex; align-items: center; list-style: none; flex-wrap: wrap; justify-content: center; }
+    .nhsuk-pagination__item { display: flex; }
+    .nhsuk-pagination__link {
+      display: flex; align-items: center; justify-content: center;
+      min-width: 32px; height: 32px; padding: 0 var(--s1); margin: 0 2px;
+      border: 1px dashed var(--wf-border); font-family: var(--wf-font); font-size: 12px;
+      color: var(--wf-dark); text-decoration: underline; background: var(--wf-white); cursor: pointer;
+    }
+    .nhsuk-pagination__link:hover { background: var(--wf-shade); }
+    .nhsuk-pagination__link:focus { outline: 2px dashed var(--wf-dark); outline-offset: 2px; }
+    .nhsuk-pagination__item--current .nhsuk-pagination__link {
+      background: var(--wf-dark); color: var(--wf-white); border-style: solid;
+      font-weight: bold; text-decoration: none; cursor: default;
+    }
+    .nhsuk-pagination__item--current .nhsuk-pagination__link:hover { background: var(--wf-dark); }
+    .nhsuk-pagination__item--ellipsis {
+      display: flex; align-items: center; justify-content: center;
+      min-width: 32px; height: 32px; font-family: var(--wf-font); font-size: 12px;
+      color: var(--wf-light); pointer-events: none; user-select: none;
+    }
+    .nhsuk-icon { vertical-align: middle; flex-shrink: 0; }
+    .nhsuk-u-visually-hidden {
+      position: absolute; width: 1px; height: 1px; margin: -1px;
+      padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0;
+    }
+
+    /* ACTION BUTTONS — two independent bars */
+    .wf-results-actions {
+      display: flex; gap: var(--s2); align-items: center; flex-wrap: wrap;
+    }
+    .wf-results-actions--search {
+      margin-top: var(--s4); padding-top: var(--s4);
+      border-top: 2px dashed var(--wf-border-dark);
+    }
+    .wf-results-actions--groups {
+      margin-top: var(--s4);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       GROUPS SCREEN
+    ══════════════════════════════════════════════════════════════════ */
+    .wf-groups-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      flex-wrap: wrap; gap: var(--s3); margin-bottom: var(--s5);
+      padding-bottom: var(--s3); border-bottom: 2px solid var(--wf-dark);
+    }
+    .wf-groups-title {
+      font-family: var(--wf-font); font-size: 22px; font-weight: bold;
+      color: var(--wf-black);
+    }
+    .wf-btn-back {
+      display: inline-flex; align-items: center; gap: 4px;
+      height: 34px; padding: 0 var(--s3);
+      background: var(--wf-white); color: var(--wf-dark);
+      border: 1px dashed var(--wf-border-dark);
+      font-family: var(--wf-font); font-size: 12px; font-weight: bold;
+      cursor: pointer; flex-shrink: 0;
+    }
+    .wf-btn-back:hover { background: var(--wf-shade); }
+    .wf-btn-back:focus { outline: 2px dashed var(--wf-dark); outline-offset: 2px; }
+
+    .wf-groups-empty {
+      background: var(--wf-white); border: 2px dashed var(--wf-border-dark);
+      background-image: var(--wf-hatching);
+      padding: var(--s6) var(--s4); text-align: center;
+    }
+    .wf-groups-empty__icon {
+      font-family: var(--wf-font); font-size: 28px; color: var(--wf-rule); display: block;
+    }
+    .wf-groups-empty__title {
+      font-family: var(--wf-font); font-size: 16px; font-weight: bold;
+      color: var(--wf-dark); margin: var(--s3) 0 var(--s2);
+    }
+    .wf-groups-empty__body {
+      font-family: var(--wf-font); font-size: 12px; color: var(--wf-mid);
+    }
+
+    /* GROUP CARD */
+    .group-card {
+      border: 2px solid var(--wf-border-dark);
+      background: var(--wf-white); margin-bottom: var(--s3); overflow: hidden;
+    }
+    .group-card__header {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: var(--s2); padding: var(--s3) var(--s4);
+      border-bottom: 1px dashed var(--wf-border);
+      background: var(--wf-shade);
+    }
+    .group-card__name {
+      font-family: var(--wf-font); font-size: 15px; font-weight: bold; color: var(--wf-dark);
+    }
+    .group-card__meta {
+      font-family: var(--wf-font); font-size: 11px; color: var(--wf-mid);
+    }
+    .group-card__meta strong { color: var(--wf-dark); }
+    .group-card__badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 2px solid var(--wf-dark); background: var(--wf-dark);
+      color: var(--wf-white); font-family: var(--wf-font);
+      font-size: 11px; font-weight: bold;
+      padding: 2px 10px; white-space: nowrap; flex-shrink: 0;
+    }
+    .group-card__toggle {
+      display: flex; align-items: center; gap: var(--s2);
+      padding: var(--s2) var(--s4);
+      background: none; border: none; border-top: 1px dashed var(--wf-border);
+      font-family: var(--wf-font); font-size: 12px; font-weight: bold;
+      color: var(--wf-dark); cursor: pointer; width: 100%; text-align: left;
+    }
+    .group-card__toggle:hover { background: var(--wf-shade); }
+    .group-card__toggle:focus { outline: 2px dashed var(--wf-dark); outline-offset: -2px; }
+    .toggle-icon { transition: transform 0.15s; display: inline-block; }
+    .toggle-icon--open { transform: rotate(180deg); }
+    .group-card__body { display: none; }
+    .group-card__body--open { display: block; }
+
+    /* Group inner table */
+    .group-table-wrap { overflow-x: auto; }
+    .group-participants-table {
+      width: 100%; border-collapse: collapse; font-family: var(--wf-font); font-size: 12px;
+    }
+    .group-participants-table th {
+      padding: var(--s2) var(--s3); font-size: 11px; font-weight: bold;
+      text-align: left; background: var(--wf-shade-dark);
+      border-bottom: 2px solid var(--wf-dark);
+      border-right: 1px dashed var(--wf-rule); color: var(--wf-dark);
+    }
+    .group-participants-table th:last-child { border-right: none; }
+    .group-participants-table td {
+      padding: var(--s2) var(--s3); font-size: 12px; color: var(--wf-dark);
+      border-bottom: 1px dashed var(--wf-rule);
+      border-right: 1px dashed var(--wf-rule);
+    }
+    .group-participants-table td:last-child { border-right: none; }
+    .group-participants-table tr:last-child td { border-bottom: none; }
+    .group-participants-table tr:nth-child(even) td { background: var(--wf-shade); }
+
+    /* Remove participant button */
+    .btn-remove-participant {
+      display: inline-flex; align-items: center; gap: 4px;
+      height: 26px; padding: 0 var(--s2);
+      background: var(--wf-white); color: var(--wf-dark);
+      border: 1px dashed var(--wf-border-dark);
+      font-family: var(--wf-font); font-size: 11px; font-weight: bold;
+      cursor: pointer; white-space: nowrap;
+    }
+    .btn-remove-participant:hover { background: var(--wf-shade-dark); }
+    .btn-remove-participant:focus { outline: 2px dashed var(--wf-dark); outline-offset: 2px; }
+    /* Remove action column — narrow, no zebra stripe */
+    .group-participants-table td.col-action,
+    .group-participants-table th.col-action {
+      width: 90px; text-align: center; white-space: nowrap;
+      background: var(--wf-white) !important;
+      border-left: 1px solid var(--wf-border-dark);
+    }
+
+    /* Continue button — sits OUTSIDE the group card, right-aligned */
+    .group-card__continue-row {
+      display: flex; justify-content: flex-end; align-items: center;
+      margin-top: var(--s2); margin-bottom: var(--s4);
+    }
+    .wf-btn--continue {
+      display: inline-flex; align-items: center; gap: var(--s2);
+      height: 38px; padding: 0 var(--s4);
+      border: 2px solid var(--wf-dark); background: var(--wf-dark);
+      color: var(--wf-white); font-family: var(--wf-font); font-size: 13px;
+      font-weight: bold; cursor: pointer; white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+    .wf-btn--continue:hover { background: var(--wf-black); border-color: var(--wf-black); }
+    .wf-btn--continue:focus { outline: 2px dashed var(--wf-dark); outline-offset: 3px; }
+    .wf-btn--continue:active { transform: translateY(1px); }
+
+    /* Confirm removal modal */
+    .confirm-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1100; padding: var(--s3);
+    }
+    .confirm-panel {
+      background: var(--wf-white);
+      border: 3px solid var(--wf-dark);
+      width: 100%; max-width: 460px;
+      padding: var(--s5);
+      position: relative;
+    }
+    .confirm-panel::before {
+      content: "CONFIRMATION DIALOGUE";
+      position: absolute; top: -12px; left: var(--s3);
+      font-family: var(--wf-font); font-size: 9px; font-weight: bold;
+      color: var(--wf-dark); background: var(--wf-white);
+      padding: 0 4px; letter-spacing: 0.08em;
+    }
+    .confirm-title {
+      font-family: var(--wf-font); font-size: 18px; font-weight: bold;
+      color: var(--wf-dark); margin-bottom: var(--s3);
+      padding-bottom: var(--s2); border-bottom: 2px solid var(--wf-dark);
+    }
+    .confirm-body {
+      font-family: var(--wf-font); font-size: 13px; color: var(--wf-dark);
+      line-height: 1.6; margin-bottom: var(--s4);
+    }
+    .confirm-body strong { color: var(--wf-black); }
+    .confirm-warning {
+      background: var(--wf-shade); border-left: 3px solid var(--wf-dark);
+      padding: var(--s2) var(--s3); margin-top: var(--s3);
+      font-family: var(--wf-font); font-size: 12px; color: var(--wf-mid);
+    }
+    .confirm-actions { display: flex; gap: var(--s2); flex-wrap: wrap; }
+
+    /* ══════════════════════════════════════════════════════════════════
+       MODAL
+    ══════════════════════════════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; padding: var(--s3);
+    }
+    .modal-panel {
+      background: var(--wf-white);
+      border: 3px solid var(--wf-dark);
+      width: 100%; max-width: 520px;
+      padding: var(--s5);
+      position: relative; max-height: 90vh; overflow-y: auto;
+    }
+    .modal-panel::before {
+      content: "MODAL / DIALOGUE";
+      position: absolute; top: -12px; left: var(--s3);
+      font-family: var(--wf-font); font-size: 9px; font-weight: bold;
+      color: var(--wf-dark); background: var(--wf-white);
+      padding: 0 4px; letter-spacing: 0.08em;
+    }
+    .modal-title {
+      font-family: var(--wf-font); font-size: 18px; font-weight: bold;
+      color: var(--wf-dark); margin-bottom: var(--s2);
+      padding-bottom: var(--s2); border-bottom: 2px solid var(--wf-dark);
+    }
+    .modal-desc {
+      font-family: var(--wf-font); font-size: 12px; color: var(--wf-mid); line-height: 1.5;
+    }
+    .modal-desc strong { color: var(--wf-dark); }
+    .modal-actions { display: flex; gap: var(--s2); margin-top: var(--s4); flex-wrap: wrap; }
+    .modal-error { display: block; font-family: var(--wf-font); font-size: 12px; font-weight: bold; color: var(--wf-dark); border-left: 3px solid var(--wf-dark); padding-left: var(--s1); margin-top: var(--s1); }
+
+    /* MODAL TABS */
+    .modal-mode-toggle {
+      display: flex; border-bottom: 2px solid var(--wf-border-dark);
+      margin-top: var(--s4);
+    }
+    .mode-tab {
+      flex: 1; padding: var(--s2) var(--s3);
+      background: none; border: none; border-bottom: 3px solid transparent;
+      margin-bottom: -2px; font-family: var(--wf-font); font-size: 12px;
+      font-weight: bold; color: var(--wf-mid); cursor: pointer; text-align: center;
+    }
+    .mode-tab:hover { color: var(--wf-dark); }
+    .mode-tab:focus { outline: 2px dashed var(--wf-dark); outline-offset: 0; }
+    .mode-tab--active { color: var(--wf-dark); border-bottom-color: var(--wf-dark); }
+
+    /* GROUP PREVIEW */
+    .group-preview {
+      background: var(--wf-shade); border-left: 3px solid var(--wf-dark);
+      padding: var(--s2) var(--s3); margin-top: var(--s2);
+    }
+    .group-preview__label { font-family: var(--wf-font); font-size: 10px; color: var(--wf-mid); margin-bottom: 2px; }
+    .group-preview__count { font-family: var(--wf-font); font-size: 12px; font-weight: bold; color: var(--wf-dark); }
+
+    /* ── TOAST ────────────────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: var(--s5); left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: var(--wf-dark); color: var(--wf-white);
+      font-family: var(--wf-font); font-size: 13px; font-weight: bold;
+      padding: var(--s2) var(--s4); border: 2px solid var(--wf-dark);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      white-space: nowrap; z-index: 2000;
+    }
+    .toast::before {
+      content: "[ "; opacity: 0.5;
+    }
+    .toast::after {
+      content: " ]"; opacity: 0.5;
+    }
+    .toast--visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── FOOTER ───────────────────────────────────────────────────── */
+    .wf-footer {
+      background: var(--wf-dark);
+      background-image: var(--wf-hatching);
+      border-top: 3px solid var(--wf-black);
+      color: var(--wf-white); padding: var(--s5) var(--s3) var(--s4); margin-top: var(--s7);
+    }
+    .wf-footer__inner { max-width: 1200px; margin: 0 auto; }
+    .wf-footer ul { list-style: none; display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); margin-bottom: var(--s4); }
+    .wf-footer ul a { color: rgba(255,255,255,0.7); font-family: var(--wf-font); font-size: 11px; text-decoration: underline; }
+    .wf-footer ul a:hover { color: var(--wf-white); }
+    .wf-footer p { font-family: var(--wf-font); font-size: 10px; opacity: 0.5; border-top: 1px dashed rgba(255,255,255,0.3); padding-top: var(--s3); }
+
+    /* ── NHS ERROR SUMMARY (wireframe) ───────────────────────────── */
+    .wf-error-summary {
+      border: 3px solid var(--wf-dark);
+      background: var(--wf-white);
+      padding: var(--s3) var(--s4);
+      margin-bottom: var(--s4);
+      max-width: 640px;
+    }
+    .wf-error-summary__title {
+      font-family: var(--wf-font); font-size: 16px; font-weight: bold;
+      color: var(--wf-dark); margin-bottom: var(--s2);
+    }
+    .wf-error-summary__body { font-family: var(--wf-font); font-size: 13px; }
+    .wf-error-summary__list { list-style: none; padding: 0; margin: 0; }
+    .wf-error-summary__list li { margin-bottom: var(--s1); }
+    .wf-error-summary__list a {
+      color: var(--wf-dark); font-weight: bold;
+      text-decoration: underline; border-bottom: 2px solid var(--wf-dark);
+    }
+    .wf-error-summary__list a:hover { opacity: 0.7; }
+
+    /* inline field error message (under search input) */
+    .wf-field-error-msg {
+      display: block; font-family: var(--wf-font); font-size: 12px;
+      font-weight: bold; color: var(--wf-dark);
+      border-left: 4px solid var(--wf-dark);
+      padding: var(--s1) var(--s2); margin-bottom: var(--s2);
+      background: var(--wf-shade);
+    }
+
+    /* search card error state — red-left-border on group */
+    .wf-search-card--error {
+      border-left: 4px solid var(--wf-dark);
+    }
+    .wf-input--error-state {
+      border: 2px dashed var(--wf-dark) !important;
+      border-left: 4px solid var(--wf-dark) !important;
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .wf-h1 { font-size: 22px; }
+      .wf-search-card { max-width: 100%; }
+      .wf-results-actions { flex-direction: column; align-items: stretch; }
+      .wf-results-actions .wf-btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="sr-only" href="#main-content">Skip to main content</a>
+
+  <!-- MAIN -->
+  <main id="main-content" class="wf-main" role="main">
+
+    <h1 class="wf-h1">Search participant/s</h1>
+    <p class="wf-meta">
+      Batch:&nbsp;<strong>BSS_BATCH_20260526.csv</strong> &nbsp;/&nbsp;
+      Imported:&nbsp;<strong>26 May 2026</strong> &nbsp;/&nbsp;
+      Source:&nbsp;<strong>BS Select</strong>
+    </p>
+
+    <!-- NHS ERROR SUMMARY — shown above search when no results found -->
+    <div class="wf-error-summary" id="js-no-results" style="display:none;" role="alert" aria-labelledby="error-summary-title" tabindex="-1">
+      <div role="alert">
+        <h2 class="wf-error-summary__title" id="error-summary-title">
+          There is a problem
+        </h2>
+        <div class="wf-error-summary__body">
+          <ul class="wf-error-summary__list">
+            <li>
+              <a href="#js-search" id="js-no-results-link">No participants found matching your search</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEARCH CARD -->
+    <div class="wf-search-card" role="search" aria-label="Search participants">
+      <div class="wf-form-group">
+        <label class="wf-label" for="js-search">Search</label>
+        <span class="wf-hint" id="search-hint">Search by NHS number, name or date of birth &nbsp;(e.g. 02 Mar 1965)</span>
+        <!-- inline field error sits between hint and input per NHS DS pattern -->
+        <div id="js-search-error-group" style="display:none;">
+          <span class="wf-field-error-msg" id="js-search-error-inline">
+            <span class="sr-only">Error:</span>
+            <span id="js-no-results-msg"></span>
+          </span>
+        </div>
+        <div class="wf-search-row">
+          <input
+            class="wf-input"
+            type="search"
+            id="js-search"
+            aria-describedby="search-hint"
+            placeholder="e.g. 612 558 7760"
+            autocomplete="off"
+            onkeydown="handleKey(event)" />
+          <button class="wf-btn-search" type="button" onclick="runSearch()" aria-label="Search participants">
+            &#9906; Search
+          </button>
+        </div>
+      </div>
+      <button class="wf-btn-clear" type="button" onclick="clearSearch()">&#10005; Clear search</button>
+    </div>
+
+    <!-- RESULTS -->
+    <section id="js-results-section" aria-live="polite" aria-atomic="false">
+
+      <div class="wf-results-header">
+        <h2 class="wf-h2" id="js-results-title">Results</h2>
+        <span class="wf-results-count" id="js-results-count" aria-live="polite" aria-atomic="true"></span>
+      </div>
+
+      <!-- Table meta -->
+      <div class="wf-table-meta" id="js-table-meta" style="display:none;">
+        <span id="js-showing"></span>
+      </div>
+
+      <!-- Table -->
+      <div class="wf-table-wrap" id="js-table-wrap" style="display:none;"
+        role="region" aria-label="Search results" tabindex="0">
+        <table class="wf-table" id="js-table">
+          <caption class="sr-only" id="js-caption">Participant search results</caption>
+          <thead>
+            <tr>
+              <th scope="col">
+                <input type="checkbox" class="wf-checkbox" id="js-selectall"
+                  aria-label="Select all visible participants" onchange="toggleAll(this)" />
+              </th>
+              <th scope="col" tabindex="0" aria-sort="none" data-col="nhs"
+                onclick="sortBy('nhs',this)" onkeydown="sortKey(event,'nhs',this)">
+                NHS Number
+                <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
+              </th>
+              <th scope="col" tabindex="0" aria-sort="none" data-col="last"
+                onclick="sortBy('last',this)" onkeydown="sortKey(event,'last',this)">
+                Last Name
+                <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
+              </th>
+              <th scope="col" tabindex="0" aria-sort="none" data-col="fore"
+                onclick="sortBy('fore',this)" onkeydown="sortKey(event,'fore',this)">
+                Forename
+                <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
+              </th>
+              <th scope="col" tabindex="0" aria-sort="none" data-col="dob"
+                onclick="sortBy('dob',this)" onkeydown="sortKey(event,'dob',this)">
+                Date of birth
+                <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
+              </th>
+              <th scope="col" tabindex="0" aria-sort="none" data-col="gp"
+                onclick="sortBy('gp',this)" onkeydown="sortKey(event,'gp',this)">
+                GP practice code
+                <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="js-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <nav class="nhsuk-pagination" id="js-pagination"
+        role="navigation" aria-label="Pagination" style="display:none;"></nav>
+
+      <!-- ADD TO GROUP — only shown when search results are visible -->
+      <div class="wf-results-actions wf-results-actions--search" id="js-add-group-bar" style="display:none;">
+        <button class="wf-btn" type="button" id="btn-add-group" onclick="openAddToGroup()">
+          &#43; Add to group
+        </button>
+      </div>
+
+    </section>
+
+    <!-- DISPLAY GROUPS — shown independently whenever groups with participants exist -->
+    <div class="wf-results-actions wf-results-actions--groups" id="js-display-groups-bar" style="display:none;">
+      <button class="wf-btn wf-btn--secondary" type="button" id="btn-display-groups"
+        onclick="showGroupsScreen()">
+        &#9632; Display groups
+      </button>
+    </div>
+
+    <!-- GROUPS SCREEN -->
+    <section id="js-groups-screen" style="display:none;" aria-label="Participant groups">
+      <div class="wf-groups-header">
+        <div>
+          <h2 class="wf-groups-title">Participant groups</h2>
+          <p class="wf-small" style="color:var(--wf-mid);margin-top:4px;">
+            Batch: <strong style="color:var(--wf-dark);">BSS_BATCH_20260526.csv</strong>
+          </p>
+        </div>
+        <button class="wf-btn-back" type="button" onclick="hideGroupsScreen()">
+          &larr; Back to search
+        </button>
+      </div>
+
+      <div id="js-groups-empty" class="wf-groups-empty" style="display:none;">
+        <span class="wf-groups-empty__icon">[ &nbsp;&#128101;&nbsp; ]</span>
+        <p class="wf-groups-empty__title">No groups yet</p>
+        <p class="wf-groups-empty__body">Select participants from search results and use "Add to group" to create a group.</p>
+      </div>
+
+      <div id="js-groups-list"></div>
+    </section>
+
+  </main>
+
+  <!-- MODAL -->
+  <div id="js-modal-overlay" class="modal-overlay" role="dialog" aria-modal="true"
+    aria-labelledby="modal-title" style="display:none;" onclick="handleOverlayClick(event)">
+    <div class="modal-panel">
+
+      <h2 class="modal-title" id="modal-title">Add to group</h2>
+      <p class="modal-desc" id="js-modal-desc"></p>
+
+      <div class="modal-mode-toggle" id="js-modal-mode-toggle" style="display:none;">
+        <button class="mode-tab mode-tab--active" id="tab-existing" type="button"
+          onclick="switchModalMode('existing')">Add to existing group</button>
+        <button class="mode-tab" id="tab-new" type="button"
+          onclick="switchModalMode('new')">Create new group</button>
+      </div>
+
+      <!-- EXISTING PANEL -->
+      <div id="js-panel-existing" style="display:none;">
+        <div class="wf-form-group" style="margin-top:var(--s3);">
+          <label class="wf-label" for="js-group-select">Select a group</label>
+          <span class="wf-hint" id="group-select-hint">Choose which group to add the selected participants to</span>
+          <select class="wf-select" id="js-group-select"
+            aria-describedby="group-select-hint js-group-select-error"
+            onchange="onGroupSelectChange()">
+            <option value="">-- Select a group --</option>
+          </select>
+          <span class="modal-error" id="js-group-select-error" role="alert" style="display:none;">Select a group</span>
+        </div>
+        <div class="group-preview" id="js-group-preview" style="display:none;">
+          <p class="group-preview__label">Current participants in this group</p>
+          <p class="group-preview__count" id="js-group-preview-count"></p>
+        </div>
+      </div>
+
+      <!-- NEW PANEL -->
+      <div id="js-panel-new">
+        <div class="wf-form-group" style="margin-top:var(--s3);">
+          <label class="wf-label" for="js-group-name">Group name</label>
+          <span class="wf-hint" id="group-name-hint">Enter a descriptive name for this group</span>
+          <input class="wf-input" type="text" id="js-group-name"
+            aria-describedby="group-name-hint js-group-name-error"
+            placeholder="e.g. Priority overdue — June 2026"
+            maxlength="80"
+            oninput="clearNameError()"
+            onkeydown="handleModalKey(event)" />
+          <span class="modal-error" id="js-group-name-error" role="alert" style="display:none;">Enter a group name</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="wf-btn" type="button" id="js-modal-save-btn" onclick="saveGroup()">Save group</button>
+        <button class="wf-btn wf-btn--secondary" type="button" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="js-toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ── REMOVE PARTICIPANT CONFIRMATION ─────────────────────────────── -->
+  <div id="js-confirm-overlay" class="confirm-overlay" style="display:none;"
+       role="dialog" aria-modal="true" aria-labelledby="js-confirm-title">
+    <div class="confirm-panel">
+      <p class="confirm-title" id="js-confirm-title">Remove participant from group?</p>
+      <div class="confirm-body">
+        <p>You are about to remove <strong id="js-confirm-name">this participant</strong> from the group <strong id="js-confirm-group">"..."</strong>.</p>
+        <div class="confirm-warning">This action cannot be undone. The participant will need to be added again manually if removed in error.</div>
+      </div>
+      <div class="confirm-actions">
+        <button type="button" class="wf-btn" id="js-confirm-yes" onclick="confirmRemove()">Yes, remove participant</button>
+        <button type="button" class="wf-btn wf-btn--secondary" onclick="cancelRemove()">No, go back</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ─── DATA ─────────────────────────────────────────────────────── */
+    const ALL_DATA = [
+      { nhs:"612 558 7760", last:"Ali",       fore:"Sara",      dob:"1965-03-02", dobD:"02 Mar 1965", gp:"G82650" },
+      { nhs:"625 671 9980", last:"Graham",    fore:"Sam",       dob:"1968-08-18", dobD:"18 Aug 1968", gp:"G82041" },
+      { nhs:"638 784 2200", last:"Nowak",     fore:"Ana",       dob:"1972-11-09", dobD:"09 Nov 1972", gp:"G82109" },
+      { nhs:"651 897 4420", last:"Garcia",    fore:"Amy",       dob:"1966-12-14", dobD:"14 Dec 1966", gp:"G82041" },
+      { nhs:"677 023 8860", last:"Petrov",    fore:"Kristin",   dob:"1967-07-28", dobD:"28 Jul 1967", gp:"G82109" },
+      { nhs:"690 136 0080", last:"Ibrahim",   fore:"Ahmed",     dob:"1971-06-03", dobD:"03 Jun 1971", gp:"G82650" },
+      { nhs:"755 691 1180", last:"Moore",     fore:"Percy",     dob:"1962-05-23", dobD:"23 May 1962", gp:"G82109" },
+      { nhs:"794 020 7840", last:"Clark",     fore:"Bianca",    dob:"1968-11-24", dobD:"24 Nov 1968", gp:"G82650" },
+      { nhs:"781 917 5620", last:"Taylor",    fore:"Helen",     dob:"1965-04-07", dobD:"07 Apr 1965", gp:"G85540" },
+      { nhs:"807 133 0060", last:"Zodovaska", fore:"Andrea",    dob:"1971-08-13", dobD:"13 Aug 1971", gp:"G82041" },
+      { nhs:"485 777 3456", last:"John",      fore:"Jane",      dob:"1962-03-14", dobD:"14 Mar 1962", gp:"G82650" },
+      { nhs:"491 234 8812", last:"Patel",     fore:"Reena",     dob:"1958-06-29", dobD:"29 Jun 1958", gp:"G82041" },
+      { nhs:"502 881 1140", last:"Okonkwa",   fore:"Paula",     dob:"1965-11-07", dobD:"07 Nov 1965", gp:"G82109" },
+      { nhs:"477 003 9921", last:"Jackson",   fore:"Miranda",   dob:"1971-08-22", dobD:"22 Aug 1971", gp:"G82650" },
+      { nhs:"533 612 0044", last:"Williams",  fore:"Carol",     dob:"1963-01-05", dobD:"05 Jan 1963", gp:"G82109" },
+      { nhs:"548 290 1133", last:"Brown",     fore:"Patricia",  dob:"1969-09-12", dobD:"12 Sep 1969", gp:"G85540" },
+      { nhs:"561 445 7782", last:"Jones",     fore:"Linda",     dob:"1964-07-19", dobD:"19 Jul 1964", gp:"G82650" },
+      { nhs:"574 889 3310", last:"Davis",     fore:"Margaret",  dob:"1960-02-28", dobD:"28 Feb 1960", gp:"G82041" },
+      { nhs:"589 002 4421", last:"Wilson",    fore:"Barbara",   dob:"1966-10-31", dobD:"31 Oct 1966", gp:"G82109" },
+      { nhs:"603 117 5500", last:"Evans",     fore:"Susan",     dob:"1970-06-14", dobD:"14 Jun 1970", gp:"G82650" },
+      { nhs:"614 223 6610", last:"Roberts",   fore:"Karen",     dob:"1961-04-22", dobD:"22 Apr 1961", gp:"G82109" },
+      { nhs:"628 334 7720", last:"Thompson",  fore:"Christine", dob:"1967-09-17", dobD:"17 Sep 1967", gp:"G82650" },
+      { nhs:"642 445 8830", last:"White",     fore:"Sharon",    dob:"1963-12-03", dobD:"03 Dec 1963", gp:"G82041" },
+      { nhs:"656 556 9940", last:"Harris",    fore:"Angela",    dob:"1969-05-09", dobD:"09 May 1969", gp:"G85540" },
+      { nhs:"670 667 0050", last:"Martin",    fore:"Deborah",   dob:"1965-08-14", dobD:"14 Aug 1965", gp:"G82109" },
+      { nhs:"684 778 1160", last:"Lee",       fore:"Catherine", dob:"1971-02-27", dobD:"27 Feb 1971", gp:"G82650" },
+      { nhs:"698 889 2270", last:"Walker",    fore:"Janet",     dob:"1962-11-11", dobD:"11 Nov 1962", gp:"G82041" },
+      { nhs:"712 990 3380", last:"Hall",      fore:"Frances",   dob:"1968-07-06", dobD:"06 Jul 1968", gp:"G82109" },
+      { nhs:"726 001 4490", last:"Allen",     fore:"Ann",       dob:"1964-03-19", dobD:"19 Mar 1964", gp:"G85540" },
+      { nhs:"740 112 5500", last:"Young",     fore:"Wendy",     dob:"1970-09-28", dobD:"28 Sep 1970", gp:"G82650" },
+      { nhs:"754 223 6611", last:"Scott",     fore:"Donna",     dob:"1964-05-30", dobD:"30 May 1964", gp:"G82109"},
+    ];
+    const STATUS_DATES = [
+    ];
+    while (ALL_DATA.length < 100) {
+      const i = ALL_DATA.length, base = ALL_DATA[i % 30], sd = STATUS_DATES[i % 5];
+      ALL_DATA.push({
+        nhs:  (String(800+i)+" "+String(100+(i%900))+" "+String(200+(i%800))).slice(0,13),
+        last: base.last, fore: base.fore, dob: base.dob, dobD: base.dobD,
+        gp: base.gp
+      });
+    }
+
+    /* ─── STATE ─────────────────────────────────────────────────────── */
+    const PAGE_SIZE = 15;
+    let page = 1, sortCol = "last", sortDir = 1;
+    let filtered = [], selected = new Set(), lastQuery = "";
+    const TODAY = new Date("2026-06-03");
+
+    /* ─── HIGHLIGHT ─────────────────────────────────────────────────── */
+    function highlight(text, query) {
+      if (!query) return text;
+      const esc = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return text.replace(new RegExp("("+esc+")","gi"), "<mark>$1</mark>");
+    }
+
+    /* ─── SEARCH ─────────────────────────────────────────────────────── */
+    function handleKey(e) { if (e.key === "Enter") runSearch(); }
+
+    function runSearch() {
+      const q = document.getElementById("js-search").value.trim();
+      if (!q) return;
+      lastQuery = q;
+      const ql = q.toLowerCase();
+      filtered = ALL_DATA.filter(function(r) {
+        return r.nhs.toLowerCase().includes(ql)
+            || r.last.toLowerCase().includes(ql)
+            || r.fore.toLowerCase().includes(ql)
+            || (r.fore+" "+r.last).toLowerCase().includes(ql)
+            || (r.last+" "+r.fore).toLowerCase().includes(ql)
+            || r.dobD.toLowerCase().includes(ql);
+      });
+      page = 1;
+      sortAndRender();
+      revealResults();
+    }
+
+    function clearSearch() {
+      document.getElementById("js-search").value = "";
+      filtered = []; lastQuery = ""; selected.clear();
+      /* clear error state */
+      document.getElementById("js-no-results").style.display  = "none";
+      document.getElementById("js-search-error-group").style.display = "none";
+      document.querySelector(".wf-search-card").classList.remove("wf-search-card--error");
+      document.getElementById("js-search").classList.remove("wf-input--error-state");
+      document.getElementById("js-search").setAttribute("aria-describedby","search-hint");
+      /* hide results section and add-group bar */
+      document.getElementById("js-results-section").classList.remove("visible");
+      document.getElementById("js-add-group-bar").style.display = "none";
+      /* Display groups bar stays visible if groups already exist */
+      updateDisplayGroupsBtn();
+      document.getElementById("js-search").focus();
+    }
+
+    /* ─── REVEAL RESULTS ─────────────────────────────────────────────── */
+    function revealResults() {
+      const section    = document.getElementById("js-results-section");
+      const noResults  = document.getElementById("js-no-results");
+      const errorGroup = document.getElementById("js-search-error-group");
+      const tableWrap  = document.getElementById("js-table-wrap");
+      const tableMeta  = document.getElementById("js-table-meta");
+      const pagination = document.getElementById("js-pagination");
+      const countEl    = document.getElementById("js-results-count");
+      const searchCard = document.querySelector(".wf-search-card");
+      const searchInput = document.getElementById("js-search");
+
+      section.classList.add("visible");
+      document.getElementById("js-results-title").textContent = 'Results for "'+lastQuery+'"';
+
+      if (filtered.length === 0) {
+        /* — show NHS error summary — */
+        const errMsg = 'No participants found matching "' + lastQuery + '". Check the NHS number, name or date of birth and try again.';
+        document.getElementById("js-no-results-link").textContent = errMsg;
+        document.getElementById("js-no-results-msg").textContent  = errMsg;
+        noResults.style.display   = "block";
+        errorGroup.style.display  = "block";
+        searchCard.classList.add("wf-search-card--error");
+        searchInput.classList.add("wf-input--error-state");
+        searchInput.setAttribute("aria-describedby", "search-hint js-search-error-inline");
+        /* focus the error summary so screen readers announce it */
+        noResults.focus();
+
+        tableWrap.style.display  = "none";
+        tableMeta.style.display  = "none";
+        pagination.style.display = "none";
+        countEl.innerHTML = "<strong>0</strong> results";
+      } else {
+        /* — clear any error state — */
+        noResults.style.display   = "none";
+        errorGroup.style.display  = "none";
+        searchCard.classList.remove("wf-search-card--error");
+        searchInput.classList.remove("wf-input--error-state");
+        searchInput.setAttribute("aria-describedby", "search-hint");
+
+        tableWrap.style.display  = "block";
+        tableMeta.style.display  = "flex";
+        pagination.style.display = filtered.length > PAGE_SIZE ? "flex" : "none";
+        countEl.innerHTML = "<strong>"+filtered.length+"</strong> result"+(filtered.length!==1?"s":"");
+      }
+      updateActionButtons();
+    }
+
+    /* ─── SORT ──────────────────────────────────────────────────────── */
+    function sortBy(col, th) {
+      if (sortCol === col) sortDir *= -1; else { sortCol = col; sortDir = 1; }
+      document.querySelectorAll(".wf-table th[aria-sort]")
+        .forEach(function(el) { el.setAttribute("aria-sort","none"); });
+      th.setAttribute("aria-sort", sortDir===1?"ascending":"descending");
+      sortAndRender();
+    }
+    function sortKey(e, col, th) {
+      if (e.key==="Enter"||e.key===" ") { e.preventDefault(); sortBy(col,th); }
+    }
+    function sortAndRender() {
+      filtered.sort(function(a,b){
+        const av=(a[sortCol]||"").toLowerCase(), bv=(b[sortCol]||"").toLowerCase();
+        return av<bv?-sortDir:av>bv?sortDir:0;
+      });
+      renderTable(); renderPagination();
+    }
+
+    /* ─── RENDER TABLE ──────────────────────────────────────────────── */
+    function renderTable() {
+      const tbody = document.getElementById("js-tbody");
+      const total = filtered.length;
+      const start = (page-1)*PAGE_SIZE;
+      const slice = filtered.slice(start, start+PAGE_SIZE);
+      const q     = lastQuery;
+      document.getElementById("js-showing").textContent =
+        "Showing "+(start+1)+"–"+Math.min(start+slice.length,total)+" of "+total;
+      if (!slice.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="wf-table-empty">No results to display.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = slice.map(function(r) {
+        const sel = selected.has(r.nhs);
+        return '<tr class="'+(sel?"row--selected":"")+'" id="row-'+r.nhs.replace(/ /g,"-")+'">'
+          +'<td><input type="checkbox" class="wf-checkbox" data-nhs="'+r.nhs+'" aria-label="Select '+r.fore+' '+r.last+', NHS number '+r.nhs+'" '+(sel?"checked":"")+'  onchange="toggleRow(this)" /></td>'
+          +'<td><a href="#" class="wf-table-link" onclick="event.preventDefault();openRecord(\''+r.nhs+'\')">'+highlight(r.nhs,q)+'</a></td>'
+          +'<td>'+highlight(r.last,q)+'</td>'
+          +'<td>'+highlight(r.fore,q)+'</td>'
+          +'<td style="white-space:nowrap;">'+highlight(r.dobD,q)+'</td>'
+          +'<td>'+r.gp+'</td>'
+          +'</tr>';
+      }).join("");
+    }
+
+    /* ─── PAGINATION ─────────────────────────────────────────────────── */
+    function renderPagination() {
+      const nav = document.getElementById("js-pagination");
+      const totalPages = Math.ceil(filtered.length/PAGE_SIZE)||1;
+      if (totalPages<=1) { nav.innerHTML=""; return; }
+      const items=[], range=new Set([1,totalPages]);
+      for (let p=Math.max(1,page-2);p<=Math.min(totalPages,page+2);p++) range.add(p);
+      const sorted=Array.from(range).sort(function(a,b){return a-b;});
+      let prev=0;
+      sorted.forEach(function(p){
+        if (p-prev>1) items.push({type:"ellipsis"});
+        items.push({type:"page",num:p}); prev=p;
+      });
+      const prevSVG='<svg class="nhsuk-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" focusable="false" aria-hidden="true"><path d="M10.7 6.3c.4.4.4 1 0 1.4L7.4 11H19a1 1 0 0 1 0 2H7.4l3.3 3.3c.4.4.4 1 0 1.4a1 1 0 0 1-1.4 0l-5-5A1 1 0 0 1 4 12c0-.3.1-.5.3-.7l5-5a1 1 0 0 1 1.4 0Z"/></svg>';
+      const nextSVG='<svg class="nhsuk-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" focusable="false" aria-hidden="true"><path d="m14.7 6.3 5 5c.2.2.3.4.3.7 0 .3-.1.5-.3.7l-5 5a1 1 0 0 1-1.4-1.4l3.3-3.3H5a1 1 0 0 1 0-2h11.6l-3.3-3.3a1 1 0 1 1 1.4-1.4Z"/></svg>';
+      const prevCls=page===1?"nhsuk-pagination__previous nhsuk-pagination__previous--disabled":"nhsuk-pagination__previous";
+      const nextCls=page===totalPages?"nhsuk-pagination__next nhsuk-pagination__next--disabled":"nhsuk-pagination__next";
+      const listItems=items.map(function(item){
+        if (item.type==="ellipsis") return '<li class="nhsuk-pagination__item nhsuk-pagination__item--ellipsis" aria-hidden="true">&ctdot;</li>';
+        const cur=item.num===page;
+        return '<li class="nhsuk-pagination__item'+(cur?" nhsuk-pagination__item--current":"")+'"><button class="nhsuk-pagination__link" onclick="'+(cur?"":"changePage("+item.num+")")+'" aria-label="Page '+item.num+'" '+(cur?'aria-current="page"':"")+'>'+item.num+'</button></li>';
+      }).join("");
+      nav.innerHTML='<button class="'+prevCls+'" '+(page===1?"disabled":"")+'  onclick="changePage('+(page-1)+')" aria-label="Previous page">'+prevSVG+'<span class="nhsuk-pagination__title">Previous<span class="nhsuk-u-visually-hidden"> page</span></span></button><ul class="nhsuk-pagination__list">'+listItems+'</ul><button class="'+nextCls+'" '+(page===totalPages?"disabled":"")+'  onclick="changePage('+(page+1)+')" aria-label="Next page"><span class="nhsuk-pagination__title">Next<span class="nhsuk-u-visually-hidden"> page</span></span>'+nextSVG+'</button>';
+    }
+
+    function changePage(p) {
+      const totalPages=Math.ceil(filtered.length/PAGE_SIZE)||1;
+      if (p<1||p>totalPages) return;
+      page=p; renderTable(); renderPagination();
+      document.getElementById("js-table-wrap").scrollIntoView({behavior:"smooth",block:"start"});
+    }
+
+    /* ─── SELECTION ──────────────────────────────────────────────────── */
+    function toggleRow(cb) {
+      if (cb.checked) selected.add(cb.dataset.nhs);
+      else            selected.delete(cb.dataset.nhs);
+    }
+    function toggleAll(masterCb) {
+      const start=(page-1)*PAGE_SIZE, slice=filtered.slice(start,start+PAGE_SIZE);
+      if (masterCb.checked) slice.forEach(function(r){selected.add(r.nhs);});
+      else                  slice.forEach(function(r){selected.delete(r.nhs);});
+      renderTable();
+    }
+    function openRecord(nhs) {
+      alert("Open participant record: "+nhs+"\n\n(In the live system this would open the full participant record.)");
+    }
+
+    /* ─── GROUPS STATE ───────────────────────────────────────────────── */
+    var groups = [];
+    var currentModalMode = "new";
+
+    /* Show "Add to group" bar only when search results are visible */
+    function updateActionButtons() {
+      var addBar = document.getElementById("js-add-group-bar");
+      if (addBar) addBar.style.display = filtered.length > 0 ? "flex" : "none";
+    }
+
+    /* Show "Display groups" bar whenever at least one group has participants —
+       independent of search state, persists after clear */
+    function updateDisplayGroupsBtn() {
+      var bar = document.getElementById("js-display-groups-bar");
+      if (!bar) return;
+      var hasParticipants = groups.some(function(g) { return g.participants.length > 0; });
+      bar.style.display = hasParticipants ? "flex" : "none";
+    }
+
+    /* ─── OPEN MODAL ─────────────────────────────────────────────────── */
+    function openAddToGroup() {
+      var n = selected.size;
+      var desc = document.getElementById("js-modal-desc");
+      desc.innerHTML = n === 0
+        ? "No participants are currently selected. Tick checkboxes in the results table first."
+        : "<strong>"+n+" participant"+(n!==1?"s":"")+"</strong> selected will be added to the chosen group.";
+      var toggleEl = document.getElementById("js-modal-mode-toggle");
+      if (groups.length > 0) {
+        toggleEl.style.display = "flex";
+        populateGroupDropdown();
+        switchModalMode("existing");
+      } else {
+        toggleEl.style.display = "none";
+        switchModalMode("new");
+      }
+      document.getElementById("js-group-name").value = "";
+      clearNameError();
+      document.getElementById("js-modal-overlay").style.display = "flex";
+      document.addEventListener("keydown", trapFocus);
+      setTimeout(function(){
+        var focus = currentModalMode==="existing"
+          ? document.getElementById("js-group-select")
+          : document.getElementById("js-group-name");
+        focus.focus();
+      }, 60);
+    }
+
+    function populateGroupDropdown() {
+      var sel = document.getElementById("js-group-select");
+      sel.innerHTML = '<option value="">-- Select a group --</option>';
+      groups.forEach(function(g){
+        var opt = document.createElement("option");
+        opt.value = g.id;
+        var n = g.participants.length;
+        opt.textContent = g.name+" ("+n+" participant"+(n!==1?"s":"")+")";
+        sel.appendChild(opt);
+      });
+      document.getElementById("js-group-preview").style.display = "none";
+      document.getElementById("js-group-select-error").style.display = "none";
+      sel.classList.remove("wf-input--error");
+    }
+
+    function onGroupSelectChange() {
+      var sel = document.getElementById("js-group-select");
+      var preview = document.getElementById("js-group-preview");
+      var countEl = document.getElementById("js-group-preview-count");
+      sel.classList.remove("wf-input--error");
+      document.getElementById("js-group-select-error").style.display = "none";
+      var id = sel.value;
+      if (!id) { preview.style.display = "none"; return; }
+      var g = groups.find(function(x){ return String(x.id)===String(id); });
+      if (g) {
+        var n = g.participants.length;
+        countEl.textContent = n===0
+          ? "This group currently has no participants."
+          : n+" participant"+(n!==1?"s":"")+" already in this group — new selections will be appended.";
+        preview.style.display = "block";
+      }
+    }
+
+    function switchModalMode(mode) {
+      currentModalMode = mode;
+      var tabEx=document.getElementById("tab-existing"), tabNew=document.getElementById("tab-new");
+      var panelEx=document.getElementById("js-panel-existing"), panelNew=document.getElementById("js-panel-new");
+      var saveBtn=document.getElementById("js-modal-save-btn");
+      if (mode==="existing") {
+        tabEx.classList.add("mode-tab--active"); tabNew.classList.remove("mode-tab--active");
+        panelEx.style.display="block"; panelNew.style.display="none";
+        saveBtn.textContent="Add to group";
+        setTimeout(function(){ document.getElementById("js-group-select").focus(); },30);
+      } else {
+        tabNew.classList.add("mode-tab--active"); tabEx.classList.remove("mode-tab--active");
+        panelNew.style.display="block"; panelEx.style.display="none";
+        saveBtn.textContent="Save group";
+        setTimeout(function(){ document.getElementById("js-group-name").focus(); },30);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById("js-modal-overlay").style.display = "none";
+      document.removeEventListener("keydown", trapFocus);
+      document.getElementById("btn-add-group").focus();
+    }
+    function handleOverlayClick(e) {
+      if (e.target===document.getElementById("js-modal-overlay")) closeModal();
+    }
+    function handleModalKey(e) {
+      if (e.key==="Enter") saveGroup();
+      if (e.key==="Escape") closeModal();
+    }
+    function clearNameError() {
+      document.getElementById("js-group-name-error").style.display = "none";
+      document.getElementById("js-group-name").classList.remove("wf-input--error");
+    }
+    function trapFocus(e) {
+      if (e.key==="Escape") { closeModal(); return; }
+      if (e.key!=="Tab") return;
+      var panel = document.querySelector(".modal-panel");
+      var focusable = Array.from(panel.querySelectorAll(
+        'button:not([disabled]),input:not([disabled]),select:not([disabled])'
+      )).filter(function(el){ return el.offsetParent!==null; });
+      if (!focusable.length) return;
+      var first=focusable[0], last=focusable[focusable.length-1];
+      if (e.shiftKey) { if (document.activeElement===first){e.preventDefault();last.focus();} }
+      else            { if (document.activeElement===last) {e.preventDefault();first.focus();} }
+    }
+
+    function saveGroup() {
+      var now=new Date(), nowStr=fmtDate(now);
+      var newParticipants=[];
+      selected.forEach(function(nhs){
+        var rec=ALL_DATA.find(function(r){return r.nhs===nhs;});
+        if (rec) newParticipants.push({nhs:rec.nhs,fore:rec.fore,last:rec.last,dobD:rec.dobD,gp:rec.gp,addedAt:nowStr});
+      });
+      if (currentModalMode==="existing") {
+        var sel=document.getElementById("js-group-select"), id=sel.value;
+        if (!id) {
+          document.getElementById("js-group-select-error").style.display="block";
+          sel.classList.add("wf-input--error"); sel.focus(); return;
+        }
+        var g=groups.find(function(x){return String(x.id)===String(id);});
+        if (!g) return;
+        var existing=new Set(g.participants.map(function(p){return p.nhs;}));
+        var added=0;
+        newParticipants.forEach(function(p){ if (!existing.has(p.nhs)){g.participants.push(p);added++;} });
+        closeModal();
+        var skipped=newParticipants.length-added;
+        var msg=added>0?added+" participant"+(added!==1?"s":"")+" added to \""+g.name+"\"":"No new participants — all already in \""+g.name+"\"";
+        if (skipped>0&&added>0) msg+=" ("+skipped+" already in group, skipped)";
+        showToast(msg);
+        updateDisplayGroupsBtn();
+      } else {
+        var nameEl=document.getElementById("js-group-name"), name=nameEl.value.trim();
+        if (!name) {
+          document.getElementById("js-group-name-error").style.display="block";
+          nameEl.classList.add("wf-input--error"); nameEl.focus(); return;
+        }
+        groups.push({id:Date.now(),name:name,createdAt:nowStr,participants:newParticipants});
+        closeModal();
+        var n=newParticipants.length;
+        showToast("Group \""+name+"\" created"+(n>0?" with "+n+" participant"+(n!==1?"s":""):""));
+        updateDisplayGroupsBtn();
+      }
+    }
+
+    /* ─── GROUPS SCREEN ─────────────────────────────────────────────── */
+    function showGroupsScreen() {
+      document.querySelector(".wf-search-card").style.display     = "none";
+      document.getElementById("js-results-section").style.display = "none";
+      document.getElementById("js-add-group-bar").style.display   = "none";
+      document.getElementById("js-display-groups-bar").style.display = "none";
+      document.getElementById("js-groups-screen").style.display   = "block";
+      renderGroupsScreen();
+    }
+    function hideGroupsScreen() {
+      document.getElementById("js-groups-screen").style.display = "none";
+      document.querySelector(".wf-search-card").style.display    = "";
+      document.getElementById("js-results-section").style.display = "";
+      if (filtered.length > 0) {
+        document.getElementById("js-results-section").classList.add("visible");
+        document.getElementById("js-add-group-bar").style.display = "flex";
+      }
+      /* always restore display-groups bar if groups with participants exist */
+      updateDisplayGroupsBtn();
+    }
+    function renderGroupsScreen() {
+      var emptyEl=document.getElementById("js-groups-empty"), listEl=document.getElementById("js-groups-list");
+      if (groups.length===0) {
+        emptyEl.style.cssText="display:flex;flex-direction:column;align-items:center;";
+        listEl.innerHTML=""; return;
+      }
+      emptyEl.style.display="none";
+
+      /* remember which cards are currently open so we can restore after re-render */
+      var openIds = {};
+      listEl.querySelectorAll(".group-card__body--open").forEach(function(el){
+        openIds[el.id] = true;
+      });
+
+      listEl.innerHTML = groups.map(function(g){
+        var n = g.participants.length;
+        var bodyId = "group-body-"+g.id;
+        var wasOpen = !!openIds[bodyId];
+
+        var rows = n===0
+          ? '<tr><td colspan="6" style="padding:var(--s4);text-align:center;color:var(--wf-mid);">No participants in this group.</td></tr>'
+          : g.participants.map(function(p){
+              return '<tr>'
+                +'<td>'+escHtml(p.nhs)+'</td>'
+                +'<td>'+escHtml(p.last)+'</td>'
+                +'<td>'+escHtml(p.fore)+'</td>'
+                +'<td style="white-space:nowrap;">'+escHtml(p.dobD)+'</td>'
+                +'<td style="white-space:nowrap;">'+escHtml(p.addedAt)+'</td>'
+                +'<td class="col-action">'
+                +  '<button class="btn-remove-participant" type="button"'
+                +    ' onclick="removeParticipant(\''+g.id+'\',\''+escHtml(p.nhs)+'\')"'
+                +    ' aria-label="Remove '+escHtml(p.fore)+' '+escHtml(p.last)+' from group">'
+                +    '&#10005; Remove'
+                +  '</button>'
+                +'</td>'
+                +'</tr>';
+            }).join("");
+
+        return '<div class="group-card" id="group-'+g.id+'">'
+          +'<div class="group-card__header">'
+          +  '<div><p class="group-card__name">'+escHtml(g.name)+'</p>'
+          +  '<div class="group-card__meta" style="margin-top:4px;"><span>Created: <strong>'+escHtml(g.createdAt)+'</strong></span></div></div>'
+          +  '<span class="group-card__badge" id="badge-'+g.id+'">'+n+'&nbsp;participant'+(n!==1?'s':'')+'</span>'
+          +'</div>'
+          +'<button class="group-card__toggle" type="button"'
+          +  ' onclick="toggleGroupBody(\''+g.id+'\',this)"'
+          +  ' aria-expanded="'+(wasOpen?'true':'false')+'"'
+          +  ' aria-controls="'+bodyId+'">'
+          +  '<svg class="toggle-icon'+(wasOpen?' toggle-icon--open':'')+'" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>'
+          +  '<span class="toggle-label">'+(wasOpen?' Hide participants':' Show participants')+'</span>'
+          +'</button>'
+          +'<div class="group-card__body'+(wasOpen?' group-card__body--open':'')+'" id="'+bodyId+'">'
+          +  '<div class="group-table-wrap"><table class="group-participants-table">'
+          +    '<thead><tr>'
+          +      '<th>NHS Number</th><th>Last Name</th><th>Forename</th>'
+          +      '<th>Date of birth</th><th>Date added to group</th>'
+          +      '<th class="col-action">Action</th>'
+          +    '</tr></thead>'
+          +    '<tbody>'+rows+'</tbody>'
+          +  '</table></div>'
+          +'</div>'
+          +'</div>'
+          +(n > 0
+            ? '<div class="group-card__continue-row">'
+              +  '<button type="button" class="wf-btn--continue" onclick="continueGroup(\''+g.id+'\')">'
+              +    'Continue with this group &#8594;'
+              +  '</button>'
+              +'</div>'
+            : '');
+      }).join("");
+    }
+    function toggleGroupBody(id, btn) {
+      var body=document.getElementById("group-body-"+id);
+      var icon=btn.querySelector(".toggle-icon"), label=btn.querySelector(".toggle-label");
+      var isOpen=body.classList.contains("group-card__body--open");
+      body.classList.toggle("group-card__body--open",!isOpen);
+      icon.classList.toggle("toggle-icon--open",!isOpen);
+      btn.setAttribute("aria-expanded",String(!isOpen));
+      label.textContent=isOpen?" Show participants":" Hide participants";
+    }
+
+    /* ─── REMOVE PARTICIPANT FROM GROUP ─────────────────────────────── */
+    var _pendingRemove = null; /* { groupId, nhs } */
+
+    function removeParticipant(groupId, nhs) {
+      var g = groups.find(function(x){ return String(x.id)===String(groupId); });
+      if (!g) return;
+      var idx = g.participants.findIndex(function(p){ return p.nhs===nhs; });
+      if (idx === -1) return;
+
+      var p = g.participants[idx];
+      _pendingRemove = { groupId: groupId, nhs: nhs };
+
+      document.getElementById("js-confirm-name").textContent  = p.fore+" "+p.last+" ("+p.nhs+")";
+      document.getElementById("js-confirm-group").textContent = "\u201C"+g.name+"\u201D";
+
+      var overlay = document.getElementById("js-confirm-overlay");
+      overlay.style.display = "flex";
+      document.getElementById("js-confirm-yes").focus();
+
+      overlay.addEventListener("keydown", _confirmKeyHandler);
+    }
+
+    function _confirmKeyHandler(e) {
+      if (e.key === "Escape") { cancelRemove(); }
+    }
+
+    function confirmRemove() {
+      if (!_pendingRemove) return;
+      var g = groups.find(function(x){ return String(x.id)===String(_pendingRemove.groupId); });
+      if (!g) { cancelRemove(); return; }
+      var idx = g.participants.findIndex(function(p){ return p.nhs===_pendingRemove.nhs; });
+      if (idx === -1) { cancelRemove(); return; }
+
+      var removedName = g.participants[idx].fore+" "+g.participants[idx].last;
+      g.participants.splice(idx, 1);
+
+      cancelRemove();
+      renderGroupsScreen();
+      updateDisplayGroupsBtn();
+      showToast(escHtml(removedName)+" removed from \""+escHtml(g.name)+"\"");
+    }
+
+    function cancelRemove() {
+      var overlay = document.getElementById("js-confirm-overlay");
+      overlay.style.display = "none";
+      overlay.removeEventListener("keydown", _confirmKeyHandler);
+      _pendingRemove = null;
+    }
+
+    /* ─── CONTINUE WITH GROUP ────────────────────────────────────────── */
+    function continueGroup(groupId) {
+      var g = groups.find(function(x){ return String(x.id)===String(groupId); });
+      if (!g) return;
+      alert("Continue with group \u201C"+g.name+"\u201D\n\n"+g.participants.length+" participant"+(g.participants.length!==1?"s":"")+" in this group.\n\n(In the live system this would proceed to the next step in the workflow.)");
+    }
+
+    /* ─── HELPERS ────────────────────────────────────────────────────── */
+    function fmtDate(d) {
+      var M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      return pad(d.getDate())+" "+M[d.getMonth()]+" "+d.getFullYear()+", "+pad(d.getHours())+":"+pad(d.getMinutes());
+    }
+    function pad(n) { return n<10?"0"+n:String(n); }
+    function escHtml(s) {
+      return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+    function showToast(msg) {
+      var t=document.getElementById("js-toast");
+      t.textContent=msg; t.classList.add("toast--visible");
+      setTimeout(function(){ t.classList.remove("toast--visible"); },3800);
+    }
+  </script>
+</body>
+</html>
