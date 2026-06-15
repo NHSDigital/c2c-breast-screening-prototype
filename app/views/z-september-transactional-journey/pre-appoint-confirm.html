@@ -26,8 +26,9 @@
     .app-flow-arrow {
       position: relative;
       transform: translateX(calc(-50% + 14px));
-      color: #fff;
-      background: #4c6272;
+      color: #4c6272;
+      background: #fff;
+      font-weight: bold;
       padding: 0.3rem 0 0.3rem 0.75rem;
       z-index: 1;
       border-radius: 4px 0 0 4px;
@@ -43,7 +44,7 @@
       height: 0;
       border-top: 28px solid transparent;
       border-bottom: 28px solid transparent;
-      border-left: 28px solid #4c6272;
+      border-left: 28px solid #fff;
     }
 
       /* Make the cards fill the flex item's cross size and allow their content to stretch */
@@ -60,6 +61,28 @@
         align-self: center;
       }
   </style>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="nhsuk-error-summary" data-module="nhsuk-error-summary">
+        <div role="alert">
+          <h2 class="nhsuk-error-summary__title">
+          There is a problem
+          </h2>
+          <div class="nhsuk-error-summary__body">
+            <p>
+              During this test, the number of available slots must be greater than or identical to the number of participants
+            </p>
+            <ul class="nhsuk-list nhsuk-error-summary__list">
+              <li>
+                <a href="#">Cancel and go back</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
@@ -109,12 +132,25 @@
     </div>
   </div>
   
-  <div class="nhsuk-grid-row">
+  <!-- <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
 
       {{ button({
         text: "Confirm and book"
       }) }}
+      <p>
+        or
+        <a href="#">cancel and go back</a>
+      </p>
+    </div>
+  </div> -->
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <button class="nhsuk-button" data-module="nhsuk-button" type="submit" disabled aria-disabled="true">
+        Confirm and book
+      </button>
       <p>
         or
         <a href="#">cancel and go back</a>
