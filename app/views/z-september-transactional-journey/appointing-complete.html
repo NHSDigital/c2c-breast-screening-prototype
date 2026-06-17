@@ -1,56 +1,61 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "Day clinic view" %}
+{% set pageName = "" %}
 
-{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
+  {{ primaryNavigation() }}
 {% endblock %}
 
-{% block beforeContent %}
-{{ breadcrumb({
-  items: [
-    {
-      href: "#",
-      text: "Home"
-    },
-    {
-      href: "/clinics/",
-      text: "Clinics"
-    },
-    {
-      href: "calendar-layout",
-      text: "Worthing C2C test 1"
-    }
-  ]
-}) }}
-{% endblock %}
+{% block beforeContent %}{% endblock %}
 
 {% block content %}
 
+
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-      <h1 class="nhsuk-heading-m">
-        <span class="nhsuk-caption-m">HWO-NNN-standard-20260501</span>
-        Worthing C2C test
+      {% set html %}
+        <p class="nhsuk-notification-banner__heading">
+          All participants appointed successfully
+        </p>
+      {% endset %}
+      {{ notificationBanner({
+        html: html,
+        type: "success"
+      }) }}
+      <h1 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
+        <span class="nhsuk-caption-m">CLINC-ID</span>
+        Clinic name
       </h1>
+      <div class="nhsuk-caption-m">
+        Unit name at location name
+      </div>
     </div>
   </div>
 
-  <hr class="nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
+  <hr class="nhsuk-u-margin-top-4 nhsuk-u-margin-bottom-4">
   
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-      <h2 class="nhsuk-heading-l">
-        <span class="nhsuk-caption-m">Day view</span>
-        1 September 2026
-      </h2>
       <div class="app-card-editable">
-        <h4 class="nhsuk-heading-s">
-          <span class="nhsuk-caption-m">Morning session</span>  
-          08:30 to 12:30
-        </h4>
+        <h2 class="nhsuk-heading-l">
+          <span class="nhsuk-caption-m">Day view</span>
+          1 September 2026
+        </h2>
+        {{ actionLink({
+          text: "Download .csv",
+          href: "#"
+        }) }}
       </div>
+    </div>
+  </div>
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h3 class="nhsuk-heading-s">
+        <span class="nhsuk-caption-m">Morning session</span>  
+        08:30 to 12:30
+      </h3>
       <details class="nhsuk-details nhsuk-expander">
         <summary class="nhsuk-details__summary">
           <span class="nhsuk-details__summary-text">
@@ -518,4 +523,8 @@
       </details>
     </div>
   </div>
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
 {% endblock %}

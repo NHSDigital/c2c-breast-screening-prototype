@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% set html %}
+        <p class="nhsuk-notification-banner__heading">
+          Batch uploaded
+        </p>
+      {% endset %}
+      {{ notificationBanner({
+        html: html,
+        type: "success"
+      }) }}
+      <h1 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
+        <span class="nhsuk-caption-m">BATCH-ID</span>
+        Batch name
+      </h1>
+      <div class="nhsuk-body-s nhsuk-u-secondary-text-colour">
+        Batch uploaded 11 June 2026 at 15:53
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-one-third">
+      <div class="nhsuk-card">
+        <div class="nhsuk-card__content">
+          <h2 class="nhsuk-card__heading nhsuk-u-font-size-36 nhsuk-u-margin-bottom-1">
+            <span role="text">
+              2172
+            </span>
+          </h2>
+          <span class="nhsuk-u-font-size-19">total participants</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      {{ button({
+        text: "Select participants to book"
+      }) }}
+
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}

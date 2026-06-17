@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<!-- <svg height="200" viewBox="0 0 200 200" width="200" xmlns="http://www.w3.org/2000/svg">
+<g fill="none" fill-rule="evenodd">
+  <path d="m100 0v13.0000106c-.0149985-.0000068-.0299979-.0000106-.0449982-.0000106-48.0239214 0-86.9550018 38.9310804-86.9550018 86.9550018 0 48.0239212 38.9310804 86.9550022 86.9550018 86.9550022 48.0089212 0 86.9306812-38.906764 86.9549902-86.910004h13.090008c0 55.228475-44.771525 100-100 100s-100-44.771525-100-100 44.771525-100 100-100z" fill="#e5e5e5"/>
+  <path d="m0 100h13.0000106zm100 86.909993v13.090007zm100-86.909993h-13.090007c.000007-.0149985.000011-.0299979.000011-.0449982 0-48.0089211-38.906764-86.9306807-86.910004-86.9549904v-13.0000114c55.228475 0 100 44.771525 100 100z" fill="#367c42"/>
+</g>
+</svg> -->
+
+  <style type="text/css">
+    .loading {
+      display: block;
+      margin:0 auto;
+      height: 200px;
+      width: 200px;
+      background: transparent url('data:image/svg+xml,<svg height="200" viewBox="0 0 200 200" width="200" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="m100 0v13.0000106c-.0149985-.0000068-.0299979-.0000106-.0449982-.0000106-48.0239214 0-86.9550018 38.9310804-86.9550018 86.9550018 0 48.0239212 38.9310804 86.9550022 86.9550018 86.9550022 48.0089212 0 86.9306812-38.906764 86.9549902-86.910004h13.090008c0 55.228475-44.771525 100-100 100s-100-44.771525-100-100 44.771525-100 100-100z" fill="%23e5e5e5"/><path d="m0 100h13.0000106zm100 86.909993v13.090007zm100-86.909993h-13.090007c.000007-.0149985.000011-.0299979.000011-.0449982 0-48.0089211-38.906764-86.9306807-86.910004-86.9549904v-13.0000114c55.228475 0 100 44.771525 100 100z" fill="%23367c42"/></g></svg>') no-repeat;
+      background-size: 200px 200px;
+      -webkit-animation-name: spin;
+      animation-name: spin;
+      -webkit-animation-duration: .75s;
+      animation-duration: .75s;
+      -webkit-animation-iteration-count: infinite;
+      animation-iteration-count: infinite;
+      -webkit-transform-origin: 50% 50%;
+      -ms-transform-origin: 50% 50%;
+      transform-origin: 50% 50%;
+      animation-timing-function: ease;
+    }
+
+    @keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform:rotate(0)
+      }
+
+      to {
+        -webkit-transform: rotate(1turn);
+        transform:rotate(1turn)
+      }
+    }
+  </style>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      
+      <div class="loading"></div>
+      <p class="nhsuk-body nhsuk-u-margin-top-4" style="text-align: center;">
+        Appointing participants to slots
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}
