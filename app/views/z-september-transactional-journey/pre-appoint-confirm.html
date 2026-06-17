@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "" %}
+{% set pageName = "Autoflow™ participants into slots" %}
 
 {% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -62,7 +62,7 @@
       }
   </style>
 
-  <div class="nhsuk-grid-row">
+  <!-- <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
       <div class="nhsuk-error-summary" data-module="nhsuk-error-summary">
         <div role="alert">
@@ -82,7 +82,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
@@ -132,31 +132,31 @@
     </div>
   </div>
   
-  <!-- <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-
-      {{ button({
-        text: "Confirm and book"
-      }) }}
-      <p>
-        or
-        <a href="#">cancel and go back</a>
-      </p>
-    </div>
-  </div> -->
-  
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
 
-      <button class="nhsuk-button" data-module="nhsuk-button" type="submit" disabled aria-disabled="true">
-        Confirm and book
-      </button>
+      <a href="appointing-complete" class="nhsuk-button">
+        Confirm and proceed
+      </a>
       <p>
         or
         <a href="#">cancel and go back</a>
       </p>
     </div>
   </div>
+  
+  <!-- <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <button class="nhsuk-button" data-module="nhsuk-button" type="submit" disabled aria-disabled="true">
+        Confirm and proceed
+      </button>
+      <p>
+        or
+        <a href="#">cancel and go back</a>
+      </p>
+    </div>
+  </div> -->
 
 {% endblock %}
 
