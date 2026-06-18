@@ -1,31 +1,13 @@
 {% extends 'layout.html' %}
 
+{% set pageName = "" %}
 
-{% set pageName = "search participants in batch HWO-standard-20251209" %}
-
-{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Batches", serviceName) }}
+  {{ primaryNavigation() }}
 {% endblock %}
 
-{% block beforeContent %}
-{{ breadcrumb({
-  items: [
-    {
-      href: "#",
-      text: "Home"
-    },
-    {
-      href: "/batches/",
-      text: "Batches"
-    },
-    {
-      href: "/search/",
-      text: "Search participants"
-    }
-  ]
-}) }}
-{% endblock %}
+{% block beforeContent %}{% endblock %}
 
   <!-- For adding page content -->
   <!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
@@ -35,7 +17,7 @@
 
 
       <h1 class="nhsuk-heading-xl">Search participant/s</h1>
-      <p class="nhsuk-batch-meta">
+      <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">
         <span>Batch:&nbsp;<strong>HWO-standard-20251209.csv</strong></span>
         <span>Imported:&nbsp;<strong>26 May 2026</strong></span>
         <span>Source:&nbsp;<strong>BS Select</strong></span>
@@ -153,7 +135,7 @@
       <section id="js-results-section" aria-live="polite" aria-atomic="false">
 
         <div class="nhsuk-results-header">
-          <h2 class="nhsuk-results-heading" id="js-results-title">Results</h2>
+          <h2 class="nhsuk-results-heading" id="js-results-title">Search result</h2>
           <span class="nhsuk-results-count" id="js-results-count" aria-live="polite" aria-atomic="true"></span>
         </div>
 
@@ -190,11 +172,11 @@
                   Date of birth
                   <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
                 </th>
-                <th scope="col" tabindex="0" aria-sort="none" data-col="gp"
+                <!--th scope="col" tabindex="0" aria-sort="none" data-col="gp"
                   onclick="sortBy('gp',this)" onkeydown="sortKey(event,'gp',this)">
                   GP practice code
                   <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
-                </th>
+                </th-->
               </tr>
             </thead>
             <tbody id="js-tbody"></tbody>
@@ -292,36 +274,36 @@
      DATA — 30 sample participants in this batch
   ═══════════════════════════════════════════════════════════════ */
   const ALL_DATA = [
-    { nhs:"612 558 7760", last:"Ali",        fore:"Sara",      dob:"1965-03-02", dobD:"02 Mar 1965", gp:"G82650" },
-    { nhs:"625 671 9980", last:"Graham",     fore:"Sam",       dob:"1968-08-18", dobD:"18 Aug 1968", gp:"G82041" },
-    { nhs:"638 784 2200", last:"Nowak",      fore:"Ana",       dob:"1972-11-09", dobD:"09 Nov 1972", gp:"G82109" },
-    { nhs:"651 897 4420", last:"Garcia",     fore:"Amy",       dob:"1966-12-14", dobD:"14 Dec 1966", gp:"G82041" },
-    { nhs:"677 023 8860", last:"Petrov",     fore:"Kristin",   dob:"1967-07-28", dobD:"28 Jul 1967", gp:"G82109" },
-    { nhs:"690 136 0080", last:"Ibrahim",    fore:"Ahmed",     dob:"1971-06-03", dobD:"03 Jun 1971", gp:"G82650" },
-    { nhs:"755 691 1180", last:"Moore",      fore:"Percy",     dob:"1962-05-23", dobD:"23 May 1962", gp:"G82109" },
-    { nhs:"794 020 7840", last:"Clark",      fore:"Bianca",    dob:"1968-11-24", dobD:"24 Nov 1968", gp:"G82650" },
-    { nhs:"781 917 5620", last:"Taylor",     fore:"Helen",     dob:"1965-04-07", dobD:"07 Apr 1965", gp:"G85540" },
-    { nhs:"807 133 0060", last:"Zodovaska",  fore:"Andrea",    dob:"1971-08-13", dobD:"13 Aug 1971", gp:"G82041" },
-    { nhs:"485 777 3456", last:"John",       fore:"Jane",      dob:"1962-03-14", dobD:"14 Mar 1962", gp:"G82650" },
-    { nhs:"491 234 8812", last:"Patel",      fore:"Reena",     dob:"1958-06-29", dobD:"29 Jun 1958", gp:"G82041" },
-    { nhs:"502 881 1140", last:"Okonkwa",    fore:"Paula",     dob:"1965-11-07", dobD:"07 Nov 1965", gp:"G82109" },
-    { nhs:"477 003 9921", last:"Jackson",    fore:"Miranda",   dob:"1971-08-22", dobD:"22 Aug 1971", gp:"G82650" },
-    { nhs:"533 612 0044", last:"Williams",   fore:"Carol",     dob:"1963-01-05", dobD:"05 Jan 1963", gp:"G82109" },
-    { nhs:"548 290 1133", last:"Brown",      fore:"Patricia",  dob:"1969-09-12", dobD:"12 Sep 1969", gp:"G85540" },
-    { nhs:"561 445 7782", last:"Jones",      fore:"Linda",     dob:"1964-07-19", dobD:"19 Jul 1964", gp:"G82650" },
-    { nhs:"574 889 3310", last:"Davis",      fore:"Margaret",  dob:"1960-02-28", dobD:"28 Feb 1960", gp:"G82041" },
-    { nhs:"589 002 4421", last:"Wilson",     fore:"Barbara",   dob:"1966-10-31", dobD:"31 Oct 1966", gp:"G82109" },
-    { nhs:"603 117 5500", last:"Evans",      fore:"Susan",     dob:"1970-06-14", dobD:"14 Jun 1970", gp:"G82650" },
-    { nhs:"614 223 6610", last:"Roberts",    fore:"Karen",     dob:"1961-04-22", dobD:"22 Apr 1961", gp:"G82109" },
-    { nhs:"628 334 7720", last:"Thompson",   fore:"Christine", dob:"1967-09-17", dobD:"17 Sep 1967", gp:"G82650" },
-    { nhs:"641 445 8830", last:"White",      fore:"Dorothy",   dob:"1963-12-30", dobD:"30 Dec 1963", gp:"G82041" },
-    { nhs:"654 556 9940", last:"Harris",     fore:"Lisa",      dob:"1968-03-11", dobD:"11 Mar 1968", gp:"G82109" },
-    { nhs:"667 667 0050", last:"Martin",     fore:"Nancy",     dob:"1972-07-04", dobD:"04 Jul 1972", gp:"G85540" },
-    { nhs:"680 778 1160", last:"Lewis",      fore:"Betty",     dob:"1959-01-19", dobD:"19 Jan 1959", gp:"G82650" },
-    { nhs:"693 889 2270", last:"Lee",        fore:"Helen",     dob:"1964-05-26", dobD:"26 May 1964", gp:"G82041" },
-    { nhs:"706 990 3380", last:"Walker",     fore:"Sandra",    dob:"1966-08-03", dobD:"03 Aug 1966", gp:"G82109" },
-    { nhs:"719 001 4490", last:"Hall",       fore:"Donna",     dob:"1970-11-15", dobD:"15 Nov 1970", gp:"G82650" },
-    { nhs:"732 112 5500", last:"Allen",      fore:"Carol",     dob:"1962-09-28", dobD:"28 Sep 1962", gp:"G85540" }
+    { nhs:"612 558 7760", last:"Ali",        fore:"Sara",      dob:"1965-03-02", dobD:"02 Mar 1965", },
+    { nhs:"625 671 9980", last:"Graham",     fore:"Sam",       dob:"1968-08-18", dobD:"18 Aug 1968", },
+    { nhs:"638 784 2200", last:"Nowak",      fore:"Ana",       dob:"1972-11-09", dobD:"09 Nov 1972", },
+    { nhs:"651 897 4420", last:"Garcia",     fore:"Amy",       dob:"1966-12-14", dobD:"14 Dec 1966", },
+    { nhs:"677 023 8860", last:"Petrov",     fore:"Kristin",   dob:"1967-07-28", dobD:"28 Jul 1967", },
+    { nhs:"690 136 0080", last:"Ibrahim",    fore:"Ahmed",     dob:"1971-06-03", dobD:"03 Jun 1971", },
+    { nhs:"755 691 1180", last:"Moore",      fore:"Percy",     dob:"1962-05-23", dobD:"23 May 1962", },
+    { nhs:"794 020 7840", last:"Clark",      fore:"Bianca",    dob:"1968-11-24", dobD:"24 Nov 1968", },
+    { nhs:"781 917 5620", last:"Taylor",     fore:"Helen",     dob:"1965-04-07", dobD:"07 Apr 1965", },
+    { nhs:"807 133 0060", last:"Zodovaska",  fore:"Andrea",    dob:"1971-08-13", dobD:"13 Aug 1971", },
+    { nhs:"485 777 3456", last:"John",       fore:"Jane",      dob:"1962-03-14", dobD:"14 Mar 1962", },
+    { nhs:"491 234 8812", last:"Patel",      fore:"Reena",     dob:"1958-06-29", dobD:"29 Jun 1958", },
+    { nhs:"502 881 1140", last:"Okonkwa",    fore:"Paula",     dob:"1965-11-07", dobD:"07 Nov 1965", },
+    { nhs:"477 003 9921", last:"Jackson",    fore:"Miranda",   dob:"1971-08-22", dobD:"22 Aug 1971", },
+    { nhs:"533 612 0044", last:"Williams",   fore:"Carol",     dob:"1963-01-05", dobD:"05 Jan 1963", },
+    { nhs:"548 290 1133", last:"Brown",      fore:"Patricia",  dob:"1969-09-12", dobD:"12 Sep 1969", },
+    { nhs:"561 445 7782", last:"Jones",      fore:"Linda",     dob:"1964-07-19", dobD:"19 Jul 1964", },
+    { nhs:"574 889 3310", last:"Davis",      fore:"Margaret",  dob:"1960-02-28", dobD:"28 Feb 1960", },
+    { nhs:"589 002 4421", last:"Wilson",     fore:"Barbara",   dob:"1966-10-31", dobD:"31 Oct 1966", },
+    { nhs:"603 117 5500", last:"Evans",      fore:"Susan",     dob:"1970-06-14", dobD:"14 Jun 1970", },
+    { nhs:"614 223 6610", last:"Roberts",    fore:"Karen",     dob:"1961-04-22", dobD:"22 Apr 1961", },
+    { nhs:"628 334 7720", last:"Thompson",   fore:"Christine", dob:"1967-09-17", dobD:"17 Sep 1967", },
+    { nhs:"641 445 8830", last:"White",      fore:"Dorothy",   dob:"1963-12-30", dobD:"30 Dec 1963", },
+    { nhs:"654 556 9940", last:"Harris",     fore:"Lisa",      dob:"1968-03-11", dobD:"11 Mar 1968", },
+    { nhs:"667 667 0050", last:"Martin",     fore:"Nancy",     dob:"1972-07-04", dobD:"04 Jul 1972", },
+    { nhs:"680 778 1160", last:"Lewis",      fore:"Betty",     dob:"1959-01-19", dobD:"19 Jan 1959", },
+    { nhs:"693 889 2270", last:"Lee",        fore:"Helen",     dob:"1964-05-26", dobD:"26 May 1964", },
+    { nhs:"706 990 3380", last:"Walker",     fore:"Sandra",    dob:"1966-08-03", dobD:"03 Aug 1966", },
+    { nhs:"719 001 4490", last:"Hall",       fore:"Donna",     dob:"1970-11-15", dobD:"15 Nov 1970", },
+    { nhs:"732 112 5500", last:"Allen",      fore:"Carol",     dob:"1962-09-28", dobD:"28 Sep 1962", }
   ];
 
   /* ═══════════════════════════════════════════════════════════════
@@ -570,7 +552,7 @@
       document.getElementById('js-no-results-msg').textContent =
         'No participants in this batch match your search. Check the details and try again.';
       document.getElementById('js-results-count').innerHTML = '';
-      document.getElementById('js-results-title').textContent = 'Results';
+      document.getElementById('js-results-title').textContent = 'Search result';
       return;
     }
 
@@ -580,7 +562,7 @@
 
     document.getElementById('js-results-count').innerHTML =
       '<strong>' + filtered.length + '</strong> participant' + (filtered.length !== 1 ? 's' : '') + ' found';
-    document.getElementById('js-results-title').textContent = 'Results';
+    document.getElementById('js-results-title').textContent = 'Search result';
 
     renderTableRows(nhsVal, foreVal, lastVal, dobStr);
     updateActionBar();
@@ -604,7 +586,7 @@
         + '<td>' + highlight(p.last, lastVal, false) + '</td>'
         + '<td>' + highlight(p.fore, foreVal, false) + '</td>'
         + '<td style="white-space:nowrap;">' + esc(p.dobD) + '</td>'
-        + '<td>' + esc(p.gp) + '</td>'
+        <!--+ '<td>' + esc(p.gp) + '</td>'-->
         + '</tr>';
     }).join('');
   }
@@ -926,4 +908,8 @@
 
   </script>
 
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
 {% endblock %}

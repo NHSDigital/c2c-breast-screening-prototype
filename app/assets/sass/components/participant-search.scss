@@ -303,12 +303,12 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   background: white;
-  border: 1px solid var(--nhsuk-grey-4);
+  border: 1px solid #4c6272;
 }
 .nhsuk-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 16px;
+  font-size: 18px;
   min-width: 640px;
 }
 .nhsuk-table thead { background: #f0f4f5; }
@@ -321,7 +321,7 @@
   text-align: left;
   vertical-align: bottom;
   white-space: nowrap;
-  border-right: 1px solid var(--nhsuk-grey-4);
+  border-right: 1px solid #4c6272;
   position: relative;
   cursor: pointer;
   user-select: none;
@@ -370,8 +370,8 @@
   font-size: 14px;
   color: #212b32;
   vertical-align: middle;
-  border-bottom: 1px solid var(--nhsuk-grey-4);
-  border-right: 1px solid var(--nhsuk-grey-4);
+  border-bottom: 1px solid #4c6272;
+  border-right: 1px solid #4c6272;
   line-height: 1.4;
 }
 .nhsuk-table td:first-child { text-align: center; border-right: 1px solid var(--nhsuk-grey-3); }
@@ -422,9 +422,10 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 0px;
   padding-bottom: 20px;
-  border-bottom: 2px solid #212b32;
+
+  padding-left: 83%
 }
 .nhsuk-groups-title {
   font-size: 24px;
@@ -458,7 +459,7 @@
 /* Group card */
 .nhsuk-group-card {
   background: white;
-  border: 1px solid var(--nhsuk-grey-4);
+  border: 1px solid #4c6272;
   margin-bottom: 24px;
 }
 .nhsuk-group-card__header {
@@ -467,8 +468,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--nhsuk-grey-4);
+  padding: 10px 20px;
+  border-bottom: 1px solid #4c6272;
   background: #f0f4f5;
 }
 .nhsuk-group-card__name {
@@ -477,7 +478,7 @@
   margin: 0 0 2px;
 }
 .nhsuk-group-card__date {
-  font-size: 13px;
+  font-size: 16px;
   color: var(--nhsuk-grey-1);
 }
 .nhsuk-badge {
@@ -485,8 +486,8 @@
   color: white;
   font-size: 13px;
   font-weight: 700;
-  padding: 3px 12px;
-  border-radius: 12px;
+  padding: 6px 12px;
+  border-radius: 32px;
   white-space: nowrap;
 }
 .nhsuk-group-card__toggle {
@@ -496,7 +497,7 @@
   padding: 12px 20px;
   background: none;
   border: none;
-  border-top: 1px solid var(--nhsuk-grey-4);
+  border-top: 1px solid #4c6272;
   font-size: 14px;
   font-weight: 700;
   font-family: inherit;
@@ -509,29 +510,29 @@
 .nhsuk-group-card__toggle:focus { outline: 4px solid var(--nhsuk-yellow); outline-offset: -4px; }
 .nhsuk-toggle-icon { transition: transform 0.15s; display: inline-block; }
 .nhsuk-toggle-icon--open { transform: rotate(180deg); }
-.nhsuk-group-card__body { display: none; border-top: 1px solid var(--nhsuk-grey-4); }
+.nhsuk-group-card__body { display: none; border-top: 1px solid #4c6272; }
 .nhsuk-group-card__body--open { display: block; }
 
 .nhsuk-group-inner-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 16px;
 }
 .nhsuk-group-inner-table th {
   padding: 10px 16px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   text-align: left;
   background: #f0f4f5;
   border-bottom: 2px solid #212b32;
-  border-right: 1px solid var(--nhsuk-grey-4);
+  border-right: 1px solid #4c6272;
 }
 .nhsuk-group-inner-table th:last-child { border-right: none; }
 .nhsuk-group-inner-table td {
   padding: 10px 16px;
-  font-size: 13px;
-  border-bottom: 1px solid var(--nhsuk-grey-4);
-  border-right: 1px solid var(--nhsuk-grey-4);
+  font-size: 14px;
+  border-bottom: 1px solid #4c6272;
+  border-right: 1px solid #4c6272;
 }
 .nhsuk-group-inner-table td:last-child { border-right: none; }
 .nhsuk-group-inner-table tr:last-child td { border-bottom: none; }
@@ -554,7 +555,7 @@
   display: flex;
   justify-content: flex-end;
   padding: 16px 20px;
-  border-top: 1px solid var(--nhsuk-grey-4);
+  border-top: 1px solid #4c6272;
 }
 
 /* Modal CSS removed — Add to group now adds directly to Standard group */
@@ -598,6 +599,8 @@
   margin-top: 12px;
 }
 .nhsuk-confirm-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+
 
 /* ── Display groups bar ── */
 .nhsuk-display-groups-bar {
@@ -694,7 +697,7 @@ margin-left: 32%;
   border: 0;
 }
 
-/* ── Responsive ── */
+/* ── Responsive ──
 @media (max-width: 640px) {
   .nhsuk-heading-xl { font-size: 24px; }
   .nhsuk-name-row { flex-direction: column; }
@@ -706,4 +709,4 @@ margin-left: 32%;
 @media (prefers-reduced-motion: reduce) {
   .nhsuk-toggle-icon { transition: none; }
   .nhsuk-toast { transition: none; }
-}
+}*/
