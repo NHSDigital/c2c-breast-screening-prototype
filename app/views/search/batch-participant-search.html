@@ -1,0 +1,1632 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+  <!-- For adding page content -->
+  <!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
+  {% block content %}
+
+  <!-- ══ MAIN ══ -->
+
+
+      <h1 class="nhsuk-heading-xl">Search participant/s</h1>
+      <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">
+        <span>Batch:&nbsp;<strong>HWO-standard-20251209.csv</strong></span>
+        <span>Imported:&nbsp;<strong>26 May 2026</strong></span>
+        <span>Source:&nbsp;<strong>BS Select</strong></span>
+        <span>Type:&nbsp;<strong>Standard</strong></span>
+      </p>
+
+      <!-- ── ERROR SUMMARY (validation errors) ── -->
+      <div class="nhsuk-error-summary" id="js-error-summary" style="display:none;"
+        role="alert" aria-labelledby="js-error-summary-title" tabindex="-1">
+        <h2 class="nhsuk-error-summary__title" id="js-error-summary-title">
+          There is a problem
+        </h2>
+        <div class="nhsuk-error-summary__body">
+          <ul class="nhsuk-error-summary__list" id="js-error-list"></ul>
+        </div>
+      </div>
+
+      <!-- ── SEARCH FORM ── -->
+      <div class="nhsuk-search-card" id="js-search-card" role="search" aria-label="Search participants in this batch">
+
+        <!---<p class="nhsuk-search-card__hint">
+          You can search on one or more of these fields. At least one field must be completed to search.
+        </p>--->
+
+        <!-- NHS Number -->
+        <div class="nhsuk-form-group" id="fg-nhs">
+          <label class="nhsuk-label" for="inp-nhs">NHS number</label>
+          <!--span class="nhsuk-hint" id="hint-nhs">For example, 999 123 4567</span-->
+          <span class="nhsuk-error-message" id="err-nhs" style="display:none;">Enter a valid NHS number (10 digits)</span>
+          <input class="nhsuk-input nhsuk-input--width-10" type="text" id="inp-nhs"
+            aria-describedby="hint-nhs"
+            autocomplete="off"
+            inputmode="numeric"
+            placeholder="e.g. 612 558 7760"
+            maxlength="12"
+            onkeydown="if(event.key==='Enter') runSearch()" />
+        </div>
+
+        <!-- Forename + Last name -->
+        <div class="nhsuk-name-row">
+          <div class="nhsuk-form-group" id="fg-last">
+            <label class="nhsuk-label" for="inp-last">Last name</label>
+            <span class="nhsuk-error-message" id="err-last" style="display:none;">Enter a last name</span>
+            <input class="nhsuk-input" type="text" id="inp-last"
+              autocomplete="family-name"
+              inputmode="alphabet"
+              placeholder="enter lastname"
+              maxlength="21"
+              onkeydown="if(event.key==='Enter') runSearch()" />
+          </div>
+          <div class="nhsuk-form-group" id="fg-fore">
+            <label class="nhsuk-label" for="inp-fore">Forename</label>
+            <span class="nhsuk-error-message" id="err-fore" style="display:none;">Enter a forename</span>
+            <input class="nhsuk-input" type="text" id="inp-fore"
+              autocomplete="given-name"
+              inputmode="alphabet"
+              placeholder="enter forename"
+              maxlength="21"
+              onkeydown="if(event.key==='Enter') runSearch()" />
+          </div>
+        </div>
+
+        <!-- Date of birth — NHS date input pattern -->
+        <fieldset class="nhsuk-fieldset" id="fg-dob">
+          <legend class="nhsuk-fieldset__legend">Date of birth</legend>
+          <!--span class="nhsuk-hint" id="hint-dob">For example, 15 3 1984</span-->
+          <span class="nhsuk-error-message" id="err-dob" style="display:none;" role="alert"></span>
+          <div class="nhsuk-date-input" aria-describedby="hint-dob">
+            <div class="nhsuk-date-input__item">
+              <label class="nhsuk-date-input__label" for="dob-day">Day</label>
+              <input class="nhsuk-date-input__input" type="text" id="dob-day"
+                inputmode="numeric" maxlength="2" autocomplete="bday-day" placeholder="dd"
+                onkeydown="if(event.key==='Enter') runSearch()" />
+            </div>
+            <div class="nhsuk-date-input__item">
+              <label class="nhsuk-date-input__label" for="dob-month">Month</label>
+              <input class="nhsuk-date-input__input" type="text" id="dob-month"
+                inputmode="numeric" maxlength="2" autocomplete="bday-month" placeholder="mm"
+                onkeydown="if(event.key==='Enter') runSearch()" />
+            </div>
+            <div class="nhsuk-date-input__item">
+              <label class="nhsuk-date-input__label" for="dob-year">Year</label>
+              <input class="nhsuk-date-input__input nhsuk-date-input__input--year" type="text" id="dob-year"
+                inputmode="numeric" maxlength="4" autocomplete="bday-year" placeholder="yyyy"
+                onkeydown="if(event.key==='Enter') runSearch()" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Buttons -->
+        <div class="nhsuk-button-group" style="margin-top:24px;">
+          <!--button class="nhsuk-button" type="button" onclick="runSearch()">
+            Search
+          </button-->
+          <!--button class="nhsuk-link-button" type="button" onclick="clearSearch()">
+            Clear search
+          </button-->
+          <button class="nhsuk-button" data-module="nhsuk-button" type="submit" aria-label="Search" data-nhsuk-button-init="" onclick="runSearch()">
+            <svg class="nhsuk-icon nhsuk-icon--search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+              <path d="m20.7 18.9-4.1-4.1a7 7 0 1 0-1.4 1.4l4 4.1a1 1 0 0 0 1.5 0c.4-.4.4-1 0-1.4ZM6 10.6a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"></path>
+            </svg>
+            <span class="nhsuk-button__content">Find</span>
+          </button>
+
+          <!--button class="nhsuk-button nhsuk-button--secondary-solid" data-module="nhsuk-button" type="submit" onclick="clearSearch()">
+            Clear search
+          </button-->
+
+          <a href="#" class="nhsuk-link" onclick="clearSearch()">Clear search</a>
+        </div>
+
+      </div><!-- /search card -->
+
+      <!-- ── RESULTS ── -->
+      <section id="js-results-section" aria-live="polite" aria-atomic="false">
+
+        <div class="nhsuk-results-header">
+          <h2 class="nhsuk-results-heading" id="js-results-title">Search result</h2>
+          <span class="nhsuk-results-count" id="js-results-count" aria-live="polite" aria-atomic="true"></span>
+        </div>
+
+        <p class="nhsuk-search-term-bar" id="js-search-term-bar" style="display:none;"></p>
+
+        <!-- Table -->
+        <div class="nhsuk-table-wrap" id="js-table-wrap" style="display:none;"
+          role="region" aria-label="Search results" tabindex="0">
+          <table class="nhsuk-table" id="js-table">
+            <caption class="nhsuk-visually-hidden" id="js-caption">Participant search results</caption>
+            <thead>
+              <tr>
+                <th scope="col">
+                  <input type="checkbox" class="nhsuk-checkbox-cell" id="js-selectall"
+                    aria-label="Select all participants" onchange="toggleAll(this)" />
+                </th>
+                <th scope="col" tabindex="0" aria-sort="none" data-col="nhs"
+                  onclick="sortBy('nhs',this)" onkeydown="sortKey(event,'nhs',this)">
+                  NHS Number
+                  <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
+                </th>
+                <th scope="col" tabindex="0" aria-sort="none" data-col="last"
+                  onclick="sortBy('last',this)" onkeydown="sortKey(event,'last',this)">
+                  Last Name
+                  <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
+                </th>
+                <th scope="col" tabindex="0" aria-sort="none" data-col="fore"
+                  onclick="sortBy('fore',this)" onkeydown="sortKey(event,'fore',this)">
+                  Forename
+                  <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
+                </th>
+                <th scope="col" tabindex="0" aria-sort="none" data-col="dob"
+                  onclick="sortBy('dob',this)" onkeydown="sortKey(event,'dob',this)">
+                  Date of birth
+                  <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
+                </th>
+                <!--th scope="col" tabindex="0" aria-sort="none" data-col="gp"
+                  onclick="sortBy('gp',this)" onkeydown="sortKey(event,'gp',this)">
+                  GP practice code
+                  <span class="sort-arrows" aria-hidden="true"><span class="sort-arrows__up"></span><span class="sort-arrows__down"></span></span>
+                </th-->
+              </tr>
+            </thead>
+            <tbody id="js-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- No results state -->
+        <div class="nhsuk-no-results" id="js-no-results" style="display:none;">
+          <p class="nhsuk-no-results__title">No participants found</p>
+          <p class="nhsuk-no-results__body" id="js-no-results-msg"></p>
+        </div>
+
+        <!-- Action bar -->
+        <!--div class="nhsuk-action-bar" id="js-action-bar" style="display:none;">
+          <span class="nhsuk-selection-count" id="js-selection-count"></span>
+          <button class="nhsuk-button nhsuk-button--secondary" type="button" id="btn-add-group" onclick="addToStandard()">
+            Add to group
+          </button>
+        </div-->
+
+        <div class="nhsuk-button-group nhsuk-button-group--small" id="js-action-bar" style="display:none;">
+          <span class="nhsuk-selection-count" id="js-selection-count"></span>
+          <button class="nhsuk-button nhsuk-button--small-v" data-module="nhsuk-button" type="button" id="btn-add-group" onclick="addToStandard()">
+            Add to group
+          </button>
+        </div>
+
+      </section>
+
+      <!-- Display groups button — only shown once participants have been added to Standard -->
+      <!--div class="nhsuk-display-groups-bar" id="js-display-groups-bar">
+        <button class="nhsuk-button nhsuk-button--secondary-solid" data-module="nhsuk-button" type="submit" onclick="showGroupsScreen()">
+          View group
+        </button>
+      </div-->
+
+      <div class="nhsuk-display-groups-bar" id="js-display-groups-bar">
+        <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--small" data-module="nhsuk-button" type="submit" onclick="showGroupsScreen()">
+          View group
+        </button>
+      </div>
+
+
+      <!-- ══ GROUPS SCREEN ══ -->
+      <section id="js-groups-screen" style="display:none;" aria-label="Participant groups">
+
+        <div class="nhsuk-groups-header">
+          <!--div>
+            <h2 class="nhsuk-groups-title">Participant groups</h2>
+
+          </div-->
+          <button class="nhsuk-btn-back" type="button" onclick="hideGroupsScreen()">
+            &#8592; Back to search
+          </button>
+        </div>
+
+        <div id="js-groups-empty" style="display:none;padding:40px 0;text-align:center;">
+          <p style="font-size:18px;font-weight:700;margin:0 0 8px;">No groups yet</p>
+          <p style="font-size:16px;color:var(--nhsuk-grey-1);margin:0;">Select participants from search results and use "Add to group" to create a group.</p>
+        </div>
+
+        <div id="js-groups-list"></div>
+
+      </section>
+
+
+
+  <!-- Add to group modal removed — participants are added directly to the Standard group -->
+
+  <!-- ══ REMOVE CONFIRMATION MODAL ══ -->
+  <div id="js-confirm-overlay" class="nhsuk-confirm-overlay" role="dialog" aria-modal="true"
+    aria-labelledby="js-confirm-title">
+    <div class="nhsuk-confirm-panel">
+      <p class="nhsuk-confirm-title" id="js-confirm-title">Remove participant from group?</p>
+      <div class="nhsuk-confirm-body">
+        <p>You are about to remove <strong id="js-confirm-name">this participant</strong> from the group <strong id="js-confirm-group">"..."</strong>.</p>
+        <div class="nhsuk-confirm-warning">
+          This action cannot be undone. The participant will need to be re-added manually if removed in error.
+        </div>
+      </div>
+      <div class="nhsuk-confirm-actions">
+        <button class="nhsuk-button" type="button" id="js-confirm-yes" onclick="confirmRemove()">Yes, remove participant</button>
+        <button class="nhsuk-button nhsuk-button--secondary" type="button" onclick="cancelRemove()">No, go back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TOAST ══ -->
+  <div id="js-toast" class="nhsuk-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+
+<style>
+
+  :root {
+    --nhsuk-blue:        #003087;
+    --nhsuk-white:       #ffffff;
+    --nhsuk-grey-1:      #4c6272;
+    --nhsuk-grey-2:      #768692;
+    --nhsuk-grey-3:      #aeb7bd;
+    --nhsuk-grey-4:      #d8dde0;
+    --nhsuk-grey-5:      #f0f4f5;
+    --nhsuk-yellow:      #ffd52c;
+    --nhsuk-red:         #d5281b;
+    --nhsuk-green:       #007f3b;
+    --nhsuk-warm-yellow: #ffb81c;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  /* ── Headings & meta ── */
+  .nhsuk-heading-xl {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #212b32;
+    margin: 0 0 8px;
+  }
+  .nhsuk-batch-meta {
+    font-size: 14px;
+    color: var(--nhsuk-grey-1);
+    margin: 0 0 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+  }
+  .nhsuk-batch-meta strong { color: #212b32; }
+
+  /* ── Error summary ── */
+  .nhsuk-error-summary {
+    background: white;
+    border: 4px solid var(--nhsuk-red);
+    padding: 20px 24px 20px 24px;
+    margin-bottom: 32px;
+    max-width: 640px;
+  }
+  .nhsuk-error-summary__title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #212b32;
+    margin: 0 0 12px;
+  }
+  .nhsuk-error-summary__body { font-size: 16px; }
+  .nhsuk-error-summary__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .nhsuk-error-summary__list li { margin-bottom: 6px; }
+  .nhsuk-error-summary__list a {
+    color: var(--nhsuk-red);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  .nhsuk-error-summary__list a:hover { text-decoration: none; }
+
+  /* ── Search form card ── */
+  .nhsuk-search-card {
+    background: white;
+    border: 1px solid var(--nhsuk-grey-4);
+    padding: 28px;
+    margin-bottom: 40px;
+    max-width: 640px;
+  }
+  .nhsuk-search-card.nhsuk-search-card--error {
+    border-left: 4px solid var(--nhsuk-red);
+  }
+  .nhsuk-search-card__hint {
+    font-size: 16px;
+    color: var(--nhsuk-grey-1);
+    margin: 0 0 24px;
+    padding: 12px 16px;
+    background: var(--nhsuk-grey-5);
+    border-left: 4px solid var(--nhsuk-grey-3);
+  }
+
+  /* ── Form groups ── */
+  .nhsuk-form-group {
+    margin-bottom: 24px;
+  }
+  .nhsuk-form-group--error .nhsuk-input {
+    border: 2px solid var(--nhsuk-red);
+    border-left-width: 4px;
+  }
+  .nhsuk-form-group--error .nhsuk-date-input__item .nhsuk-input {
+    border: 2px solid var(--nhsuk-red);
+    border-left-width: 4px;
+  }
+  .nhsuk-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: #212b32;
+    margin-bottom: 4px;
+  }
+  .nhsuk-hint {
+    display: block;
+    font-size: 14px;
+    color: var(--nhsuk-grey-1);
+    margin-bottom: 8px;
+  }
+  .nhsuk-error-message {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--nhsuk-red);
+    margin-bottom: 8px;
+  }
+  .nhsuk-error-message::before {
+    content: "Error: ";
+  }
+  .nhsuk-input {
+    height: 40px;
+    width: 100%;
+    border: 2px solid #4c6272;
+    background: white;
+    font-size: 16px;
+    font-family: inherit;
+    color: #212b32;
+    padding: 0 12px;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+  .nhsuk-input:focus {
+    outline: 4px solid var(--nhsuk-yellow);
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 2px #212b32;
+  }
+  .nhsuk-input--width-10 { max-width: 320px; }
+
+  /* ── Two-column name row ── */
+  .nhsuk-name-row {
+    display: flex;
+    gap: 16px;
+  }
+  .nhsuk-name-row .nhsuk-form-group {
+    flex: 1;
+  }
+
+  /* ── Date input ── */
+  .nhsuk-date-input {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .nhsuk-date-input__item {
+    display: flex;
+    flex-direction: column;
+  }
+  .nhsuk-date-input__label {
+    font-size: 14px;
+    font-weight: 400;
+    color: #212b32;
+    margin-bottom: 4px;
+  }
+  .nhsuk-date-input__input {
+    width: 64px;
+    height: 40px;
+    border: 2px solid #4c6272;
+    padding: 0 10px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #212b32;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+  .nhsuk-date-input__input--year { width: 88px; }
+  .nhsuk-date-input__input:focus {
+    outline: 4px solid var(--nhsuk-yellow);
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 2px #212b32;
+  }
+
+  /* ── Button group ── */
+  .nhsuk-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .nhsuk-button  {
+        background: var(--nhsuk-green);
+        color: #fff;
+        border: 2px solid transparent;
+        font-size: 16px; font-weight:600; padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      }
+
+  .nhsuk-button:hover {
+    background: #00592e;
+    border-bottom-color: #00331a;
+  }
+  .nhsuk-button:focus {
+    outline: 4px solid var(--nhsuk-yellow);
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 2px #212b32;
+  }
+  .nhsuk-button:active { transform: translateY(2px); border-bottom-width: 2px; }
+
+  .nhsuk-button--secondary {
+    background: #fff;
+    color: var(--nhsuk-blue);
+    border-color: var(--nhsuk-blue);
+  }
+  .nhsuk-button--secondary:hover { background: var(--nhsuk-grey-4);  }
+
+  .nhsuk-link-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--nhsuk-blue);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .nhsuk-link-button:hover { text-decoration: none; }
+  .nhsuk-link-button:focus {
+    outline: 4px solid var(--nhsuk-yellow);
+    outline-offset: 0;
+  }
+
+  .nhsuk-button--small {
+    min-height: 2.25rem;
+    padding: .375rem .75rem;
+    margin-bottom: 20px;
+  }
+
+  .nhsuk-button--small-v {
+    background-color: #4c6272;
+    min-height: 2.25rem;
+    padding: .375rem .75rem;
+    margin-bottom: 20px;
+  }
+  .nhsuk-button--small-v:hover { background: #005eb8;border-color: var(--nhsuk-blue); }
+
+
+  /* ── Results section ── */
+  #js-results-section { display: none; }
+  #js-results-section.visible { display: block; }
+
+  .nhsuk-results-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #212b32;
+  }
+  .nhsuk-results-heading {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+  }
+  .nhsuk-results-count {
+    font-size: 14px;
+    color: var(--nhsuk-grey-1);
+  }
+  .nhsuk-results-count strong { color: #212b32; }
+
+  /* ── Search term pill ── */
+  .nhsuk-search-term-bar {
+    font-size: 14px;
+    color: var(--nhsuk-grey-1);
+    margin-bottom: 16px;
+  }
+  .nhsuk-search-term-bar strong { color: #212b32; }
+
+  /* No results */
+  .nhsuk-no-results {
+    background: white;
+    border: 1px solid var(--nhsuk-grey-4);
+    padding: 32px 24px;
+    text-align: center;
+    max-width: 520px;
+  }
+  .nhsuk-no-results__title {
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  .nhsuk-no-results__body {
+    font-size: 16px;
+    color: var(--nhsuk-grey-1);
+    margin: 0;
+  }
+
+  /* ── Table ── */
+  .nhsuk-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: white;
+    border: 1px solid #4c6272;
+  }
+  .nhsuk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+    min-width: 640px;
+  }
+  .nhsuk-table thead { background: #f0f4f5; }
+  .nhsuk-table thead tr { border-bottom: 2px solid #212b32; }
+  .nhsuk-table th {
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #212b32;
+    text-align: left;
+    vertical-align: bottom;
+    white-space: nowrap;
+    border-right: 1px solid #4c6272;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    padding-right: 32px;
+  }
+  .nhsuk-table th:first-child {
+    cursor: default;
+    padding-right: 16px;
+    width: 48px;
+    text-align: center;
+  }
+  .nhsuk-table th:last-child { border-right: none; }
+  .nhsuk-table th:not(:first-child):hover { background: #d5dfe1; }
+  .nhsuk-table th:focus {
+    outline: 4px solid var(--nhsuk-yellow);
+    outline-offset: -4px;
+  }
+  .sort-arrows {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .sort-arrows__up, .sort-arrows__down {
+    width: 0; height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    display: block;
+  }
+  .sort-arrows__up   { border-bottom: 5px solid var(--nhsuk-grey-3); }
+  .sort-arrows__down { border-top:    5px solid var(--nhsuk-grey-3); }
+  [aria-sort="ascending"]  .sort-arrows__up   { border-bottom-color: var(--nhsuk-blue); }
+  [aria-sort="descending"] .sort-arrows__down { border-top-color:    var(--nhsuk-blue); }
+
+  .nhsuk-table tbody tr:nth-child(even) { background: #f0f4f5; }
+  .nhsuk-table tbody tr:hover { background: #d5dfe1; }
+  .nhsuk-table tbody tr.row--selected {
+    background: #fff8dc !important;
+    border-left: 4px solid var(--nhsuk-blue);
+  }
+  .nhsuk-table td {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #212b32;
+    vertical-align: middle;
+    border-bottom: 1px solid #4c6272;
+    border-right: 1px solid #4c6272;
+    line-height: 1.4;
+  }
+  .nhsuk-table td:first-child { text-align: center; border-right: 1px solid var(--nhsuk-grey-3); }
+  .nhsuk-table td:last-child  { border-right: none; }
+  .nhsuk-table tbody tr:last-child td { border-bottom: none; }
+
+  /* Highlight matched text */
+  .nhsuk-match-highlight {
+    background: var(--nhsuk-yellow);
+    padding: 0 2px;
+    border-radius: 1px;
+  }
+
+  /* Checkbox */
+  .nhsuk-checkbox-cell {
+    width: 20px; height: 20px;
+    border: 2px solid var(--nhsuk-grey-1);
+    cursor: pointer;
+    accent-color: var(--nhsuk-blue);
+    display: block;
+    margin: 0 auto;
+  }
+  .nhsuk-checkbox-cell:focus {
+    outline: 4px solid var(--nhsuk-yellow);
+    outline-offset: 0;
+  }
+
+  /* ── Action bar ── */
+  .nhsuk-action-bar {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--nhsuk-grey-4);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .nhsuk-selection-count {
+    font-size: 14px;
+    color: var(--nhsuk-grey-1);
+  }
+  .nhsuk-selection-count strong { color: #212b32; }
+
+  /* ── Groups screen ── */
+  .nhsuk-groups-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 0px;
+    padding-bottom: 20px;
+
+    padding-left: 83%
+  }
+  .nhsuk-groups-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+  .nhsuk-groups-meta {
+    font-size: 14px;
+    color: var(--nhsuk-grey-1);
+    margin: 0;
+  }
+  .nhsuk-btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 16px;
+    background: #ffffff;
+    color: var(--nhsuk-blue);
+    border: 1px solid var(--nhsuk-blue);
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 0;
+  }
+  .nhsuk-btn-back:hover { background: #f0f4f5; }
+  .nhsuk-btn-back:focus { outline: 4px solid var(--nhsuk-yellow); }
+
+  /* Group card */
+  .nhsuk-group-card {
+    background: white;
+    border: 1px solid #4c6272;
+    margin-bottom: 24px;
+  }
+  .nhsuk-group-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 20px;
+    border-bottom: 1px solid #4c6272;
+    background: #f0f4f5;
+  }
+  .nhsuk-group-card__name {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 2px;
+  }
+  .nhsuk-group-card__date {
+    font-size: 16px;
+    color: var(--nhsuk-grey-1);
+  }
+  .nhsuk-badge {
+    background: var(--nhsuk-blue);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 32px;
+    white-space: nowrap;
+  }
+  .nhsuk-group-card__toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: none;
+    border: none;
+    border-top: 1px solid #4c6272;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    color: var(--nhsuk-blue);
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+  }
+  .nhsuk-group-card__toggle:hover { background: #f0f4f5; }
+  .nhsuk-group-card__toggle:focus { outline: 4px solid var(--nhsuk-yellow); outline-offset: -4px; }
+  .nhsuk-toggle-icon { transition: transform 0.15s; display: inline-block; }
+  .nhsuk-toggle-icon--open { transform: rotate(180deg); }
+  .nhsuk-group-card__body { display: none; border-top: 1px solid #4c6272; }
+  .nhsuk-group-card__body--open { display: block; }
+
+  .nhsuk-group-inner-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  .nhsuk-group-inner-table th {
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+    background: #f0f4f5;
+    border-bottom: 2px solid #212b32;
+    border-right: 1px solid #4c6272;
+  }
+  .nhsuk-group-inner-table th:last-child { border-right: none; }
+  .nhsuk-group-inner-table td {
+    padding: 10px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid #4c6272;
+    border-right: 1px solid #4c6272;
+  }
+  .nhsuk-group-inner-table td:last-child { border-right: none; }
+  .nhsuk-group-inner-table tr:last-child td { border-bottom: none; }
+  .nhsuk-group-inner-table tr:nth-child(even) td { background: #f0f4f5; }
+
+  .nhsuk-btn-remove {
+    background: none;
+    border: 1px solid var(--nhsuk-red);
+    color: var(--nhsuk-red);
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 600;
+    padding: 4px 10px;
+    cursor: pointer;
+  }
+  .nhsuk-btn-remove:hover { background: #fff0ef; }
+  .nhsuk-btn-remove:focus { outline: 4px solid var(--nhsuk-yellow); }
+
+  .nhsuk-group-continue-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 20px;
+    border-top: 1px solid #4c6272;
+  }
+
+  /* Modal CSS removed — Add to group now adds directly to Standard group */
+
+  /* ── Confirm modal ── */
+  .nhsuk-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+    padding: 16px;
+  }
+  .nhsuk-confirm-overlay.is-active { display: flex; }
+  .nhsuk-confirm-panel {
+    background: white;
+    border-top: 4px solid var(--nhsuk-red);
+    width: 100%;
+    max-width: 460px;
+    padding: 28px;
+  }
+  .nhsuk-confirm-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--nhsuk-grey-4);
+  }
+  .nhsuk-confirm-body {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .nhsuk-confirm-warning {
+    background: #fff8dc;
+    border-left: 4px solid var(--nhsuk-warm-yellow);
+    padding: 12px 16px;
+    font-size: 14px;
+    margin-top: 12px;
+  }
+  .nhsuk-confirm-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+
+
+  /* ── Display groups bar ── */
+  .nhsuk-display-groups-bar {
+    margin-top: 24px;
+    display: none;
+  }
+
+  .nhsuk-display-groups-bar.is-visible {
+  display: flex;
+  margin-top: -7.5%;
+  margin-left: 32%;
+  }
+
+  /* When search is cleared after adding a participant — keep visible, but reset position offsets */
+  .nhsuk-display-groups-bar.is-visible.is-default-position {
+    margin-top: 24px;
+    margin-left: 0;
+  }
+
+  /* ── NHS secondary button — matches service manual spec ── */
+
+  .nhsuk-button--secondary-solid {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 20px;
+    background-color: #fff;
+    color: #005eb8;
+    border: 2px solid transparent;
+    border-bottom: 4px solid #a0adb4;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 0;
+    white-space: nowrap;
+  }
+  .nhsuk-button--secondary-solid:hover {
+    background-color: #d9e7f4;
+    border-bottom-color: #768692;
+  }
+  .nhsuk-button--secondary-solid:focus {
+    outline: 4px solid #ffd52c;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 2px #212b32;
+  }
+  .nhsuk-button--secondary-solid:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+  }
+
+  /* ── Toast ── */
+  .nhsuk-toast {
+    position: absolute;
+    bottom: 150px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #005eb8;
+    color: white;
+    padding: 20px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 2px;
+    z-index: 2000;
+    opacity: 0;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .nhsuk-toast.is-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ── Fieldset / legend ── */
+  .nhsuk-fieldset { border: none; padding: 0; margin: 0; }
+  .nhsuk-fieldset__legend {
+    font-size: 16px;
+    font-weight: 700;
+    color: #212b32;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  /* ── SR only ── */
+  .nhsuk-visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+  }
+
+  /* ── Responsive ──
+  @media (max-width: 640px) {
+    .nhsuk-heading-xl { font-size: 24px; }
+    .nhsuk-name-row { flex-direction: column; }
+    .nhsuk-search-card { padding: 16px; }
+    .nhsuk-modal-panel, .nhsuk-confirm-panel { padding: 20px 16px; }
+    .nhsuk-action-bar { flex-direction: column; align-items: stretch; }
+    .nhsuk-toast { white-space: normal; max-width: 90vw; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nhsuk-toggle-icon { transition: none; }
+    .nhsuk-toast { transition: none; }
+  }*/
+
+
+
+
+</style>
+
+  <script>
+
+  /* ═══════════════════════════════════════════════════════════════
+     DATA — 30 sample participants in this batch
+  ═══════════════════════════════════════════════════════════════ */
+  const ALL_DATA = [
+    { nhs:"612 558 7760", last:"Ali",        fore:"Sara",      dob:"1965-03-02", dobD:"02 Mar 1965", },
+    { nhs:"625 671 9980", last:"Graham",     fore:"Sam",       dob:"1968-08-18", dobD:"18 Aug 1968", },
+    { nhs:"638 784 2200", last:"Nowak",      fore:"Ana",       dob:"1972-11-09", dobD:"09 Nov 1972", },
+    { nhs:"651 897 4420", last:"Garcia",     fore:"Amy",       dob:"1966-12-14", dobD:"14 Dec 1966", },
+    { nhs:"677 023 8860", last:"Petrov",     fore:"Kristin",   dob:"1967-07-28", dobD:"28 Jul 1967", },
+    { nhs:"690 136 0080", last:"Ibrahim",    fore:"Ahmed",     dob:"1971-06-03", dobD:"03 Jun 1971", },
+    { nhs:"755 691 1180", last:"Moore",      fore:"Percy",     dob:"1962-05-23", dobD:"23 May 1962", },
+    { nhs:"794 020 7840", last:"Clark",      fore:"Bianca",    dob:"1968-11-24", dobD:"24 Nov 1968", },
+    { nhs:"781 917 5620", last:"Taylor",     fore:"Helen",     dob:"1965-04-07", dobD:"07 Apr 1965", },
+    { nhs:"807 133 0060", last:"Zodovaska",  fore:"Andrea",    dob:"1971-08-13", dobD:"13 Aug 1971", },
+    { nhs:"485 777 3456", last:"John",       fore:"Jane",      dob:"1962-03-14", dobD:"14 Mar 1962", },
+    { nhs:"491 234 8812", last:"Patel",      fore:"Reena",     dob:"1958-06-29", dobD:"29 Jun 1958", },
+    { nhs:"502 881 1140", last:"Okonkwa",    fore:"Paula",     dob:"1965-11-07", dobD:"07 Nov 1965", },
+    { nhs:"477 003 9921", last:"Jackson",    fore:"Miranda",   dob:"1971-08-22", dobD:"22 Aug 1971", },
+    { nhs:"533 612 0044", last:"Williams",   fore:"Carol",     dob:"1963-01-05", dobD:"05 Jan 1963", },
+    { nhs:"548 290 1133", last:"Brown",      fore:"Patricia",  dob:"1969-09-12", dobD:"12 Sep 1969", },
+    { nhs:"561 445 7782", last:"Jones",      fore:"Linda",     dob:"1964-07-19", dobD:"19 Jul 1964", },
+    { nhs:"574 889 3310", last:"Davis",      fore:"Margaret",  dob:"1960-02-28", dobD:"28 Feb 1960", },
+    { nhs:"589 002 4421", last:"Wilson",     fore:"Barbara",   dob:"1966-10-31", dobD:"31 Oct 1966", },
+    { nhs:"603 117 5500", last:"Evans",      fore:"Susan",     dob:"1970-06-14", dobD:"14 Jun 1970", },
+    { nhs:"614 223 6610", last:"Roberts",    fore:"Karen",     dob:"1961-04-22", dobD:"22 Apr 1961", },
+    { nhs:"628 334 7720", last:"Thompson",   fore:"Christine", dob:"1967-09-17", dobD:"17 Sep 1967", },
+    { nhs:"641 445 8830", last:"White",      fore:"Dorothy",   dob:"1963-12-30", dobD:"30 Dec 1963", },
+    { nhs:"654 556 9940", last:"Harris",     fore:"Lisa",      dob:"1968-03-11", dobD:"11 Mar 1968", },
+    { nhs:"667 667 0050", last:"Martin",     fore:"Nancy",     dob:"1972-07-04", dobD:"04 Jul 1972", },
+    { nhs:"680 778 1160", last:"Lewis",      fore:"Betty",     dob:"1959-01-19", dobD:"19 Jan 1959", },
+    { nhs:"693 889 2270", last:"Lee",        fore:"Helen",     dob:"1964-05-26", dobD:"26 May 1964", },
+    { nhs:"706 990 3380", last:"Walker",     fore:"Sandra",    dob:"1966-08-03", dobD:"03 Aug 1966", },
+    { nhs:"719 001 4490", last:"Hall",       fore:"Donna",     dob:"1970-11-15", dobD:"15 Nov 1970", },
+    { nhs:"732 112 5500", last:"Allen",      fore:"Carol",     dob:"1962-09-28", dobD:"28 Sep 1962", }
+  ];
+
+  /* ═══════════════════════════════════════════════════════════════
+     STATE
+  ═══════════════════════════════════════════════════════════════ */
+  let filtered   = [];
+  let sortCol    = null;
+  let sortDir    = 'asc';
+  let selected   = new Set();
+
+  /* Pre-seeded Standard group — always exists */
+  const STANDARD_ID = 1;
+  let groups = [
+    { id: STANDARD_ID, name: 'Standard', createdAt: fmtDate(new Date()), participants: [] }
+  ];
+
+
+  /* ═══════════════════════════════════════════════════════════════
+     VALIDATION
+  ═══════════════════════════════════════════════════════════════ */
+  function clearValidation() {
+    ['nhs','fore','last'].forEach(function(f) {
+      document.getElementById('fg-'+f).classList.remove('nhsuk-form-group--error');
+      document.getElementById('err-'+f).style.display = 'none';
+    });
+    document.getElementById('fg-dob').classList.remove('nhsuk-form-group--error');
+    document.getElementById('err-dob').style.display = 'none';
+    document.getElementById('js-error-summary').style.display = 'none';
+    document.getElementById('js-error-list').innerHTML = '';
+    document.getElementById('js-search-card').classList.remove('nhsuk-search-card--error');
+    ['dob-day','dob-month','dob-year'].forEach(function(id){
+      document.getElementById(id).style.borderColor = '';
+    });
+  }
+
+  function showValidationError(errors) {
+    // Error summary at top
+    var list = document.getElementById('js-error-list');
+    list.innerHTML = '';
+    errors.forEach(function(e) {
+      var li = document.createElement('li');
+      var a  = document.createElement('a');
+      a.href = e.anchor;
+      a.textContent = e.msg;
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    var summary = document.getElementById('js-error-summary');
+    summary.style.display = 'block';
+    summary.focus();
+    document.getElementById('js-search-card').classList.add('nhsuk-search-card--error');
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+       NAME FIELD VALIDATION (forename / last name)
+       Rejects: digits-only, alphanumeric mixes (e.g. "Arp12a"), and
+       anything over 21 characters. Allows letters plus the punctuation
+       genuinely found in names: hyphens, apostrophes, and spaces
+       (e.g. "Anne-Marie", "O'Brien", "Al Amin").
+    ═══════════════════════════════════════════════════════════════ */
+    function validateNameField(value, fieldLabel) {
+      var MAX_LENGTH = 21;
+      var namePattern = /^[A-Za-z' -]+$/;
+      var hasDigit = /\d/.test(value);
+
+      if (value.length > MAX_LENGTH) {
+        return fieldLabel + ' must be 21 characters or fewer';
+      }
+      if (hasDigit) {
+        return fieldLabel + ' must not contain numbers';
+      }
+      if (!namePattern.test(value)) {
+        return fieldLabel + ' must only contain letters';
+      }
+      return null;
+    }
+
+
+
+  /* ═══════════════════════════════════════════════════════════════
+     SEARCH
+  ═══════════════════════════════════════════════════════════════ */
+  function runSearch() {
+    clearValidation();
+    var nhsVal  = document.getElementById('inp-nhs').value.trim();
+    var foreVal = document.getElementById('inp-fore').value.trim();
+    var lastVal = document.getElementById('inp-last').value.trim();
+    var dobDay  = document.getElementById('dob-day').value.trim();
+    var dobMon  = document.getElementById('dob-month').value.trim();
+    var dobYr   = document.getElementById('dob-year').value.trim();
+
+    var errors = [];
+
+    // Validate NHS number if supplied
+    if (nhsVal) {
+      var digits = nhsVal.replace(/\s/g,'');
+      if (!/^\d{10}$/.test(digits)) {
+        errors.push({ anchor:'#inp-nhs', msg:'Enter a valid NHS number (10 digits)', field:'nhs' });
+      }
+    }
+
+    if (foreVal) {
+      var foreError = validateNameField(foreVal, 'Forename');
+      if (foreError) {
+        errors.push({ anchor: '#inp-fore', msg: foreError, field: 'fore' });
+      }
+    }
+
+    if (lastVal) {
+      var lastError = validateNameField(lastVal, 'Last name');
+      if (lastError) {
+        errors.push({ anchor: '#inp-last', msg: lastError, field: 'last' });
+      }
+    }
+
+    // DOB: either all blank or all provided & valid
+    var dobPartial = dobDay || dobMon || dobYr;
+      var dobFull = dobDay && dobMon && dobYr;
+      var dobDate = null;
+
+      if (dobPartial && !dobFull) {
+        errors.push({ anchor: '#dob-day', msg: 'Date of birth must include a day, month and year', field: 'dob' });
+      } else if (dobFull) {
+        /* Check each field is numeric BEFORE attempting range validation.
+           parseInt('1W', 10) silently returns 1 (and parseInt('r', 10) returns NaN),
+           so without this check letters can slip through or produce a vague
+           "enter a real date" message instead of telling the user which
+           field has the problem. */
+        var numericPattern = /^\d+$/;
+        var dayIsNumeric = numericPattern.test(dobDay);
+        var monIsNumeric = numericPattern.test(dobMon);
+        var yrIsNumeric = numericPattern.test(dobYr);
+
+        if (!dayIsNumeric || !monIsNumeric || !yrIsNumeric) {
+          var badFields = [];
+          if (!dayIsNumeric) badFields.push('day');
+          if (!monIsNumeric) badFields.push('month');
+          if (!yrIsNumeric) badFields.push('year');
+
+          var msg;
+          if (badFields.length === 1) {
+            msg = 'Date of birth ' + badFields[0] + ' must be a number';
+          } else if (badFields.length === 2) {
+            msg = 'Date of birth ' + badFields[0] + ' and ' + badFields[1] + ' must be numbers';
+          } else {
+            msg = 'Date of birth must be made up of numbers';
+          }
+
+          errors.push({ anchor: '#dob-day', msg: msg, field: 'dob', badParts: badFields });
+        } else {
+          var d = parseInt(dobDay, 10), m = parseInt(dobMon, 10), y = parseInt(dobYr, 10);
+          var valid = (d >= 1 && d <= 31) && (m >= 1 && m <= 12) && (y >= 1900 && y <= 2024);
+          if (!valid) {
+            errors.push({ anchor: '#dob-day', msg: 'Enter a real date of birth', field: 'dob' });
+          } else {
+            dobDate = y + '-' + pad(m) + '-' + pad(d);
+          }
+        }
+      }
+
+    // At least one field needed
+    if (!nhsVal && !foreVal && !lastVal && !dobPartial) {
+      errors.push({ anchor:'#inp-nhs', msg:'Enter at least one search field', field:'nhs' });
+    }
+
+    if (errors.length > 0) {
+      showValidationError(errors);
+      errors.forEach(function(e) {
+        if (e.field === 'nhs') {
+          document.getElementById('fg-nhs').classList.add('nhsuk-form-group--error');
+          document.getElementById('err-nhs').style.display = 'block';
+          document.getElementById('err-nhs').textContent = e.msg;
+        }
+        if (e.field === 'fore') {
+          document.getElementById('fg-fore').classList.add('nhsuk-form-group--error');
+          document.getElementById('err-fore').style.display = 'block';
+        }
+        if (e.field === 'last') {
+          document.getElementById('fg-last').classList.add('nhsuk-form-group--error');
+          document.getElementById('err-last').style.display = 'block';
+        }
+        if (e.field === 'dob') {
+          document.getElementById('fg-dob').classList.add('nhsuk-form-group--error');
+          var errEl = document.getElementById('err-dob');
+          errEl.style.display = 'block';
+          errEl.textContent = e.msg;
+          ['dob-day','dob-month','dob-year'].forEach(function(id){
+            document.getElementById(id).style.borderColor = '#d5281b';
+          });
+        }
+        if (e.field === 'nhs' && e.msg === 'Enter at least one search field') {
+          // don't double-error specific field; just show summary
+        }
+      });
+      document.getElementById('js-results-section').classList.remove('visible');
+      return;
+    }
+
+    // Filter
+    filtered = ALL_DATA.filter(function(p) {
+      var nhsDigits = nhsVal ? nhsVal.replace(/\s/g,'') : null;
+      var pNhsDigits = p.nhs.replace(/\s/g,'');
+
+      var matchNHS  = !nhsVal  || pNhsDigits === nhsDigits;
+      var matchFore = !foreVal || p.fore.toLowerCase().startsWith(foreVal.toLowerCase());
+      var matchLast = !lastVal || p.last.toLowerCase().startsWith(lastVal.toLowerCase());
+      var matchDob  = !dobDate || p.dob === dobDate;
+
+      return matchNHS && matchFore && matchLast && matchDob;
+    });
+
+    selected.clear();
+    sortCol = null;
+    sortDir = 'asc';
+    document.querySelectorAll('#js-table th[aria-sort]').forEach(function(th){ th.setAttribute('aria-sort','none'); });
+
+    renderResults(nhsVal, foreVal, lastVal, dobDate ? (dobDay+'/'+dobMon+'/'+dobYr) : null);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     RENDER RESULTS
+  ═══════════════════════════════════════════════════════════════ */
+  function renderResults(nhsVal, foreVal, lastVal, dobStr) {
+    var section = document.getElementById('js-results-section');
+    var tableWrap = document.getElementById('js-table-wrap');
+    var noResults = document.getElementById('js-no-results');
+    var actionBar = document.getElementById('js-action-bar');
+    var termBar   = document.getElementById('js-search-term-bar');
+
+    section.classList.add('visible');
+    document.getElementById('js-selectall').checked = false;
+
+    // Search term summary
+    var terms = [];
+    if (nhsVal)  terms.push('NHS number <strong>' + esc(nhsVal) + '</strong>');
+    if (foreVal) terms.push('forename <strong>' + esc(foreVal) + '</strong>');
+    if (lastVal) terms.push('last name <strong>' + esc(lastVal) + '</strong>');
+    if (dobStr)  terms.push('date of birth <strong>' + esc(dobStr) + '</strong>');
+    termBar.style.display = 'block';
+    termBar.innerHTML = 'Search: ' + terms.join(' &nbsp;·&nbsp; ');
+
+    if (filtered.length === 0) {
+      tableWrap.style.display = 'none';
+      actionBar.style.display = 'none';
+      noResults.style.display = 'block';
+      document.getElementById('js-no-results-msg').textContent =
+        'No participants in this batch match your search. Check the details and try again.';
+      document.getElementById('js-results-count').innerHTML = '';
+      document.getElementById('js-results-title').textContent = 'Search result';
+      return;
+    }
+
+    noResults.style.display = 'none';
+    tableWrap.style.display = 'block';
+    actionBar.style.display = 'flex';
+
+    document.getElementById('js-results-count').innerHTML =
+      '<strong>' + filtered.length + '</strong> participant' + (filtered.length !== 1 ? 's' : '') + ' found';
+    document.getElementById('js-results-title').textContent = 'Search result';
+
+    renderTableRows(nhsVal, foreVal, lastVal, dobStr);
+    updateActionBar();
+    /* >>> CHANGED: re-sync display-groups-bar position on fresh search <<< */
+    updateDisplayGroupsBtn();
+    /* >>> END CHANGED <<< */
+  }
+
+  function renderTableRows(nhsVal, foreVal, lastVal, dobStr) {
+    var tbody = document.getElementById('js-tbody');
+    tbody.innerHTML = filtered.map(function(p) {
+      var checked = selected.has(p.nhs) ? 'checked' : '';
+      var rowCls  = selected.has(p.nhs) ? 'row--selected' : '';
+
+      return '<tr class="' + rowCls + '" id="row-' + esc(p.nhs.replace(/\s/g,'')) + '">'
+        + '<td><input type="checkbox" class="nhsuk-checkbox-cell" '
+        +   'aria-label="Select ' + esc(p.fore) + ' ' + esc(p.last) + '" '
+        +   'onchange="toggleRow(this,\'' + esc(p.nhs) + '\')" '
+        +   (checked ? 'checked' : '') + ' /></td>'
+        + '<td>' + highlight(p.nhs, nhsVal ? nhsVal.replace(/\s/g,'') : '', true) + '</td>'
+        + '<td>' + highlight(p.last, lastVal, false) + '</td>'
+        + '<td>' + highlight(p.fore, foreVal, false) + '</td>'
+        + '<td style="white-space:nowrap;">' + esc(p.dobD) + '</td>'
+        <!--+ '<td>' + esc(p.gp) + '</td>'-->
+        + '</tr>';
+    }).join('');
+  }
+
+  /* ─── Highlight match ─── */
+  function highlight(text, term, isNhs) {
+    if (!term) return esc(text);
+    var t = isNhs ? text.replace(/\s/g,'') : text;
+    var tl = t.toLowerCase(), trl = term.toLowerCase();
+    var idx = tl.indexOf(trl);
+    if (idx < 0) return esc(text);
+    // For NHS number, re-map index into spaced version
+    if (isNhs) {
+      // just wrap the whole thing if it matches (NHS full match only)
+      return '<mark class="nhsuk-match-highlight">' + esc(text) + '</mark>';
+    }
+    return esc(text.substring(0, idx))
+      + '<mark class="nhsuk-match-highlight">' + esc(text.substring(idx, idx+term.length)) + '</mark>'
+      + esc(text.substring(idx+term.length));
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     CLEAR SEARCH
+  ═══════════════════════════════════════════════════════════════ */
+  function clearSearch() {
+    ['inp-nhs','inp-fore','inp-last','dob-day','dob-month','dob-year'].forEach(function(id){
+      document.getElementById(id).value = '';
+    });
+    clearValidation();
+    document.getElementById('js-results-section').classList.remove('visible');
+    document.getElementById('js-no-results').style.display = 'none';
+    document.getElementById('js-table-wrap').style.display = 'none';
+    document.getElementById('js-action-bar').style.display = 'none';
+    document.getElementById('js-search-term-bar').style.display = 'none';
+    filtered = [];
+    selected.clear();
+    document.getElementById('inp-nhs').focus();
+
+    /* >>> CHANGED: reset "View group" button to default position on clear <<< */
+    // Results table is gone, so if the "View group" button is still
+    // showing (group has participants), drop it back to its default
+    // position instead of the offset position used alongside results.
+    document.getElementById('js-display-groups-bar').classList.add('is-default-position');
+    /* >>> END CHANGED <<< */
+
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     SORTING
+  ═══════════════════════════════════════════════════════════════ */
+  function sortBy(col, thEl) {
+    if (sortCol === col) {
+      sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortCol = col; sortDir = 'asc';
+    }
+    document.querySelectorAll('#js-table th[aria-sort]').forEach(function(th){
+      th.setAttribute('aria-sort','none');
+    });
+    thEl.setAttribute('aria-sort', sortDir === 'asc' ? 'ascending' : 'descending');
+
+    filtered.sort(function(a,b){
+      var va = a[col] || '', vb = b[col] || '';
+      return sortDir === 'asc'
+        ? va.localeCompare(vb)
+        : vb.localeCompare(va);
+    });
+    renderTableRows(
+      document.getElementById('inp-nhs').value.trim(),
+      document.getElementById('inp-fore').value.trim(),
+      document.getElementById('inp-last').value.trim(),
+      null
+    );
+  }
+  function sortKey(e, col, th) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sortBy(col, th); }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     SELECTION
+  ═══════════════════════════════════════════════════════════════ */
+  function toggleRow(cb, nhs) {
+    var row = document.getElementById('row-'+nhs.replace(/\s/g,''));
+    if (cb.checked) {
+      selected.add(nhs);
+      if (row) row.classList.add('row--selected');
+    } else {
+      selected.delete(nhs);
+      if (row) row.classList.remove('row--selected');
+    }
+    updateActionBar();
+    document.getElementById('js-selectall').checked = (selected.size === filtered.length && filtered.length > 0);
+  }
+  function toggleAll(cb) {
+    filtered.forEach(function(p){
+      var row = document.getElementById('row-'+p.nhs.replace(/\s/g,''));
+      if (cb.checked) {
+        selected.add(p.nhs);
+        if (row) row.classList.add('row--selected');
+      } else {
+        selected.delete(p.nhs);
+        if (row) row.classList.remove('row--selected');
+      }
+    });
+    document.querySelectorAll('#js-tbody input[type=checkbox]').forEach(function(c){ c.checked = cb.checked; });
+    updateActionBar();
+  }
+  function updateActionBar() {
+    var n = selected.size;
+    var txt = n === 0
+      ? 'No participants selected'
+      : '<strong>' + n + '</strong> participant' + (n !== 1 ? 's' : '') + ' selected';
+    document.getElementById('js-selection-count').innerHTML = txt;
+    document.getElementById('btn-add-group').disabled = (n === 0);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     ADD TO STANDARD GROUP — no modal, direct action
+  ═══════════════════════════════════════════════════════════════ */
+  function addToStandard() {
+    if (selected.size === 0) return;
+    var standardGroup = groups.find(function(g){ return g.id === STANDARD_ID; });
+    if (!standardGroup) return;
+
+    var added = 0;
+    ALL_DATA.filter(function(p){ return selected.has(p.nhs); }).forEach(function(p){
+      if (!standardGroup.participants.find(function(x){ return x.nhs === p.nhs; })) {
+        standardGroup.participants.push(Object.assign({}, p, { addedAt: fmtDate(new Date()) }));
+        added++;
+      }
+    });
+
+    var skipped = selected.size - added;
+    updateDisplayGroupsBtn();
+
+    if (added > 0 && skipped === 0) {
+      showToast(added + ' participant' + (added !== 1 ? 's' : '') + ' added to "Standard"');
+    } else if (added > 0 && skipped > 0) {
+      showToast(added + ' added to "Standard" · ' + skipped + ' already in group');
+    } else {
+      showToast('All selected participants are already in "Standard"');
+    }
+  }
+
+  let _pendingRemove = null;
+
+  function updateDisplayGroupsBtn() {
+    var standardGroup = groups.find(function(g){ return g.id === STANDARD_ID; });
+    var hasParticipants = standardGroup && standardGroup.participants.length > 0;
+    /* >>> CHANGED: capture bar element + clear default-position override on re-sync >>> */
+    var bar = document.getElementById('js-display-groups-bar');
+    bar.classList.toggle('is-visible', hasParticipants);
+    // Re-syncing means we're back in a state with live results (e.g. a
+    // fresh search ran), so drop the "cleared search" default position
+    // and let the normal offset position apply again.
+    bar.classList.remove('is-default-position');
+    /* >>> END CHANGED <<< */
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     GROUPS SCREEN
+  ═══════════════════════════════════════════════════════════════ */
+  function showGroupsScreen() {
+    document.getElementById('js-search-card').style.display = 'none';
+    document.getElementById('js-results-section').style.display = 'none';
+    document.getElementById('js-display-groups-bar').classList.remove('is-visible');
+    document.getElementById('js-groups-screen').style.display = 'block';
+    renderGroupsScreen();
+  }
+  function hideGroupsScreen() {
+    document.getElementById('js-groups-screen').style.display = 'none';
+    document.getElementById('js-search-card').style.display = '';
+    if (filtered.length > 0) {
+      document.getElementById('js-results-section').style.display = '';
+    }
+    updateDisplayGroupsBtn();
+  }
+  function renderGroupsScreen() {
+    var empty = document.getElementById('js-groups-empty');
+    var list  = document.getElementById('js-groups-list');
+    if (groups.length === 0) {
+      empty.style.display = 'block'; list.innerHTML = ''; return;
+    }
+    empty.style.display = 'none';
+
+    var openIds = {};
+    list.querySelectorAll('.nhsuk-group-card__body--open').forEach(function(el){ openIds[el.id] = true; });
+
+    list.innerHTML = groups.map(function(g) {
+      var n = g.participants.length;
+      var bodyId = 'group-body-' + g.id;
+      var wasOpen = !!openIds[bodyId];
+      var rows = n === 0
+        ? '<tr><td colspan="6" style="padding:24px;text-align:center;color:#768692;">No participants in this group.</td></tr>'
+        : g.participants.map(function(p){
+            return '<tr>'
+              + '<td>' + esc(p.nhs) + '</td>'
+              + '<td>' + esc(p.last) + '</td>'
+              + '<td>' + esc(p.fore) + '</td>'
+              + '<td style="white-space:nowrap;">' + esc(p.dobD) + '</td>'
+              + '<td style="white-space:nowrap;">' + esc(p.addedAt) + '</td>'
+              + '<td><button class="nhsuk-btn-remove" type="button"'
+              + ' onclick="removeParticipant(\'' + g.id + '\',\'' + esc(p.nhs) + '\')"'
+              + ' aria-label="Remove ' + esc(p.fore) + ' ' + esc(p.last) + ' from group">Remove</button></td>'
+              + '</tr>';
+          }).join('');
+
+      return '<div class="nhsuk-group-card" id="group-' + g.id + '">'
+        + '<div class="nhsuk-group-card__header">'
+        +   '<div>'
+        +     '<p class="nhsuk-group-card__name">' + esc(g.name) + '</p>'
+        +     '<p class="nhsuk-group-card__date">Created: ' + esc(g.createdAt) + '</p>'
+        +   '</div>'
+        +   '<span class="nhsuk-badge">' + n + ' participant' + (n !== 1 ? 's' : '') + '</span>'
+        + '</div>'
+        + '<button class="nhsuk-group-card__toggle" type="button"'
+        +   ' onclick="toggleGroupBody(\'' + g.id + '\',this)"'
+        +   ' aria-expanded="' + (wasOpen ? 'true' : 'false') + '"'
+        +   ' aria-controls="' + bodyId + '">'
+        +   '<svg class="nhsuk-toggle-icon' + (wasOpen ? ' nhsuk-toggle-icon--open' : '') + '" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>'
+        +   (wasOpen ? ' Hide participants' : ' Show participants')
+        + '</button>'
+        + '<div class="nhsuk-group-card__body' + (wasOpen ? ' nhsuk-group-card__body--open' : '') + '" id="' + bodyId + '">'
+        +   '<div style="overflow-x:auto;">'
+        +   '<table class="nhsuk-group-inner-table"><thead><tr>'
+        +     '<th>NHS Number</th><th>Last Name</th><th>Forename</th>'
+        +     '<th>Date of birth</th><th>Date added</th><th>Action</th>'
+        +   '</tr></thead><tbody>' + rows + '</tbody></table>'
+        +   '</div>'
+        + '</div>'
+        + (n > 0
+          ? '<div class="nhsuk-group-continue-row">'
+          +   '<button class="nhsuk-button nhsuk-button--secondary nhsuk-button--small" type="button" onclick="continueGroup(\'' + g.id + '\')">'
+          +     'Continue with this group &rarr;'
+          +   '</button>'
+          + '</div>'
+          : '')
+        + '</div>';
+    }).join('');
+  }
+  function toggleGroupBody(id, btn) {
+    var body  = document.getElementById('group-body-' + id);
+    var icon  = btn.querySelector('.nhsuk-toggle-icon');
+    var isOpen = body.classList.contains('nhsuk-group-card__body--open');
+    body.classList.toggle('nhsuk-group-card__body--open', !isOpen);
+    if (icon) icon.classList.toggle('nhsuk-toggle-icon--open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    btn.lastChild.textContent = isOpen ? ' Show participants' : ' Hide participants';
+  }
+
+
+  /* ═══════════════════════════════════════════════════════════════
+     REMOVE PARTICIPANT
+  ═══════════════════════════════════════════════════════════════ */
+  function removeParticipant(groupId, nhs) {
+    var g = groups.find(function(x){ return String(x.id) === String(groupId); });
+    if (!g) return;
+    var p = g.participants.find(function(x){ return x.nhs === nhs; });
+    if (!p) return;
+    _pendingRemove = { groupId: groupId, nhs: nhs };
+    document.getElementById('js-confirm-name').textContent  = p.fore + ' ' + p.last + ' (' + p.nhs + ')';
+    document.getElementById('js-confirm-group').textContent = '\u201C' + g.name + '\u201D';
+    var overlay = document.getElementById('js-confirm-overlay');
+    overlay.classList.add('is-active');
+    document.getElementById('js-confirm-yes').focus();
+    overlay.addEventListener('keydown', confirmKeyHandler);
+  }
+  function confirmKeyHandler(e) { if (e.key === 'Escape') cancelRemove(); }
+  function confirmRemove() {
+    if (!_pendingRemove) return;
+    var g   = groups.find(function(x){ return String(x.id) === String(_pendingRemove.groupId); });
+    if (!g) { cancelRemove(); return; }
+    var idx = g.participants.findIndex(function(p){ return p.nhs === _pendingRemove.nhs; });
+    if (idx === -1) { cancelRemove(); return; }
+    var name = g.participants[idx].fore + ' ' + g.participants[idx].last;
+    g.participants.splice(idx, 1);
+    cancelRemove();
+    renderGroupsScreen();
+    updateDisplayGroupsBtn();
+    showToast(name + ' removed from "' + g.name + '"');
+  }
+  function cancelRemove() {
+    var overlay = document.getElementById('js-confirm-overlay');
+    overlay.classList.remove('is-active');
+    overlay.removeEventListener('keydown', confirmKeyHandler);
+    _pendingRemove = null;
+  }
+
+  function continueGroup(groupId) {
+    var g = groups.find(function(x){ return String(x.id) === String(groupId); });
+    if (!g) return;
+    alert('Continue with group \u201C' + g.name + '\u201D\n\n'
+      + g.participants.length + ' participant' + (g.participants.length !== 1 ? 's' : '') + ' in this group.\n\n'
+      + '(In the live system this would proceed to the next step.)');
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     HELPERS
+  ═══════════════════════════════════════════════════════════════ */
+  function fmtDate(d) {
+    var M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return pad(d.getDate())+' '+M[d.getMonth()]+' '+d.getFullYear()+', '+pad(d.getHours())+':'+pad(d.getMinutes());
+  }
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+  function esc(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function showToast(msg) {
+    var t = document.getElementById('js-toast');
+    t.textContent = msg;
+    t.classList.add('is-visible');
+    setTimeout(function(){ t.classList.remove('is-visible'); }, 3800);
+  }
+
+  /* Initialise on load */
+  updateDisplayGroupsBtn();
+
+  </script>
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}
