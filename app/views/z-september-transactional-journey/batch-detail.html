@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "" %}
+{% set pageName = "Batch detail" %}
 
 {% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -49,11 +49,9 @@
   
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-
-      {{ button({
-        text: "Select participants to book"
-      }) }}
-
+      <a class="nhsuk-button" href="search">
+        Select participants to book
+      </a>
     </div>
   </div>
 

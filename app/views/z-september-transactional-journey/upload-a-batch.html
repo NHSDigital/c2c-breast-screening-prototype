@@ -1,13 +1,11 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "" %}
+{% set pageName = "Upload a batch" %}
 
 {% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
 {% block header %}
   {{ primaryNavigation() }}
 {% endblock %}
-
-{% block beforeContent %}{% endblock %}
 
 {% block content %}
 
@@ -21,11 +19,12 @@
         </h1>
         <input class="nhsuk-file-upload__input" id="file-hint" name="file-hint" type="file">
       </div>
-
-
-      {{ button({
-        "text": "Upload file"
-      }) }}
+      
+      <div>
+        <a class="nhsuk-button" href="batch-detail">
+          Upload file
+        </a>
+      </div>
 
     </div>
   </div>
