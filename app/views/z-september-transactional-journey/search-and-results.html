@@ -11,14 +11,94 @@
 
 {% block content %}
 
+  {% include "z-september-transactional-journey/_includes/participant-search.html"%}
+
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-      <p class="nhsuk-body">
-        Search and results
-      </p>
-      <p>
-        <a href="group">Next: Group</a>
-      </p>
+      <h2 class="nhsuk-body">[X] participants found</h2>
+
+      <table class="nhsuk-table nhsuk-checkboxes nhsuk-checkboxes--small app-participant-table">
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <td scope="col" class="nhsuk-table__header">
+              <!-- <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="select-all" name="select-all" type="checkbox" value="participant-id">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="select-all">
+                  <span class="nhsuk-u-visually-hidden">Select all participants</span>
+                </label>
+              </div> -->
+            </td>
+            <th scope="col" class="nhsuk-table__header">
+              NHS Number
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Name
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Date of birth
+            </th>
+          </tr>
+        </thead>
+        <tbody class="nhsuk-table__body">
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
+                  <span class="nhsuk-u-visually-hidden">Select this participant</span>
+                </label>
+              </div>
+            </td>
+            <td class="nhsuk-table__cell">628 334 7720</td>
+            <td class="nhsuk-table__cell">Christine Thompson</td>
+            <td class="nhsuk-table__cell">17 September 1967</td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
+                  <span class="nhsuk-u-visually-hidden">Select this participant</span>
+                </label>
+              </div>
+            </td>
+            <td class="nhsuk-table__cell">628 334 7720</td>
+            <td class="nhsuk-table__cell">Christine Thompson</td>
+            <td class="nhsuk-table__cell">17 September 1967</td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
+                  <span class="nhsuk-u-visually-hidden">Select this participant</span>
+                </label>
+              </div>
+            </td>
+            <td class="nhsuk-table__cell">628 334 7720</td>
+            <td class="nhsuk-table__cell">Christine Thompson</td>
+            <td class="nhsuk-table__cell">17 September 1967</td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
+                  <span class="nhsuk-u-visually-hidden">Select this participant</span>
+                </label>
+              </div>
+            </td>
+            <td class="nhsuk-table__cell">628 334 7720</td>
+            <td class="nhsuk-table__cell">Christine Thompson</td>
+            <td class="nhsuk-table__cell">17 September 1967</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <a href="group" class="nhsuk-button">
+        Add selected to group
+      </a>
+        
     </div>
   </div>
 
