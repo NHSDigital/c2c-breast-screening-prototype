@@ -1,8 +1,8 @@
 // Import NHS.UK frontend library
-/*@forward "nhsuk-frontend/dist/nhsuk/nhsuk" with (
+@forward "nhsuk-frontend/dist/nhsuk/nhsuk" with (
   $nhsuk-page-width: 1280px
-);*/
-@forward "nhsuk-frontend/dist/nhsuk/nhsuk";
+);
+//@forward "nhsuk-frontend/dist/nhsuk/nhsuk";
 @use "nhsuk-frontend/dist/nhsuk/core" as *;
 
 // Stolen Manage prototype components :P

@@ -1,17 +1,29 @@
 .app-participant-table {
 
   tbody tr:nth-child(odd) {
-    background-color: rgba(255,255,255,0.5);
+    background-color: #f8fafa;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f0f4f5;
   }
 
+  th:first-child,
   td:first-child {
     padding-left: 12px;
   }
 
-  &.nhsuk-checkboxes--small {
-    .nhsuk-checkboxes__item {
-      margin-top: -8px;
-    }
+  td:has( > .nhsuk-checkboxes__item) {
+    padding-right: 0;
+    padding-top: 8px;
+    width: 62px;
   }
-  
+
+  .app-column-time {
+    width: 5rem;
+  }
+  .app-column-nhs-number {
+    text-align: right;
+    width: 10rem;
+  }
+
 }
