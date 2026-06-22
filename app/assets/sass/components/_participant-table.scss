@@ -1,5 +1,11 @@
 .app-participant-table {
 
+  thead tr {
+    position: sticky;
+    top: 0;
+    background-color: #f0f4f5;
+  }
+
   tbody tr:nth-child(odd) {
     background-color: #f8fafa;
   }
