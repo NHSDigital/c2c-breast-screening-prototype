@@ -7,14 +7,16 @@
 
 @forward "components/calendar-table";
 @forward "components/day-listing";
+@forward "components/inline-detailed-search";
 @forward "components/secondary-navigation";
+@forward "components/participant-table";
 //@forward "components/participant-search";
 
 // Add your custom CSS/Sass styles below.
 .app-card-editable {
   display: flex;
   justify-content: space-between;
-  align-items: last baseline;
+  align-items: baseline;
 }
 
 // Batch (for now) view bar charts and legends

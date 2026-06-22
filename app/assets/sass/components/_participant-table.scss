@@ -1,0 +1,17 @@
+.app-participant-table {
+
+  tbody tr:nth-child(odd) {
+    background-color: rgba(255,255,255,0.5);
+  }
+
+  td:first-child {
+    padding-left: 12px;
+  }
+
+  &.nhsuk-checkboxes--small {
+    .nhsuk-checkboxes__item {
+      margin-top: -8px;
+    }
+  }
+  
+}
