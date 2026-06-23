@@ -1,5 +1,8 @@
 // Import NHS.UK frontend library
-@forward "nhsuk-frontend/dist/nhsuk/nhsuk";
+@forward "nhsuk-frontend/dist/nhsuk/nhsuk" with (
+  $nhsuk-page-width: 1280px
+);
+//@forward "nhsuk-frontend/dist/nhsuk/nhsuk";
 @use "nhsuk-frontend/dist/nhsuk/core" as *;
 
 // Stolen Manage prototype components :P
@@ -12,7 +15,12 @@
 @forward "components/participant-table";
 //@forward "components/participant-search";
 
+//{% set containerClasses = "nhsuk-width-container-fluid" %}
+
 // Add your custom CSS/Sass styles below.
+.app-width-extended {
+  width: 1280px;
+}
 .app-card-editable {
   display: flex;
   justify-content: space-between;

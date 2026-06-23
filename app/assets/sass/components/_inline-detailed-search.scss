@@ -1,17 +1,11 @@
 .app-inline-detailed-search {
   display: flex;
-  gap: 1rem;
+  //gap: 1rem;
+  gap: 2rem;
 
   & > .nhsuk-form-group {
     margin-bottom: 0;
-
-    &:nth-child(4) {
-      width: 210px;
-      flex-shrink: 0;
-    }
-    &:last-child {
-      align-self: flex-end;
-    }
+    align-self: flex-end;
   }
 
   & .nhsuk-button {
@@ -19,7 +13,8 @@
   }
 
   .nhsuk-date-input__item {
-    margin-right: 8px;
+    //margin-right: 8px;
+    margin-right: 1rem;
     &:last-child {
       margin-right: 0;
     }
