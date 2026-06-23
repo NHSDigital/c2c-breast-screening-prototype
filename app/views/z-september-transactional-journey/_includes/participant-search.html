@@ -63,3 +63,117 @@
     </div>
   </div>
 </search>
+
+<hr>
+
+<h1><code style="color: red;">Error states</code></h1>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+      <div class="nhsuk-error-summary" data-module="nhsuk-error-summary">
+        <div role="alert">
+          <h2 class="nhsuk-error-summary__title">
+          There is a problem
+          </h2>
+          <div class="nhsuk-error-summary__body">
+            <p>
+              Is an empty submission an error or a "no results" return?
+            </p>
+            <p>
+              Bad formatting on NHS number. Non-numeric entry on NHS number. Anything else?
+            </p>
+            <p>
+              Missing date element (day, month or year). Non-numeric entry on dates. DOB mnust be in the past. Anything else?
+            </p>
+            <ul class="nhsuk-list nhsuk-error-summary__list">
+              <li>
+                <a href="#empty-search-error">Empty error</a>
+              </li>
+              <li>
+                <a href="#nhs-number-error">NHS number error</a>
+              </li>
+              <li>
+                <a href="#dob-error">Date of birth error</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<search>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h1 class="nhsuk-heading-m nhsuk-u-margin-bottom-2">
+        Find participants in Test batch 1
+      </h1>
+      <span class="nhsuk-caption-m nhsuk-caption--bottom">Use one or more fields</span>
+      <!-- replaces the hint text on error -->
+      <span class="nhsuk-caption-m nhsuk-caption--bottom nhsuk-error-message" id="empty-search-error">
+        <span class="nhsuk-u-visually-hidden">Error:</span> Use one or more fields
+      </span>
+    </div>
+  </div>
+  <div class="app-inline-detailed-search nhsuk-u-margin-top-3 nhsuk-u-margin-bottom-4">
+    <div class="nhsuk-form-group nhsuk-form-group--error">
+      <label class="nhsuk-label" for="nhs-number"><b>NHS number</b></label>
+      <span class="nhsuk-error-message" id="nhs-number-error">
+        <span class="nhsuk-u-visually-hidden">Error:</span> NHS number formatting message or something long
+      </span>
+      <input class="nhsuk-input" type="text" id="nhs-number">
+    </div>
+    <div class="nhsuk-form-group">
+      <label class="nhsuk-label" for="first-name">First name</label>
+      <input class="nhsuk-input" type="text" id="first-name">
+    </div>
+    <div class="nhsuk-form-group">
+      <label class="nhsuk-label" for="last-name">Last name</label>
+      <input class="nhsuk-input" type="text" id="last-name">
+    </div>
+    <div class="nhsuk-form-group nhsuk-form-group--error">
+      <fieldset class="nhsuk-fieldset" role="group">
+        <legend class="nhsuk-fieldset__legend" style="margin-bottom:4px;">
+          Date of birth
+        </legend>
+        <span class="nhsuk-error-message" id="dob-error">
+          <span class="nhsuk-u-visually-hidden">Error:</span> Date of birth must be in the past
+        </span>
+        <div class="nhsuk-date-input" id="dob">
+          <div class="nhsuk-date-input__item">
+            <div class="nhsuk-form-group">
+              <label class="nhsuk-u-visually-hidden" for="dob-day">
+                Day
+              </label>
+              <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="dob-day" name="dob[day]" type="text" inputmode="numeric" placeholder="dd">
+            </div>
+          </div>
+          <div class="nhsuk-date-input__item">
+            <div class="nhsuk-form-group">
+              <label class="nhsuk-u-visually-hidden" for="dob-month">
+                Month
+              </label>
+              <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="dob-month" name="dob[month]" type="text" inputmode="numeric" placeholder="mm">
+            </div>
+          </div>
+          <div class="nhsuk-date-input__item">
+            <div class="nhsuk-form-group">
+              <label class="nhsuk-u-visually-hidden" for="dob-year">
+                Year
+              </label>
+              <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-4" id="dob-year" name="dob[year]" type="text" inputmode="numeric" placeholder="yyyy">
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="nhsuk-form-group">
+      <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--small" type="submit">
+        <svg class="nhsuk-icon nhsuk-icon--search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+          <path d="m20.7 18.9-4.1-4.1a7 7 0 1 0-1.4 1.4l4 4.1a1 1 0 0 0 1.5 0c.4-.4.4-1 0-1.4ZM6 10.6a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"></path>
+        </svg>
+        <span class="nhsuk-button__content">Search</span>
+      </button>
+    </div>
+  </div>
+</search>

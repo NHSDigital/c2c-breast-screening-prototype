@@ -15,7 +15,7 @@
     <div class="nhsuk-grid-column-full">
       {% set html %}
         <p class="nhsuk-notification-banner__heading">
-          Participant successfully added to group
+          Participant[s] successfully added to group
         </p>
       {% endset %}
       {{ notificationBanner({
@@ -23,14 +23,15 @@
         type: "success"
       }) }}
 
-      <!-- {% set html %}
+      {% set html %}
         <p class="nhsuk-notification-banner__heading">
-          Participant successfully removed from group
+          Participant removed from group
         </p>
+        <a href="#">Undo</a>
       {% endset %}
       {{ notificationBanner({
         html: html
-      }) }} -->
+      }) }}
     </div>
   </div>
 
