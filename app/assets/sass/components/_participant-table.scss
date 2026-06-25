@@ -1,16 +1,12 @@
 .app-participant-table {
 
-  /*thead tr {
-    position: sticky;
-    top: 0;
-    background-color: #f0f4f5;
-  }*/
-
-  tbody tr:nth-child(odd) {
-    background-color: #f8fafa;
-  }
-  tbody tr:nth-child(even) {
-    background-color: #f0f4f5;
+  .nhsuk-table__body {
+    tr:nth-child(odd) {
+      background-color: #f8fafa;
+    }
+    tr:nth-child(even) {
+      background-color: #f0f4f5;
+    }
   }
 
   th:first-child,
