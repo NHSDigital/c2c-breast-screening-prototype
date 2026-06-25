@@ -20,9 +20,16 @@
       <h1 class="nhsuk-heading-l nhsuk-u-margin-top-4">
         Search results
       </h1>
+
+      <div class=" nhsuk-form-group--error">
+
       <h2 class="nhsuk-heading-s">4 participants found</h2>
 
-      <table class="nhsuk-table nhsuk-checkboxes nhsuk-checkboxes--small app-participant-table">
+        <span class="nhsuk-error-message" id="nhs-number-error">
+          <span class="nhsuk-u-visually-hidden">Error:</span> Select one or more participants
+        </span>
+
+      <table id="search-results" class="nhsuk-table nhsuk-checkboxes nhsuk-checkboxes--small app-participant-table">
         <thead class="nhsuk-table__head">
           <tr class="nhsuk-table__row">
             <td scope="col" class="nhsuk-table__header"></td>
@@ -92,6 +99,8 @@
           </tr>
         </tbody>
       </table>
+
+    </div>
 
       <a href="group" class="nhsuk-button">
         Add selected to Test clinic group
