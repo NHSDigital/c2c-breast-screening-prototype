@@ -13,98 +13,111 @@
 
   {% include "z-september-transactional-journey/_includes/participant-search.html"%}
 
-  <section>
+<section>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
 
-      <h1 class="nhsuk-heading-m nhsuk-u-margin-top-4">4 participants found</h1>
+      <h1 class="nhsuk-heading-l nhsuk-u-margin-top-4">
+        Search results
+      </h1>
 
-      <table class="nhsuk-table nhsuk-checkboxes nhsuk-checkboxes--small app-participant-table">
-        <thead class="nhsuk-table__head">
-          <tr class="nhsuk-table__row">
-            <td scope="col" class="nhsuk-table__header"></td>
-            <th scope="col" class="nhsuk-table__header app-column-nhs-number">
-              NHS Number
-            </th>
-            <th scope="col" class="nhsuk-table__header">
-              Name
-            </th>
-            <th scope="col" class="nhsuk-table__header">
-              Date of birth
-            </th>
-          </tr>
-        </thead>
-        <tbody class="nhsuk-table__body">
-          <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
-                  <span class="nhsuk-u-visually-hidden">Select this participant</span>
-                </label>
-              </div>
-            </td>
-            <td class="nhsuk-table__cell nhsuk-table__cell--numeric">531 676 9974</td>
-            <td class="nhsuk-table__cell">Xena Holt</td>
-            <td class="nhsuk-table__cell">11 December 1960</td>
-          </tr>
-          <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
-                  <span class="nhsuk-u-visually-hidden">Select this participant</span>
-                </label>
-              </div>
-            </td>
-            <td class="nhsuk-table__cell nhsuk-table__cell--numeric">420 565 8865</td>
-            <td class="nhsuk-table__cell">Yasmin Noor</td>
-            <td class="nhsuk-table__cell">28 August 1961</td>
-          </tr>
-          <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
-                  <span class="nhsuk-u-visually-hidden">Select this participant</span>
-                </label>
-              </div>
-            </td>
-            <td class="nhsuk-table__cell nhsuk-table__cell--numeric">319 454 7756</td>
-            <td class="nhsuk-table__cell">Zara Moon</td>
-            <td class="nhsuk-table__cell">6 May 1973</td>
-          </tr>
-          <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
-                  <span class="nhsuk-u-visually-hidden">Select this participant</span>
-                </label>
-              </div>
-            </td>
-            <td class="nhsuk-table__cell nhsuk-table__cell--numeric">208 343 6647</td>
-            <td class="nhsuk-table__cell">Abigail Stone</td>
-            <td class="nhsuk-table__cell">14 October 1959</td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- <div class="nhsuk-form-group--error"> -->
+
+        <h2 class="nhsuk-heading-s">4 participants found</h2>
+
+        <!-- <span class="nhsuk-error-message" id="nhs-number-error">
+          <span class="nhsuk-u-visually-hidden">Error:</span> Select one or more participants
+        </span> -->
+
+        <table id="search-results" class="nhsuk-table nhsuk-checkboxes nhsuk-checkboxes--small app-participant-table">
+          <thead class="nhsuk-table__head">
+            <tr class="nhsuk-table__row">
+              <td scope="col" class="nhsuk-table__header"></td>
+              <th scope="col" class="nhsuk-table__header app-column-nhs-number">
+                NHS Number
+              </th>
+              <th scope="col" class="nhsuk-table__header">
+                Full name
+              </th>
+              <th scope="col" class="nhsuk-table__header">
+                Date of birth
+              </th>
+            </tr>
+          </thead>
+          <tbody class="nhsuk-table__body">
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <div class="nhsuk-checkboxes__item">
+                  <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
+                  <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
+                    <span class="nhsuk-u-visually-hidden">Select this participant</span>
+                  </label>
+                </div>
+              </td>
+              <td class="nhsuk-table__cell nhsuk-table__cell--numeric">531 676 9974</td>
+              <td class="nhsuk-table__cell">Xena Holt</td>
+              <td class="nhsuk-table__cell">11 December 1960</td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <div class="nhsuk-checkboxes__item">
+                  <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
+                  <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
+                    <span class="nhsuk-u-visually-hidden">Select this participant</span>
+                  </label>
+                </div>
+              </td>
+              <td class="nhsuk-table__cell nhsuk-table__cell--numeric">420 565 8865</td>
+              <td class="nhsuk-table__cell">Yasmin Noor</td>
+              <td class="nhsuk-table__cell">28 August 1961</td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <div class="nhsuk-checkboxes__item">
+                  <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
+                  <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
+                    <span class="nhsuk-u-visually-hidden">Select this participant</span>
+                  </label>
+                </div>
+              </td>
+              <td class="nhsuk-table__cell nhsuk-table__cell--numeric">319 454 7756</td>
+              <td class="nhsuk-table__cell">Zara Moon</td>
+              <td class="nhsuk-table__cell">6 May 1973</td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <div class="nhsuk-checkboxes__item">
+                  <input class="nhsuk-checkboxes__input" id="example" name="example" type="checkbox" value="participant-id">
+                  <label class="nhsuk-label nhsuk-checkboxes__label" for="example">
+                    <span class="nhsuk-u-visually-hidden">Select this participant</span>
+                  </label>
+                </div>
+              </td>
+              <td class="nhsuk-table__cell nhsuk-table__cell--numeric">208 343 6647</td>
+              <td class="nhsuk-table__cell">Abigail Stone</td>
+              <td class="nhsuk-table__cell">14 October 1959</td>
+            </tr>
+          </tbody>
+        </table>
+
+      <!-- </div> -->
 
       <a href="group" class="nhsuk-button">
-        Add selected to Test clinic group
+        Add selected to booking group
       </a>
         
     </div>
   </div>
+</section>
 
-  <!-- <div class="nhsuk-grid-row">
+<!-- <section>
+  <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-      <h2 class="nhsuk-heading-m">No participants found</h2>
-      <p>Check your spelling or search again</p>
+      <h1 class="nhsuk-heading-l nhsuk-u-margin-top-4">No participants found</h1>
+      <p>Try again</p>
     </div>
-  </div> -->
-
-  </section>
+  </div>
+</section> -->
 
 {% endblock %}
 

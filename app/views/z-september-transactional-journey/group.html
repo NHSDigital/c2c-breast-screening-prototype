@@ -15,7 +15,7 @@
     <div class="nhsuk-grid-column-full">
       {% set html %}
         <p class="nhsuk-notification-banner__heading">
-          Participant[s] successfully added to group
+          1 participant added to group
         </p>
       {% endset %}
       {{ notificationBanner({
@@ -23,15 +23,27 @@
         type: "success"
       }) }}
 
-      {% set html %}
+      <!-- {% set html %}
         <p class="nhsuk-notification-banner__heading">
-          Participant removed from group
+          Billie Joanne Marquardt removed from group
         </p>
         <a href="#">Undo</a>
       {% endset %}
       {{ notificationBanner({
-        html: html
+        html: html,
+        titleText: "Participant removed"
       }) }}
+
+      {% set html %}
+        <p class="nhsuk-notification-banner__heading">
+          Billie Joanne Marquardt returned to group
+        </p>
+      {% endset %}
+      {{ notificationBanner({
+        html: html,
+        titleText: "Participant reinstated",
+        type: "success"
+      }) }} -->
     </div>
   </div>
 
@@ -58,7 +70,7 @@
               NHS Number
             </th>
             <th scope="col" class="nhsuk-table__header">
-              Name
+              Full name
             </th>
             <th scope="col" class="nhsuk-table__header">
               Date of birth
@@ -71,7 +83,12 @@
         <tbody class="nhsuk-table__body">
           <tr class="nhsuk-table__row">
             <td class="nhsuk-table__cell nhsuk-table__cell--numeric">999 054 3666</td>
-            <td class="nhsuk-table__cell">Billie Joanne Marquardt</td>
+            <td class="nhsuk-table__cell">
+              Billie Joanne Marquardt
+              <strong class="nhsuk-tag nhsuk-tag--blue nhsuk-u-margin-left-2">
+                Just added
+              </strong>
+            </td>
             <td class="nhsuk-table__cell">15 March 1960</td>
             <td class="nhsuk-table__cell"><a href="#">Remove</a></td>
           </tr>
@@ -203,7 +220,12 @@
           </tr>
           <tr class="nhsuk-table__row">
             <td class="nhsuk-table__cell nhsuk-table__cell--numeric">631 776 9904</td>
-            <td class="nhsuk-table__cell">Nora Blake</td>
+            <td class="nhsuk-table__cell">
+              Nora Blake
+              <!-- <strong class="nhsuk-tag nhsuk-tag--blue nhsuk-u-margin-left-2">
+                Just added
+              </strong> -->
+            </td>
             <td class="nhsuk-table__cell">30 December 1966</td>
             <td class="nhsuk-table__cell"><a href="#">Remove</a></td>
           </tr>
@@ -211,7 +233,7 @@
       </table>
 
       <a href="pre-appoint-confirm" class="nhsuk-button">
-        Book into slots
+        Book this group
       </a>
     </div>
   </div>
