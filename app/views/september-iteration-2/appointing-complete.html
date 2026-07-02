@@ -1,0 +1,422 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% set html %}
+        <p class="nhsuk-notification-banner__heading">
+          23 participants booked successfully
+        </p>
+      {% endset %}
+      {{ notificationBanner({
+        html: html,
+        type: "success"
+      }) }}
+      <div class="nhsuk-u-reading-width">
+        <h1 class="nhsuk-heading-m nhsuk-u-margin-bottom-1">
+          <span class="nhsuk-caption-m">CLINC-ID</span>
+          Test Clinic 1
+        </h1>
+        <div class="nhsuk-caption-m nhsuk-u-margin-bottom-3">
+          Unit name at location name
+        </div>
+        {{ actionLink({
+          text: "Download .csv",
+          href: "#"
+        }) }}
+      </div>
+    </div>
+  </div>
+
+  <hr class="nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h2 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-l">Tuesday</span>
+        1 September 2026
+      </h2>
+    </div>
+  </div>
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h3 class="nhsuk-heading-m">
+        <span class="nhsuk-caption-m">Morning session</span>  
+        08:30 to 12:30
+      </h3>
+      <details class="nhsuk-details nhsuk-expander" open>
+        <summary class="nhsuk-details__summary">
+          <span class="nhsuk-details__summary-text">
+            0 slots available of 24
+          </span>
+        </summary>
+        <div class="nhsuk-details__text">
+          <table class="nhsuk-table app-participant-table">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th scope="col" class="nhsuk-table__header app-column-time">
+                  Time
+                </th>
+                <th scope="col" class="nhsuk-table__header app-column-nhs-number">
+                  NHS Number
+                </th>
+                <th scope="col" class="nhsuk-table__header">
+                  Full name
+                </th>
+                <th scope="col" class="nhsuk-table__header">
+                  Date of birth
+                </th>
+              </tr>
+            </thead>
+            <tbody class="nhsuk-table__body">
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">08:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">999 054 3666</td>
+                <td class="nhsuk-table__cell">Billie Joanne Marquardt</td>
+                <td class="nhsuk-table__cell">15 March 1960</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">08:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">943 582 7164</td>
+                <td class="nhsuk-table__cell">Alice Marie Gregory</td>
+                <td class="nhsuk-table__cell">8 November 1964</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">08:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">821 374 0952</td>
+                <td class="nhsuk-table__cell">Daphne Hart</td>
+                <td class="nhsuk-table__cell">22 July 1958</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">702 195 4836</td>
+                <td class="nhsuk-table__cell">Marta O'Neill</td>
+                <td class="nhsuk-table__cell">3 May 1971</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">614 287 9305</td>
+                <td class="nhsuk-table__cell">Susan Carter</td>
+                <td class="nhsuk-table__cell">19 September 1967</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">505 463 1129</td>
+                <td class="nhsuk-table__cell">Olivia Barnes</td>
+                <td class="nhsuk-table__cell">12 January 1975</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">336 774 2201</td>
+                <td class="nhsuk-table__cell">Rachel Price</td>
+                <td class="nhsuk-table__cell">27 April 1962</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">223 546 8870</td>
+                <td class="nhsuk-table__cell">Hannah Wallace</td>
+                <td class="nhsuk-table__cell">6 October 1959</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">410 559 3322</td>
+                <td class="nhsuk-table__cell">Fiona Lambert</td>
+                <td class="nhsuk-table__cell">14 December 1973</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">196 804 7753</td>
+                <td class="nhsuk-table__cell">Georgia Mills</td>
+                <td class="nhsuk-table__cell">30 June 1968</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">378 290 4601</td>
+                <td class="nhsuk-table__cell">Elaine Fox</td>
+                <td class="nhsuk-table__cell">11 February 1976</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">957 613 2084</td>
+                <td class="nhsuk-table__cell">Tessa King</td>
+                <td class="nhsuk-table__cell">25 August 1963</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">604 118 9756</td>
+                <td class="nhsuk-table__cell">Nadia Singh</td>
+                <td class="nhsuk-table__cell">7 April 1957</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">842 039 6617</td>
+                <td class="nhsuk-table__cell">Jane Reed</td>
+                <td class="nhsuk-table__cell">18 November 1970</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">731 259 1148</td>
+                <td class="nhsuk-table__cell">Laura White</td>
+                <td class="nhsuk-table__cell">29 May 1965</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">665 880 3320</td>
+                <td class="nhsuk-table__cell">Marissa Young</td>
+                <td class="nhsuk-table__cell">9 March 1961</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">548 901 7732</td>
+                <td class="nhsuk-table__cell">Naomi Bell</td>
+                <td class="nhsuk-table__cell">21 September 1974</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">439 216 5087</td>
+                <td class="nhsuk-table__cell">Paige Long</td>
+                <td class="nhsuk-table__cell">4 July 1969</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">329 487 9901</td>
+                <td class="nhsuk-table__cell">Catherine Wood</td>
+                <td class="nhsuk-table__cell">16 January 1956</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">214 603 1774</td>
+                <td class="nhsuk-table__cell">Victoria Hale</td>
+                <td class="nhsuk-table__cell">13 October 1966</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">188 905 6423</td>
+                <td class="nhsuk-table__cell">Imogen Frost</td>
+                <td class="nhsuk-table__cell">31 December 1972</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">12:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">977 332 1108</td>
+                <td class="nhsuk-table__cell">Dara Moss</td>
+                <td class="nhsuk-table__cell">24 June 1960</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">12:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">861 427 5930</td>
+                <td class="nhsuk-table__cell">Sophie Hartley</td>
+                <td class="nhsuk-table__cell">2 August 1962</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">12:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">750 218 3446</td>
+                <td class="nhsuk-table__cell">Emma Cole</td>
+                <td class="nhsuk-table__cell">17 April 1975</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </div>
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="app-card-editable">
+        <h4 class="nhsuk-heading-m">
+          <span class="nhsuk-caption-m">Afternoon session</span>  
+          13:30 to 17:30
+        </h4>
+      </div>
+      <details class="nhsuk-details nhsuk-expander" open>
+        <summary class="nhsuk-details__summary">
+          <span class="nhsuk-details__summary-text">
+            0 slots available of 24
+          </span>
+        </summary>
+        <div class="nhsuk-details__text">
+          <table class="nhsuk-table app-participant-table">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th scope="col" class="nhsuk-table__header app-column-time">
+                  Time
+                </th>
+                <th scope="col" class="nhsuk-table__header app-column-nhs-number">
+                  NHS Number
+                </th>
+                <th scope="col" class="nhsuk-table__header">
+                  Full name
+                </th>
+                <th scope="col" class="nhsuk-table__header">
+                  Date of birth
+                </th>
+              </tr>
+            </thead>
+            <tbody class="nhsuk-table__body">
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">13:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">642 109 8875</td>
+                <td class="nhsuk-table__cell">Megan Price</td>
+                <td class="nhsuk-table__cell">5 February 1961</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">13:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">531 678 2209</td>
+                <td class="nhsuk-table__cell">Mia Ford</td>
+                <td class="nhsuk-table__cell">19 May 1972</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">13:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">419 502 6683</td>
+                <td class="nhsuk-table__cell">Zoe Grant</td>
+                <td class="nhsuk-table__cell">11 March 1965</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">14:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">308 244 1196</td>
+                <td class="nhsuk-table__cell">Ariana Miles</td>
+                <td class="nhsuk-table__cell">28 November 1959</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">14:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">297 883 4455</td>
+                <td class="nhsuk-table__cell">Bethany Cross</td>
+                <td class="nhsuk-table__cell">7 July 1975</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">14:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">186 771 9002</td>
+                <td class="nhsuk-table__cell">Callie Morris</td>
+                <td class="nhsuk-table__cell">14 September 1968</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">14:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">075 439 3321</td>
+                <td class="nhsuk-table__cell">Helena Rowe</td>
+                <td class="nhsuk-table__cell">2 April 1963</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">14:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">964 210 5587</td>
+                <td class="nhsuk-table__cell">Danielle Nash</td>
+                <td class="nhsuk-table__cell">23 June 1970</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">14:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">853 619 4470</td>
+                <td class="nhsuk-table__cell">Faye Turner</td>
+                <td class="nhsuk-table__cell">8 January 1957</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">15:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">742 908 2233</td>
+                <td class="nhsuk-table__cell">Leona Grant</td>
+                <td class="nhsuk-table__cell">15 October 1974</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">15:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">631 776 9904</td>
+                <td class="nhsuk-table__cell">Nora Blake</td>
+                <td class="nhsuk-table__cell">30 December 1966</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">15:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">520 665 8805</td>
+                <td class="nhsuk-table__cell">Olivia Lee</td>
+                <td class="nhsuk-table__cell">19 August 1960</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">15:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">419 554 7706</td>
+                <td class="nhsuk-table__cell">Priya Desai</td>
+                <td class="nhsuk-table__cell">10 May 1973</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">15:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">308 443 6607</td>
+                <td class="nhsuk-table__cell">Quinn Park</td>
+                <td class="nhsuk-table__cell">26 March 1964</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">15:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">197 332 5508</td>
+                <td class="nhsuk-table__cell">Rosa Kirk</td>
+                <td class="nhsuk-table__cell">13 July 1958</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">16:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">086 221 4409</td>
+                <td class="nhsuk-table__cell">Shannon Boyd</td>
+                <td class="nhsuk-table__cell">22 November 1971</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">16:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">975 110 3310</td>
+                <td class="nhsuk-table__cell">Tara Voss</td>
+                <td class="nhsuk-table__cell">9 February 1969</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">16:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">864 009 2201</td>
+                <td class="nhsuk-table__cell">Uma Jha</td>
+                <td class="nhsuk-table__cell">17 September 1962</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">16:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">753 898 1192</td>
+                <td class="nhsuk-table__cell">Victoria Dean</td>
+                <td class="nhsuk-table__cell">4 April 1976</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">16:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">642 787 0083</td>
+                <td class="nhsuk-table__cell">Wendy Fox</td>
+                <td class="nhsuk-table__cell">21 June 1967</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">16:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">531 676 9974</td>
+                <td class="nhsuk-table__cell">Xena Holt</td>
+                <td class="nhsuk-table__cell">11 December 1960</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">17:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">420 565 8865</td>
+                <td class="nhsuk-table__cell">Yasmin Noor</td>
+                <td class="nhsuk-table__cell">28 August 1961</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">17:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">319 454 7756</td>
+                <td class="nhsuk-table__cell">Zara Moon</td>
+                <td class="nhsuk-table__cell">6 May 1973</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">17:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">208 343 6647</td>
+                <td class="nhsuk-table__cell">Abigail Stone</td>
+                <td class="nhsuk-table__cell">14 October 1959</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}

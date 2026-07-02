@@ -1,0 +1,182 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<div class="nhsuk-u-reading-width">
+  <h1 class="nhsuk-heading-l">
+    Choose participants to book
+  </h1>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-two-thirds">
+    <div class="nhsuk-form-group nhsuk-search-input">
+      <label class="nhsuk-label" for="search-params">
+        Find participants
+      </label>
+      <div class="nhsuk-hint" id="search-hint">
+        Search by NHS number, first name, or last name 
+      </div>
+      <div class="nhsuk-input-wrapper nhsuk-search-input__wrapper">
+        <input class="nhsuk-input nhsuk-search-input__input nhsuk-input--width-20 nhsuk-input--code" id="search-params" name="search-params" type="search" aria-describedby="search-hint" autocomplete="off">
+        <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--icon nhsuk-button--small nhsuk-search-input__button" data-module="nhsuk-button" type="submit" aria-label="Search">
+          <svg class="nhsuk-icon nhsuk-icon--search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+            <path d="m20.7 18.9-4.1-4.1a7 7 0 1 0-1.4 1.4l4 4.1a1 1 0 0 0 1.5 0c.4-.4.4-1 0-1.4ZM6 10.6a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z" />
+          </svg>
+          <span class="nhsuk-button__content">Find</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+
+    <table id="search-results" class="nhsuk-table app-participant-table">
+      <caption>
+        <span class="nhsuk-body">4 participants found</span>
+        <!-- <span class="nhsuk-body">2000 participants</span> -->
+      </caption>
+      <thead class="nhsuk-table__head">
+        <tr class="nhsuk-table__row">
+          <th scope="col" class="nhsuk-table__header app-column-nhs-number">
+            NHS Number
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Full name
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Date of birth
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Status
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            <span class="nhsuk-u-visually-hidden">Actions</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell nhsuk-table__cell--numeric">531 676 9974</td>
+          <td class="nhsuk-table__cell">Xena Holt</td>
+          <td class="nhsuk-table__cell">11 December 1960</td>
+          <td class="nhsuk-table__cell">
+            <span class="nhsuk-tag nhsuk-tag--blue">
+              Ready to book
+            </span>
+          </td>
+          <td class="nhsuk-table__cell">
+            <a href="#">Remove</a>
+          </td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell nhsuk-table__cell--numeric">420 565 8865</td>
+          <td class="nhsuk-table__cell">Yasmin Noor</td>
+          <td class="nhsuk-table__cell">28 August 1961</td>
+          <td class="nhsuk-table__cell">
+            <span class="nhsuk-u-visually-hidden">Will not be booked</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            <a href="#">Add</a>
+          </td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell nhsuk-table__cell--numeric">319 454 7756</td>
+          <td class="nhsuk-table__cell">Zara Moon</td>
+          <td class="nhsuk-table__cell">6 May 1973</td>
+          <td class="nhsuk-table__cell">
+            <span class="nhsuk-u-visually-hidden">Will not be booked</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            <a href="#">Add</a>
+          </td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell nhsuk-table__cell--numeric">208 343 6647</td>
+          <td class="nhsuk-table__cell">Abigail Stone</td>
+          <td class="nhsuk-table__cell">14 October 1959</td>
+          <td class="nhsuk-table__cell">
+            <span class="nhsuk-u-visually-hidden">Will not be booked</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            <a href="#">Add</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <nav class="nhsuk-pagination nhsuk-pagination--numbered" role="navigation" aria-label="Pagination">
+      <ul class="nhsuk-pagination__list">
+        <li class="nhsuk-pagination__item nhsuk-pagination__item--current">
+          <a class="nhsuk-pagination__link" href="#" aria-label="Page 1" aria-current="page">
+            1
+          </a>
+        </li>
+        <li class="nhsuk-pagination__item">
+          <a class="nhsuk-pagination__link" href="#" aria-label="Page 2">
+            2
+          </a>
+        </li>
+        <li class="nhsuk-pagination__item">
+          <a class="nhsuk-pagination__link" href="#" aria-label="Page 3">
+            3
+          </a>
+        </li>
+      </ul>
+      <a href="#" class="nhsuk-pagination__next" rel="next">
+        <span class="nhsuk-pagination__title">
+          Next<span class="nhsuk-u-visually-hidden"> page</span>
+        </span>
+        <svg class="nhsuk-icon nhsuk-icon--arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+          <path d="m14.7 6.3 5 5c.2.2.3.4.3.7 0 .3-.1.5-.3.7l-5 5a1 1 0 0 1-1.4-1.4l3.3-3.3H5a1 1 0 0 1 0-2h11.6l-3.3-3.3a1 1 0 1 1 1.4-1.4Z" />
+        </svg>
+      </a>
+    </nav> -->
+
+    <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--small" data-module="nhsuk-button" type="submit">
+      Clear search results
+    </button>
+      
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-inset-text">
+      <span class="nhsuk-u-visually-hidden">Information: </span>
+      <p>1 participant ready to book</p>
+    </div>
+  </div>
+</div>
+
+<div class="nhsuk-u-reading-width">
+  <a class="nhsuk-button" href="pre-appoint-confirm">
+    Book participants
+  </a>
+</div>
+
+<!-- <section>
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h1 class="nhsuk-heading-l nhsuk-u-margin-top-4">No participants found</h1>
+      <p>Try again</p>
+    </div>
+  </div>
+</section> -->
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}
