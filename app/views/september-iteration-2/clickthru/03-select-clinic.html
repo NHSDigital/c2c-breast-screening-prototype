@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<div class="nhsuk-u-reading-width">
+  <h1 class="nhsuk-heading-l">
+    Select clinic
+  </h1>
+</div>
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+
+    {% from "september-iteration-2/macros/clinic-listing.html" import clinic_listing %}
+    {{ clinic_listing({
+      clinics: [
+        {
+          clinic_name: "Worthing - standard slots May 2026",
+          clinic_id: "HWO-NNN-standard-20260501",
+          clinic_location_name: "Worthing",
+          clinic_location_address_line_1: "Worthing Hospital",
+          clinic_unit_name: "West Sussex Breast Screening Centre",
+          clinic_unit_id: "HWO-static-1",
+          clinic_timespan: "31 May 2026",
+          clinic_length: "1 day",
+          clinic_capacity_percent_booked: "0",
+          clinic_capacity_available: "48",
+          clinic_capacity_total: "48",
+          button_url: "04-choose-participants"
+        }
+      ]
+    }) }}
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}

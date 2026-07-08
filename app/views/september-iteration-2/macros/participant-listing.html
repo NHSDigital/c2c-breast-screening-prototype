@@ -1,0 +1,59 @@
+{% macro participant_listing(options) %}
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <table id="search-results" class="nhsuk-table app-participant-table">
+      <caption>
+        {% if options.mode == "search" %}
+          <span class="nhsuk-body">4 participants found</span>
+        {% else %}
+          <span class="nhsuk-body">{{ options.participants.length }} participants</span>
+        {% endif %}
+      </caption>
+      <thead class="nhsuk-table__head">
+        <tr class="nhsuk-table__row">
+          <th scope="col" class="nhsuk-table__header app-column-nhs-number">
+            NHS Number
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Full name
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Date of birth
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Status
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            <span class="nhsuk-u-visually-hidden">Actions</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+        {% for participant in options.participants %}
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell nhsuk-table__cell--numeric">{{ participant.nhs_number }}</td>
+            <td class="nhsuk-table__cell">{{ participant.full_name }}</td>
+            <td class="nhsuk-table__cell">{{ participant.date_of_birth }}</td>
+            <td class="nhsuk-table__cell">
+              {% if participant.status == "unstaged" %}
+                <span class="nhsuk-u-visually-hidden">Will not be booked</span>
+              {% else %}
+                <strong class="nhsuk-tag nhsuk-tag--blue">
+                  Ready to book
+                </strong>
+              {% endif %}
+            </td>
+            <td class="nhsuk-table__cell">
+              {% if participant.status == "unstaged" %}
+                <a href="/action/stage/{{ loop.index0 }}">Add</a>
+              {% else %}
+                <a href="/action/unstage/{{ loop.index0 }}">Remove</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endmacro %}

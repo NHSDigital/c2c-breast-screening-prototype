@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% set html %}
+        <p class="nhsuk-notification-banner__heading">Batch uploaded</p>
+      {% endset %}
+      {{ notificationBanner({
+        html: html,
+        type: "success"
+      }) }}
+    </div>
+  </div>
+
+  {% from "september-iteration-2/macros/batch-detail.html" import batch_detail %}
+  {{ batch_detail({
+    participant_count: "2000",
+    button_url:"03-select-clinic"
+  }) }}
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}

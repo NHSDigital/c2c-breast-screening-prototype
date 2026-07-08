@@ -1,0 +1,57 @@
+{% macro clinic_listing(options) %}
+  <table class="nhsuk-table">
+    <thead class="nhsuk-table__head">
+      <tr class="nhsuk-table__row">
+        <th scope="col" class="nhsuk-table__header">
+          Clinic
+        </th>
+        <th scope="col" class="nhsuk-table__header">
+          Location
+        </th>
+        <th scope="col" class="nhsuk-table__header">
+          Unit
+        </th>
+        <th scope="col" class="nhsuk-table__header">
+          Timeframe
+        </th>
+        <th scope="col" class="nhsuk-table__header">
+          Capacity
+        </th>
+        <th scope="col" class="nhsuk-table__header">
+          <span class="nhsuk-u-visually-hidden">Action</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="nhsuk-table__body">
+      {% for clinic in options.clinics %}
+      <tr class="nhsuk-table__row">
+        <th scope="row" class="nhsuk-table__header">
+          {{ clinic.clinic_name }}<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ clinic.clinic_id }}</span>
+        </th>
+        <td class="nhsuk-table__cell">
+          {{ clinic.clinic_location_name }}<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ clinic.clinic_location_address_line_1 }}</span>
+        </td>
+        <td class="nhsuk-table__cell">
+          {{ clinic.clinic_unit_name }}<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ clinic.clinic_unit_id }}</span>
+        </td>
+        <td class="nhsuk-table__cell">
+          {{ clinic.clinic_timespan }}<br>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ clinic.clinic_length }}</span>
+        </td>
+        <td class="nhsuk-table__cell">
+          <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: {{ clinic.clinic_capacity_percent_booked }}%;"></div>
+          <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ clinic.clinic_capacity_available }} slots available of {{ clinic.clinic_capacity_total }}</span>
+        </td>
+        <td>
+          <a href="{{ clinic.button_url }}" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+            Select this clinic
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endmacro %}

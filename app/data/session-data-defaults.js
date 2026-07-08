@@ -1,3 +1,5 @@
-// Use this file to set any default data
+const participants = require('./participants')
 
-module.exports = {}
+module.exports = {
+  participants
+}
