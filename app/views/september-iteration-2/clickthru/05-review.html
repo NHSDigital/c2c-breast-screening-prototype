@@ -1,0 +1,119 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Assign slots to participants" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-u-reading-width">
+    <h1 class="nhsuk-heading-l">
+      Book participants
+    </h1>
+  </div>
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      
+      <h2 class="nhsuk-heading-s">
+        {% if data.stagedCount === 1 %}
+          You are booking 1 participant
+        {% else %}
+          You are booking {{ data.stagedCount }} participants
+        {% endif %}
+      </h2>
+
+      <details class="nhsuk-details nhsuk-u-margin-bottom-0">
+        <summary class="nhsuk-details__summary">
+          <span class="nhsuk-details__summary-text">
+            Show chosen participants
+          </span>
+        </summary>
+        <div class="nhsuk-details__text">
+          <table class="nhsuk-table app-participant-table">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th scope="col" class="nhsuk-table__header app-column-nhs-number">
+                  NHS Number
+                </th>
+                <th scope="col" class="nhsuk-table__header">
+                  Full name
+                </th>
+                <th scope="col" class="nhsuk-table__header">
+                  Date of birth
+                </th>
+              </tr>
+            </thead>
+            <tbody class="nhsuk-table__body">
+              {% for participant in data.participants.default %}
+                {% if participant.status === "staged" %}
+                  <tr class="nhsuk-table__row">
+                    <td class="nhsuk-table__cell nhsuk-table__cell--numeric">{{ participant.nhs_number }}</td>
+                    <td class="nhsuk-table__cell">{{ participant.full_name }}</td>
+                    <td class="nhsuk-table__cell">{{ participant.date_of_birth }}</td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </details>
+          
+      <h2 class="nhsuk-heading-s">into {{ data.clinicName }}</h2>
+      <details class="nhsuk-details">
+        <summary class="nhsuk-details__summary">
+          <span class="nhsuk-details__summary-text">
+            Show clinic details
+          </span>
+        </summary>
+        <div class="nhsuk-details__text">
+          {% from "september-iteration-2/macros/clinic-listing.html" import clinic_listing %}
+          {{ clinic_listing({
+            controls: false,
+            clinics: [
+              {
+                clinic_name: data.clinicName,
+                clinic_id: data.clinicId,
+                clinic_location_name: data.locationName,
+                clinic_location_address_line_1: data.locationAddressLine1,
+                clinic_unit_name: data.unitName,
+                clinic_unit_id: data.unitId,
+                clinic_timespan: data.clinicTimespan,
+                clinic_length: data.clinicLength,
+                clinic_capacity_percent_booked: data.clinicCapacityPercentBooked,
+                clinic_capacity_available: data.clinicCapacityAvailable,
+                clinic_capacity_total: data.clinicCapacityTotal
+              }
+            ]
+          }) }}
+        </div>
+      </details>
+          
+      <div class="nhsuk-u-reading-width">
+        <p>Participants will be booked in random order.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nhsuk-u-reading-width">
+    <div class="nhsuk-button-group">
+      <a href="06-booked" class="nhsuk-button">
+        Confirm
+      </a>
+      <a href="04-choose-participants" class="nhsuk-button nhsuk-button--secondary">
+        Go back
+      </a>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}

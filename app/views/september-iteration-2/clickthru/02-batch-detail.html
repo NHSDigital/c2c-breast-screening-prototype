@@ -25,7 +25,7 @@
 
   {% from "september-iteration-2/macros/batch-detail.html" import batch_detail %}
   {{ batch_detail({
-    participant_count: "2000",
+    participant_count: data.participants.default.length,
     button_url:"03-select-clinic"
   }) }}
 

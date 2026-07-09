@@ -21,19 +21,20 @@
 
     {% from "september-iteration-2/macros/clinic-listing.html" import clinic_listing %}
     {{ clinic_listing({
+      controls: true,
       clinics: [
         {
-          clinic_name: "Worthing - standard slots May 2026",
-          clinic_id: "HWO-NNN-standard-20260501",
-          clinic_location_name: "Worthing",
-          clinic_location_address_line_1: "Worthing Hospital",
-          clinic_unit_name: "West Sussex Breast Screening Centre",
-          clinic_unit_id: "HWO-static-1",
-          clinic_timespan: "31 May 2026",
-          clinic_length: "1 day",
-          clinic_capacity_percent_booked: "0",
-          clinic_capacity_available: "48",
-          clinic_capacity_total: "48",
+          clinic_name: data.clinicName,
+          clinic_id: data.clinicId,
+          clinic_location_name: data.locationName,
+          clinic_location_address_line_1: data.locationAddressLine1,
+          clinic_unit_name: data.unitName,
+          clinic_unit_id: data.unitId,
+          clinic_timespan: data.clinicTimespan,
+          clinic_length: data.clinicLength,
+          clinic_capacity_percent_booked: data.clinicCapacityPercentBooked,
+          clinic_capacity_available: data.clinicCapacityAvailable,
+          clinic_capacity_total: data.clinicCapacityTotal,
           button_url: "04-choose-participants"
         }
       ]

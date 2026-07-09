@@ -1,0 +1,26 @@
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-third">
+    <div class="nhsuk-inset-text nhsuk-u-margin-top-0">
+      <span class="nhsuk-u-visually-hidden">Information: </span>
+      {% if data.stagedCount === 0 %}
+        <p>0 participants ready to book</p>
+      {% else %}
+        <p>
+          {{ data.stagedCount }} participant{% if data.stagedCount > 1 %}s{% endif %} ready to book
+        </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="nhsuk-u-reading-width">
+  {% if data.stagedCount === 0 %}
+    <a class="nhsuk-button" href="javascript: return false;" style="opacity: 0.5;">
+      Book participants
+    </a>
+  {% else %}
+    <a class="nhsuk-button" href="05-review">
+      Book participants
+    </a>
+  {% endif %}
+</div>

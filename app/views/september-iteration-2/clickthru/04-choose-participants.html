@@ -19,15 +19,137 @@
 
 {% from "september-iteration-2/macros/search-component.html" import participant_search %}
 {{ participant_search({
-  form_action: "test"
+  form_action: "04a-example-search-result",
+  search_query: searchQuery
 }) }}
 
-{% from "september-iteration-2/macros/participant-listing.html" import participant_listing %}
-{{ participant_listing({
-  mode: "browse",
-  participants: data.participants.default
-}) }}
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    {% from "september-iteration-2/macros/participant-listing.html" import participant_listing %}
+    {{ participant_listing({
+      mode: "browse",
+      participants: data.participants.default
+    }) }}
+  </div>
+</div>
 
+    <nav id="participant-pagination" class="nhsuk-pagination nhsuk-pagination--numbered" role="navigation" aria-label="Pagination" aria-live="polite">
+      <div class="nhsuk-pagination__controls">
+        <a href="#" class="nhsuk-pagination__previous" rel="prev">
+          <svg class="nhsuk-icon nhsuk-icon--arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+            <path d="M10.7 6.3c.4.4.4 1 0 1.4L7.4 11H19a1 1 0 0 1 0 2H7.4l3.3 3.3c.4.4.4 1 0 1.4a1 1 0 0 1-1.4 0l-5-5A1 1 0 0 1 4 12c0-.3.1-.5.3-.7l5-5a1 1 0 0 1 1.4 0Z" />
+          </svg>
+          <span class="nhsuk-pagination__title">
+            Previous<span class="nhsuk-u-visually-hidden"> page</span>
+          </span>
+        </a>
+        <ul class="nhsuk-pagination__list"></ul>
+        <a href="#" class="nhsuk-pagination__next" rel="next" aria-label="Next page">
+          <span class="nhsuk-pagination__title">
+            Next<span class="nhsuk-u-visually-hidden"> page</span>
+          </span>
+          <svg class="nhsuk-icon nhsuk-icon--arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+            <path d="m14.7 6.3 5 5c.2.2.3.4.3.7 0 .3-.1.5-.3.7l-5 5a1 1 0 0 1-1.4-1.4l3.3-3.3H5a1 1 0 0 1 0-2h11.6l-3.3-3.3a1 1 0 1 1 1.4-1.4Z" />
+          </svg>
+        </a>
+      </div>
+    </nav>
+
+{% include "september-iteration-2/includes/participant-staging-control.html" %}
+{% endblock %}
+
+{% block pageScripts %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var table = document.getElementById('search-results');
+      var nav = document.getElementById('participant-pagination');
+      if (!table || !nav) return;
+
+      var rows = Array.prototype.slice.call(table.querySelectorAll('tbody tr'));
+      var pageSize = 15;
+      var totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
+      var currentPage = 1;
+      var list = nav.querySelector('.nhsuk-pagination__list');
+      var prevLink = nav.querySelector('.nhsuk-pagination__previous');
+      var nextLink = nav.querySelector('.nhsuk-pagination__next');
+
+      function updateRows(page) {
+        var start = (page - 1) * pageSize;
+        var end = page * pageSize;
+        rows.forEach(function (row, index) {
+          row.hidden = index < start || index >= end;
+        });
+      }
+
+      function renderPagination(page) {
+        currentPage = page;
+        list.innerHTML = '';
+
+        for (var pageIndex = 1; pageIndex <= totalPages; pageIndex += 1) {
+          var item = document.createElement('li');
+          item.className = 'nhsuk-pagination__item' + (pageIndex === currentPage ? ' nhsuk-pagination__item--current' : '');
+
+          var link = document.createElement('a');
+          link.className = 'nhsuk-pagination__link';
+          link.href = '#';
+          link.textContent = pageIndex;
+          link.setAttribute('aria-label', 'Page ' + pageIndex);
+          if (pageIndex === currentPage) {
+            link.setAttribute('aria-current', 'page');
+          } else {
+            link.addEventListener('click', function (event) {
+              event.preventDefault();
+              var pageNumber = parseInt(this.textContent, 10);
+              showPage(pageNumber);
+            });
+          }
+
+          item.appendChild(link);
+          list.appendChild(item);
+        }
+
+        if (prevLink) {
+          var prevDisabled = currentPage <= 1;
+          prevLink.classList.toggle('nhsuk-pagination__previous--disabled', prevDisabled);
+          prevLink.setAttribute('aria-disabled', prevDisabled ? 'true' : 'false');
+          prevLink.hidden = prevDisabled;
+        }
+        if (nextLink) {
+          var nextDisabled = currentPage >= totalPages;
+          nextLink.classList.toggle('nhsuk-pagination__next--disabled', nextDisabled);
+          nextLink.setAttribute('aria-disabled', nextDisabled ? 'true' : 'false');
+          nextLink.hidden = nextDisabled;
+        }
+      }
+
+      function showPage(page) {
+        if (page < 1) page = 1;
+        if (page > totalPages) page = totalPages;
+        updateRows(page);
+        renderPagination(page);
+      }
+
+      if (prevLink) {
+        prevLink.addEventListener('click', function (event) {
+          event.preventDefault();
+          if (currentPage > 1) {
+            showPage(currentPage - 1);
+          }
+        });
+      }
+
+      if (nextLink) {
+        nextLink.addEventListener('click', function (event) {
+          event.preventDefault();
+          if (currentPage < totalPages) {
+            showPage(currentPage + 1);
+          }
+        });
+      }
+
+      showPage(1);
+    });
+  </script>
 {% endblock %}
 
 {% block footer %}

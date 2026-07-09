@@ -17,9 +17,11 @@
         <th scope="col" class="nhsuk-table__header">
           Capacity
         </th>
-        <th scope="col" class="nhsuk-table__header">
-          <span class="nhsuk-u-visually-hidden">Action</span>
-        </th>
+        {% if options.controls != false %}
+          <th scope="col" class="nhsuk-table__header">
+            <span class="nhsuk-u-visually-hidden">Action</span>
+          </th>
+        {% endif %}
       </tr>
     </thead>
     <tbody class="nhsuk-table__body">
@@ -45,11 +47,13 @@
           <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: {{ clinic.clinic_capacity_percent_booked }}%;"></div>
           <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ clinic.clinic_capacity_available }} slots available of {{ clinic.clinic_capacity_total }}</span>
         </td>
-        <td>
-          <a href="{{ clinic.button_url }}" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
-            Select this clinic
-          </a>
-        </td>
+        {% if options.controls != false %}
+          <td>
+            <a href="{{ clinic.button_url }}" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+              Select this clinic
+            </a>
+          </td>
+        {% endif %}
       </tr>
       {% endfor %}
     </tbody>
