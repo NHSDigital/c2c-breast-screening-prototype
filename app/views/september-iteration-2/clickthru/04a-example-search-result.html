@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<div class="nhsuk-u-reading-width">
+  <h1 class="nhsuk-heading-l">
+    Choose participants to book
+  </h1>
+</div>
+
+{% from "september-iteration-2/macros/search-component.html" import participant_search %}
+{{ participant_search({
+  form_action: "04a-example-search-result",
+  search_query: searchQuery
+}) }}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    {% from "september-iteration-2/macros/participant-listing.html" import participant_listing %}
+    {{ participant_listing({
+      mode: "search",
+      participants: participants
+    }) }}
+    <a href="04-choose-participants" class="nhsuk-button nhsuk-button--secondary">
+      Clear search results
+    </a>
+  </div>
+</div>
+
+{% include "september-iteration-2/includes/participant-staging-control.html" %}
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}
