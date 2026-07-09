@@ -66,7 +66,7 @@
       if (!table || !nav) return;
 
       var rows = Array.prototype.slice.call(table.querySelectorAll('tbody tr'));
-      var pageSize = 15;
+      var pageSize = 16;
       var totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
       var currentPage = 1;
       var list = nav.querySelector('.nhsuk-pagination__list');
@@ -110,15 +110,13 @@
 
         if (prevLink) {
           var prevDisabled = currentPage <= 1;
-          prevLink.classList.toggle('nhsuk-pagination__previous--disabled', prevDisabled);
+          prevLink.classList.toggle('nhsuk-u-visually-hidden', prevDisabled);
           prevLink.setAttribute('aria-disabled', prevDisabled ? 'true' : 'false');
-          prevLink.hidden = prevDisabled;
         }
         if (nextLink) {
           var nextDisabled = currentPage >= totalPages;
-          nextLink.classList.toggle('nhsuk-pagination__next--disabled', nextDisabled);
+          nextLink.classList.toggle('nhsuk-u-visually-hidden', nextDisabled);
           nextLink.setAttribute('aria-disabled', nextDisabled ? 'true' : 'false');
-          nextLink.hidden = nextDisabled;
         }
       }
 
