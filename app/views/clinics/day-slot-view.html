@@ -45,35 +45,248 @@
         <span class="nhsuk-caption-l">Tuesday</span>
         1 September 2026
       </h2>
-      {% set secondaryNavItems = [] %}
-      {% for item in [
-        { href: '#', label: 'One modality name (42 slots available)', selected: 'true' },
-        { href: '#', label: 'Another modality name (0 slots available)' }
-      ] %}
-        {% set secondaryNavItems = secondaryNavItems | push({
-          text: item.label | safe,
-          href: item.href | trim,
-          current: true if item.selected == 'true'
-        }) %}
-      {% endfor %}
-
-      {{ appSecondaryNavigation({
-        visuallyHiddenTitle: "Secondary menu",
-        items: secondaryNavItems
-      }) }}
-      <div class="app-card-editable">
-        <h4 class="nhsuk-heading-s">
-          <span class="nhsuk-caption-m">Morning session</span>  
-          08:30 to 12:30
-        </h4>
+      <div style="border: 1px solid red;">
+        <p>Whole day size controls:</p>
+        <ul>
+          <li>Using session template X? Can I change the template?</li>
+          <li>Can I add slots now, eiter before or after the established ones?</li>
+          <li>Cancel the whole day</li>
+        </ul>
       </div>
-      <details class="nhsuk-details nhsuk-expander">
-        <summary class="nhsuk-details__summary">
-          <span class="nhsuk-details__summary-text">
-            18 slots available of 21
-          </span>
-        </summary>
-        <div class="nhsuk-details__text">
+      <h3 class="nhsuk-heading-s">
+        [num] slots available of [total]
+      </h3>
+
+
+          <table class="nhsuk-table app-participant-table">
+            <thead class="nhsuk-table__head">
+              <tr class="nhsuk-table__row">
+                <th scope="col" class="nhsuk-table__header app-column-time">
+                  Time
+                </th>
+                <th scope="col" class="nhsuk-table__header">
+                  Participant details
+                </th>
+                <th scope="col" class="nhsuk-table__header">
+                  Date of birth
+                </th>
+                <th scope="col" class="nhsuk-table__header">
+                  Appointment details
+                </th>
+                <th scope="col" colspan="2" class="nhsuk-table__header">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody class="nhsuk-table__body">
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">
+                  08:30
+                </td>
+                <td class="nhsuk-table__cell">
+                  <a href="#">Joanne Marquardt</a>
+                  <div class="nhsuk-u-secondary-text-colour">NHS: 999 054 3666</div>
+                </td>
+                <td class="nhsuk-table__cell">
+                  15 March 1960
+                  <div class="nhsuk-u-secondary-text-colour">(66 years)</div>
+                </td>
+                <td class="nhsuk-table__cell">
+                  <strong class="nhsuk-tag nhsuk-tag--yellow app-nowrap">
+                    Special appointment
+                  </strong>
+                  <div><a href="#">View appointment</a> or a tiny note</div>
+                </td>
+                <td class="nhsuk-table__cell">
+                  Rebook participant
+                </td>
+                <td class="nhsuk-table__cell">
+                  Secondary actions
+                </td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">08:40</td>
+                <td colspan="3" class="nhsuk-table__cell">Held: why?</td>
+                <td class="nhsuk-table__cell">
+                  Release slot
+                </td>
+                <td class="nhsuk-table__cell">
+                  Secondary actions
+                </td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">
+                  08:50
+                  +09:00
+                </td>
+                <td class="nhsuk-table__cell">
+                  <a href="#">Daphne Hart</a>
+                  <div class="nhsuk-u-secondary-text-colour">NHS: 821 374 0952</div>
+                </td>
+                <td class="nhsuk-table__cell">
+                  22 July 1958
+                  <div class="nhsuk-u-secondary-text-colour">(67 years)</div>
+                </td>
+                <td class="nhsuk-table__cell">
+                  <strong class="nhsuk-tag nhsuk-tag--yellow app-nowrap">
+                    Special appointment x 2
+                  </strong>
+                  <div><a href="#">View appointment</a> or a tiny note</div>
+                </td>
+                <td class="nhsuk-table__cell">
+                  Rebook participant
+                </td>
+                <td class="nhsuk-table__cell">
+                  Secondary actions
+                </td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">
+                  09:10
+                </td>
+                <td class="nhsuk-table__cell">
+                  <a href="#">Marta O'Neill</a>
+                  <div class="nhsuk-u-secondary-text-colour">NHS: 702 195 4836</div>
+                </td>
+                <td class="nhsuk-table__cell">
+                  3 May 1971
+                  <div class="nhsuk-u-secondary-text-colour">(55 years)</div>
+                </td>
+                <td class="nhsuk-table__cell">
+                  <a href="#">View appointment</a> or a tiny note
+                </td>
+                <td class="nhsuk-table__cell">
+                  Rebook participant
+                </td>
+                <td class="nhsuk-table__cell">
+                  Secondary actions
+                </td>
+              </tr>
+
+
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">614 287 9305</td>
+                <td class="nhsuk-table__cell">Susan Carter</td>
+                <td class="nhsuk-table__cell">19 September 1967</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">505 463 1129</td>
+                <td class="nhsuk-table__cell">Olivia Barnes</td>
+                <td class="nhsuk-table__cell">12 January 1975</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">336 774 2201</td>
+                <td class="nhsuk-table__cell">Rachel Price</td>
+                <td class="nhsuk-table__cell">27 April 1962</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">223 546 8870</td>
+                <td class="nhsuk-table__cell">Hannah Wallace</td>
+                <td class="nhsuk-table__cell">6 October 1959</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">09:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">410 559 3322</td>
+                <td class="nhsuk-table__cell">Fiona Lambert</td>
+                <td class="nhsuk-table__cell">14 December 1973</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">196 804 7753</td>
+                <td class="nhsuk-table__cell">Georgia Mills</td>
+                <td class="nhsuk-table__cell">30 June 1968</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">378 290 4601</td>
+                <td class="nhsuk-table__cell">Elaine Fox</td>
+                <td class="nhsuk-table__cell">11 February 1976</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">957 613 2084</td>
+                <td class="nhsuk-table__cell">Tessa King</td>
+                <td class="nhsuk-table__cell">25 August 1963</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">604 118 9756</td>
+                <td class="nhsuk-table__cell">Nadia Singh</td>
+                <td class="nhsuk-table__cell">7 April 1957</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">842 039 6617</td>
+                <td class="nhsuk-table__cell">Jane Reed</td>
+                <td class="nhsuk-table__cell">18 November 1970</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">10:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">731 259 1148</td>
+                <td class="nhsuk-table__cell">Laura White</td>
+                <td class="nhsuk-table__cell">29 May 1965</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">665 880 3320</td>
+                <td class="nhsuk-table__cell">Marissa Young</td>
+                <td class="nhsuk-table__cell">9 March 1961</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">548 901 7732</td>
+                <td class="nhsuk-table__cell">Naomi Bell</td>
+                <td class="nhsuk-table__cell">21 September 1974</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">439 216 5087</td>
+                <td class="nhsuk-table__cell">Paige Long</td>
+                <td class="nhsuk-table__cell">4 July 1969</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:30</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">329 487 9901</td>
+                <td class="nhsuk-table__cell">Catherine Wood</td>
+                <td class="nhsuk-table__cell">16 January 1956</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:40</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">214 603 1774</td>
+                <td class="nhsuk-table__cell">Victoria Hale</td>
+                <td class="nhsuk-table__cell">13 October 1966</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">11:50</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">188 905 6423</td>
+                <td class="nhsuk-table__cell">Imogen Frost</td>
+                <td class="nhsuk-table__cell">31 December 1972</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">12:00</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">977 332 1108</td>
+                <td class="nhsuk-table__cell">Dara Moss</td>
+                <td class="nhsuk-table__cell">24 June 1960</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">12:10</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">861 427 5930</td>
+                <td class="nhsuk-table__cell">Sophie Hartley</td>
+                <td class="nhsuk-table__cell">2 August 1962</td>
+              </tr>
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">12:20</td>
+                <td class="nhsuk-table__cell nhsuk-table__cell--numeric">750 218 3446</td>
+                <td class="nhsuk-table__cell">Emma Cole</td>
+                <td class="nhsuk-table__cell">17 April 1975</td>
+              </tr>
+            </tbody>
+          </table>
+      
           <ul class="nhsuk-list">
             <li class="nhsuk-list-item app-slot-listing --hold">
               <div class="app-slot-row">
@@ -291,246 +504,7 @@
               </div>
             </li>
           </ul>
-        </div>
-      </details>
-    </div>
-  </div>
-  
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      <div class="app-card-editable">
-        <h4 class="nhsuk-heading-s">
-          <span class="nhsuk-caption-m">Afternoon session</span>  
-          13:30 to 17:30
-        </h4>
-      </div>
-      <details class="nhsuk-details nhsuk-expander">
-        <summary class="nhsuk-details__summary">
-          <span class="nhsuk-details__summary-text">
-            24 slots available of 24
-          </span>
-        </summary>
-        <div class="nhsuk-details__text">
-          <ul class="nhsuk-list">
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>13:30</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>13:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>13:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>14:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>14:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>14:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>14:30</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>14:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>14:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>15:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>15:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>15:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>15:30</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>15:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>15:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>16:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>16:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>16:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>16:30</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>16:40</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>16:50</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>17:00</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>17:10</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-            <li class="nhsuk-list-item app-slot-listing">
-              <div class="app-slot-row">
-                <span>17:20</span>
-                <span class="app-slot-row-controls">
-                  <a href="#">Book</a>
-                  <a href="#" class="nhsuk-u-font-size-16 nhsuk-u-margin-left-3">More actions...</a>
-                </span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </details>
+          
     </div>
   </div>
 {% endblock %}
