@@ -14,13 +14,14 @@
 @forward "components/secondary-navigation";
 @forward "components/participant-table";
 //@forward "components/participant-search";
+@forward "components/workflow";
 
 //{% set containerClasses = "nhsuk-width-container-fluid" %}
-
 // Add your custom CSS/Sass styles below.
 .app-width-extended {
   width: 1280px;
 }
+
 .app-card-editable {
   display: flex;
   justify-content: space-between;
