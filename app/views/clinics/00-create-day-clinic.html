@@ -64,7 +64,6 @@
     <div class="nhsuk-u-reading-width">
 
       <h1 class="nhsuk-heading-l">Clinic details</h1>
-      <p>Potentially some real brief help and scene setting. Mainly to point out you can punch holes in it as you go?</p>
 
       <form action="01-set-date-and-time" method="post">
 
@@ -76,123 +75,138 @@
             A memorable name for this clinic. This is the name you’ll see everywhere for it, as titles and links.
           </div>
           <input class="nhsuk-input" id="clinic-name" name="clinicName" type="text" aria-describedby="naming-hint-text">
-          <label class="nhsuk-label nhsuk-u-secondary-text-colour nhsuk-u-margin-top-2" for="clinic-id">
+        </div>
+
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-u-secondary-text-colour" for="clinic-id">
             System generated ID in the format blah blah blah
           </label>
           <input class="nhsuk-input nhsuk-input--width-20" id="clinic-id" name="clinicId" type="text" aria-describedby="id-hint-text" value="HWO-NNN-standard-20260501" disabled>
         </div>
+        
+        <hr class="nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-4">
 
-        <div class="nhsuk-form-group">
-          <fieldset class="nhsuk-fieldset">
-            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
-              Location
-            </legend>
-            <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="location" name="location" type="radio" value="Bognor Regis">
-                <label class="nhsuk-label nhsuk-radios__label" for="location">
-                  Bognor Regis
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="location-2" name="location" type="radio" value="Burgess Hill">
-                <label class="nhsuk-label nhsuk-radios__label" for="location-2">
-                  Burgess Hill
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="location-3" name="location" type="radio" value="Chichester">
-                <label class="nhsuk-label nhsuk-radios__label" for="location-3">
-                  Chichester
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="location-4" name="location" type="radio" value="Crawley">
-                <label class="nhsuk-label nhsuk-radios__label" for="location-4">
-                  Crawley
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="location-5" name="location" type="radio" value="Haywards Heath">
-                <label class="nhsuk-label nhsuk-radios__label" for="location-5">
-                  Haywards Heath
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="location-6" name="location" type="radio" value="Horsham">
-                <label class="nhsuk-label nhsuk-radios__label" for="location-6">
-                  Horsham
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="location-7" name="location" type="radio" value="Littlehampton">
-                <label class="nhsuk-label nhsuk-radios__label" for="location-7">
-                  Littlehampton
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="location-8" name="location" type="radio" value="Shoreham-by-Sea">
-                <label class="nhsuk-label nhsuk-radios__label" for="location-8">
-                  Shoreham-by-Sea
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="location-9" name="location" type="radio" value="Storrington">
-                <label class="nhsuk-label nhsuk-radios__label" for="location-9">
-                  Storrington
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="location-10" name="location" type="radio" value="Worthing hospital">
-                <label class="nhsuk-label nhsuk-radios__label" for="location-10">
-                  Worthing hospital
-                </label>
-              </div>
+        <div class="nhsuk-grid-row">
+
+          <div class="nhsuk-grid-column-one-half">
+            <div class="nhsuk-form-group">
+              <fieldset class="nhsuk-fieldset">
+                <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
+                  Unit
+                </legend>
+                <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit" name="unit" type="radio" value="West Sussex Breast Care Centre">
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit">
+                      West Sussex Breast Care Centre
+                    </label>
+                  </div>
+                  <hr class="nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-2">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-2" name="unit" type="radio" value="Alpha Van">
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-2">
+                      Alpha Van
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-3" name="unit" type="radio" value="Beta Van">
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-3">
+                      Beta Van
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-4" name="unit" type="radio" value="Gamma Van">
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-4">
+                      Gamma Van
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-5" name="unit" type="radio" value="Delta Van">
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-5">
+                      Delta Van
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
             </div>
-          </fieldset>
-        </div>
+          </div>
 
-
-        <div class="nhsuk-form-group">
-          <fieldset class="nhsuk-fieldset">
-            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
-              Unit
-            </legend>
-            <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="unit" name="unit" type="radio" value="West Sussex Breast Care Centre">
-                <label class="nhsuk-label nhsuk-radios__label" for="unit">
-                  West Sussex Breast Care Centre
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="unit-2" name="unit" type="radio" value="Alpha Van">
-                <label class="nhsuk-label nhsuk-radios__label" for="unit-2">
-                  Alpha Van
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="unit-3" name="unit" type="radio" value="Beta Van">
-                <label class="nhsuk-label nhsuk-radios__label" for="unit-3">
-                  Beta Van
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="unit-4" name="unit" type="radio" value="Gamma Van">
-                <label class="nhsuk-label nhsuk-radios__label" for="unit-4">
-                  Gamma Van
-                </label>
-              </div>
-              <div class="nhsuk-radios__item">
-                <input class="nhsuk-radios__input" id="unit-5" name="unit" type="radio" value="Delta Van">
-                <label class="nhsuk-label nhsuk-radios__label" for="unit-5">
-                  Delta Van
-                </label>
-              </div>
+          <div class="nhsuk-grid-column-one-half">
+            <div class="nhsuk-form-group">
+              <fieldset class="nhsuk-fieldset">
+                <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
+                  Location
+                </legend>
+                <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-10" name="location" type="radio" value="Worthing hospital">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-10">
+                      Worthing hospital
+                    </label>
+                  </div>
+                  <hr class="nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-2">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location" name="location" type="radio" value="Bognor Regis">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location">
+                      Bognor Regis
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-2" name="location" type="radio" value="Burgess Hill">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-2">
+                      Burgess Hill
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-3" name="location" type="radio" value="Chichester">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-3">
+                      Chichester
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-4" name="location" type="radio" value="Crawley">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-4">
+                      Crawley
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-5" name="location" type="radio" value="Haywards Heath">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-5">
+                      Haywards Heath
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-6" name="location" type="radio" value="Horsham">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-6">
+                      Horsham
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-7" name="location" type="radio" value="Littlehampton">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-7">
+                      Littlehampton
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-8" name="location" type="radio" value="Shoreham-by-Sea">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-8">
+                      Shoreham-by-Sea
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-9" name="location" type="radio" value="Storrington">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-9">
+                      Storrington
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
             </div>
-          </fieldset>
-        </div>
+          </div>
 
+        </div>
+        
+        <hr class="nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
         <button class="nhsuk-button" type="submit">Continue</button>
 
       </form>
@@ -201,107 +215,4 @@
 
 
 
-{% endblock %}
-
-{% block pageScripts %}
-  <script>
-    (function () {
-      const fieldIds = [
-        'start-time-hour',
-        'start-time-minute',
-        'end-time-hour',
-        'end-time-minute',
-        'duration'
-      ];
-
-      const fields = fieldIds
-        .map(id => document.getElementById(id))
-        .filter(Boolean);
-      const totalElement = document.querySelector('[data-capacity-calculator-total]');
-      const totalInput = document.getElementById('totalSlots');
-
-      if (!totalElement || !totalInput || fields.length === 0) {
-        return;
-      }
-
-      const parseInteger = value => {
-        const parsed = parseInt(value, 10);
-        return Number.isNaN(parsed) ? NaN : parsed;
-      };
-
-      const validTime = (hour, minute) =>
-        Number.isInteger(hour) && hour >= 0 && hour <= 23 &&
-        Number.isInteger(minute) && minute >= 0 && minute <= 59;
-
-      const errorElement = document.querySelector('[data-capacity-calculator-error]');
-
-      const calculateTotalSlots = (startHour, startMinute, endHour, endMinute, duration) => {
-        if (
-          !validTime(startHour, startMinute) ||
-          !validTime(endHour, endMinute) ||
-          !Number.isInteger(duration) ||
-          duration <= 0
-        ) {
-          return 0;
-        }
-
-        const startMinutes = startHour * 60 + startMinute;
-        const endMinutes = endHour * 60 + endMinute;
-        const availableMinutes = endMinutes - startMinutes;
-
-        if (availableMinutes <= 0) {
-          return 0;
-        }
-
-        return Math.floor(availableMinutes / duration);
-      };
-
-      const updateTotal = () => {
-        const startHour = parseInteger(document.getElementById('start-time-hour').value);
-        const startMinute = parseInteger(document.getElementById('start-time-minute').value);
-        const endHour = parseInteger(document.getElementById('end-time-hour').value);
-        const endMinute = parseInteger(document.getElementById('end-time-minute').value);
-        const duration = parseInteger(document.getElementById('duration').value);
-
-        const totalSlots = calculateTotalSlots(startHour, startMinute, endHour, endMinute, duration);
-        totalElement.textContent = String(totalSlots);
-        totalInput.value = String(totalSlots);
-
-        if (!errorElement) {
-          return;
-        }
-
-        if (!validTime(startHour, startMinute) || !validTime(endHour, endMinute)) {
-          errorElement.textContent = 'Enter start and end times in 24-hour format (HH:MM).';
-          errorElement.hidden = false;
-          return;
-        }
-
-        if (!Number.isInteger(duration) || duration <= 0) {
-          errorElement.textContent = 'Enter a valid slot duration in minutes.';
-          errorElement.hidden = false;
-          return;
-        }
-
-        const startMinutes = startHour * 60 + startMinute;
-        const endMinutes = endHour * 60 + endMinute;
-
-        if (endMinutes <= startMinutes) {
-          errorElement.textContent = 'End time must be after start time.';
-          errorElement.hidden = false;
-          return;
-        }
-
-        errorElement.textContent = '';
-        errorElement.hidden = true;
-      };
-
-      fields.forEach(field => {
-        field.addEventListener('input', updateTotal);
-        field.addEventListener('change', updateTotal);
-      });
-
-      updateTotal();
-    })();
-  </script>
 {% endblock %}
