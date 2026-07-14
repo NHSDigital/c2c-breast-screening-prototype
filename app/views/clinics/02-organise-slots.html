@@ -7,26 +7,7 @@
   {{ primaryNavigation("Clinics", serviceName) }}
 {% endblock %}
 
-{% block beforeContent %}
-
-{{ breadcrumb({
-  items: [
-    {
-      href: "#",
-      text: "Clinics"
-    },
-    {
-      href: "#",
-      text: "Templates"
-    },
-    {
-      href: "#",
-      text: "Session templates"
-    }
-  ]
-}) }}
-
-{% endblock %}
+{% block beforeContent %}{% endblock %}
 
 {% block content %}
 
@@ -52,8 +33,16 @@
   .slot-tag { font-size: 11px; margin-top: 4px; font-weight: 500; }
   
   .slot.is-hold {
+    
+  }
+
+  .slot.is-staff-break {
     background: transparent;
     border-style: dashed;
+  }
+
+  .slot.is-special-appointment {
+    background-color: #fff9c4;
   }
 
   .slot.is-merged {
@@ -61,15 +50,17 @@
     margin-bottom: 0;
   }
   .slot.is-merged-child {
-    border-top: 1px dashed #d8d8d8;
+    border-top: 1px dashed #212b32;
   }
   .slot.is-merged-last-child { 
     border-bottom: 2px solid #212b32;
     margin-bottom: 12px;
   }
-  .slot.is-hold.is-merged-last-child {
+
+  .slot.is-staff-break.is-merged-last-child {
     border-bottom-style: dashed;
   }
+
   .slot.is-merged-child > .slot-time,
   .slot.is-merged-child > .slot-end {
     display: none;
@@ -102,21 +93,27 @@
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
             <span class="app-workflow-side-nav__link">
               <span class="app-workflow-side-nav__number">
-                {{ tickSvg | safe }}
+                1
               </span>
-              <span class="app-workflow-side-nav__label">Set times</span>
+              <span class="app-workflow-side-nav__label">Clinic details</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <span class="app-workflow-side-nav__link">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Set date and time</span>
             </span>
           </li>
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
-            <span class="app-workflow-side-nav__link">
-              <span class="app-workflow-side-nav__number">2</span>
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">3</span>
               <span class="app-workflow-side-nav__label">Organise slots</span>
             </span>
           </li>
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
             <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">3</span>
-              <span class="app-workflow-side-nav__label">Save template</span>
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">Publish clinic</span>
             </span>
           </li>
         </ol>
@@ -129,39 +126,53 @@
     <div class="nhsuk-u-reading-width">
       <h1 class="nhsuk-heading-l">Organise slots</h1>
       <p>Potentially some real brief help and scene setting. Selection and controls</p>
+      <p class="nhsuk-hint nhsuk-body-s">
+        Click to select a slot.<br>
+        Press shift and click to select a range<br>
+        Press control or command (⌘) and click to select multiple.</p>
       <h2 class="nhsuk-heading-m">
         <span class="nhsuk-caption-m">Session time</span>
         {{ data.newSession.startTime.hour | zeroPad }}:{{ data.newSession.startTime.minute | zeroPad }} to {{ data.newSession.endTime.hour | zeroPad }}:{{ data.newSession.endTime.minute | zeroPad }}
       </h2>
     </div>
 
-    <div class="nhsuk-grid-row">
-      <div class="nhsuk-grid-column-three-quarters">
-        <div id="slots-container"></div>
-      </div>
-      <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0; border: 1px solid red;">
-        <p>
-          <span id="available-slots">{{ data.newSession.totalSlots }}</span> slots available to book of <span id="total-slots">{{ data.newSession.totalSlots }}</span> total
-        </p>
-        <p class="nhsuk-hint nhsuk-u-font-size-14 nhsuk-u-margin-bottom-2">Click to select · Shift+click for a range · ⌘/Ctrl+click for multiple</p>
-        <div class="side-panel" id="side-panel">
-          <h3 class="nhsuk-heading-s">With selected:</h3>
-          <ul class="nhsuk-list">
-            <li><a class="panel-item" id="panel-hold">Hold</a></li>
-            <li><a class="panel-item" id="panel-unhold">Remove hold</a></li>
-            <li><a class="panel-item" id="panel-merge">Merge</a></li>
-            <li><a class="panel-item" id="panel-unmerge">Unmerge</a></li>
-          </ul>
+    <form action="03-publish-clinic" method="post">
+
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-three-quarters">
+          <div id="slots-container"></div>
+        </div>
+        <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
+          <div class="side-panel" id="side-panel">
+            <h3 class="nhsuk-heading-s">With selected:</h3>
+            <ul class="nhsuk-list">
+              <li><a class="panel-item" id="panel-hold">Hold</a></li>
+              <li><a class="panel-item" id="panel-staff-break">Staff break</a></li>
+              <li><a class="panel-item" id="panel-special-appointment">Special appointment</a></li>
+              <li><a class="panel-item" id="panel-clear-type">Clear slot type</a></li>
+            </ul>
+            <ul class="nhsuk-list">
+              <li><a class="panel-item" id="panel-merge">Merge selected</a></li>
+              <li><a class="panel-item" id="panel-unmerge">Unmerge</a></li>
+            </ul>
+          </div>
+          <p>
+            <span id="available-slots">{{ data.newSession.totalSlots }}</span> slots available
+          </p>
         </div>
       </div>
-    </div>
 
-    </div>
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+          <p class="nhsuk-u-margin-top-4">
+            <button class="nhsuk-button" type="submit">Continue</button>
+          </p>
+        </div>
+      </div>
+
+    </form>
   </div>
 </div>
-
-
-
 
 {% endblock %}
 
@@ -173,6 +184,7 @@
     let slotData = [];
     let selectedIndices = new Set();
     let lastClickedIndex = null;
+    let totalSlotCount = 0;
 
     // ========== UTILITY FUNCTIONS ==========
     function parseMinutes(time) {
@@ -227,7 +239,7 @@
       if (!parent.merged) return;
 
       const span = parent.span;
-      const parentHold = parent.hold;
+      const parentType = parent.type;
 
       for (let j = parentIndex; j < parentIndex + span; j++) {
         if (!slotData[j]) continue;
@@ -236,13 +248,13 @@
         slotData[j].span = 1;
         slotData[j].isMergedInto = undefined;
         slotData[j].mergedEnd = null;
-        slotData[j].hold = parentHold;
+        slotData[j].type = parentType;
       }
     }
 
-    function holdSlots(indices, hold) {
+    function setSlotType(indices, type) {
       [...indices].forEach(i => {
-        if (slotData[i]) slotData[i].hold = hold;
+        if (slotData[i]) slotData[i].type = type;
       });
     }
 
@@ -257,20 +269,20 @@
       const first = sel[0];
       const last = sel[sel.length - 1];
       const span = sel.length;
-      const mergeHold = sel.every(i => slotData[i].hold);
+      const mergeType = slotData[first].type;
 
       // reset (important when reusing slots)
       for (let j = first; j <= last; j++) {
         slotData[j].merged = false;
         slotData[j].span = 1;
         slotData[j].isMergedInto = undefined;
-        slotData[j].hold = false;
+        slotData[j].type = null;
       }
 
       slotData[first].merged = true;
       slotData[first].span = span;
       slotData[first].mergedEnd = formatTime(slotData[last].end);
-      slotData[first].hold = mergeHold;
+      slotData[first].type = mergeType;
 
       for (let j = first + 1; j <= last; j++) {
         slotData[j].isMergedInto = first;
@@ -302,6 +314,7 @@
         return;
       }
 
+      totalSlotCount = slotCount;
       const prevData = [...slotData];
       slotData = [];
 
@@ -316,7 +329,7 @@
           start: s,
           end: e,
           key,
-          hold: prev.hold || false,
+          type: prev.type || null,
           merged: prev.merged || false,
           span: prev.span || 1,
           isMergedInto: prev.isMergedInto ?? undefined,
@@ -326,24 +339,19 @@
 
       selectedIndices = new Set([...selectedIndices].filter(i => i < slotCount));
       renderGrid();
-      setStats(totalMins, slotLen);
+      setStats();
     }
 
-    function setStats(totalMins, slotLen) {
+    function setStats() {
       const heads = slotData.filter(s => s.isMergedInto === undefined);
-      const count = heads.length;
-      const holdC = heads.filter(s => s.hold).length;
-      const avail = count - holdC;
-      document.getElementById('total-slots').textContent = count || '—';
-      document.getElementById('available-slots').textContent = count ? avail : '—';
+      const nonAvail = heads.filter(s => s.type === 'hold' || s.type === 'staff-break' || s.merged).length;
+      const avail = totalSlotCount - nonAvail;
+      document.getElementById('available-slots').textContent = totalSlotCount ? avail : '—';
     }
 
     function commit() {
       renderGrid();
-      const startMins = parseMinutes(sessionData.startTime);
-      const endMins = parseMinutes(sessionData.endTime);
-      const slotLen = Number(sessionData.duration);
-      setStats(endMins - startMins, slotLen);
+      setStats();
     }
 
     // ========== RENDERING FUNCTIONS ==========
@@ -359,12 +367,14 @@
         const classes = ['slot'];
         const isSelected = selectedIndices.has(i) || (isChild && selectedIndices.has(headIndex));
         const isMerged = sd.merged || isChild;
-        const isHeld = sd.hold || (isChild && headSlot?.hold);
+        const slotType = isChild ? headSlot?.type : sd.type;
         const isLastMergedChild = isChild && headSlot && i === headIndex + (headSlot.span || 1) - 1;
 
         if (isSelected) classes.push('selected');
         if (isMerged) classes.push('is-merged');
-        if (isHeld) classes.push('is-hold');
+        if (slotType === 'hold') classes.push('is-hold');
+        if (slotType === 'staff-break') classes.push('is-staff-break');
+        if (slotType === 'special-appointment') classes.push('is-special-appointment');
         if (isChild) classes.push('is-merged-child');
         if (isLastMergedChild) classes.push('is-merged-last-child');
 
@@ -377,12 +387,13 @@
         `;
 
         if (isMerged) {
-          const mergedLabel = sd.merged
-            ? isHeld ? `Merged (${sd.span}) · Held` : `Merged (${sd.span})`
-            : 'Merged slot';
+          let mergedLabel = `Merged (${sd.span})`;
           div.innerHTML += `<div class="slot-tag">${mergedLabel}</div>`;
-        } else if (isHeld) {
-          div.innerHTML += `<div class="slot-tag">Held</div>`;
+        }
+        if (slotType && !isChild) {
+          const typeLabel = slotType === 'hold' ? 'Held' : slotType === 'staff-break' ? 'Staff break' : 'Special appointment';
+          const tagClass = slotType === 'hold' ? 'nhsuk-tag--blue' : slotType === 'staff-break' ? 'nhsuk-tag--grey' : 'nhsuk-tag--yellow';
+          div.innerHTML += `<div class="slot-tag"><span class="nhsuk-tag ${tagClass}">${typeLabel}</span></div>`;
         }
 
         div.addEventListener('click', e => handleSlotClick(e, i));
@@ -408,11 +419,17 @@
         const s = slotData[i];
         return s.merged || s.isMergedInto !== undefined;
       });
-      const anyHold = sel.some(i => slotData[i]?.hold);
-      const allHold = sel.every(i => slotData[i]?.hold);
+      
+      const typeSet = new Set(sel.map(i => slotData[i]?.type));
+      const allHold = typeSet.size === 1 && typeSet.has('hold');
+      const allStaffBreak = typeSet.size === 1 && typeSet.has('staff-break');
+      const allSpecialAppointment = typeSet.size === 1 && typeSet.has('special-appointment');
+      const anyType = sel.some(i => slotData[i]?.type !== null);
 
       document.getElementById('panel-hold').classList.toggle('disabled', !sel.length || allHold);
-      document.getElementById('panel-unhold').classList.toggle('disabled', !sel.length || !anyHold);
+      document.getElementById('panel-staff-break').classList.toggle('disabled', !sel.length || allStaffBreak);
+      document.getElementById('panel-special-appointment').classList.toggle('disabled', !sel.length || allSpecialAppointment);
+      document.getElementById('panel-clear-type').classList.toggle('disabled', !sel.length || !anyType);
       document.getElementById('panel-merge').classList.toggle('disabled', !canMerge);
       document.getElementById('panel-unmerge').classList.toggle('disabled', !hasMerged);
     }
@@ -449,21 +466,39 @@
     // ========== EVENT ATTACHMENTS ==========
     // No DOM form inputs on this page; session data is sourced from the server-side session.
     const panelHold = document.getElementById('panel-hold');
-    const panelUnhold = document.getElementById('panel-unhold');
+    const panelStaffBreak = document.getElementById('panel-staff-break');
+    const panelSpecialAppointment = document.getElementById('panel-special-appointment');
+    const panelClearType = document.getElementById('panel-clear-type');
     const panelMerge = document.getElementById('panel-merge');
     const panelUnmerge = document.getElementById('panel-unmerge');
 
     if (panelHold) {
       panelHold.addEventListener('click', () => {
-        holdSlots(selectedIndices, true);
+        setSlotType(selectedIndices, 'hold');
         selectedIndices.clear();
         commit();
       });
     }
 
-    if (panelUnhold) {
-      panelUnhold.addEventListener('click', () => {
-        holdSlots(selectedIndices, false);
+    if (panelStaffBreak) {
+      panelStaffBreak.addEventListener('click', () => {
+        setSlotType(selectedIndices, 'staff-break');
+        selectedIndices.clear();
+        commit();
+      });
+    }
+
+    if (panelSpecialAppointment) {
+      panelSpecialAppointment.addEventListener('click', () => {
+        setSlotType(selectedIndices, 'special-appointment');
+        selectedIndices.clear();
+        commit();
+      });
+    }
+
+    if (panelClearType) {
+      panelClearType.addEventListener('click', () => {
+        setSlotType(selectedIndices, null);
         selectedIndices.clear();
         commit();
       });
@@ -486,12 +521,12 @@
     }
 
     // Global keyboard events
-    document.addEventListener('keydown', e => {
+    /*document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         selectedIndices.clear();
         renderGrid();
       }
-    });
+    });*/
 
     // ========== INITIALIZATION ==========
     render();
