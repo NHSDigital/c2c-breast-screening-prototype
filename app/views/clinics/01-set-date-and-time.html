@@ -1,0 +1,309 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Clinics" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Create day clinic
+          </span>
+          Workflow steps
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <span class="app-workflow-side-nav__link">
+              <span class="app-workflow-side-nav__number">
+                1
+              </span>
+              <span class="app-workflow-side-nav__label">Clinic details</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Set date and time</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Organise slots</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">Publish clinic</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+    <div class="nhsuk-u-reading-width">
+
+      <h1 class="nhsuk-heading-l">Set date and time</h1>
+      <p>Potentially some real brief help and scene setting. Mainly to point out you can punch holes in it as you go?</p>
+
+      <form action="02-organise-slots" method="post">
+
+        <div class="nhsuk-form-group">
+          <fieldset class="nhsuk-fieldset" role="group" aria-describedby="clinic-date-hint">
+            <legend class="nhsuk-fieldset__legend nhsuk-label--m">
+                Date of clinic
+            </legend>
+            <div class="nhsuk-hint" id="clinic-date-hint">
+              For example, 18 6 2026
+            </div>
+            <div class="nhsuk-date-input" id="appointment-date">
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="clinic-date-day">
+                    Day
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="clinic-date-day" name="clinicDate[day]" type="text" inputmode="numeric">
+                </div>
+              </div>
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="clinic-date-month">
+                    Month
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="clinic-date-month" name="clinicDate[month]" type="text" inputmode="numeric">
+                </div>
+              </div>
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="clinic-date-year">
+                    Year
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-4" id="clinic-date-year" name="clinicDate[year]" type="text" inputmode="numeric">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        
+        <div class="nhsuk-form-group">
+          <fieldset class="nhsuk-fieldset" role="group" aria-describedby="start-time-hint">
+            <legend class="nhsuk-fieldset__legend nhsuk-label--m">
+              Session start time
+            </legend>
+            <div id="start-time-hint" class="nhsuk-hint">
+              For example, 10:00
+            </div>
+
+            <div id="start-time" class="nhsuk-date-input">
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="start-time-hour">
+                    Hour
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="start-time-hour"
+                    name="newSession[startTime][hour]" type="text" inputmode="numeric">
+                </div>
+              </div>
+
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="start-time-minute">
+                    Minute
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="start-time-minute"
+                    name="newSession[startTime][minute]" type="text" inputmode="numeric">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="nhsuk-form-group">
+          <fieldset class="nhsuk-fieldset" role="group" aria-describedby="end-time-hint">
+            <legend class="nhsuk-fieldset__legend nhsuk-label--m">
+              Session end time
+            </legend>
+            <div id="end-time-hint" class="nhsuk-hint">
+              For example, 17:00
+            </div>
+
+            <div id="end-time" class="nhsuk-date-input">
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="end-time-hour">
+                    Hour
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="end-time-hour"
+                    name="newSession[endTime][hour]" type="text" inputmode="numeric">
+                </div>
+              </div>
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="end-time-minute">
+                    Minute
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="end-time-minute"
+                    name="newSession[endTime][minute]" type="text" inputmode="numeric">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-label--m" for="duration">
+            Slot length
+          </label>
+          <div class="nhsuk-input-wrapper">
+            <input class="nhsuk-input nhsuk-input--width-2" id="duration" name="newSession[duration]" type="text"
+              spellcheck="false" value="" aria-describedby="duration-hint" inputmode="numeric">
+            <div class="nhsuk-input-wrapper__suffix" aria-hidden="true">minutes</div>
+          </div>
+        </div>
+
+        <div class="nhsuk-inset-text">
+          <span class="nhsuk-u-visually-hidden">Information: </span>
+          <p class="nhsuk-body nhsuk-u-margin-bottom-1"><strong>Capacity calculator</strong></p>
+          <p class="nhsuk-body nhsuk-u-margin-bottom-1"><span data-capacity-calculator-total>X</span> total slots in the
+            session</p>
+          <input type="hidden" id="totalSlots" name="newSession[totalSlots]">
+          <p class="nhsuk-error-message nhsuk-u-margin-bottom-0" data-capacity-calculator-error hidden aria-live="polite"></p>
+        </div>
+
+        <button class="nhsuk-button" type="submit">Continue</button>
+
+      </form>
+
+      <div style="border: 2px dotted red">
+        Time must be in 24 hour format<br>
+        Start time must be before end time and vice versa<br>
+        Slots dont have to divide equally into the times, but it'll be interesting to work that out?
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <script>
+    (function () {
+      const fieldIds = [
+        'start-time-hour',
+        'start-time-minute',
+        'end-time-hour',
+        'end-time-minute',
+        'duration'
+      ];
+
+      const fields = fieldIds
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+      const totalElement = document.querySelector('[data-capacity-calculator-total]');
+      const totalInput = document.getElementById('totalSlots');
+
+      if (!totalElement || !totalInput || fields.length === 0) {
+        return;
+      }
+
+      const parseInteger = value => {
+        const parsed = parseInt(value, 10);
+        return Number.isNaN(parsed) ? NaN : parsed;
+      };
+
+      const validTime = (hour, minute) =>
+        Number.isInteger(hour) && hour >= 0 && hour <= 23 &&
+        Number.isInteger(minute) && minute >= 0 && minute <= 59;
+
+      const errorElement = document.querySelector('[data-capacity-calculator-error]');
+
+      const calculateTotalSlots = (startHour, startMinute, endHour, endMinute, duration) => {
+        if (
+          !validTime(startHour, startMinute) ||
+          !validTime(endHour, endMinute) ||
+          !Number.isInteger(duration) ||
+          duration <= 0
+        ) {
+          return 0;
+        }
+
+        const startMinutes = startHour * 60 + startMinute;
+        const endMinutes = endHour * 60 + endMinute;
+        const availableMinutes = endMinutes - startMinutes;
+
+        if (availableMinutes <= 0) {
+          return 0;
+        }
+
+        return Math.floor(availableMinutes / duration);
+      };
+
+      const updateTotal = () => {
+        const startHour = parseInteger(document.getElementById('start-time-hour').value);
+        const startMinute = parseInteger(document.getElementById('start-time-minute').value);
+        const endHour = parseInteger(document.getElementById('end-time-hour').value);
+        const endMinute = parseInteger(document.getElementById('end-time-minute').value);
+        const duration = parseInteger(document.getElementById('duration').value);
+
+        const totalSlots = calculateTotalSlots(startHour, startMinute, endHour, endMinute, duration);
+        totalElement.textContent = String(totalSlots);
+        totalInput.value = String(totalSlots);
+
+        if (!errorElement) {
+          return;
+        }
+
+        if (!validTime(startHour, startMinute) || !validTime(endHour, endMinute)) {
+          errorElement.textContent = 'Enter start and end times in 24-hour format (HH:MM).';
+          errorElement.hidden = false;
+          return;
+        }
+
+        if (!Number.isInteger(duration) || duration <= 0) {
+          errorElement.textContent = 'Enter a valid slot duration in minutes.';
+          errorElement.hidden = false;
+          return;
+        }
+
+        const startMinutes = startHour * 60 + startMinute;
+        const endMinutes = endHour * 60 + endMinute;
+
+        if (endMinutes <= startMinutes) {
+          errorElement.textContent = 'End time must be after start time.';
+          errorElement.hidden = false;
+          return;
+        }
+
+        errorElement.textContent = '';
+        errorElement.hidden = true;
+      };
+
+      fields.forEach(field => {
+        field.addEventListener('input', updateTotal);
+        field.addEventListener('change', updateTotal);
+      });
+
+      updateTotal();
+    })();
+  </script>
+{% endblock %}

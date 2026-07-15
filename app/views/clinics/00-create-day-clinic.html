@@ -1,0 +1,218 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Clinics" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Create day clinic
+          </span>
+          Workflow steps
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current  ">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">
+                1
+              </span>
+              <span class="app-workflow-side-nav__label">Clinic details</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Set date and time</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Organise slots</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">Publish clinic</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+    <div class="nhsuk-u-reading-width">
+
+      <h1 class="nhsuk-heading-l">Clinic details</h1>
+
+      <form action="01-set-date-and-time" method="post">
+
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-label--m" for="clinic-name">
+            Clinic name
+          </label>
+          <div class="nhsuk-hint" id="naming-hint-text">
+            A memorable name for this clinic. This is the name you’ll see everywhere for it, as titles and links.
+          </div>
+          <input class="nhsuk-input" id="clinic-name" name="clinicName" type="text" aria-describedby="naming-hint-text">
+        </div>
+
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-u-secondary-text-colour" for="clinic-id">
+            System generated ID in the format blah blah blah
+          </label>
+          <input class="nhsuk-input nhsuk-input--width-20" id="clinic-id" name="clinicId" type="text" aria-describedby="id-hint-text" value="HWO-NNN-standard-20260501" disabled>
+        </div>
+        
+        <hr class="nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-4">
+
+        <div class="nhsuk-grid-row">
+
+          <div class="nhsuk-grid-column-one-half">
+            <div class="nhsuk-form-group">
+              <fieldset class="nhsuk-fieldset">
+                <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
+                  Unit
+                </legend>
+                <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit" name="unit" type="radio" value="West Sussex Breast Care Centre">
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit">
+                      West Sussex Breast Care Centre
+                    </label>
+                  </div>
+                  <hr class="nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-2">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-2" name="unit" type="radio" value="Alpha Van">
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-2">
+                      Alpha Van
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-3" name="unit" type="radio" value="Beta Van">
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-3">
+                      Beta Van
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-4" name="unit" type="radio" value="Gamma Van">
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-4">
+                      Gamma Van
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-5" name="unit" type="radio" value="Delta Van">
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-5">
+                      Delta Van
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="nhsuk-grid-column-one-half">
+            <div class="nhsuk-form-group">
+              <fieldset class="nhsuk-fieldset">
+                <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
+                  Location
+                </legend>
+                <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-10" name="location" type="radio" value="Worthing hospital">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-10">
+                      Worthing hospital
+                    </label>
+                  </div>
+                  <hr class="nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-2">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location" name="location" type="radio" value="Bognor Regis">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location">
+                      Bognor Regis
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-2" name="location" type="radio" value="Burgess Hill">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-2">
+                      Burgess Hill
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-3" name="location" type="radio" value="Chichester">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-3">
+                      Chichester
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-4" name="location" type="radio" value="Crawley">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-4">
+                      Crawley
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-5" name="location" type="radio" value="Haywards Heath">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-5">
+                      Haywards Heath
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-6" name="location" type="radio" value="Horsham">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-6">
+                      Horsham
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-7" name="location" type="radio" value="Littlehampton">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-7">
+                      Littlehampton
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-8" name="location" type="radio" value="Shoreham-by-Sea">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-8">
+                      Shoreham-by-Sea
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-9" name="location" type="radio" value="Storrington">
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-9">
+                      Storrington
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+        </div>
+        
+        <hr class="nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
+        <button class="nhsuk-button" type="submit">Continue</button>
+
+      </form>
+    </div>
+  </div>
+
+
+
+{% endblock %}
