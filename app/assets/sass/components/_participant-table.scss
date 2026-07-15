@@ -2,10 +2,10 @@
 
   .nhsuk-table__body {
     tr:nth-child(odd) {
-      background-color: #f8fafa;
+      background-color: rgba(224,228,230,.5);
     }
     tr:nth-child(even) {
-      background-color: #f0f4f5;
+      background-color: transparent;
     }
   }
 
