@@ -12,48 +12,44 @@
 {% block content %}
 
 <style>
+
   .slot {
     background-color: #fff;
-    border: 2px solid #212b32;
-    padding: 10px 12px;
-    min-height: 62px;
-    cursor: pointer;
+    border: 1px solid #212b32;
+    padding-left: 8px;
     user-select: none;
     margin-bottom: 12px;
   }
-  .slot:hover { background: var(--color-background-secondary); }
-  .slot.selected {
+  /*.slot.selected {
     border: 2px solid #212b32;
     outline: 4px solid #ffeb3b;
     outline-offset: 0;
     box-shadow: inset 0 0 0 2px #212b32;
-  }
+  }*/
 
-  .slot-end { font-size: 14px; margin-top: 2px; }
-  .slot-tag { font-size: 11px; margin-top: 4px; font-weight: 500; }
+  .slot-end { font-size: 16px; margin-right: 1rem; }
+  .slot-tag { font-size: 16px; margin-left: 1rem; }
   
-  .slot.is-hold {
-    
-  }
-
+  .slot.is-hold {}
   .slot.is-staff-break {
     background: transparent;
     border-style: dashed;
   }
-
-  .slot.is-special-appointment {
-    background-color: #fff9c4;
-  }
+  .slot.is-special-appointment {}
 
   .slot.is-merged {
     border-bottom: none;
     margin-bottom: 0;
   }
-  .slot.is-merged-child {
+  .slot.is-merged-child  {
     border-top: 1px dashed #212b32;
+    height: 42px;
+  }
+  .slot.is-merged-child > .nhsuk-checkboxes__item { 
+    display: none;
   }
   .slot.is-merged-last-child { 
-    border-bottom: 2px solid #212b32;
+    border-bottom: 1px solid #212b32;
     margin-bottom: 12px;
   }
 
@@ -66,8 +62,13 @@
     display: none;
   }
 
-  .side-panel { display: none; }
-  .side-panel.visible { display: block; }
+  .slot .nhsuk-checkboxes__label {
+    width: 100%;
+  }
+
+  /*.side-panel { display: none; }
+  .side-panel.visible { display: block; }*/
+
   .panel-item { display: block; cursor: pointer; }
   .panel-item.disabled { opacity: 0.38; cursor: default; pointer-events: none; }
 </style>
@@ -126,10 +127,6 @@
     <div class="nhsuk-u-reading-width">
       <h1 class="nhsuk-heading-l">Organise slots</h1>
       <p>Potentially some real brief help and scene setting. Selection and controls</p>
-      <p class="nhsuk-hint nhsuk-body-s">
-        Click to select a slot.<br>
-        Press shift and click to select a range<br>
-        Press control or command (⌘) and click to select multiple.</p>
       <h2 class="nhsuk-heading-m">
         <span class="nhsuk-caption-m">Session time</span>
         {{ data.newSession.startTime.hour | zeroPad }}:{{ data.newSession.startTime.minute | zeroPad }} to {{ data.newSession.endTime.hour | zeroPad }}:{{ data.newSession.endTime.minute | zeroPad }}
@@ -137,10 +134,15 @@
     </div>
 
     <form action="03-publish-clinic" method="post">
+      
+      <!-- <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">
+        Click to select a slot.<br>
+        Press shift and click to select a range.
+      </p> -->
 
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-three-quarters">
-          <div id="slots-container"></div>
+          <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes"></div>
         </div>
         <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
           <div class="side-panel" id="side-panel">
@@ -156,15 +158,11 @@
               <li><a class="panel-item" id="panel-unmerge">Unmerge</a></li>
             </ul>
           </div>
+          <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
           <p>
             <span id="available-slots">{{ data.newSession.totalSlots }}</span> slots available
           </p>
-        </div>
-      </div>
-
-      <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-full">
-          <p class="nhsuk-u-margin-top-4">
+          <p>
             <button class="nhsuk-button" type="submit">Continue</button>
           </p>
         </div>
@@ -228,6 +226,21 @@
 
     function resolveToMergeHead(i) {
       return slotData[i].isMergedInto ?? i;
+    }
+
+    function getCheckedIndices() {
+      const checked = new Set();
+      document.querySelectorAll('#slots-container input[type="checkbox"]:checked').forEach(input => {
+        const idx = Number(input.value);
+        if (Number.isInteger(idx) && idx >= 0) {
+          checked.add(idx);
+        }
+      });
+      return checked;
+    }
+
+    function syncSelectedIndicesFromCheckboxes() {
+      selectedIndices = getCheckedIndices();
     }
 
     // ========== SLOT MANAGEMENT FUNCTIONS ==========
@@ -354,6 +367,12 @@
       setStats();
     }
 
+    function commitFromChecked() {
+      syncSelectedIndicesFromCheckboxes();
+      renderGrid();
+      setStats();
+    }
+
     // ========== RENDERING FUNCTIONS ==========
     function renderGrid() {
       const container = document.getElementById('slots-container');
@@ -378,25 +397,70 @@
         if (isChild) classes.push('is-merged-child');
         if (isLastMergedChild) classes.push('is-merged-last-child');
 
+        const slotId = `slot-${i}`;
         const div = document.createElement('div');
-        div.className = classes.join(' ');
-        const endTime = sd.merged ? sd.mergedEnd : formatTime(sd.end);
-        div.innerHTML = `
-          <div class="slot-time">${formatTime(sd.start)}</div>
-          <div class="slot-end">to ${endTime}</div>
-        `;
+        div.className = [...classes].join(' ');
 
+        const endTime = sd.merged ? sd.mergedEnd : formatTime(sd.end);
+
+        let mergedHtml = '';
         if (isMerged) {
-          let mergedLabel = `Merged (${sd.span})`;
-          div.innerHTML += `<div class="slot-tag">${mergedLabel}</div>`;
+          mergedHtml += `<span class="slot-tag">Merged (${sd.span})</span>`;
         }
+
+        let typeHtml = '';
         if (slotType && !isChild) {
           const typeLabel = slotType === 'hold' ? 'Held' : slotType === 'staff-break' ? 'Staff break' : 'Special appointment';
-          const tagClass = slotType === 'hold' ? 'nhsuk-tag--blue' : slotType === 'staff-break' ? 'nhsuk-tag--grey' : 'nhsuk-tag--yellow';
-          div.innerHTML += `<div class="slot-tag"><span class="nhsuk-tag ${tagClass}">${typeLabel}</span></div>`;
+          const tagClass = slotType === 'hold' ? 'nhsuk-tag--grey' : slotType === 'staff-break' ? 'nhsuk-tag--grey' : 'nhsuk-tag--yellow';
+          typeHtml += `<span class="slot-tag"><span class="nhsuk-tag ${tagClass}">${typeLabel}</span></span>`;
         }
 
-        div.addEventListener('click', e => handleSlotClick(e, i));
+        div.innerHTML = `
+          <div class="nhsuk-checkboxes__item">
+            <input class="nhsuk-checkboxes__input" id="${slotId}" name="slots[]" type="checkbox" value="${i}">
+            <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId}">
+              <span class="slot-time">${formatTime(sd.start)}</span>
+              <span class="slot-end nhsuk-u-secondary-text-colour">to ${endTime}</span>
+              ${typeHtml}
+              ${mergedHtml}
+            </label>
+          </div>
+        `;
+
+        const checkbox = div.querySelector('input[type="checkbox"]');
+
+        function handleCheckboxSelection(e, checked) {
+          const head = resolveToMergeHead(i);
+
+          if (e.shiftKey && lastClickedIndex !== null) {
+            const lo = Math.min(lastClickedIndex, i);
+            const hi = Math.max(lastClickedIndex, i);
+            for (let j = lo; j <= hi; j++) {
+              if (checked) {
+                selectedIndices.add(resolveToMergeHead(j));
+              } else {
+                selectedIndices.delete(resolveToMergeHead(j));
+              }
+            }
+          } else {
+            if (checked) {
+              selectedIndices.add(head);
+            } else {
+              selectedIndices.delete(head);
+            }
+          }
+
+          lastClickedIndex = i;
+          renderGrid();
+        }
+
+        if (checkbox) {
+          checkbox.checked = isSelected;
+          checkbox.addEventListener('click', e => {
+            handleCheckboxSelection(e, checkbox.checked);
+          });
+        }
+
         container.appendChild(div);
       });
 
@@ -405,14 +469,6 @@
 
     function updatePanel() {
       const sel = [...selectedIndices].sort((a, b) => a - b);
-      const panel = document.getElementById('side-panel');
-
-      if (sel.length === 0) {
-        panel.classList.remove('visible');
-        return;
-      }
-
-      panel.classList.add('visible');
 
       const canMerge = isConsecutive(sel) && sel.every(i => isSlotFree(i));
       const hasMerged = sel.some(i => {
@@ -434,35 +490,6 @@
       document.getElementById('panel-unmerge').classList.toggle('disabled', !hasMerged);
     }
 
-    // ========== EVENT HANDLERS ==========
-    function handleSlotClick(e, i) {
-      if (e.shiftKey && lastClickedIndex !== null) {
-        const lo = Math.min(lastClickedIndex, i);
-        const hi = Math.max(lastClickedIndex, i);
-        for (let j = lo; j <= hi; j++) {
-          selectedIndices.add(resolveToMergeHead(j));
-        }
-      } else if (e.metaKey || e.ctrlKey) {
-        const head = resolveToMergeHead(i);
-        if (selectedIndices.has(head)) {
-          selectedIndices.delete(head);
-        } else {
-          selectedIndices.add(head);
-        }
-      } else {
-        const head = resolveToMergeHead(i);
-        if (selectedIndices.size === 1 && selectedIndices.has(head)) {
-          selectedIndices.clear();
-        } else {
-          selectedIndices.clear();
-          selectedIndices.add(head);
-        }
-      }
-
-      lastClickedIndex = i;
-      renderGrid();
-    }
-
     // ========== EVENT ATTACHMENTS ==========
     // No DOM form inputs on this page; session data is sourced from the server-side session.
     const panelHold = document.getElementById('panel-hold');
@@ -474,59 +501,63 @@
 
     if (panelHold) {
       panelHold.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
         setSlotType(selectedIndices, 'hold');
         selectedIndices.clear();
-        commit();
+        renderGrid();
+        setStats();
       });
     }
 
     if (panelStaffBreak) {
       panelStaffBreak.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
         setSlotType(selectedIndices, 'staff-break');
         selectedIndices.clear();
-        commit();
+        renderGrid();
+        setStats();
       });
     }
 
     if (panelSpecialAppointment) {
       panelSpecialAppointment.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
         setSlotType(selectedIndices, 'special-appointment');
         selectedIndices.clear();
-        commit();
+        renderGrid();
+        setStats();
       });
     }
 
     if (panelClearType) {
       panelClearType.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
         setSlotType(selectedIndices, null);
         selectedIndices.clear();
-        commit();
+        renderGrid();
+        setStats();
       });
     }
 
     if (panelMerge) {
       panelMerge.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
         mergeSlots(selectedIndices);
         selectedIndices.clear();
-        commit();
+        renderGrid();
+        setStats();
       });
     }
 
     if (panelUnmerge) {
       panelUnmerge.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
         [...selectedIndices].forEach(i => unmergeAt(i));
         selectedIndices.clear();
-        commit();
+        renderGrid();
+        setStats();
       });
     }
-
-    // Global keyboard events
-    /*document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        selectedIndices.clear();
-        renderGrid();
-      }
-    });*/
 
     // ========== INITIALIZATION ==========
     render();
