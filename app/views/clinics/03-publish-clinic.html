@@ -100,9 +100,9 @@
             Slots
           </dt>
           <dd class="nhsuk-summary-list__value">
-            XX slots available to book<br>
-            XX special apppointments<br>
-            XX held
+            {{ data.slotsAvailableCount }} slots available to book<br>
+            {{ data.slotsSpecialAvailableCount }} special apppointment{% if data.slotsSpecialAvailableCount > 1 %}s{% endif %}<br>
+            {{ data.slotsHeldCount }} held
           </dd>
           <dd class="nhsuk-summary-list__actions">
             <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> slots</span></a>

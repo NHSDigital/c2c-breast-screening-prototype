@@ -134,6 +134,10 @@
     </div>
 
     <form action="03-publish-clinic" method="post">
+
+      <input type="hidden" name="slotsAvailableCount">
+      <input type="hidden" name="slotsSpecialAvailableCount">
+      <input type="hidden" name="slotsHeldCount">
       
       <!-- <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">
         Click to select a slot.<br>
@@ -360,6 +364,18 @@
       const nonAvail = heads.filter(s => s.type === 'hold' || s.type === 'staff-break' || s.merged).length;
       const avail = totalSlotCount - nonAvail;
       document.getElementById('available-slots').textContent = totalSlotCount ? avail : '—';
+
+      // additional counts for form fields
+      const specialCount = heads.filter(s => s.type === 'special-appointment').length;
+      const heldCount = heads.filter(s => s.type === 'hold').length;
+
+      const availInput = document.querySelector('input[name="slotsAvailableCount"]');
+      const specialInput = document.querySelector('input[name="slotsSpecialAvailableCount"]');
+      const heldInput = document.querySelector('input[name="slotsHeldCount"]');
+
+      if (availInput) availInput.value = totalSlotCount ? String(avail) : '';
+      if (specialInput) specialInput.value = String(specialCount);
+      if (heldInput) heldInput.value = String(heldCount);
     }
 
     function commit() {
