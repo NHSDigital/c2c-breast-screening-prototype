@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
 
+{% set errorState = "false" %}
+
 {% set pageName = "Clinics" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
@@ -63,18 +65,43 @@
   <div class="nhsuk-grid-column-three-quarters">
     <div class="nhsuk-u-reading-width">
 
+      {% if errorState === "true" %}
+        {{ errorSummary({
+          titleText: "There is a problem",
+          errorList: [
+            {
+              text: "Clinic must be given a name",
+              href: "#"
+            },
+            {
+              text: "A unit must be chosen",
+              href: "#"
+            },
+            {
+              text: "A location must be chosen",
+              href: "#"
+            }
+          ]
+        }) }}
+      {% endif %}
+
       <h1 class="nhsuk-heading-l">Clinic details</h1>
 
       <form action="01-set-date-and-time" method="post">
 
-        <div class="nhsuk-form-group">
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="clinic-name">
             Clinic name
           </label>
           <div class="nhsuk-hint" id="naming-hint-text">
             A memorable name for this clinic. This is the name you’ll see everywhere for it, as titles and links.
           </div>
-          <input class="nhsuk-input" id="clinic-name" name="clinicName" type="text" aria-describedby="naming-hint-text">
+          {% if errorState === "true" %}
+            <span class="nhsuk-error-message">
+              <span class="nhsuk-u-visually-hidden">Error:</span> Clinic must be given a name
+            </span>
+          {% endif %}
+          <input class="nhsuk-input {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="clinic-name" name="clinicName" type="text" aria-describedby="naming-hint-text">
         </div>
 
         <div class="nhsuk-form-group">
@@ -89,11 +116,16 @@
         <div class="nhsuk-grid-row">
 
           <div class="nhsuk-grid-column-one-half">
-            <div class="nhsuk-form-group">
+            <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
               <fieldset class="nhsuk-fieldset">
                 <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
                   Unit
                 </legend>
+                {% if errorState === "true" %}
+                  <span class="nhsuk-error-message">
+                    <span class="nhsuk-u-visually-hidden">Error:</span> A unit must be chosen
+                  </span>
+                {% endif %}
                 <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
                   <div class="nhsuk-radios__item">
                     <input class="nhsuk-radios__input" id="unit" name="unit" type="radio" value="West Sussex Breast Care Centre">
@@ -132,11 +164,16 @@
           </div>
 
           <div class="nhsuk-grid-column-one-half">
-            <div class="nhsuk-form-group">
+            <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
               <fieldset class="nhsuk-fieldset">
                 <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
                   Location
                 </legend>
+                {% if errorState === "true" %}
+                  <span class="nhsuk-error-message">
+                    <span class="nhsuk-u-visually-hidden">Error:</span> A location must be chosen
+                  </span>
+                {% endif %}
                 <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
                   <div class="nhsuk-radios__item">
                     <input class="nhsuk-radios__input" id="location-10" name="location" type="radio" value="Worthing hospital">

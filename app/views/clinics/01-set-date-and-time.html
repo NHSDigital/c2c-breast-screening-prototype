@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
 
+{% set errorState = "false" %}
+
 {% set pageName = "Clinics" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
@@ -63,12 +65,47 @@
   <div class="nhsuk-grid-column-three-quarters">
     <div class="nhsuk-u-reading-width">
 
+      {% if errorState === "true" %}
+        {{ errorSummary({
+          titleText: "There is a problem",
+          errorList: [
+            {
+              text: "Date of clinic must be given a day, month, and year",
+              href: "#"
+            },
+            {
+              text: "Date of clinic must be in the future",
+              href: "#"
+            },
+            {
+              text: "Start time must be entered, in 24 hour format",
+              href: "#"
+            },
+            {
+              text: "End time must be entered, in 24 hour format",
+              href: "#"
+            },
+            {
+              text: "End time must be later than start time",
+              href: "#"
+            },
+            {
+              text: "Start time must be earlier than end time",
+              href: "#"
+            },
+            {
+              text: "Slot length must be entered, in minutes",
+              href: "#"
+            }
+          ]
+        }) }}
+      {% endif %}
+
       <h1 class="nhsuk-heading-l">Set date and time</h1>
-      <p>Potentially some real brief help and scene setting. Mainly to point out you can punch holes in it as you go?</p>
 
       <form action="02-organise-slots" method="post">
 
-        <div class="nhsuk-form-group">
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset" role="group" aria-describedby="clinic-date-hint">
             <legend class="nhsuk-fieldset__legend nhsuk-label--m">
                 Date of clinic
@@ -76,13 +113,18 @@
             <div class="nhsuk-hint" id="clinic-date-hint">
               For example, 18 6 2026
             </div>
+            {% if errorState === "true" %}
+              <span class="nhsuk-error-message">
+                <span class="nhsuk-u-visually-hidden">Error:</span> Date of clinic must be given a day, month, and year
+              </span>
+            {% endif %}
             <div class="nhsuk-date-input" id="appointment-date">
               <div class="nhsuk-date-input__item">
                 <div class="nhsuk-form-group">
                   <label class="nhsuk-label nhsuk-date-input__label" for="clinic-date-day">
                     Day
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="clinic-date-day" name="clinicDate[day]" type="text" inputmode="numeric">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="clinic-date-day" name="clinicDate[day]" type="text" inputmode="numeric">
                 </div>
               </div>
               <div class="nhsuk-date-input__item">
@@ -90,7 +132,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="clinic-date-month">
                     Month
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="clinic-date-month" name="clinicDate[month]" type="text" inputmode="numeric">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="clinic-date-month" name="clinicDate[month]" type="text" inputmode="numeric">
                 </div>
               </div>
               <div class="nhsuk-date-input__item">
@@ -98,21 +140,26 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="clinic-date-year">
                     Year
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-4" id="clinic-date-year" name="clinicDate[year]" type="text" inputmode="numeric">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-4" id="clinic-date-year" name="clinicDate[year]" type="text" inputmode="numeric">
                 </div>
               </div>
             </div>
           </fieldset>
         </div>
         
-        <div class="nhsuk-form-group">
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset" role="group" aria-describedby="start-time-hint">
             <legend class="nhsuk-fieldset__legend nhsuk-label--m">
               Session start time
             </legend>
             <div id="start-time-hint" class="nhsuk-hint">
-              For example, 10:00
+              Use 24 hour format, for example, 10:00
             </div>
+            {% if errorState === "true" %}
+              <span class="nhsuk-error-message">
+                <span class="nhsuk-u-visually-hidden">Error:</span> Start time must be entered, in 24 hour format
+              </span>
+            {% endif %}
 
             <div id="start-time" class="nhsuk-date-input">
               <div class="nhsuk-date-input__item">
@@ -120,7 +167,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="start-time-hour">
                     Hour
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="start-time-hour"
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-hour"
                     name="newSession[startTime][hour]" type="text" inputmode="numeric">
                 </div>
               </div>
@@ -130,7 +177,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="start-time-minute">
                     Minute
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="start-time-minute"
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-minute"
                     name="newSession[startTime][minute]" type="text" inputmode="numeric">
                 </div>
               </div>
@@ -138,14 +185,19 @@
           </fieldset>
         </div>
 
-        <div class="nhsuk-form-group">
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset" role="group" aria-describedby="end-time-hint">
             <legend class="nhsuk-fieldset__legend nhsuk-label--m">
               Session end time
             </legend>
             <div id="end-time-hint" class="nhsuk-hint">
-              For example, 17:00
+              Use 24 hour format, for example, 17:00
             </div>
+            {% if errorState === "true" %}
+              <span class="nhsuk-error-message">
+                <span class="nhsuk-u-visually-hidden">Error:</span> End time must be entered, in 24 hour format
+              </span>
+            {% endif %}
 
             <div id="end-time" class="nhsuk-date-input">
               <div class="nhsuk-date-input__item">
@@ -153,7 +205,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="end-time-hour">
                     Hour
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="end-time-hour"
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-hour"
                     name="newSession[endTime][hour]" type="text" inputmode="numeric">
                 </div>
               </div>
@@ -162,7 +214,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="end-time-minute">
                     Minute
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2" id="end-time-minute"
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-minute"
                     name="newSession[endTime][minute]" type="text" inputmode="numeric">
                 </div>
               </div>
@@ -170,12 +222,17 @@
           </fieldset>
         </div>
 
-        <div class="nhsuk-form-group">
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="duration">
             Slot length
           </label>
+          {% if errorState === "true" %}
+            <span class="nhsuk-error-message">
+              <span class="nhsuk-u-visually-hidden">Error:</span> Slot length must be entered, in minutes
+            </span>
+          {% endif %}
           <div class="nhsuk-input-wrapper">
-            <input class="nhsuk-input nhsuk-input--width-2" id="duration" name="newSession[duration]" type="text"
+            <input class="nhsuk-input nhsuk-input--width-2 {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="duration" name="newSession[duration]" type="text"
               spellcheck="false" value="" aria-describedby="duration-hint" inputmode="numeric">
             <div class="nhsuk-input-wrapper__suffix" aria-hidden="true">minutes</div>
           </div>
@@ -187,18 +244,12 @@
           <p class="nhsuk-body nhsuk-u-margin-bottom-1"><span data-capacity-calculator-total>X</span> total slots in the
             session</p>
           <input type="hidden" id="totalSlots" name="newSession[totalSlots]">
-          <p class="nhsuk-error-message nhsuk-u-margin-bottom-0" data-capacity-calculator-error hidden aria-live="polite"></p>
+          <!-- <p class="nhsuk-error-message nhsuk-u-margin-bottom-0" data-capacity-calculator-error hidden aria-live="polite"></p> -->
         </div>
 
         <button class="nhsuk-button" type="submit">Continue</button>
 
       </form>
-
-      <div style="border: 2px dotted red">
-        Time must be in 24 hour format<br>
-        Start time must be before end time and vice versa<br>
-        Slots dont have to divide equally into the times, but it'll be interesting to work that out?
-      </div>
     </div>
   </div>
 </div>
@@ -269,6 +320,7 @@
         totalElement.textContent = String(totalSlots);
         totalInput.value = String(totalSlots);
 
+        
         if (!errorElement) {
           return;
         }

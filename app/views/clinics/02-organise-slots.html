@@ -126,7 +126,6 @@
 
     <div class="nhsuk-u-reading-width">
       <h1 class="nhsuk-heading-l">Organise slots</h1>
-      <p>Potentially some real brief help and scene setting. Selection and controls</p>
       <h2 class="nhsuk-heading-m">
         <span class="nhsuk-caption-m">Session time</span>
         {{ data.newSession.startTime.hour | zeroPad }}:{{ data.newSession.startTime.minute | zeroPad }} to {{ data.newSession.endTime.hour | zeroPad }}:{{ data.newSession.endTime.minute | zeroPad }}
@@ -155,8 +154,9 @@
               <li><a class="panel-item" id="panel-hold">Hold</a></li>
               <li><a class="panel-item" id="panel-staff-break">Staff break</a></li>
               <li><a class="panel-item" id="panel-special-appointment">Special appointment</a></li>
-              <li><a class="panel-item" id="panel-clear-type">Clear slot type</a></li>
+              <li class="nhsuk-u-margin-top-4"><a class="panel-item" id="panel-clear-type">Clear slot type</a></li>
             </ul>
+            <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
             <ul class="nhsuk-list">
               <li><a class="panel-item" id="panel-merge">Merge selected</a></li>
               <li><a class="panel-item" id="panel-unmerge">Unmerge</a></li>
