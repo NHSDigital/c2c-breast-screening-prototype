@@ -138,10 +138,9 @@
       <input type="hidden" name="slotsSpecialAvailableCount">
       <input type="hidden" name="slotsHeldCount">
       
-      <!-- <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">
-        Click to select a slot.<br>
-        Press shift and click to select a range.
-      </p> -->
+      <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">
+        Click to select a slot. Press shift and click to select a range.
+      </p>
 
       <div class="nhsuk-grid-row">
         <div class="nhsuk-grid-column-three-quarters">
@@ -444,6 +443,7 @@
         `;
 
         const checkbox = div.querySelector('input[type="checkbox"]');
+        const label = div.querySelector('label');
 
         function handleCheckboxSelection(e, checked) {
           const head = resolveToMergeHead(i);
@@ -475,6 +475,16 @@
           checkbox.addEventListener('click', e => {
             handleCheckboxSelection(e, checkbox.checked);
           });
+
+          if (label) {
+            label.addEventListener('click', e => {
+              // Handle label clicks explicitly so shift-click range selection works from the label text too.
+              e.preventDefault();
+              const nextChecked = !checkbox.checked;
+              checkbox.checked = nextChecked;
+              handleCheckboxSelection(e, nextChecked);
+            });
+          }
         }
 
         container.appendChild(div);
