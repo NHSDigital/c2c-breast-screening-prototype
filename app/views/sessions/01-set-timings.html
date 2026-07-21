@@ -1,0 +1,303 @@
+{% extends 'layout.html' %}
+
+{% set errorState = "false" %}
+
+{% set pageName = "Create session: set timings" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          Create session
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">1</span>
+              <span class="app-workflow-side-nav__label">Set timings</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Organise slots</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Publish</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+    <div class="nhsuk-u-reading-width">
+
+      {% if errorState === "true" %}
+        {{ errorSummary({
+          titleText: "There is a problem",
+          errorList: [
+            {
+              text: "Start time must be entered, in 24 hour format",
+              href: "#"
+            },
+            {
+              text: "End time must be entered, in 24 hour format",
+              href: "#"
+            },
+            {
+              text: "End time must be later than start time",
+              href: "#"
+            },
+            {
+              text: "Start time must be earlier than end time",
+              href: "#"
+            },
+            {
+              text: "Slot length must be entered, in minutes",
+              href: "#"
+            }
+          ]
+        }) }}
+      {% endif %}
+
+      <h1 class="nhsuk-heading-l">Set timings</h1>
+
+      <form action="02-organise-slots" method="post">
+        
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+          <fieldset class="nhsuk-fieldset" role="group" aria-describedby="start-time-hint">
+            <legend class="nhsuk-fieldset__legend nhsuk-label--m">
+              Session start time
+            </legend>
+            <div id="start-time-hint" class="nhsuk-hint">
+              Use 24 hour format, for example, 10:00
+            </div>
+            {% if errorState === "true" %}
+              <span class="nhsuk-error-message">
+                <span class="nhsuk-u-visually-hidden">Error:</span> Start time must be entered, in 24 hour format
+              </span>
+            {% endif %}
+
+            <div id="start-time" class="nhsuk-date-input">
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="start-time-hour">
+                    Hour
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-hour"
+                    name="newSession[startTime][hour]" type="text" inputmode="numeric">
+                </div>
+              </div>
+
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="start-time-minute">
+                    Minute
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-minute"
+                    name="newSession[startTime][minute]" type="text" inputmode="numeric">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+          <fieldset class="nhsuk-fieldset" role="group" aria-describedby="end-time-hint">
+            <legend class="nhsuk-fieldset__legend nhsuk-label--m">
+              Session end time
+            </legend>
+            <div id="end-time-hint" class="nhsuk-hint">
+              Use 24 hour format, for example, 17:00
+            </div>
+            {% if errorState === "true" %}
+              <span class="nhsuk-error-message">
+                <span class="nhsuk-u-visually-hidden">Error:</span> End time must be entered, in 24 hour format
+              </span>
+            {% endif %}
+
+            <div id="end-time" class="nhsuk-date-input">
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="end-time-hour">
+                    Hour
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-hour"
+                    name="newSession[endTime][hour]" type="text" inputmode="numeric">
+                </div>
+              </div>
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="end-time-minute">
+                    Minute
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-minute"
+                    name="newSession[endTime][minute]" type="text" inputmode="numeric">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+          <label class="nhsuk-label nhsuk-label--m" for="duration">
+            Slot length
+          </label>
+          {% if errorState === "true" %}
+            <span class="nhsuk-error-message">
+              <span class="nhsuk-u-visually-hidden">Error:</span> Slot length must be entered, in minutes
+            </span>
+          {% endif %}
+          <div class="nhsuk-input-wrapper">
+            <input class="nhsuk-input nhsuk-input--width-2 {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="duration" name="newSession[duration]" type="text"
+              spellcheck="false" value="" aria-describedby="duration-hint" inputmode="numeric">
+            <div class="nhsuk-input-wrapper__suffix" aria-hidden="true">minutes</div>
+          </div>
+        </div>
+
+        <div class="nhsuk-inset-text">
+          <span class="nhsuk-u-visually-hidden">Information: </span>
+          <p class="nhsuk-body nhsuk-u-margin-bottom-1"><strong>Capacity calculator</strong></p>
+          <p class="nhsuk-body nhsuk-u-margin-bottom-1"><span data-capacity-calculator-total>X</span> total slots in the
+            session</p>
+          <input type="hidden" id="totalSlots" name="newSession[totalSlots]">
+          <!-- <p class="nhsuk-error-message nhsuk-u-margin-bottom-0" data-capacity-calculator-error hidden aria-live="polite"></p> -->
+        </div>
+
+        <button class="nhsuk-button" type="submit">Continue</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <script>
+    (function () {
+      const fieldIds = [
+        'start-time-hour',
+        'start-time-minute',
+        'end-time-hour',
+        'end-time-minute',
+        'duration'
+      ];
+
+      const fields = fieldIds
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+      const totalElement = document.querySelector('[data-capacity-calculator-total]');
+      const totalInput = document.getElementById('totalSlots');
+
+      if (!totalElement || !totalInput || fields.length === 0) {
+        return;
+      }
+
+      const parseInteger = value => {
+        const parsed = parseInt(value, 10);
+        return Number.isNaN(parsed) ? NaN : parsed;
+      };
+
+      const validTime = (hour, minute) =>
+        Number.isInteger(hour) && hour >= 0 && hour <= 23 &&
+        Number.isInteger(minute) && minute >= 0 && minute <= 59;
+
+      const errorElement = document.querySelector('[data-capacity-calculator-error]');
+
+      const calculateTotalSlots = (startHour, startMinute, endHour, endMinute, duration) => {
+        if (
+          !validTime(startHour, startMinute) ||
+          !validTime(endHour, endMinute) ||
+          !Number.isInteger(duration) ||
+          duration <= 0
+        ) {
+          return 0;
+        }
+
+        const startMinutes = startHour * 60 + startMinute;
+        const endMinutes = endHour * 60 + endMinute;
+        const availableMinutes = endMinutes - startMinutes;
+
+        if (availableMinutes <= 0) {
+          return 0;
+        }
+
+        return Math.floor(availableMinutes / duration);
+      };
+
+      const updateTotal = () => {
+        const startHour = parseInteger(document.getElementById('start-time-hour').value);
+        const startMinute = parseInteger(document.getElementById('start-time-minute').value);
+        const endHour = parseInteger(document.getElementById('end-time-hour').value);
+        const endMinute = parseInteger(document.getElementById('end-time-minute').value);
+        const duration = parseInteger(document.getElementById('duration').value);
+
+        const totalSlots = calculateTotalSlots(startHour, startMinute, endHour, endMinute, duration);
+        totalElement.textContent = String(totalSlots);
+        totalInput.value = String(totalSlots);
+
+        
+        if (!errorElement) {
+          return;
+        }
+
+        if (!validTime(startHour, startMinute) || !validTime(endHour, endMinute)) {
+          errorElement.textContent = 'Enter start and end times in 24-hour format (HH:MM).';
+          errorElement.hidden = false;
+          return;
+        }
+
+        if (!Number.isInteger(duration) || duration <= 0) {
+          errorElement.textContent = 'Enter a valid slot duration in minutes.';
+          errorElement.hidden = false;
+          return;
+        }
+
+        const startMinutes = startHour * 60 + startMinute;
+        const endMinutes = endHour * 60 + endMinute;
+
+        if (endMinutes <= startMinutes) {
+          errorElement.textContent = 'End time must be after start time.';
+          errorElement.hidden = false;
+          return;
+        }
+
+        errorElement.textContent = '';
+        errorElement.hidden = true;
+      };
+
+      fields.forEach(field => {
+        field.addEventListener('input', updateTotal);
+        field.addEventListener('change', updateTotal);
+      });
+
+      updateTotal();
+    })();
+  </script>
+{% endblock %}
