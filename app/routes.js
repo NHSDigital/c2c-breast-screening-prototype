@@ -3,6 +3,8 @@ const express = require('express')
 
 const router = express.Router()
 
+const isWholeNumber = str => /^\d+$/.test(str)
+
 router.get('/september-iteration-2/clickthru/04a-example-search-result', function (req, res) {
   const query = (req.query['search-params'] || '').trim()
   const allParticipants = (req.session.data.participants && req.session.data.participants.default) || []
@@ -29,6 +31,64 @@ router.get('/september-iteration-2/clickthru/04a-example-search-result', functio
     participants: searchResults,
     searchQuery: query
   })
+})
+
+router.post('/sessions/02-organise-slots', function (req, res) {
+  const session = (req.body && req.body.newSession) || {}
+  const startTime = session.startTime || {}
+  const endTime = session.endTime || {}
+
+  const startHourStr = (startTime.hour || '').trim()
+  const startMinuteStr = (startTime.minute || '').trim()
+  const endHourStr = (endTime.hour || '').trim()
+  const endMinuteStr = (endTime.minute || '').trim()
+  const durationStr = (session.duration || '').trim()
+
+  const startHour = parseInt(startHourStr, 10)
+  const startMinute = parseInt(startMinuteStr, 10)
+  const endHour = parseInt(endHourStr, 10)
+  const endMinute = parseInt(endMinuteStr, 10)
+  const duration = parseInt(durationStr, 10)
+
+  const validStartHour = isWholeNumber(startHourStr) && startHour >= 0 && startHour <= 23
+  const validStartMinute = isWholeNumber(startMinuteStr) && startMinute >= 0 && startMinute <= 59
+  const validEndHour = isWholeNumber(endHourStr) && endHour >= 0 && endHour <= 23
+  const validEndMinute = isWholeNumber(endMinuteStr) && endMinute >= 0 && endMinute <= 59
+
+  const errors = {}
+
+  if (!validStartHour || !validStartMinute) {
+    errors.startTime = 'Start time must be entered, in 24 hour format'
+  }
+
+  if (!validEndHour || !validEndMinute) {
+    errors.endTime = 'End time must be entered, in 24 hour format'
+  }
+
+  const validDuration = isWholeNumber(durationStr) && duration > 0
+  if (!validDuration) {
+    errors.duration = 'Slot length must be entered, in minutes, as a whole number'
+  }
+
+  if (!errors.startTime && !errors.endTime) {
+    const startTotalMinutes = startHour * 60 + startMinute
+    const endTotalMinutes = endHour * 60 + endMinute
+    if (endTotalMinutes <= startTotalMinutes) {
+      errors.startTime = 'Start time must be earlier than end time'
+      errors.endTime = 'End time must be later than start time'
+    } else if (!errors.duration && duration > endTotalMinutes - startTotalMinutes) {
+      errors.duration = 'Slot length must be shorter than the total session duration'
+    }
+  }
+
+  req.session.data.newSession = session
+
+  if (Object.keys(errors).length > 0) {
+    return res.render('sessions/01-set-timings', {
+      errors
+    })
+  }
+  res.redirect('/sessions/02-organise-slots')
 })
 
 router.get('/action/stage/:participantId', function (req, res) {
