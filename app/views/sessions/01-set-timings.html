@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% set errorState = "false" %}
+{% set errorState = "true" if errors else "false" %}
 
 {% set pageName = "Create session: set timings" %}
 
@@ -58,30 +58,19 @@
     <div class="nhsuk-u-reading-width">
 
       {% if errorState === "true" %}
+        {% set errorList = [] %}
+        {% if errors.startTime %}
+          {% set errorList = errorList.concat([{ text: errors.startTime, href: "#start-time-hour" }]) %}
+        {% endif %}
+        {% if errors.endTime %}
+          {% set errorList = errorList.concat([{ text: errors.endTime, href: "#end-time-hour" }]) %}
+        {% endif %}
+        {% if errors.duration %}
+          {% set errorList = errorList.concat([{ text: errors.duration, href: "#duration" }]) %}
+        {% endif %}
         {{ errorSummary({
           titleText: "There is a problem",
-          errorList: [
-            {
-              text: "Start time must be entered, in 24 hour format",
-              href: "#"
-            },
-            {
-              text: "End time must be entered, in 24 hour format",
-              href: "#"
-            },
-            {
-              text: "End time must be later than start time",
-              href: "#"
-            },
-            {
-              text: "Start time must be earlier than end time",
-              href: "#"
-            },
-            {
-              text: "Slot length must be entered, in minutes",
-              href: "#"
-            }
-          ]
+          errorList: errorList
         }) }}
       {% endif %}
 
@@ -89,7 +78,7 @@
 
       <form action="02-organise-slots" method="post">
         
-        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+        <div class="nhsuk-form-group {% if errors and errors.startTime %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset" role="group" aria-describedby="start-time-hint">
             <legend class="nhsuk-fieldset__legend nhsuk-label--m">
               Session start time
@@ -97,9 +86,9 @@
             <div id="start-time-hint" class="nhsuk-hint">
               Use 24 hour format, for example, 10:00
             </div>
-            {% if errorState === "true" %}
+            {% if errors and errors.startTime %}
               <span class="nhsuk-error-message">
-                <span class="nhsuk-u-visually-hidden">Error:</span> Start time must be entered, in 24 hour format
+                <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.startTime }}
               </span>
             {% endif %}
 
@@ -109,8 +98,8 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="start-time-hour">
                     Hour
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-hour"
-                    name="newSession[startTime][hour]" type="text" inputmode="numeric">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.startTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-hour"
+                    name="newSession[startTime][hour]" type="text" inputmode="numeric" value="{{ data.newSession.startTime.hour if data.newSession else '' }}">
                 </div>
               </div>
 
@@ -119,15 +108,15 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="start-time-minute">
                     Minute
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-minute"
-                    name="newSession[startTime][minute]" type="text" inputmode="numeric">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.startTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-minute"
+                    name="newSession[startTime][minute]" type="text" inputmode="numeric" value="{{ data.newSession.startTime.minute if data.newSession else '' }}">
                 </div>
               </div>
             </div>
           </fieldset>
         </div>
 
-        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+        <div class="nhsuk-form-group {% if errors and errors.endTime %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset" role="group" aria-describedby="end-time-hint">
             <legend class="nhsuk-fieldset__legend nhsuk-label--m">
               Session end time
@@ -135,9 +124,9 @@
             <div id="end-time-hint" class="nhsuk-hint">
               Use 24 hour format, for example, 17:00
             </div>
-            {% if errorState === "true" %}
+            {% if errors and errors.endTime %}
               <span class="nhsuk-error-message">
-                <span class="nhsuk-u-visually-hidden">Error:</span> End time must be entered, in 24 hour format
+                <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.endTime }}
               </span>
             {% endif %}
 
@@ -147,8 +136,8 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="end-time-hour">
                     Hour
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-hour"
-                    name="newSession[endTime][hour]" type="text" inputmode="numeric">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.endTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-hour"
+                    name="newSession[endTime][hour]" type="text" inputmode="numeric" value="{{ data.newSession.endTime.hour if data.newSession else '' }}">
                 </div>
               </div>
               <div class="nhsuk-date-input__item">
@@ -156,26 +145,26 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="end-time-minute">
                     Minute
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-minute"
-                    name="newSession[endTime][minute]" type="text" inputmode="numeric">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.endTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-minute"
+                    name="newSession[endTime][minute]" type="text" inputmode="numeric" value="{{ data.newSession.endTime.minute if data.newSession else '' }}">
                 </div>
               </div>
             </div>
           </fieldset>
         </div>
 
-        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+        <div class="nhsuk-form-group {% if errors and errors.duration %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="duration">
             Slot length
           </label>
-          {% if errorState === "true" %}
+          {% if errors and errors.duration %}
             <span class="nhsuk-error-message">
-              <span class="nhsuk-u-visually-hidden">Error:</span> Slot length must be entered, in minutes
+              <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.duration }}
             </span>
           {% endif %}
           <div class="nhsuk-input-wrapper">
-            <input class="nhsuk-input nhsuk-input--width-2 {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="duration" name="newSession[duration]" type="text"
-              spellcheck="false" value="" aria-describedby="duration-hint" inputmode="numeric">
+            <input class="nhsuk-input nhsuk-input--width-2 {% if errors and errors.duration %}nhsuk-input--error{% endif %}" id="duration" name="newSession[duration]" type="text"
+              spellcheck="false" value="{{ data.newSession.duration if data.newSession else '' }}" aria-describedby="duration-hint" inputmode="numeric">
             <div class="nhsuk-input-wrapper__suffix" aria-hidden="true">minutes</div>
           </div>
         </div>
@@ -186,7 +175,6 @@
           <p class="nhsuk-body nhsuk-u-margin-bottom-1"><span data-capacity-calculator-total>X</span> total slots in the
             session</p>
           <input type="hidden" id="totalSlots" name="newSession[totalSlots]">
-          <!-- <p class="nhsuk-error-message nhsuk-u-margin-bottom-0" data-capacity-calculator-error hidden aria-live="polite"></p> -->
         </div>
 
         <button class="nhsuk-button" type="submit">Continue</button>
@@ -228,8 +216,6 @@
         Number.isInteger(hour) && hour >= 0 && hour <= 23 &&
         Number.isInteger(minute) && minute >= 0 && minute <= 59;
 
-      const errorElement = document.querySelector('[data-capacity-calculator-error]');
-
       const calculateTotalSlots = (startHour, startMinute, endHour, endMinute, duration) => {
         if (
           !validTime(startHour, startMinute) ||
@@ -261,35 +247,6 @@
         const totalSlots = calculateTotalSlots(startHour, startMinute, endHour, endMinute, duration);
         totalElement.textContent = String(totalSlots);
         totalInput.value = String(totalSlots);
-
-        
-        if (!errorElement) {
-          return;
-        }
-
-        if (!validTime(startHour, startMinute) || !validTime(endHour, endMinute)) {
-          errorElement.textContent = 'Enter start and end times in 24-hour format (HH:MM).';
-          errorElement.hidden = false;
-          return;
-        }
-
-        if (!Number.isInteger(duration) || duration <= 0) {
-          errorElement.textContent = 'Enter a valid slot duration in minutes.';
-          errorElement.hidden = false;
-          return;
-        }
-
-        const startMinutes = startHour * 60 + startMinute;
-        const endMinutes = endHour * 60 + endMinute;
-
-        if (endMinutes <= startMinutes) {
-          errorElement.textContent = 'End time must be after start time.';
-          errorElement.hidden = false;
-          return;
-        }
-
-        errorElement.textContent = '';
-        errorElement.hidden = true;
       };
 
       fields.forEach(field => {
