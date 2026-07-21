@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Prototype end" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+
+      {% set panelHtml %}
+        <ul>
+          <li>
+            <a href="01-set-timings">Back to workdlow item 1: set timings</a>
+          </li>
+          <li>
+            <a href="/prototype-admin/reset">Back to prototype index</a>
+          </li>
+        </ul>
+      {% endset %}
+
+      {{ panel({
+        titleText: "Prototype completed!",
+        html: panelHtml
+      }) }}
+    </div>
+  </div>
+{% endblock %}
