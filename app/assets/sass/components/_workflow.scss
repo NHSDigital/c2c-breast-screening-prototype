@@ -3,14 +3,14 @@
 @use "nhsuk-frontend/dist/nhsuk/core" as *;
 
 // Wider container for workflow mode
-.nhsuk-width-container--wide {
+/*.nhsuk-width-container--wide {
   @include nhsuk-width-container(1200px);
 }
 
 .app-workflow-mode .nhsuk-width-container {
   @include nhsuk-width-container(1200px);
 }
-
+*/
 // Use flexbox for workflow layout to allow nav column to stretch for sticky positioning
 .app-workflow-container__row {
   @include nhsuk-media-query($from: desktop) {
@@ -71,8 +71,7 @@ a.app-workflow-side-nav__link {
 
   &:hover {
     .app-workflow-side-nav__label {
-      text-decoration: underline;
-      text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+      //text-decoration: underline;
     }
   }
 
