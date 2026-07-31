@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+
+{% set errorState = "true" if errors else "false" %}
+
+{% set pageName = "Session templates" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+  <div class="app-card-editable">
+    <h1 class="nhsuk-heading-l">Session templates</h1>
+
+    {{ button({
+      text: "Create a new session template",
+      href: "#",
+      classes: "nhsuk-button--secondary"
+    }) }}
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      {{ table({
+        firstCellIsHeader: false,
+        head: [
+          {
+            text: 'Template'
+          },
+          {
+            text: 'Start time'
+          },
+          {
+            text: 'End time'
+          },
+          {
+            text: 'Slot length'
+          }
+        ],
+        rows: [
+          [
+            {
+              html: '
+                <a href="#">Standard day session for static site</a><br>
+                Standard day template for our static site at Worthing Hospital. 2 double-slot special appointments at the beginning of the day, and 4 held slots at the end. 1 hour break from 12:00 to 13:00.
+              '
+            },
+            {
+              text: '10:00'
+            },
+            {
+              text: '17:00'
+            },
+            {
+              text: '10 minutes'
+            }
+          ],
+          [
+            {
+              html: '
+                <a href="#">Special appointments day session for static site</a><br>
+                Whole day of double-slot special appointments with a 1 hour break from 12:00 to 13:00. 
+              '
+            },
+            {
+              text: '10:00'
+            },
+            {
+              text: '17:00'
+            },
+            {
+              text: '20 minutes'
+            }
+          ]
+        ]
+      }) }}
+
+    </div>
+  </div>
+
+  
+
+{% endblock %}
+
+{% block pageScripts %}{% endblock %}
