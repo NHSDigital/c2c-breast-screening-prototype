@@ -120,7 +120,11 @@ router.post('/sessions/01-set-timings', function (req, res) {
 })
 
 router.post('/sessions/02-organise-slots', function (req, res) {
-  res.redirect('/sessions/03-prototype-end')
+  if (req.session.data.sessionCreationType === 'new session template') {
+    res.redirect('/sessions/templating-03-save-as')
+  } else {
+    res.redirect('/sessions/03-prototype-end')
+  }
 })
 
 module.exports = router
