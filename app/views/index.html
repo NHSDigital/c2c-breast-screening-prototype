@@ -37,7 +37,11 @@
         {{ serviceName }}
       </h1>
 
-      <hr>
+      {{ button({
+        text: "Reset all session data",
+        classes: "nhsuk-button--secondary",
+        href: "/prototype-admin/reset?returnPage=" + (currentPage | urlencode)
+      }) }}
 
       <h2 class="nhsuk-heading-m">July 2026</h2>
       <p>Sessions: first run</p>
