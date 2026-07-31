@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
 
+{% set workflow = "template" if data.sessionCreationType === "new session template" else "standard" %}
+
 {% set pageName = "Create session: organise slots" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
@@ -79,7 +81,11 @@
           <span class="nhsuk-caption-m">
             Workflow steps
           </span>
-          Create session
+          {% if workflow === "template" %}
+            New session template
+          {% else %}
+            Create session
+          {% endif %}
         </h2>
         <ol class="app-workflow-side-nav__list">
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
@@ -97,7 +103,13 @@
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
             <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
               <span class="app-workflow-side-nav__number">3</span>
-              <span class="app-workflow-side-nav__label">Publish</span>
+              <span class="app-workflow-side-nav__label">
+                {% if workflow === "template" %}
+                  Save template
+                {% else %}
+                  Publish
+                {% endif %}
+              </span>
             </span>
           </li>
         </ol>
@@ -115,7 +127,7 @@
       </h2>
     </div>
 
-    <form action="03-prototype-end" method="post">
+    <form method="post">
 
       <input type="hidden" name="slotsAvailableCount">
       <input type="hidden" name="slotsSpecialAvailableCount">

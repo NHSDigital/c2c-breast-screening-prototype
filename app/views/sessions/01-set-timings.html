@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 
+{% set workflow = "template" if data.sessionCreationType === "new session template" else "standard" %}
 {% set errorState = "true" if errors else "false" %}
 
 {% set pageName = "Create session: set timings" %}
@@ -23,12 +24,17 @@
   <div class="nhsuk-grid-column-one-quarter">
 
     <div class="app-workflow-side-nav-wrapper">
+
       <nav class="app-workflow-side-nav">
         <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
           <span class="nhsuk-caption-m">
             Workflow steps
           </span>
-          Create session
+          {% if workflow === "template" %}
+            New session template
+          {% else %}
+            Create session
+          {% endif %}
         </h2>
         <ol class="app-workflow-side-nav__list">
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
@@ -46,11 +52,18 @@
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
             <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
               <span class="app-workflow-side-nav__number">3</span>
-              <span class="app-workflow-side-nav__label">Publish</span>
+              <span class="app-workflow-side-nav__label">
+                {% if workflow === "template" %}
+                  Save template
+                {% else %}
+                  Publish
+                {% endif %}
+              </span>
             </span>
           </li>
         </ol>
       </nav>
+
     </div>
 
   </div>
@@ -76,7 +89,7 @@
 
       <h1 class="nhsuk-heading-l">Set timings</h1>
 
-      <form action="02-organise-slots" method="post">
+      <form method="post">
         
         <div class="nhsuk-form-group {% if errors and errors.startTime %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset" role="group" aria-describedby="start-time-hint">

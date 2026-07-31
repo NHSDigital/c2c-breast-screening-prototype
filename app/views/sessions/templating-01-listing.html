@@ -1,7 +1,5 @@
 {% extends 'layout.html' %}
 
-{% set errorState = "true" if errors else "false" %}
-
 {% set pageName = "Session templates" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
@@ -12,72 +10,164 @@
 {% block beforeContent %}{% endblock %}
 
 {% block content %}
-  <div class="app-card-editable">
-    <h1 class="nhsuk-heading-l">Session templates</h1>
 
-    {{ button({
-      text: "Create a new session template",
-      href: "#",
-      classes: "nhsuk-button--secondary"
-    }) }}
-  </div>
+{{ data.sessionCreationType }}
 
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
+<form action="01-set-timings" method="post" class="app-card-editable">
+  <h1 class="nhsuk-heading-l">Session templates</h1>
 
-      {{ table({
-        firstCellIsHeader: false,
-        head: [
+  <input type="hidden" name="sessionCreationType" value="new session template">
+  {{ button({
+    text: "Create a new session template",
+    classes: "nhsuk-button--secondary"
+  }) }}
+</form>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+
+    {{ table({
+      firstCellIsHeader: false,
+      head: [
+        {
+          text: 'Template'
+        },
+        {
+          text: 'Start time'
+        },
+        {
+          text: 'End time'
+        },
+        {
+          text: 'Slot length'
+        }
+      ],
+      rows: [
+        [
           {
-            text: 'Template'
+            html: '
+              <a href="#">Standard day session for static site</a><br>
+              Standard day template for our static site at Worthing Hospital. 2 double-slot special appointments at the beginning of the day, and 4 held slots at the end. 1 hour break from 12:00 to 13:00.
+            '
           },
           {
-            text: 'Start time'
+            text: '10:00'
           },
           {
-            text: 'End time'
+            text: '17:00'
           },
           {
-            text: 'Slot length'
+            text: '10 minutes'
           }
         ],
-        rows: [
-          [
-            {
-              html: '
-                <a href="#">Standard day session for static site</a><br>
-                Standard day template for our static site at Worthing Hospital. 2 double-slot special appointments at the beginning of the day, and 4 held slots at the end. 1 hour break from 12:00 to 13:00.
-              '
-            },
-            {
-              text: '10:00'
-            },
-            {
-              text: '17:00'
-            },
-            {
-              text: '10 minutes'
-            }
-          ],
-          [
-            {
-              html: '
-                <a href="#">Special appointments day session for static site</a><br>
-                Whole day of double-slot special appointments with a 1 hour break from 12:00 to 13:00. 
-              '
-            },
-            {
-              text: '10:00'
-            },
-            {
-              text: '17:00'
-            },
-            {
-              text: '20 minutes'
-            }
-          ]
+        [
+          {
+            html: '
+              <a href="#">Special appointments day session for static site</a><br>
+              Whole day of double-slot special appointments with a 1 hour break from 12:00 to 13:00. 
+            '
+          },
+          {
+            text: '10:00'
+          },
+          {
+            text: '17:00'
+          },
+          {
+            text: '20 minutes'
+          }
         ]
-      }) }}
+      ]
+    }) }}
+
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <h2 class="nhsuk-u-visually-hidden">Archived session templates</h2>
+    <p>
+      <a href="#">View archived templates</a>
+    </p>
+  </div>
+</div>
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          New session template
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="#">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Set timings</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="#">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Organise slots</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Save template</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+    <div class="nhsuk-u-reading-width">
+
+      <h1 class="nhsuk-heading-l">Save session template</h1>
+
+      <form action="" method="post">
+
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+          <label class="nhsuk-label nhsuk-label--m" for="session-template-name">
+            Template name
+          </label>
+          <div class="nhsuk-hint" id="naming-hint-text">
+            A memorable name for this template. This is the name you’ll see everywhere for it, as titles and links.
+          </div>
+          {% if errorState === "true" %}
+            <span class="nhsuk-error-message">
+              <span class="nhsuk-u-visually-hidden">Error:</span> Template must be given a name
+            </span>
+          {% endif %}
+          <input class="nhsuk-input {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="session-template-name" name="sessionTemplateName" type="text" aria-describedby="naming-hint-text">
+        </div>
+
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-label--m" for="session-template-description">
+            Description
+          </label>
+          <div class="nhsuk-hint" id="description-hint-text">
+            Put in a description so you can remember stuff
+          </div>
+          <textarea class="nhsuk-textarea" id="session-template-description" name="sessionTemplateDescription" rows="5" aria-describedby="description-hint-text"></textarea>
+        </div>
+
+        <button class="nhsuk-button" type="submit">Save template</button>
+
+      </form>
 
     </div>
   </div>
