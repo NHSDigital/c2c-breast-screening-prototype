@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Clinics" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+
+{{ breadcrumb({
+  items: [
+    {
+      href: "#",
+      text: "Home"
+    }
+  ]
+}) }}
+
+{% endblock %}
+
+{% block content %}
+  <div class="app-card-editable">
+    <h1 class="nhsuk-heading-l">Clinics</h1>
+
+    {{ button({
+      text: "Create a new clinic",
+      href: "00-clinic-details",
+      classes: "nhsuk-button--secondary"
+    }) }}
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      {% include "_includes/clinics/clinic-listing-table.html"%}
+
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h2 class="nhsuk-u-visually-hidden">Completed batches</h2>
+      <p>
+        <a href="#">View completed clinics</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

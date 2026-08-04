@@ -1,0 +1,285 @@
+{% extends 'layout.html' %}
+
+{% set errorState = "false" %}
+
+{% set pageName = "Apply session dates" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+{{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+<svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+  <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+</svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          Create a clinic 
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="00-clinic-details">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Clinic details</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-create-schedule">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Create schedule</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="03-create-session">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Create session</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="04-organise-slots">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Organise slots</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">5</span>
+              <span class="app-workflow-side-nav__label">Apply session dates</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">6</span>
+              <span class="app-workflow-side-nav__label">Publish clinic</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-one-half">
+
+    <h1 class="nhsuk-heading-l">
+      Which dates do you want to apply this session to?
+    </h1>
+
+    <form action="07-schedule-details" method="post">
+      <input type="hidden" name="selectedSessionDatesJson" value="[]">
+
+
+      {% if data.calendars and data.calendars.length > 0 %}
+      {% for calendar in data.calendars %}
+      <table class="nhsuk-table nhsuk-table--no-border calendar-table calendar-table--apply-session">
+        <caption class="nhsuk-sr-only">{{ calendar.monthName }} {{ calendar.year }}</caption>
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <th scope="col" class="nhsuk-table__header">Mon</th>
+            <th scope="col" class="nhsuk-table__header">Tue</th>
+            <th scope="col" class="nhsuk-table__header">Wed</th>
+            <th scope="col" class="nhsuk-table__header">Thu</th>
+            <th scope="col" class="nhsuk-table__header">Fri</th>
+            <th scope="col" class="nhsuk-table__header">Sat</th>
+            <th scope="col" class="nhsuk-table__header">Sun</th>
+          </tr>
+        </thead>
+        <tbody class="nhsuk-table__body">
+          {% for week in calendar.weeks %}
+          <tr class="nhsuk-table__row">
+            {% for dayItem in week %}
+            {% if dayItem %}
+            <td class="nhsuk-table__cell" data-date="{{ calendar.year }}-{{ '0' + calendar.month if calendar.month < 10 else calendar.month }}-{{ '0' + dayItem.date if dayItem.date < 10 else dayItem.date }}">
+              <a href="#">
+                <span class="calendar-table-date">{{ dayItem.date }}</span>
+              </a>
+            </td>
+            {% else %}
+            <td class="nhsuk-table__cell calendar-table-no-data">
+              <span class="nhsuk-u-visually-hidden">No data</span>
+            </td>
+            {% endif %}
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endfor %}
+      {% else %}
+      <p>No date range has been configured for this schedule. Please return to <a href="01-create-schedule">create
+          schedule</a> to set a date range.</p>
+      {% endif %}
+
+      <hr>
+
+      <button class="nhsuk-button" type="submit">Continue</button>
+
+    </form>
+
+  </div>
+
+  <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-card nhsuk-u-margin-top-4">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-heading-s">Session summary<span class="nhsuk-caption-m">{{ data.sessionName if data.sessionName
+            else '' }}</span></h2>
+
+        <p class="nhsuk-body-s nhsuk-u-margin-bottom-1">
+          <strong>Start time:</strong>
+          {% if data.newSession and data.newSession.startTime %}
+          {{ data.newSession.startTime.hour | zeroPad }}:{{ data.newSession.startTime.minute | zeroPad }}
+          {% else %}
+          -
+          {% endif %}
+        </p>
+        <p class="nhsuk-body-s nhsuk-u-margin-bottom-1">
+          <strong>End time:</strong>
+          {% if data.newSession and data.newSession.endTime %}
+          {{ data.newSession.endTime.hour | zeroPad }}:{{ data.newSession.endTime.minute | zeroPad }}
+          {% else %}
+          -
+          {% endif %}
+        </p>
+        <p class="nhsuk-body-s nhsuk-u-margin-bottom-1">
+          <strong>Slot length:</strong>
+          {% if data.newSession and data.newSession.duration %}
+          {{ data.newSession.duration }} minutes
+          {% else %}
+          -
+          {% endif %}
+        </p>
+        <p class="nhsuk-body-s nhsuk-u-margin-bottom-3">
+          <strong>Number of slots:</strong>
+          {% if data.newSession and data.newSession.totalSlots %}
+          {{ data.newSession.totalSlots }}
+          {% else %}
+          -
+          {% endif %}
+        </p>
+
+        {% if data.sessionSummaryRows and data.sessionSummaryRows.length > 0 %}
+        <div class="nhsuk-u-font-size-16">
+          {% for row in data.sessionSummaryRows %}
+          <p class="nhsuk-body-s nhsuk-u-margin-bottom-2">{{ row.start }} - {{ row.end }}: {{ row.details }}</p>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">
+          No slot configuration has been applied yet.
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript">
+  var lastSelectedCell = null;
+  var selectedDatesInput = document.querySelector('input[name="selectedSessionDatesJson"]');
+  var savedSelectedDates = {{ data.selectedSessionDates | toJSON | safe if data.selectedSessionDates else '[]' }};
+
+  function getSelectableCells() {
+    return Array.from(document.querySelectorAll('.calendar-table--apply-session td:not(.calendar-table-no-data)'));
+  }
+
+  function applySavedSelectedDates() {
+    if (!Array.isArray(savedSelectedDates) || !savedSelectedDates.length) {
+      return;
+    }
+
+    var savedSet = new Set(savedSelectedDates);
+    getSelectableCells().forEach(function (cell) {
+      var date = cell.getAttribute('data-date');
+      if (date && savedSet.has(date)) {
+        cell.classList.add('calendar-table-cell--selected');
+      }
+    });
+  }
+
+  function updateSelectedDatesInput() {
+    if (!selectedDatesInput) {
+      return;
+    }
+
+    var selectedDates = getSelectableCells()
+      .filter(function (cell) {
+        return cell.classList.contains('calendar-table-cell--selected');
+      })
+      .map(function (cell) {
+        return cell.getAttribute('data-date');
+      })
+      .filter(Boolean);
+
+    selectedDatesInput.value = JSON.stringify(selectedDates);
+  }
+
+  document.querySelectorAll('.calendar-table--apply-session').forEach(function (table) {
+    table.addEventListener('mousedown', function (event) {
+      var anchor = event.target.closest('a');
+      if (anchor && table.contains(anchor)) {
+        // Prevent mouse focus from sticking on the link and obscuring selected date text.
+        event.preventDefault();
+      }
+    });
+
+    table.addEventListener('click', function (event) {
+      var target = event.target;
+      var anchor = target.closest('a');
+      var cell = target.closest('td');
+
+      if (!cell || !table.contains(cell) || cell.classList.contains('calendar-table-no-data')) {
+        return;
+      }
+
+      if (anchor) {
+        event.preventDefault();
+        anchor.blur();
+      }
+
+      if (event.shiftKey && lastSelectedCell) {
+        var selectableCells = getSelectableCells();
+        var startIndex = selectableCells.indexOf(lastSelectedCell);
+        var endIndex = selectableCells.indexOf(cell);
+
+        if (startIndex !== -1 && endIndex !== -1) {
+          var rangeStart = Math.min(startIndex, endIndex);
+          var rangeEnd = Math.max(startIndex, endIndex);
+
+          for (var i = rangeStart; i <= rangeEnd; i++) {
+            selectableCells[i].classList.add('calendar-table-cell--selected');
+          }
+        } else {
+          cell.classList.toggle('calendar-table-cell--selected');
+        }
+      } else {
+        cell.classList.toggle('calendar-table-cell--selected');
+      }
+
+      lastSelectedCell = cell;
+      updateSelectedDatesInput();
+    });
+  });
+
+  applySavedSelectedDates();
+  updateSelectedDatesInput();
+</script>
+{% endblock %}

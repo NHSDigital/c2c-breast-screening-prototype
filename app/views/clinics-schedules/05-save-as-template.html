@@ -1,0 +1,113 @@
+{% extends 'layout.html' %}
+
+{% set errorState = "false" %}
+
+{% set pageName = "Save this session as a template" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          Create a clinic 
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="00-clinic-details">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Clinic details</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+              <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-create-schedule">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Create schedule</span>
+              </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="03-create-session">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Create session</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="04-organise-slots">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Organise slots</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">5</span>
+              <span class="app-workflow-side-nav__label">Apply session dates</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">6</span>
+              <span class="app-workflow-side-nav__label">Publish clinic</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+    <div class="nhsuk-u-reading-width">
+
+      <form action="05-save-as-template" method="post">
+
+        <div class="nhsuk-form-group">
+          <fieldset class="nhsuk-fieldset" aria-describedby="example-hints-hint">
+            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
+              <h1 class="nhsuk-fieldset__heading">
+                Do you want to save this session as a template?
+              </h1>
+            </legend>
+            <div class="nhsuk-radios" data-module="nhsuk-radios">
+              <div class="nhsuk-radios__item">
+                <input class="nhsuk-radios__input" id="save-session-as-template-yes" name="saveSessionHints" type="radio" value="yes" {% if data.saveSessionHints == 'yes' %}checked{% endif %}>
+                <label class="nhsuk-label nhsuk-radios__label" for="save-session-as-template-yes">
+                  Yes, save this session as a template
+                </label>
+              </div>
+              <div class="nhsuk-radios__item">
+                <input class="nhsuk-radios__input" id="save-session-as-template-no" name="saveSessionHints" type="radio" value="no" {% if data.saveSessionHints == 'no' %}checked{% endif %}>
+                <label class="nhsuk-label nhsuk-radios__label" for="save-session-as-template-no">
+                  No, do not save this session as a template
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        
+        <button class="nhsuk-button" type="submit">Continue</button>
+
+      </form>
+    </div>
+  </div>
+
+
+
+{% endblock %}
