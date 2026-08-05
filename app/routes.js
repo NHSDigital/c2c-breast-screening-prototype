@@ -482,6 +482,10 @@ router.post('/clinics-schedules/04-organise-slots', function (req, res) {
   res.redirect('/clinics-schedules/04-organise-slots')
 })
 
+router.get('/clinics-schedules/05-save-as-template', function (req, res) {
+  res.render('clinics-schedules/05-save-as-template')
+})
+
 router.post('/clinics-schedules/05-save-as-template', function (req, res) {
   const saveSessionHints = req.body && req.body.saveSessionHints
 
@@ -530,6 +534,12 @@ router.post('/clinics-schedules/05-save-as-template', function (req, res) {
     } catch (err) {
       req.session.data.organisedSlotData = []
     }
+  }
+
+  // Step 4 posts slot data here first; if no choice has been made yet,
+  // send user to step 5 question page instead of skipping to step 6.
+  if (!saveSessionHints) {
+    return res.redirect('/clinics-schedules/05-save-as-template')
   }
 
   if (saveSessionHints === 'yes') {
