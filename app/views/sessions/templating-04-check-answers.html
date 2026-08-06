@@ -107,8 +107,8 @@
             Slot organisation
           </dt>
           <dd class="nhsuk-summary-list__value">
-            Total capacity ie all slot count that's not cancelled or breaks<br>
-            {{ data.slotsSpecialAvailableCount }} special apppointment{% if data.slotsSpecialAvailableCount > 1 %}s{% endif %}<br>
+            {{ data.slotsAvailableCount }} total session capacity (all slot count that's not cancelled or breaks?)<br>
+            {{ data.slotsSpecialAvailableCount }} special apppointment{% if (data.slotsSpecialAvailableCount == 0) or (data.slotsSpecialAvailableCount > 1) %}s{% endif %}<br>
             {{ data.slotsHeldCount }} held (this could break into multiple "helds" for reasons we're getting in UR)
           </dd>
           <dd class="nhsuk-summary-list__actions">
@@ -116,7 +116,7 @@
           </dd>
         </div>
       </dl>
-
+      
       <p class="nhsuk-u-margin-top-4">
         <a class="nhsuk-button" href="#">Save template</a>
       </p>
