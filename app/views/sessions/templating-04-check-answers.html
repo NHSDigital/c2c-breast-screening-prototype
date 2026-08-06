@@ -1,0 +1,128 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Publish clinic" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          New session template
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-set-timings">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Set timings</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="02-organise-slots">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Organise slots</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="templating-03-name-and-description">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Name and description</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">
+                  Save session template
+              </span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+    <div class="nhsuk-u-reading-width">
+
+      <h1 class="nhsuk-heading-l">Save session template</h1>
+
+      <!-- {{ data | dump }} -->
+
+      <dl class="nhsuk-summary-list">
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Template name
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            {{ data.sessionTemplateName }}
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> template name</span></a>
+          </dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Description
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            {{ data.sessionTemplateDescription }}
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> description</span></a>
+          </dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Session timings
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            {{ data.newSession.startTime.hour }}:{{ data.newSession.startTime.minute }} to {{ data.newSession.endTime.hour }}:{{ data.newSession.endTime.minute }}<br>
+            {{ data.newSession.duration }} minute slots
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> timings</span></a>
+          </dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Slot organisation
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            Total capacity ie all slot count that's not cancelled or breaks<br>
+            {{ data.slotsSpecialAvailableCount }} special apppointment{% if data.slotsSpecialAvailableCount > 1 %}s{% endif %}<br>
+            {{ data.slotsHeldCount }} held (this could break into multiple "helds" for reasons we're getting in UR)
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> slot organisation</span></a>
+          </dd>
+        </div>
+      </dl>
+
+      <p class="nhsuk-u-margin-top-4">
+        <a class="nhsuk-button" href="#">Save template</a>
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

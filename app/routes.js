@@ -121,7 +121,7 @@ router.post('/sessions/01-set-timings', function (req, res) {
 
 router.post('/sessions/02-organise-slots', function (req, res) {
   if (req.session.data.sessionCreationType === 'new session template') {
-    res.redirect('/sessions/templating-03-save-as')
+    res.redirect('/sessions/templating-03-name-and-description')
   } else {
     res.redirect('/sessions/03-prototype-end')
   }

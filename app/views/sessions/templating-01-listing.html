@@ -11,7 +11,24 @@
 
 {% block content %}
 
-{{ data.sessionCreationType }}
+{% set secondaryNavItems = [] %}
+
+{% for item in [
+  { href: '/clinics/', label: 'Active clinics' },
+  { href: '#', label: 'Archived clinics' },
+  { href: '/sessions/templating-01-listing', label: 'Session templates', selected: 'true' }
+] %}
+  {% set secondaryNavItems = secondaryNavItems | push({
+    text: item.label | safe,
+    href: item.href | trim,
+    current: true if item.selected == 'true'
+  }) %}
+{% endfor %}
+
+{{ appSecondaryNavigation({
+  visuallyHiddenTitle: "Secondary menu",
+  items: secondaryNavItems
+}) }}
 
 <form action="01-set-timings" method="get" class="app-card-editable">
   <h1 class="nhsuk-heading-l">Session templates</h1>
@@ -40,6 +57,9 @@
         },
         {
           text: 'Slot length'
+        },
+        {
+          text: 'Capacity'
         }
       ],
       rows: [
@@ -54,10 +74,13 @@
             text: '10:00'
           },
           {
-            text: '17:00'
+            text: '16:00'
           },
           {
             text: '10 minutes'
+          },
+          {
+            text: '30 slots'
           }
         ],
         [
@@ -75,6 +98,9 @@
           },
           {
             text: '20 minutes'
+          },
+          {
+            text: '30 slots'
           }
         ]
       ]

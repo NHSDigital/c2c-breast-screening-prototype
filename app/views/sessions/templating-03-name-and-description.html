@@ -30,13 +30,13 @@
         </h2>
         <ol class="app-workflow-side-nav__list">
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
-            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="#">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-set-timings">
               <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
               <span class="app-workflow-side-nav__label">Set timings</span>
             </a>
           </li>
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
-            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="#">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="02-organise-slots">
               <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
               <span class="app-workflow-side-nav__label">Organise slots</span>
             </a>
@@ -44,7 +44,15 @@
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
             <span class="app-workflow-side-nav__link" aria-current="page">
               <span class="app-workflow-side-nav__number">3</span>
-              <span class="app-workflow-side-nav__label">Save template</span>
+              <span class="app-workflow-side-nav__label">Name and description</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">
+                  Save session template
+              </span>
             </span>
           </li>
         </ol>
@@ -55,13 +63,13 @@
   <div class="nhsuk-grid-column-three-quarters">
     <div class="nhsuk-u-reading-width">
 
-      <h1 class="nhsuk-heading-l">Save session template</h1>
+      <h1 class="nhsuk-heading-l">Template name and description</h1>
 
-      <form action="" method="post">
+      <form action="templating-04-check-answers" method="post">
 
         <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="session-template-name">
-            Template name
+            Name
           </label>
           <div class="nhsuk-hint" id="naming-hint-text">
             A memorable name for this template. This is the name you’ll see everywhere for it, as titles and links.
@@ -76,7 +84,7 @@
 
         <div class="nhsuk-form-group">
           <label class="nhsuk-label nhsuk-label--m" for="session-template-description">
-            Description
+            Description (optional)
           </label>
           <div class="nhsuk-hint" id="description-hint-text">
             Put in a description so you can remember stuff
@@ -84,7 +92,7 @@
           <textarea class="nhsuk-textarea" id="session-template-description" name="sessionTemplateDescription" rows="5" aria-describedby="description-hint-text"></textarea>
         </div>
 
-        <button class="nhsuk-button" type="submit">Save template</button>
+        <button class="nhsuk-button" type="submit">Continue</button>
 
       </form>
 

@@ -87,6 +87,36 @@
             Create session
           {% endif %}
         </h2>
+        {% if workflow === "template" %}
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-set-timings">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Set timings</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Organise slots</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Name and description</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">
+                  Save session template
+              </span>
+            </span>
+          </li>
+        </ol>
+        {% else %}
         <ol class="app-workflow-side-nav__list">
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
             <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-set-timings">
@@ -104,15 +134,12 @@
             <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
               <span class="app-workflow-side-nav__number">3</span>
               <span class="app-workflow-side-nav__label">
-                {% if workflow === "template" %}
-                  Save template
-                {% else %}
-                  Publish
-                {% endif %}
+                Publish
               </span>
             </span>
           </li>
         </ol>
+        {% endif %}
       </nav>
     </div>
 
