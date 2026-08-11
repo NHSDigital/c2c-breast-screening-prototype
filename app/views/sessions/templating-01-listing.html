@@ -1,0 +1,122 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Session templates" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set secondaryNavItems = [] %}
+
+{% for item in [
+  { href: '/clinics/', label: 'Active clinics' },
+  { href: '#', label: 'Archived clinics' },
+  { href: '/sessions/templating-01-listing', label: 'Session templates', selected: 'true' }
+] %}
+  {% set secondaryNavItems = secondaryNavItems | push({
+    text: item.label | safe,
+    href: item.href | trim,
+    current: true if item.selected == 'true'
+  }) %}
+{% endfor %}
+
+{{ appSecondaryNavigation({
+  visuallyHiddenTitle: "Secondary menu",
+  items: secondaryNavItems
+}) }}
+
+<form action="01-set-timings" method="get" class="app-card-editable">
+  <h1 class="nhsuk-heading-l">Session templates</h1>
+
+  <input type="hidden" name="sessionCreationType" value="new session template">
+  {{ button({
+    text: "Create a new session template",
+    classes: "nhsuk-button--secondary"
+  }) }}
+</form>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+
+    {{ table({
+      firstCellIsHeader: false,
+      head: [
+        {
+          text: 'Template'
+        },
+        {
+          text: 'Start time'
+        },
+        {
+          text: 'End time'
+        },
+        {
+          text: 'Slot length'
+        },
+        {
+          text: 'Capacity'
+        }
+      ],
+      rows: [
+        [
+          {
+            html: '
+              <a href="#">Standard day session for static site</a><br>
+              Standard day template for our static site at Worthing Hospital. 2 double-slot special appointments at the beginning of the day, and 4 held slots at the end. 1 hour break from 12:00 to 13:00.
+            '
+          },
+          {
+            text: '10:00'
+          },
+          {
+            text: '16:00'
+          },
+          {
+            text: '10 minutes'
+          },
+          {
+            text: '30 slots'
+          }
+        ],
+        [
+          {
+            html: '
+              <a href="#">Special appointments day session for static site</a><br>
+              Whole day of double-slot special appointments with a 1 hour break from 12:00 to 13:00. 
+            '
+          },
+          {
+            text: '10:00'
+          },
+          {
+            text: '17:00'
+          },
+          {
+            text: '20 minutes'
+          },
+          {
+            text: '30 slots'
+          }
+        ]
+      ]
+    }) }}
+
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <h2 class="nhsuk-u-visually-hidden">Archived session templates</h2>
+    <p>
+      <a href="#">View archived templates</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}{% endblock %}

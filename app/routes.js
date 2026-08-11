@@ -3,7 +3,7 @@ const express = require('express')
 
 const router = express.Router()
 
-const isWholeNumber = str => /^\d+$/.test(str)
+//======= September test specific for now
 
 router.get('/september-iteration-2/clickthru/04a-example-search-result', function (req, res) {
   const query = (req.query['search-params'] || '').trim()
@@ -33,7 +33,35 @@ router.get('/september-iteration-2/clickthru/04a-example-search-result', functio
   })
 })
 
-router.post('/sessions/02-organise-slots', function (req, res) {
+router.get('/action/stage/:participantId', function (req, res) {
+  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const participantIndex = participants.findIndex((participant) => participant.participantId === req.params.participantId)
+
+  if (participantIndex !== -1) {
+    participants[participantIndex].status = 'staged'
+    req.session.data.stagedCount++
+  }
+
+  res.redirect(req.get('referer') || '/september-iteration-2/clickthru/04-choose-participants')
+});
+
+router.get('/action/unstage/:participantId', function (req, res) {
+  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const participantIndex = participants.findIndex((participant) => participant.participantId === req.params.participantId)
+
+  if (participantIndex !== -1) {
+    participants[participantIndex].status = 'unstaged'
+    req.session.data.stagedCount--
+  }
+
+  res.redirect(req.get('referer') || '/september-iteration-2/clickthru/04-choose-participants')
+});
+
+// ====== session setup handlers
+
+const isWholeNumber = str => /^\d+$/.test(str)
+
+router.post('/sessions/01-set-timings', function (req, res) {
   const session = (req.body && req.body.newSession) || {}
   const startTime = session.startTime || {}
   const endTime = session.endTime || {}
@@ -91,28 +119,12 @@ router.post('/sessions/02-organise-slots', function (req, res) {
   res.redirect('/sessions/02-organise-slots')
 })
 
-router.get('/action/stage/:participantId', function (req, res) {
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
-  const participantIndex = participants.findIndex((participant) => participant.participantId === req.params.participantId)
-
-  if (participantIndex !== -1) {
-    participants[participantIndex].status = 'staged'
-    req.session.data.stagedCount++
+router.post('/sessions/02-organise-slots', function (req, res) {
+  if (req.session.data.sessionCreationType === 'new session template') {
+    res.redirect('/sessions/templating-03-name-and-description')
+  } else {
+    res.redirect('/sessions/03-prototype-end')
   }
-
-  res.redirect(req.get('referer') || '/september-iteration-2/clickthru/04-choose-participants')
-});
-
-router.get('/action/unstage/:participantId', function (req, res) {
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
-  const participantIndex = participants.findIndex((participant) => participant.participantId === req.params.participantId)
-
-  if (participantIndex !== -1) {
-    participants[participantIndex].status = 'unstaged'
-    req.session.data.stagedCount--
-  }
-
-  res.redirect(req.get('referer') || '/september-iteration-2/clickthru/04-choose-participants')
-});
+})
 
 module.exports = router
