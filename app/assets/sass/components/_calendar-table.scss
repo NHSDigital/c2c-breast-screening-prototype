@@ -52,3 +52,39 @@
   font-weight: bold;
   display: block;
 }
+
+.calendar-table--apply-session {
+  width: min(100%, 42rem);
+  margin-right: auto;
+}
+
+.calendar-table--apply-session th,
+.calendar-table--apply-session td {
+  padding: 1rem 0.4rem;
+}
+
+.calendar-table--apply-session th {
+  text-align: center;
+}
+
+.calendar-table--apply-session td {
+  min-height: 5.75rem;
+}
+
+.calendar-table--apply-session td a {
+  display: block;
+  min-height: 100%;
+}
+
+.calendar-table--apply-session td:not(.calendar-table-no-data) {
+  cursor: pointer;
+}
+
+.calendar-table--apply-session td.calendar-table-cell--selected {
+  background-color: var(--nhsuk-blue-colour, #005eb8);
+}
+
+.calendar-table--apply-session td.calendar-table-cell--selected a,
+.calendar-table--apply-session td.calendar-table-cell--selected .calendar-table-date {
+  color: #fff;
+}
