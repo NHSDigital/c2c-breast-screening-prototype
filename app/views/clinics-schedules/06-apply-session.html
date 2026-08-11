@@ -79,7 +79,11 @@
     </h1>
 
     <form action="07-schedule-details" method="post">
-      <input type="hidden" name="selectedSessionDatesJson" value="[]">
+      <input
+        type="hidden"
+        name="selectedSessionDatesJson"
+        value="[]"
+        data-saved-selected-dates='{{ (data.selectedSessionDates if data.selectedSessionDates else []) | toJSON | escape }}'>
 
 
       {% if data.calendars and data.calendars.length > 0 %}
@@ -195,7 +199,15 @@
 <script type="text/javascript">
   var lastSelectedCell = null;
   var selectedDatesInput = document.querySelector('input[name="selectedSessionDatesJson"]');
-  var savedSelectedDates = {{ data.selectedSessionDates | toJSON | safe if data.selectedSessionDates else '[]' }};
+  var savedSelectedDates = [];
+
+  if (selectedDatesInput && selectedDatesInput.dataset.savedSelectedDates) {
+    try {
+      savedSelectedDates = JSON.parse(selectedDatesInput.dataset.savedSelectedDates);
+    } catch (error) {
+      savedSelectedDates = [];
+    }
+  }
 
   function getSelectableCells() {
     return Array.from(document.querySelectorAll('.calendar-table--apply-session td:not(.calendar-table-no-data)'));
