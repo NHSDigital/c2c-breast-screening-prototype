@@ -1,0 +1,60 @@
+@use "nhsuk-frontend/dist/nhsuk/core" as *;
+
+:root {
+  --generic-chart-hatch: repeating-linear-gradient(130deg, #005eb8, #005eb8 1px, #ccdff1 1px, #ccdff1 12px);
+  --standard-chart-hatch: repeating-linear-gradient(45deg, #004c23, #004c23 1px, #cce5d8 1px, #cce5d8 12px);
+  --special-chart-hatch: repeating-linear-gradient(-45deg, #4d3708, #4d3708 1px, #ffdc8e 1px, #ffdc8e 12px);
+  --ceased-chart-hatch: repeating-linear-gradient(90deg, #354550, #354550 1px, #dbe0e3 1px, #dbe0e3 12px);
+  --vhr-chart-hatch-1: repeating-linear-gradient(-45deg, #6b140e, #6b140e 1px, transparent 1px, transparent 12px);
+  --vhr-chart-hatch-2: repeating-linear-gradient(45deg, #6b140e, #6b140e 1px, #f7d4d1 1px, #f7d4d1 12px);
+}
+
+.app-simple-progress-bar {
+  width: 100%;
+  min-width: nhsuk-px-to-rem(200px);
+  outline: 1px solid $nhsuk-input-border-colour;
+
+  &.--thin {
+    min-height: 19px;
+  }
+
+  &.--generic {
+    background: var(--generic-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
+
+  &.--standard {
+    background: var(--standard-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
+  &.--special {
+    background: var(--special-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
+  &.--ceased {
+    background: var(--ceased-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
+  &.--vhr {
+    background: var(--vhr-chart-hatch-1) 0 0 / var(--percentage) 100% no-repeat, var(--vhr-chart-hatch-2) 0 0 / var(--percentage) 100% no-repeat,#fff;
+  }
+}
+
+
+.app-progress-bar {
+  width: 100%;
+  min-width: nhsuk-px-to-rem(200px);
+  border: 1px solid $nhsuk-input-border-colour;;
+  background: #fff;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.app-progress-bar::-webkit-progress-bar {
+  background: #fff;
+}
+.app-progress-bar.--generic::-webkit-progress-value {
+  background: var(--generic-chart-hatch);
+}
+.app-progress-bar::-moz-progress-bar {
+  background: transparent;
+}
+.app-progress-bar.--generic::-moz-progress-bar {
+  background: var(--generic-chart-hatch);
+}
