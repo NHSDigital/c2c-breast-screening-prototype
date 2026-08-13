@@ -1,17 +1,24 @@
+// Import NHS.UK frontend library
+@use "nhsuk-frontend/dist/nhsuk/core" as *;
+
 .app-participant-table {
 
-  .nhsuk-table__body {
-    tr:nth-child(odd) {
-      background-color: rgba(224,228,230,.5);
-    }
-    tr:nth-child(even) {
-      background-color: transparent;
-    }
+  tbody tr:nth-child(odd) {
+    background-color: rgba(224,228,230,.5);
+  }
+  tbody tr:nth-child(even) {
+    background-color: transparent;
+  }
+  tbody tr.app-container-available {
+    background: nhsuk-colour("white");
+  }
+  tbody tr.app-container-staff-break {
+    background: repeating-linear-gradient(130deg, nhsuk-colour("grey-4"), nhsuk-colour("grey-4") 1px, transparent 1px, transparent 12px);
   }
 
   th:first-child,
   td:first-child {
-    //padding-left: 6px;
+    padding-left: 6px;
   }
 
   td:has( > .nhsuk-checkboxes__item) {
@@ -20,12 +27,5 @@
     width: 62px;
   }
 
-  .app-column-time {
-    width: 5rem;
-  }
-  .app-column-nhs-number {
-    text-align: right;
-    width: 10rem;
-  }
-
 }
+
