@@ -3,6 +3,13 @@
 
 .app-participant-table {
 
+  tbody td {
+    height: 100px;
+    &.--double {
+      height: 200px;
+    }
+  }
+
   tbody tr:nth-child(odd) {
     background-color: rgba(224,228,230,.5);
   }
