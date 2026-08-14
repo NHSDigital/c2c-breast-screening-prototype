@@ -2,9 +2,11 @@
 
 :root {
   --generic-chart-hatch: repeating-linear-gradient(130deg, #005eb8, #005eb8 1px, #ccdff1 1px, #ccdff1 12px);
-  --standard-chart-hatch: repeating-linear-gradient(45deg, #004c23, #004c23 1px, #cce5d8 1px, #cce5d8 12px);
-  --special-chart-hatch: repeating-linear-gradient(-45deg, #4d3708, #4d3708 1px, #ffdc8e 1px, #ffdc8e 12px);
-  --ceased-chart-hatch: repeating-linear-gradient(90deg, #354550, #354550 1px, #dbe0e3 1px, #dbe0e3 12px);
+  --standard-chart-hatch: repeating-linear-gradient(130deg, #004c23, #004c23 1px, #cce5d8 1px, #cce5d8 12px);
+  --special-chart-hatch: repeating-linear-gradient(130deg, #4d3708, #4d3708 1px, #ffdc8e 1px, #ffdc8e 12px);
+  --ceased-chart-hatch: repeating-linear-gradient(130deg, #354550, #354550 1px, #dbe0e3 1px, #dbe0e3 12px);
+  --vhr-chart-hatch: repeating-linear-gradient(130deg, #6b140e, #6b140e 1px, #f7d4d1 1px, #f7d4d1 12px);
+  
   --vhr-chart-hatch-1: repeating-linear-gradient(-45deg, #6b140e, #6b140e 1px, transparent 1px, transparent 12px);
   --vhr-chart-hatch-2: repeating-linear-gradient(45deg, #6b140e, #6b140e 1px, #f7d4d1 1px, #f7d4d1 12px);
 }
@@ -49,12 +51,31 @@
 .app-progress-bar::-webkit-progress-bar {
   background: #fff;
 }
-.app-progress-bar.--generic::-webkit-progress-value {
-  background: var(--generic-chart-hatch);
-}
 .app-progress-bar::-moz-progress-bar {
   background: transparent;
 }
+
+.app-progress-bar.--generic::-webkit-progress-value,
 .app-progress-bar.--generic::-moz-progress-bar {
   background: var(--generic-chart-hatch);
+}
+
+.app-progress-bar.--standard::-webkit-progress-value,
+.app-progress-bar.--standard::-moz-progress-bar {
+  background: var(--standard-chart-hatch);
+}
+
+.app-progress-bar.--special::-webkit-progress-value,
+.app-progress-bar.--special::-moz-progress-bar {
+  background: var(--special-chart-hatch);
+}
+
+.app-progress-bar.--ceased::-webkit-progress-value,
+.app-progress-bar.--ceased::-moz-progress-bar {
+  background: var(--ceased-chart-hatch);
+}
+
+.app-progress-bar.--vhr::-webkit-progress-value,
+.app-progress-bar.--vhr::-moz-progress-bar {
+  background: var(--vhr-chart-hatch);
 }
