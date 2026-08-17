@@ -1,0 +1,26 @@
+// Import NHS.UK frontend library
+@use "nhsuk-frontend/dist/nhsuk/core" as *;
+
+.app-clinic-level-breadcrumbs {
+  display: flex;
+  @include nhsuk-responsive-margin(4, "top");
+  border-bottom: 2px solid nhsuk-colour("grey-4");
+
+  & .--item:not(:first-child) {
+    position: relative;
+    padding-left: nhsuk-px-to-rem(32px);
+    margin-left: nhsuk-px-to-rem(16px);
+  }
+
+  & .--item:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    top: nhsuk-px-to-rem(8px);
+    left: 0;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-right: 2px solid $nhsuk-secondary-text-colour;
+    border-bottom: 2px solid $nhsuk-secondary-text-colour;
+    transform: rotate(-45deg);
+  }
+}

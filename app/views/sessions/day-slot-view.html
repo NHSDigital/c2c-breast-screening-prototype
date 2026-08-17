@@ -8,47 +8,25 @@
 {% endblock %}
 
 {% block beforeContent %}
-{{ breadcrumb({
-  items: [
-    {
-      href: "#",
-      text: "Clinics"
-    },
-    {
-      href: "#",
-      text: "Worthing C2C test 1"
-    },
-    {
-      href: "#",
-      text: "Schedule name (and dates?)"
-    }
-  ]
-}) }}
+  <nav class="app-clinic-level-breadcrumbs">
+    <div class="--item">
+      <span class="nhsuk-caption-m">Clinic</span>
+      <h1 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">
+        <a href="clinic-detail">Worthing C2C test 1</a>
+      </h1>
+      <p class="nhsuk-body-s">Alpha van<br>Chichester, St Richard’s Hospital</p>
+    </div>
+    <div class="--item">
+      <span class="nhsuk-caption-m">Schedule</span>
+      <h1 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">
+        <a href="clinic-detail">Rota 12</a>
+      </h1>
+      <p class="nhsuk-body-s">From: Monday August 24th 20026 <br>to: Wednesday 7th October 2026</p>
+    </div>
+  </nav>
 {% endblock %}
 
 {% block content %}
-
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      <h1 class="nhsuk-heading-s">
-        <span class="nhsuk-caption-m">Clinic</span>
-        <a href="clinic-detail">Worthing C2C test 1</a>
-        <span class="nhsuk-caption-m">Unit and location</span>
-      </h1>
-    </div>
-  </div>
-
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      <h1 class="nhsuk-heading-m">
-        <span class="nhsuk-caption-m">Schedule</span>
-        <a href="clinic-detail">Schedule name</a>
-        <span class="nhsuk-caption-m">from date to date</span>
-      </h1>
-    </div>
-  </div>
-
-  <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
   
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-three-quarters">
@@ -66,6 +44,9 @@
       <ul class="nhsuk-list">
         <li>
           <a href="#">Open all held slots</a>
+        </li>
+        <li>
+          <a href="#">Open held slots by type</a>
         </li>
         <li>
           <a href="#">Append or prepend new slots</a>
