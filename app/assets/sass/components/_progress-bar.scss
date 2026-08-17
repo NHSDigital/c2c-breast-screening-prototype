@@ -42,17 +42,21 @@
 .app-progress-bar {
   width: 100%;
   min-width: nhsuk-px-to-rem(200px);
+  min-height: 42px;
   border: 1px solid $nhsuk-input-border-colour;;
   background: #fff;
   box-sizing: border-box;
   appearance: none;
   -webkit-appearance: none;
+  &.--thin {
+    min-height: 19px;
+  }
 }
 .app-progress-bar::-webkit-progress-bar {
   background: #fff;
 }
 .app-progress-bar::-moz-progress-bar {
-  background: transparent;
+  background: #fff;
 }
 
 .app-progress-bar.--generic::-webkit-progress-value,

@@ -40,56 +40,9 @@
   background: var(--ceased-chart-hatch)
 }
 .hatching--high-risk {
-  background: var(--vhr-chart-hatch-1), var(--vhr-chart-hatch-2)
+  background: var(--vhr-chart-hatch)
 }
 
-.app-chart-bar-segmented-horizontal {
-  margin: 0;
-  /* Turn the table tbody into a single horizontal bar */
-  tbody {
-    display: flex;
-    width: 100%;
-    min-height: 2rem;
-    overflow: hidden;
-  }
-  /* Each row becomes a segment, sized by its proportion of the total */
-  tbody tr {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    overflow: hidden;
-  }
-  /* Each row becomes a segment, sized by its proportion of the total */
-  tbody td {
-    padding: 0;
-  }
-}
-.app-chart-bar-segmented-horizontal--legend {
-  @include nhsuk-media-query($from: tablet) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: flex-start;
-
-    li {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 8px;
-    }
-  }
-  .swatch {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    flex-shrink: 0;
-    margin-right: 6px;
-    vertical-align: middle;
-  }
-}
-
-// alternate to stacked bar?
 .app-segmented-cards {
   .nhsuk-card__content {
     display: flex;
