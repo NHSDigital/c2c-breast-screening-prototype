@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Publish clinic" %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          Create day clinic
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <span class="app-workflow-side-nav__link">
+              <span class="app-workflow-side-nav__number">
+                {{ tickSvg | safe }}
+              </span>
+              <span class="app-workflow-side-nav__label">Clinic details</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <span class="app-workflow-side-nav__link">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Set date and time</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Publish clinic</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+    <div class="nhsuk-u-reading-width">
+
+      <h1 class="nhsuk-heading-l">Publish clinic</h1>
+
+      <dl class="nhsuk-summary-list">
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Clinic details
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            {{ data.clinicName }}
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> clinic details</span></a>
+          </dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Date and time
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            {{ data.clinicDate['day'] }} {{ data.clinicDate['month'] }} {{ data.clinicDate['year'] }}<br>
+            {{ data.newSession.startTime.hour | zeroPad }}:{{ data.newSession.startTime.minute | zeroPad }} to {{ data.newSession.endTime.hour | zeroPad }}:{{ data.newSession.endTime.minute | zeroPad }}<br>
+            {{ data.newSession.duration }} minute slot length
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> date and time</span></a>
+          </dd>
+        </div>
+      </dl>
+
+      <p class="nhsuk-u-margin-top-4">
+        <a class="nhsuk-button" href="#">Publish clinic</a>
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
