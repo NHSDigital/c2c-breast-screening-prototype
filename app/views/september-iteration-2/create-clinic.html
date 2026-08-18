@@ -1,0 +1,141 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Clinics" %}
+
+
+{% block content %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <div class="app-card-editable">
+      <h1 class="nhsuk-heading-l">Clinics</h1>
+      {{ button({
+        text: "Create a new clinic",
+        href: "create-clinic-rev-1",
+        classes: "nhsuk-button--secondary"
+      }) }}
+    </div>
+  </div>
+</div>
+
+
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <table class="nhsuk-table">
+      <thead class="nhsuk-table__head">
+        <tr class="nhsuk-table__row">
+          <th scope="col" class="nhsuk-table__header">
+            Clinic
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Location
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Unit
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Timeframe
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Capacity
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            <span class="nhsuk-u-visually-hidden">Action</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+
+        <!-- 1 day clinic example for Create clinic module: live test #2 -->
+        <tr class="nhsuk-table__row">
+          <th scope="row" class="nhsuk-table__header">
+            Rubie test clinic
+          </th>
+          <td class="nhsuk-table__cell">
+            Hard coded<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">as per live test #1</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            Alpha van<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-mobile-1</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            1 October 2026<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">1 day</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: 0%;"></div>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">48 slots available of 48</span>
+          </td>
+          <td>
+            <a href="search-and-results" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+              Select this clinic
+            </a>
+          </td>
+        </tr>
+
+        <tr class="nhsuk-table__row">
+          <th scope="row" class="nhsuk-table__header">
+            Chichester - standard slots May 2026<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-standard-20260501</span>
+          </th>
+          <td class="nhsuk-table__cell">
+            Chichester<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">St Richard’s Hospital</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            Alpha van<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-mobile-1</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            31 May 2026<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">1 day</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: 0%;"></div>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">48 slots available of 48</span>
+          </td>
+          <td>
+            <a href="search-and-results" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+              Select this clinic
+            </a>
+          </td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <th scope="row" class="nhsuk-table__header">
+            Worthing - special slots May 2026<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-special-20260501</span>
+          </th>
+          <td class="nhsuk-table__cell">
+            Worthing<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">Worthing Hospital</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            Home base<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-static-1</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            7, 21 May 2026<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">2 days</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: 60%;"></div>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">40 slots available of 100</div>
+          </td>
+          <td>
+            <a href="#" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+              Select this clinic
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}
