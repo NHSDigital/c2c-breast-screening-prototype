@@ -39,7 +39,7 @@
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
             <span class="app-workflow-side-nav__link" aria-current="page">
               <span class="app-workflow-side-nav__number">3</span>
-              <span class="app-workflow-side-nav__label">Publish clinic</span>
+              <span class="app-workflow-side-nav__label">Save clinic</span>
             </span>
           </li>
         </ol>
@@ -50,7 +50,7 @@
   <div class="nhsuk-grid-column-three-quarters">
     <div class="nhsuk-u-reading-width">
 
-      <h1 class="nhsuk-heading-l">Publish clinic</h1>
+      <h1 class="nhsuk-heading-l">Save clinic</h1>
 
       <dl class="nhsuk-summary-list">
         <div class="nhsuk-summary-list__row">
@@ -69,7 +69,7 @@
             Date and time
           </dt>
           <dd class="nhsuk-summary-list__value">
-            {{ data.clinicDate['day'] }} {{ data.clinicDate['month'] }} {{ data.clinicDate['year'] }}<br>
+            {{ data.clinicDate | formatDate }}<br>
             {{ data.newSession.startTime.hour | zeroPad }}:{{ data.newSession.startTime.minute | zeroPad }} to {{ data.newSession.endTime.hour | zeroPad }}:{{ data.newSession.endTime.minute | zeroPad }}<br>
             {{ data.newSession.duration }} minute slot length
           </dd>
@@ -80,7 +80,7 @@
       </dl>
 
       <p class="nhsuk-u-margin-top-4">
-        <a class="nhsuk-button" href="#">Publish clinic</a>
+        <a class="nhsuk-button" href="#">Save clinic</a>
       </p>
 
     </div>
