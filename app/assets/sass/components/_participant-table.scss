@@ -30,19 +30,18 @@
   tbody tr:nth-child(even) {
     background-color: transparent;
   }
-  // tbody tr.app-container-available {
-  //   background: nhsuk-colour("white");
-  // }
+  
   tbody tr.app-container-staff-break {
     background: repeating-linear-gradient(130deg, nhsuk-colour("grey-4"), nhsuk-colour("grey-4") 1px, transparent 1px, transparent 12px);
   }
 
   th:first-child,
   td:first-child {
-    padding-left: 6px;
+    padding-left: nhsuk-px-to-rem(44px);
   }
 
   td:has( > .nhsuk-checkboxes__item) {
+    padding-left: 6px;
     padding-right: 0;
     padding-top: 8px;
     width: 62px;

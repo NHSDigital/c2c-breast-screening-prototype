@@ -4,6 +4,7 @@
 .app-clinic-level-breadcrumbs {
   display: flex;
   @include nhsuk-responsive-margin(4, "top");
+  @include nhsuk-responsive-padding(4, "bottom");
   border-bottom: 2px solid nhsuk-colour("grey-4");
 
   & .--item:not(:first-child) {
