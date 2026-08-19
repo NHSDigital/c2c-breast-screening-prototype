@@ -8,19 +8,17 @@
 {% endblock %}
 
 {% block beforeContent %}
-  <nav class="app-clinic-level-breadcrumbs">
-    <div class="--item">
-      <span class="nhsuk-caption-m">Clinic</span>
-      <h1 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">
+  <nav>
+    <ol class="app-clinic-level-breadcrumbs nhsuk-list">
+      <li class="--item">
+        <span class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">Clinic</span>
         <a href="clinic-detail">Worthing C2C test 1</a>
-      </h1>
-    </div>
-    <div class="--item">
-      <span class="nhsuk-caption-m">Schedule</span>
-      <h1 class="nhsuk-heading-s nhsuk-u-margin-bottom-2">
+      </li>
+      <li class="--item">
+        <span class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">Schedule</span>
         <a href="clinic-detail">Rota 12</a>
-      </h1>
-    </div>
+      </li>
+    </ol>
   </nav>
 {% endblock %}
 
@@ -39,28 +37,33 @@
       </ul> -->
     </div>
     <div class="nhsuk-grid-column-one-quarter">
-      <h2 class="nhsuk-heading-s">Session actions:</h2>
+      <!-- <h2 class="nhsuk-heading-s">Session actions:</h2>
       <ul class="nhsuk-list">
-        <!-- <li>
+        <li>
           <a href="#">Open all held slots</a>
-        </li> -->
-        <!-- <li>
+        </li>
+        <li>
           <a href="#">Open held slots by type</a>
-        </li> -->
+        </li>
         <li>
           <a href="#">Append or prepend new slots</a>
         </li>
         <li>
-          <a href="#">Cancel whole session</a>
+          <a href="#">Cancel this session</a>
         </li>
-      </ul>
+      </ul> -->
+      <p>
+        <a href="#" class="app-link--warning">Cancel this session</a>
+      </p>
     </div>
   </div>
 
-  <hr class="">
+  <!-- <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible"> -->
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-three-quarters">
+
+      <p><a href="#">Prepend a new slot</a></p>
 
       <table class="nhsuk-table app-participant-table nhsuk-table-responsive">
         <thead class="nhsuk-table__head">
@@ -927,22 +930,25 @@
           </tr>
         </tbody>
       </table>
+
+      <p><a href="#">Append a new slot</a></p>
       
     </div>
 
     <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
       <div class="side-panel" id="side-panel">
-        <h3 class="nhsuk-heading-s">With selected:</h3>
+        <h3 class="nhsuk-heading-s">Change slots</h3>
+        <div class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-2">With selected:</div>
         <ul class="nhsuk-list">
-          <li><a class="panel-item" id="panel-hold">Hold</a></li>
-          <li><a class="panel-item" id="panel-staff-break">Staff break</a></li>
-          <li><a class="panel-item" id="panel-special-appointment">Special appointment</a></li>
-          <li class="nhsuk-u-margin-top-4"><a class="panel-item app-link--error" id="panel-clear-type">Clear slot type</a></li>
+          <li><a class="panel-item">Hold slots</a></li>
+          <li><a class="panel-item">Remove slots</a></li>
+          <li><a class="panel-item">Combine slots</a></li>
         </ul>
         <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
         <ul class="nhsuk-list">
-          <li><a class="panel-item" id="panel-merge">Merge selected</a></li>
-          <li><a class="panel-item" id="panel-unmerge">Unmerge</a></li>
+          <li><a class="panel-item">Release held slots</a></li>
+          <li><a class="panel-item">Restore removed slots</a></li>
+          <li><a class="panel-item">Separate combined slots</a></li>
         </ul>
       </div>
     </div>

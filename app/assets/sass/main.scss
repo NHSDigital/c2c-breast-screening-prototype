@@ -29,6 +29,23 @@
   align-items: baseline;
 }
 
+.app-link--error,
+.app-link--warning {
+  &,
+  &:visited {
+    color: $nhsuk-error-colour;
+  }
+
+  &:hover,
+  &:hover:visited {
+    color: nhsuk-shade($nhsuk-error-colour, 20%);
+  }
+
+  &:hover:active {
+    color: $nhsuk-text-colour;
+  }
+}
+
 // Batch (for now) view bar charts and legends
 
 .hatching--standard {

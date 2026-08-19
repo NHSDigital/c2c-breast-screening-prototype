@@ -5,6 +5,7 @@
   display: flex;
   @include nhsuk-responsive-margin(4, "top");
   @include nhsuk-responsive-padding(4, "bottom");
+  margin-bottom: 0;
   border-bottom: 2px solid nhsuk-colour("grey-4");
 
   & .--item:not(:first-child) {
@@ -16,10 +17,10 @@
   & .--item:not(:first-child)::before {
     content: "";
     position: absolute;
-    top: nhsuk-px-to-rem(8px);
+    bottom: nhsuk-px-to-rem(18px);
     left: 0;
-    width: 0.75rem;
-    height: 0.75rem;
+    width: 0.5rem;
+    height: 0.5rem;
     border-right: 2px solid $nhsuk-secondary-text-colour;
     border-bottom: 2px solid $nhsuk-secondary-text-colour;
     transform: rotate(-45deg);
