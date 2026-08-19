@@ -1,31 +1,51 @@
+// Import NHS.UK frontend library
+@use "nhsuk-frontend/dist/nhsuk/core" as *;
+
 .app-participant-table {
 
-  .nhsuk-table__body {
-    tr:nth-child(odd) {
-      background-color: rgba(224,228,230,.5);
-    }
-    tr:nth-child(even) {
-      background-color: transparent;
-    }
+  tbody td {
+    height: 116px;
+  }
+  tbody tr.--double td {
+    height: 232px;
+    background-image: 
+      repeating-linear-gradient(to right, nhsuk-colour("grey-4"), nhsuk-colour("grey-4") 6px, transparent 6px, transparent 12px);
+    background-position: 0 116px;
+    background-size: 100% 1px;
+    background-repeat: repeat-x;
+  }
+  tbody tr.--triple td {
+    height: 348px;
+    background-image: 
+      repeating-linear-gradient(to right, nhsuk-colour("grey-4"), nhsuk-colour("grey-4") 6px, transparent 6px, transparent 12px),
+      repeating-linear-gradient(to right, nhsuk-colour("grey-4"), nhsuk-colour("grey-4") 6px, transparent 6px, transparent 12px);
+    background-position: 0 116px, 0 232px;
+    background-size: 100% 1px;
+    background-repeat: repeat-x;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: rgba(224,228,230,.5);
+  }
+  tbody tr:nth-child(even) {
+    background-color: transparent;
+  }
+  
+  tbody tr.app-container-staff-break {
+    background: repeating-linear-gradient(130deg, nhsuk-colour("grey-4"), nhsuk-colour("grey-4") 1px, transparent 1px, transparent 12px);
   }
 
   th:first-child,
   td:first-child {
-    //padding-left: 6px;
+    padding-left: nhsuk-px-to-rem(44px);
   }
 
   td:has( > .nhsuk-checkboxes__item) {
+    padding-left: 6px;
     padding-right: 0;
     padding-top: 8px;
     width: 62px;
   }
 
-  .app-column-time {
-    width: 5rem;
-  }
-  .app-column-nhs-number {
-    text-align: right;
-    width: 10rem;
-  }
-
 }
+

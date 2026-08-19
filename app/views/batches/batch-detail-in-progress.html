@@ -164,9 +164,11 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
       <h2 class="nhsuk-heading-l">Batch progress</h2>
+      <progress class="app-progress-bar --generic" value="97" max="100">97%</progress>
+      <p class="nhsuk-u-secondary-text-colour">1341 of 1352 dealt with</p>
       <div class="app-simple-progress-bar --generic nhsuk-u-padding-2" style="--percentage: 97%;">
         {{ tag({
-          text: "1306 of 1352 dealt with",
+          text: "1341 of 1352 dealt with",
           classes: "nhsuk-tag--blue"
         }) }}
       </div>
@@ -181,6 +183,8 @@
   </div>
   <div class="nhsuk-grid-row nhsuk-u-margin-bottom-3">
     <div class="nhsuk-grid-column-two-thirds">
+      <progress class="app-progress-bar --standard" value="100" max="100">100%</progress>
+      <p class="nhsuk-u-secondary-text-colour">1330 of 1330 appointed</p>
       <div class="app-simple-progress-bar --standard nhsuk-u-padding-2" style="--percentage: 100%;">
         {{ tag({
           text: "1330 of 1330 appointed",
@@ -197,6 +201,8 @@
   </div>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
+      <progress class="app-progress-bar --special" value="50" max="100">50%</progress>
+      <p class="nhsuk-u-secondary-text-colour">6 of 12 appointed</p>
       <div class="app-simple-progress-bar --special nhsuk-u-padding-2" style="--percentage: 50%;">
         {{ tag({
           text: "6 of 12 appointed",
@@ -214,9 +220,11 @@
   </div>
   <div class="nhsuk-grid-row nhsuk-u-margin-bottom-3">
     <div class="nhsuk-grid-column-two-thirds">
-      <div class="app-simple-progress-bar --ceased nhsuk-u-padding-2" style="--percentage: 0%;">
+      <progress class="app-progress-bar --ceased" value="40" max="100">40%</progress>
+      <p class="nhsuk-u-secondary-text-colour">2 of 5 reconciled</p>
+      <div class="app-simple-progress-bar --ceased nhsuk-u-padding-2" style="--percentage: 40%;">
         {{ tag({
-          text: "0 of 5 reconciled",
+          text: "2 of 5 reconciled",
           classes: "nhsuk-tag--grey"
         }) }}
       </div>
@@ -230,9 +238,11 @@
   </div>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-      <div class="app-simple-progress-bar --vhr nhsuk-u-padding-2" style="--percentage: 0%;">
+      <progress class="app-progress-bar --vhr" value="60" max="100">60%</progress>
+      <p class="nhsuk-u-secondary-text-colour">3 of 5 reconciled</p>
+      <div class="app-simple-progress-bar --vhr nhsuk-u-padding-2" style="--percentage: 60%;">
         {{ tag({
-          text: "0 of 5 reconciled",
+          text: "3 of 5 reconciled",
           classes: "nhsuk-tag--red"
         }) }}
       </div>

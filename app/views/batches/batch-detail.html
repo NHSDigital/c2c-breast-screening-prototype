@@ -121,41 +121,6 @@
       {% endcall %}
     </div>
   </div>
-
-<!--
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      <h3 class="nhsuk-heading-s">Participant distribution by next test due date</h3>
-    </div>
-  </div>
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      <div class="app-batch-overview-sparkline">
-        <svg viewBox="0 0 960 64" width="960" height="64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:block;">
-          <defs>
-            <clipPath id="clip"><rect width="960" height="64"/></clipPath>
-          </defs>
-          <polygon points="0,64 0,26 96,24 192,10 288,28 384,38 480,12 576,30 672,40 768,26 864,24 960,24 960,64" fill="rgba(0,94,184,0.25)" clip-path="url(#clip)"/>
-          <polyline points="0,26 96,24 192,10 288,28 384,38 480,12 576,30 672,40 768,26 864,24 960,24" fill="none" stroke="#005eb8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" clip-path="url(#clip)"/>
-        </svg>
-      </div>
-      <div class="app-u-one-left-one-right nhsuk-u-margin-top-3">
-        <div>
-          <span class="nhsuk-caption-s">Earliest next test due date:</span>
-          <h3 class="nhsuk-heading-xs nhsuk-u-font-weight-normal">
-            28 February 2026
-          </h3>
-        </div>
-        <div>
-          <span class="nhsuk-caption-s">Latest:</span>
-          <h3 class="nhsuk-heading-xs nhsuk-u-font-weight-normal">
-            31 March 2026
-          </h3>
-        </div>
-      </div>
-    </div>
-  </div>
--->
 </section>
 
 <hr class="nhsuk-u-margin-0 nhsuk-u-margin-bottom-4">
@@ -164,6 +129,8 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
       <h2 class="nhsuk-heading-l">Batch progress</h2>
+      <progress class="app-progress-bar --generic" value="0" max="100">0%</progress>
+      <p class="nhsuk-u-secondary-text-colour">0 of 2172 dealt with</p>
       <div class="app-simple-progress-bar --generic nhsuk-u-padding-2" style="--percentage: 0%;">
         {{ tag({
           text: "0 of 2172 dealt with",
@@ -181,6 +148,8 @@
   </div>
   <div class="nhsuk-grid-row nhsuk-u-margin-bottom-3">
     <div class="nhsuk-grid-column-two-thirds">
+      <progress class="app-progress-bar --standard" value="0" max="100">0%</progress>
+      <p class="nhsuk-u-secondary-text-colour">0 of 2150 appointed</p>
       <div class="app-simple-progress-bar --standard nhsuk-u-padding-2" style="--percentage: 0%;">
         {{ tag({
           text: "0 of 2150 appointed",
@@ -197,6 +166,8 @@
   </div>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
+      <progress class="app-progress-bar --special" value="0" max="100">0%</progress>
+      <p class="nhsuk-u-secondary-text-colour">0 of 12 appointed</p>
       <div class="app-simple-progress-bar --special nhsuk-u-padding-2" style="--percentage: 0%;">
         {{ tag({
           text: "0 of 12 appointed",
@@ -214,6 +185,8 @@
   </div>
   <div class="nhsuk-grid-row nhsuk-u-margin-bottom-3">
     <div class="nhsuk-grid-column-two-thirds">
+      <progress class="app-progress-bar --ceased" value="0" max="100">0%</progress>
+      <p class="nhsuk-u-secondary-text-colour">0 of 5 reconciled</p>
       <div class="app-simple-progress-bar --ceased nhsuk-u-padding-2" style="--percentage: 0%;">
         {{ tag({
           text: "0 of 5 reconciled",
@@ -230,6 +203,8 @@
   </div>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
+      <progress class="app-progress-bar --vhr" value="0" max="100">0%</progress>
+      <p class="nhsuk-u-secondary-text-colour">0 of 5 reconciled</p>
       <div class="app-simple-progress-bar --vhr nhsuk-u-padding-2" style="--percentage: 0%;">
         {{ tag({
           text: "0 of 5 reconciled",

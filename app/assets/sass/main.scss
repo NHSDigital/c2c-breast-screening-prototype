@@ -9,11 +9,12 @@
 // https://github.com/NHSDigital/manage-breast-screening-prototype
 
 @forward "components/calendar-table";
-@forward "components/day-listing";
+@forward "components/clinic-level-breadcrumbs";
 @forward "components/inline-detailed-search";
 @forward "components/secondary-navigation";
 @forward "components/participant-table";
 //@forward "components/participant-search";
+@forward "components/progress-bar";
 @forward "components/workflow";
 
 //{% set containerClasses = "nhsuk-width-container-fluid" %}
@@ -28,16 +29,24 @@
   align-items: baseline;
 }
 
-// Batch (for now) view bar charts and legends
+.app-link--error,
+.app-link--warning {
+  &,
+  &:visited {
+    color: $nhsuk-error-colour;
+  }
 
-:root {
-  --generic-chart-hatch: repeating-linear-gradient(45deg, #005eb8, #005eb8 1px, #ccdff1 1px, #ccdff1 12px);
-  --standard-chart-hatch: repeating-linear-gradient(45deg, #004c23, #004c23 1px, #cce5d8 1px, #cce5d8 12px);
-  --special-chart-hatch: repeating-linear-gradient(-45deg, #4d3708, #4d3708 1px, #ffdc8e 1px, #ffdc8e 12px);
-  --ceased-chart-hatch: repeating-linear-gradient(90deg, #354550, #354550 1px, #dbe0e3 1px, #dbe0e3 12px);
-  --vhr-chart-hatch-1: repeating-linear-gradient(-45deg, #6b140e, #6b140e 1px, transparent 1px, transparent 12px);
-  --vhr-chart-hatch-2: repeating-linear-gradient(45deg, #6b140e, #6b140e 1px, #f7d4d1 1px, #f7d4d1 12px);
+  &:hover,
+  &:hover:visited {
+    color: nhsuk-shade($nhsuk-error-colour, 20%);
+  }
+
+  &:hover:active {
+    color: $nhsuk-text-colour;
+  }
 }
+
+// Batch (for now) view bar charts and legends
 
 .hatching--standard {
   background: var(--standard-chart-hatch)
@@ -49,56 +58,9 @@
   background: var(--ceased-chart-hatch)
 }
 .hatching--high-risk {
-  background: var(--vhr-chart-hatch-1), var(--vhr-chart-hatch-2)
+  background: var(--vhr-chart-hatch)
 }
 
-.app-chart-bar-segmented-horizontal {
-  margin: 0;
-  /* Turn the table tbody into a single horizontal bar */
-  tbody {
-    display: flex;
-    width: 100%;
-    min-height: 2rem;
-    overflow: hidden;
-  }
-  /* Each row becomes a segment, sized by its proportion of the total */
-  tbody tr {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    overflow: hidden;
-  }
-  /* Each row becomes a segment, sized by its proportion of the total */
-  tbody td {
-    padding: 0;
-  }
-}
-.app-chart-bar-segmented-horizontal--legend {
-  @include nhsuk-media-query($from: tablet) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: flex-start;
-
-    li {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 8px;
-    }
-  }
-  .swatch {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    flex-shrink: 0;
-    margin-right: 6px;
-    vertical-align: middle;
-  }
-}
-
-// alternate to stacked bar?
 .app-segmented-cards {
   .nhsuk-card__content {
     display: flex;
@@ -123,31 +85,4 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-}
-
-.app-simple-progress-bar {
-  width: 100%;
-  min-width: 200px;
-  outline: 1px solid #aeb7bd;
-
-  &.--thin {
-    min-height: 19px;
-  }
-
-  &.--generic {
-    background: var(--generic-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
-  }
-
-  &.--standard {
-    background: var(--standard-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
-  }
-  &.--special {
-    background: var(--special-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
-  }
-  &.--ceased {
-    background: var(--ceased-chart-hatch) 0 0 / var(--percentage) 100% no-repeat,#fff;
-  }
-  &.--vhr {
-    background: var(--vhr-chart-hatch-1) 0 0 / var(--percentage) 100% no-repeat, var(--vhr-chart-hatch-2) 0 0 / var(--percentage) 100% no-repeat,#fff;
-  }
 }

@@ -1,0 +1,957 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Day clinic view" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+  <nav>
+    <ol class="app-clinic-level-breadcrumbs nhsuk-list">
+      <li class="--item">
+        <span class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">Clinic</span>
+        <a href="clinic-detail">Worthing C2C test 1</a>
+      </li>
+      <li class="--item">
+        <span class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">Schedule</span>
+        <a href="clinic-detail">Rota 12</a>
+      </li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+      <h1 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-l">Tuesday</span>
+        1 September 2026
+        <!-- <span class="nhsuk-caption-l">Based on [template name] session template</span> -->
+      </h1>
+      <!-- <ul class="nhsuk-list">
+        <li>00 slots available to book</li>
+        <li>00 held slots</li>
+      </ul> -->
+    </div>
+    <div class="nhsuk-grid-column-one-quarter">
+      <!-- <h2 class="nhsuk-heading-s">Session actions:</h2>
+      <ul class="nhsuk-list">
+        <li>
+          <a href="#">Open all held slots</a>
+        </li>
+        <li>
+          <a href="#">Open held slots by type</a>
+        </li>
+        <li>
+          <a href="#">Append or prepend new slots</a>
+        </li>
+        <li>
+          <a href="#">Cancel this session</a>
+        </li>
+      </ul> -->
+      <p>
+        <a href="#" class="app-link--warning">Cancel this session</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible"> -->
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+
+      <p><a href="#">Prepend a new slot</a></p>
+
+      <table class="nhsuk-table app-participant-table nhsuk-table-responsive">
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <th scope="col" class="nhsuk-table__header app-column-time">
+              Time
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Participant
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Date of birth
+            </th>
+            <th scope="col"class="nhsuk-table__header">
+              <span class="nhsuk-u-visually-hidden">Primary action</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="nhsuk-table__body nhsuk-checkboxes nhsuk-checkboxes--small">
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              08:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 08:40</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Joanne Marquardt</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 054 3666</div>
+              <span class="nhsuk-tag nhsuk-tag--yellow">
+                Special appointment
+              </span><br>
+              <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a special appointment</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              15 March 1960
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(66 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId1}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId1}">
+                  08:40 <span class="slot-end nhsuk-u-secondary-text-colour  nhsuk-u-font-size-16">to 08:50</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="2" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--orange">
+                Held
+              </span><br>
+              <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a non-standard hold</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Release slot</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row --double">
+            <td class="nhsuk-table__cell">
+              08:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 09:10</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Daphne Hart</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 374 0952</div>
+              <span class="nhsuk-tag nhsuk-tag--yellow">
+                Special appointment 2 slots
+              </span><br>
+              <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a special appointment</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              22 July 1958
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(67 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              09:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 09:20</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Marta O'Neill</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 195 4836</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              3 May 1971
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(55 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+
+
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              09:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 09:30</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Susan Carter</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 287 9305</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              19 September 1967
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(58 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              09:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 09:40</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Olivia Barnes</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 463 1129</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              12 January 1975
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(51 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              09:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 09:50</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rachel Price</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 774 2201</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              27 April 1962
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(64 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              09:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 10:00</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Hannah Wallace</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 546 8870</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              6 October 1959
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(66 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              10:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 10:10</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Fiona Lambert</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 559 3322</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              14 December 1973
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(52 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              10:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 10:20</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Georgia Mills</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 804 7753</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              30 June 1968
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(58 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              10:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 10:30</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Alice Marie Gregory</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 582 7164</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              8 November 1964
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(61 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              10:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 10:40</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Elaine Fox</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 290 4601</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              11 February 1976
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(50 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              10:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 10:50</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Tessa King</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 613 2084</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              25 August 1963
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(62 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              10:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 11:00</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Nadia Singh</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 118 9756</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              7 April 1957
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(69 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              11:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 11:10</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Jane Reed</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 039 6617</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              18 November 1970
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(55 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              11:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 11:20</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Laura White</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 259 1148</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              29 May 1965
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(61 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              11:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 11:30</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Marissa Young</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 880 3320</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              9 March 1961
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(65 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              11:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 11:40</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Naomi Bell</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 901 7732</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              21 September 1974
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(51 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              11:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 11:50</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Paige Long</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 216 5087</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              4 July 1969
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(57 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              11:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:00</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Catherine Wood</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 487 9901</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              16 January 1956
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(70 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+
+          <tr class="nhsuk-table__row app-container-staff-break">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId2}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId2}">
+                  12:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:10</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="3" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--grey">
+                Staff break
+              </span>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row app-container-staff-break">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId3}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId3}">
+                  12:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:20</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="3" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--grey">
+                Staff break
+              </span>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row app-container-staff-break">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId4}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId4}">
+                  12:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:30</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="3" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--grey">
+                Staff break
+              </span>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row app-container-staff-break">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId5}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId5}">
+                  12:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:40</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="3" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--grey">
+                Staff break
+              </span>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row app-container-staff-break">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId6}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId6}">
+                  12:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:50</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="3" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--grey">
+                Staff break
+              </span>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row app-container-staff-break">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId7}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId7}">
+                  12:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 13:00</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="3" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--grey">
+                Staff break
+              </span>
+            </td>
+          </tr>
+
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              13:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 13:10</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Victoria Hale</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 603 1774</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              13 October 1966
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(59 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              13:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 13:20</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Imogen Frost</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 905 6423</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              31 December 1972
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(53 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              13:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 13:30</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Dara Moss</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 332 1108</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              24 June 1960
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(66 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              13:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 13:40</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Sophie Hartley</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 427 5930</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              2 August 1962
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(64 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              13:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 13:50</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Emma Cole</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 218 3446</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              17 April 1975
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(51 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              13:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 14:00</span>
+            </td>
+            <td colspan="2" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--orange">
+                Held
+              </span><br>
+              <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a non-standard hold</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              14:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 14:10</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Mia Ford</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 678 2209</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              19 May 1972
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(54 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId8}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId8}">
+                  14:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 14:20</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="2" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--orange">
+                Held
+              </span><br>
+              <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a non-standard hold</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              14:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 14:30</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Ariana Miles</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 244 1196</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              28 November 1959
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(66 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              14:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 14:40</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Bethany Cross</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 883 4455</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              7 July 1975
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(51 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId9}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId9}">
+                  14:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 14:50</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="2" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--orange">
+                Held
+              </span><br>
+              <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a non-standard hold</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              14:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 15:00</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Helena Rowe</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 439 3321</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              2 April 1963
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(63 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              15:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 15:10</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Danielle Nash</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 210 5587</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              23 June 1970
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(56 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              15:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 15:20</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Faye Turner</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 619 4470</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              8 January 1957
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(69 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              15:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 15:30</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Leona Grant</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 908 2233</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              15 October 1974
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(51 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              15:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 15:40</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Nora Blake</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 776 9904</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              30 December 1966
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(59 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              15:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 15:50</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Olivia Lee</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 665 8805</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              19 August 1960
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(66 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              15:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:00</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Priya Desai</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 554 7706</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              10 May 1973
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(53 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              16:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:10</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Quinn Park</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 443 6607</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              26 March 1964
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(62 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              16:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:20</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rosa Kirk</a>
+              <div class="nhsuk-u-secondary-text-colour">NHS: 999 332 5508</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              13 July 1958
+              <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(68 years)</div>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Rebook participant</a>
+            </td>
+          </tr>
+
+          <tr class="nhsuk-table__row app-container-available">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId10}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId10}">
+                  16:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:30</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="2" class="nhsuk-table__cell">
+              <strong class="nhsuk-tag nhsuk-tag--green">
+                Available
+              </strong>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Book appointment</a>
+            </td>
+          </tr>
+
+          <tr class="nhsuk-table__row app-container-available">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId11}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId11}">
+                  16:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:40</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="2" class="nhsuk-table__cell">
+              <strong class="nhsuk-tag nhsuk-tag--green">
+                Available
+              </strong>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Book appointment</a>
+            </td>
+          </tr>
+
+          <tr class="nhsuk-table__row app-container-available">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId12}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId12}">
+                  16:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:50</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="2" class="nhsuk-table__cell">
+              <strong class="nhsuk-tag nhsuk-tag--green">
+                Available
+              </strong>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Book appointment</a>
+            </td>
+          </tr>
+
+          <tr class="nhsuk-table__row app-container-available">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId13}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId13}">
+                  16:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 17:00</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="2" class="nhsuk-table__cell">
+              <strong class="nhsuk-tag nhsuk-tag--green">
+                Available
+              </strong>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Book appointment</a>
+            </td>
+          </tr>
+
+          <tr class="nhsuk-table__row --triple app-container-available">
+            <td class="nhsuk-table__cell">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="${slotId14}" name="slots[]" type="checkbox" value="${i}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId14}">
+                  17:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 17:30</span>
+                </label>
+              </div>
+            </td>
+            <td colspan="2" class="nhsuk-table__cell">
+              <span class="nhsuk-tag nhsuk-tag--yellow">
+                Special appointment 3 slots
+              </span>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Book appointment</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><a href="#">Append a new slot</a></p>
+      
+    </div>
+
+    <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
+      <div class="side-panel" id="side-panel">
+        <h3 class="nhsuk-heading-s">Change slots</h3>
+        <div class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-2">With selected:</div>
+        <ul class="nhsuk-list">
+          <li><a class="panel-item">Hold slots</a></li>
+          <li><a class="panel-item">Remove slots</a></li>
+          <li><a class="panel-item">Combine slots</a></li>
+        </ul>
+        <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+        <ul class="nhsuk-list">
+          <li><a class="panel-item">Release held slots</a></li>
+          <li><a class="panel-item">Restore removed slots</a></li>
+          <li><a class="panel-item">Separate combined slots</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}
