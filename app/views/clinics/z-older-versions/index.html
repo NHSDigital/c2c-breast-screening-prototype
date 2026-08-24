@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Clinics" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+  {% set secondaryNavItems = [] %}
+
+  {% for item in [
+    { href: '/clinics/', label: 'Active clinics', selected: 'true' },
+    { href: '#', label: 'Archived clinics' },
+    { href: '/sessions/templating-01-listing', label: 'Session templates' }
+  ] %}
+    {% set secondaryNavItems = secondaryNavItems | push({
+      text: item.label | safe,
+      href: item.href | trim,
+      current: true if item.selected == 'true'
+    }) %}
+  {% endfor %}
+
+  {{ appSecondaryNavigation({
+    visuallyHiddenTitle: "Secondary menu",
+    items: secondaryNavItems
+  }) }}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="app-card-editable">
+        <h1 class="nhsuk-heading-l">Active clinics</h1>
+        {{ button({
+          text: "Create a new clinic",
+          href: "00-create-day-clinic",
+          classes: "nhsuk-button--secondary"
+        }) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% include "_includes/clinics/clinic-listing-table.html"%}
+    </div>
+  </div>
+
+{% endblock %}
