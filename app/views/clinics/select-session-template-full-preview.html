@@ -1,0 +1,476 @@
+{% extends 'layout.html' %}
+{% block header %}{% endblock %}
+
+{% block beforeContent %}
+<a class="nhsuk-back-link" href="#">
+  Back
+</a>
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+  .slot {
+    background-color: #fff;
+    border: 1px solid #212b32;
+    padding-left: 8px;
+    user-select: none;
+    margin-bottom: 12px;
+  }
+
+  /* Special to this file right now sorry! */
+  .slot > div:first-child {
+    min-height: 42px;
+    padding-top: 6px;
+    display: flex;
+    align-items: baseline;
+  }
+  .slot-time {
+    margin-right: 0.4em;
+  }
+  /* END Special to this file right now sorry! */
+
+  .slot-end { font-size: 16px; margin-right: 1rem; }
+  .slot-tag { font-size: 16px; margin-left: 1rem; }
+  
+  .slot.is-hold {}
+  .slot.is-staff-break {
+    background: transparent;
+    border-style: dashed;
+  }
+  .slot.is-special-appointment {}
+
+  .slot.is-merged {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  .slot.is-merged-child  {
+    border-top: 1px dashed #212b32;
+    height: 42px;
+  }
+  .slot.is-merged-child > div { 
+    display: none;
+  }
+  .slot.is-merged-last-child { 
+    border-bottom: 1px solid #212b32;
+    margin-bottom: 12px;
+  }
+
+  .slot.is-staff-break.is-merged-last-child {
+    border-bottom-style: dashed;
+  }
+
+  .slot.is-merged-child > .slot-time,
+  .slot.is-merged-child > .slot-end {
+    display: none;
+  }
+
+  /* .slot .nhsuk-checkboxes__label {
+    width: 100%;
+  } */
+</style>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-two-thirds">
+
+    <div class="nhsuk-u-reading-width">
+      <h1 class="nhsuk-u-visually-hidden">Session template full preview</h1>
+      <h2 class="nhsuk-heading-m">
+        <span class="nhsuk-caption-m">Session time</span>
+        {{ data.newSession.startTime.hour | zeroPad }}:{{ data.newSession.startTime.minute | zeroPad }} to {{ data.newSession.endTime.hour | zeroPad }}:{{ data.newSession.endTime.minute | zeroPad }}
+      </h2>
+    </div>
+
+    <div id="slots-container" class="">
+      <div class="slot is-merged is-special-appointment">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">09:00</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 09:20</span>
+          <span class="slot-tag"><span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span></span>
+          <span class="slot-tag">Merged (2)</span>
+        </div>
+      </div>
+      <div class="slot is-merged is-special-appointment is-merged-child is-merged-last-child">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">09:10</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 09:20</span>
+    
+          <span class="slot-tag">Merged (1)</span>
+        </div>
+      </div>
+      <div class="slot is-merged is-special-appointment">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">09:20</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 09:40</span>
+          <span class="slot-tag"><span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span></span>
+          <span class="slot-tag">Merged (2)</span>
+        </div>
+      </div>
+      <div class="slot is-merged is-special-appointment is-merged-child is-merged-last-child">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">09:30</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 09:40</span>
+    
+          <span class="slot-tag">Merged (1)</span>
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">09:40</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 09:50</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">09:50</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 10:00</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">10:00</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 10:10</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">10:10</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 10:20</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">10:20</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 10:30</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">10:30</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 10:40</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">10:40</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 10:50</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">10:50</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 11:00</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">11:00</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 11:10</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">11:10</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 11:20</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">11:20</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 11:30</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">11:30</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 11:40</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">11:40</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 11:50</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">11:50</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 12:00</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">12:00</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 12:10</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">12:10</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 12:20</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">12:20</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 12:30</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">12:30</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 12:40</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">12:40</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 12:50</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">12:50</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 13:00</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot is-merged is-staff-break">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">13:00</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 14:00</span>
+          <span class="slot-tag"><span class="nhsuk-tag nhsuk-tag--grey">Staff break</span></span>
+          <span class="slot-tag">Merged (6)</span>
+        </div>
+      </div>
+      <div class="slot is-merged is-staff-break is-merged-child">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">13:10</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 13:20</span>
+    
+          <span class="slot-tag">Merged (1)</span>
+        </div>
+      </div>
+      <div class="slot is-merged is-staff-break is-merged-child">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">13:20</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 13:30</span>
+    
+          <span class="slot-tag">Merged (1)</span>
+        </div>
+      </div>
+      <div class="slot is-merged is-staff-break is-merged-child">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">13:30</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 13:40</span>
+    
+          <span class="slot-tag">Merged (1)</span>
+        </div>
+      </div>
+      <div class="slot is-merged is-staff-break is-merged-child">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">13:40</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 13:50</span>
+    
+          <span class="slot-tag">Merged (1)</span>
+        </div>
+      </div>
+      <div class="slot is-merged is-staff-break is-merged-child is-merged-last-child">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">13:50</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 14:00</span>
+    
+          <span class="slot-tag">Merged (1)</span>
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">14:00</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 14:10</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">14:10</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 14:20</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">14:20</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 14:30</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">14:30</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 14:40</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">14:40</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 14:50</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">14:50</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 15:00</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">15:00</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 15:10</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">15:10</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 15:20</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">15:20</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 15:30</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">15:30</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 15:40</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">15:40</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 15:50</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">15:50</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 16:00</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">16:00</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 16:10</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">16:10</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 16:20</span>
+    
+    
+        </div>
+      </div>
+      <div class="slot is-hold">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">16:20</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 16:30</span>
+          <span class="slot-tag"><span class="nhsuk-tag nhsuk-tag--grey">Held</span></span>
+    
+        </div>
+      </div>
+      <div class="slot is-hold">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">16:30</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 16:40</span>
+          <span class="slot-tag"><span class="nhsuk-tag nhsuk-tag--grey">Held</span></span>
+    
+        </div>
+      </div>
+      <div class="slot is-hold">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">16:40</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 16:50</span>
+          <span class="slot-tag"><span class="nhsuk-tag nhsuk-tag--grey">Held</span></span>
+    
+        </div>
+      </div>
+      <div class="slot is-hold">
+        <div>
+          <span class="slot-time nhsuk-u-font-size-19">16:50</span>
+          <span class="slot-end nhsuk-u-secondary-text-colour">to 17:00</span>
+          <span class="slot-tag"><span class="nhsuk-tag nhsuk-tag--grey">Held</span></span>
+    
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+{% block footer %}{% endblock %}
