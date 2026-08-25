@@ -11,8 +11,185 @@
 
 {% block content %}
 <div class="nhsuk-grid-row">
-  <div class="nhsuk-grid-column-full-width">
-    This bee the template picky page
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          Pop sessions into schedule
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">
+                1
+              </span>
+              <span class="app-workflow-side-nav__label">Picky thing</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Picky thing</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">etc</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+
+  <div class="nhsuk-grid-column-three-quarters">
+    <h1 class="nhsuk-heading-l">Choose session template</h1>
+
+    <div class="nhsuk-card nhsuk-u-padding-4 nhsuk-u-padding-bottom-0">
+      <div class="app-card-editable">
+        <h2 class="nhsuk-heading-s">
+          Standard day
+        </h2>
+        <a href="#" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+          Select this template
+        </a>
+      </div>
+      <div class="app-template-card">
+        <div>
+          <img src="/assets/images/placeholder-session-template.png" class="preview-image">
+        </div>
+        <div>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Total capacity
+              </dt>
+              <dd class="nhsuk-summary-list__value">
+                42 slots
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key">
+                Time
+              </dt>
+              <dd class="nhsuk-summary-list__value">
+                09:00 to 17:00
+              </dd>
+            </div>
+          </dl>
+          <div>
+            <a href="#">Show full template preview</a>
+          </div>
+        </div>
+        <div>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-0">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Slot length
+              </dt>
+              <dd class="nhsuk-summary-list__value">
+                10 minutes
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key">
+                Total held
+              </dt>
+              <dd class="nhsuk-summary-list__value">
+                8 slots
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key">
+                Total cancelled
+              </dt>
+              <dd class="nhsuk-summary-list__value">
+                6 slots
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="nhsuk-card nhsuk-u-padding-4 nhsuk-u-padding-bottom-0">
+      <div class="app-card-editable">
+        <h2 class="nhsuk-heading-s">
+          Special appointments day
+        </h2>
+        <a href="#" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+          Select this template
+        </a>
+      </div>
+      <div class="app-template-card">
+        <div>
+          <img src="/assets/images/placeholder-session-template-special-held.png" class="preview-image">
+        </div>
+        <div>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Total capacity
+              </dt>
+              <dd class="nhsuk-summary-list__value">
+                42 slots
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key">
+                Time
+              </dt>
+              <dd class="nhsuk-summary-list__value">
+                09:00 to 17:00
+              </dd>
+            </div>
+          </dl>
+          <div>
+            <a href="#">Show full template preview</a>
+          </div>
+        </div>
+        <div>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-0">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Slot length
+              </dt>
+              <dd class="nhsuk-summary-list__value">
+                10 minutes
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key">
+                Total held
+              </dt>
+              <dd class="nhsuk-summary-list__value">
+                42 slots
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key">
+                Total cancelled
+              </dt>
+              <dd class="nhsuk-summary-list__value">
+                6 slots
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+
+    <p>
+      <a href="#">Create new session template</a>
+    </p>
+
   </div>
 </div>
 {% endblock %}
