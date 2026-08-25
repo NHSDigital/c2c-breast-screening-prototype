@@ -25,6 +25,10 @@
   width: 1280px;
 }
 
+a {
+  @extend .nhsuk-link--no-visited-state;
+}
+
 .app-card-editable {
   display: flex;
   justify-content: space-between;
