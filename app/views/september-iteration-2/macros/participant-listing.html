@@ -3,7 +3,8 @@
     <caption>
       {% set totalCount = options.totalCount or options.participants.length %}
       {% if options.mode == "search" %}
-        <span class="nhsuk-body">{{ totalCount }} participant{% if totalCount != 1 %}s{% endif %} found</span>
+        <span class="nhsuk-body">
+          {% if totalCount === 0 %}No{% else %}{{ totalCount }}{% endif %} participant{% if totalCount != 1 %}s{% endif %} found</span>
       {% else %}
         <span class="nhsuk-body">{{ totalCount }} participants</span>
       {% endif %}
