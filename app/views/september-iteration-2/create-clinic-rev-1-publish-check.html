@@ -71,7 +71,8 @@
           <dd class="nhsuk-summary-list__value">
             {{ data.clinicDate | formatDate }}<br>
             {{ data.newSession.startTime.hour | zeroPad }}:{{ data.newSession.startTime.minute | zeroPad }} to {{ data.newSession.endTime.hour | zeroPad }}:{{ data.newSession.endTime.minute | zeroPad }}<br>
-            {{ data.newSession.duration }} minute slot length
+            {{ data.newSession.duration }} minute slot length<br>
+            {{ data.clinicCapacityTotal }} total capacity
           </dd>
           <dd class="nhsuk-summary-list__actions">
             <a class="nhsuk-link" href="#">Change<span class="nhsuk-u-visually-hidden"> date and time</span></a>
