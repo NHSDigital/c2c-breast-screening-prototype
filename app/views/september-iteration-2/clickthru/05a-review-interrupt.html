@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Assign slots to participants" %}
+
+{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation() }}
+{% endblock %}
+
+{% block beforeContent %}
+<a class="nhsuk-back-link" href="#">
+  Back
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-two-thirds">
+
+    <div class="nhsuk-panel nhsuk-panel--interruption">
+      <h1 class="nhsuk-panel__heading nhsuk-panel__heading--l">
+        2 slots remaining
+      </h1>
+      <div class="nhsuk-panel__body">
+        <p>
+          You are booking 8 participants into Test Clinic which has 10 slots available.
+        </p>
+        <p>Do you want to go back and add participants?</p>
+        <div class="nhsuk-button-group">
+          <a class="nhsuk-button nhsuk-button--reverse" data-module="nhsuk-button" href="#" role="button" draggable="false">
+            Go back
+          </a>
+          <a href="#">I’m happy, continue</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}
