@@ -35,10 +35,10 @@
           </span>
         </summary>
         <div class="nhsuk-details__text">
-          <table class="nhsuk-table app-participant-table">
+          <table class="nhsuk-table nhsuk-table--striped">
             <thead class="nhsuk-table__head">
               <tr class="nhsuk-table__row">
-                <th scope="col" class="nhsuk-table__header app-column-nhs-number">
+                <th scope="col" class="nhsuk-table__header">
                   NHS Number
                 </th>
                 <th scope="col" class="nhsuk-table__header">
@@ -53,7 +53,7 @@
               {% for participant in data.participants.default %}
                 {% if participant.status === "staged" %}
                   <tr class="nhsuk-table__row">
-                    <td class="nhsuk-table__cell nhsuk-table__cell--numeric">{{ participant.nhs_number }}</td>
+                    <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
                     <td class="nhsuk-table__cell">{{ participant.full_name }}</td>
                     <td class="nhsuk-table__cell">{{ participant.date_of_birth }}</td>
                   </tr>
