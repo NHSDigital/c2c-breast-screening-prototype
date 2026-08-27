@@ -13,6 +13,6 @@ module.exports = {
   clinicTimespan: "1 September 2026",
   clinicLength: "1 day",
   clinicCapacityPercentBooked: "0",
-  clinicCapacityAvailable: "48",
-  clinicCapacityTotal: "48"
+  clinicCapacityAvailable: "10",
+  clinicCapacityTotal: "10"
 }
