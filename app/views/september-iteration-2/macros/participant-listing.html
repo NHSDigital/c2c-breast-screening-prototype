@@ -1,16 +1,17 @@
 {% macro participant_listing(options) %}
-  <table id="search-results" class="nhsuk-table app-participant-table">
+  <table id="search-results" class="nhsuk-table nhsuk-table--striped">
     <caption>
       {% set totalCount = options.totalCount or options.participants.length %}
       {% if options.mode == "search" %}
-        <span class="nhsuk-body">{{ totalCount }} participant{% if totalCount != 1 %}s{% endif %} found</span>
+        <span class="nhsuk-body">
+          {% if totalCount === 0 %}No{% else %}{{ totalCount }}{% endif %} participant{% if totalCount != 1 %}s{% endif %} found</span>
       {% else %}
         <span class="nhsuk-body">{{ totalCount }} participants</span>
       {% endif %}
     </caption>
     <thead class="nhsuk-table__head">
       <tr class="nhsuk-table__row">
-        <th scope="col" class="nhsuk-table__header app-column-nhs-number">
+        <th scope="col" class="nhsuk-table__header">
           NHS Number
         </th>
         <th scope="col" class="nhsuk-table__header">
@@ -30,7 +31,7 @@
     <tbody class="nhsuk-table__body">
       {% for participant in options.participants %}
         <tr class="nhsuk-table__row">
-          <td class="nhsuk-table__cell nhsuk-table__cell--numeric">{{ participant.nhs_number }}</td>
+          <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
           <td class="nhsuk-table__cell">{{ participant.full_name }}</td>
           <td class="nhsuk-table__cell">{{ participant.date_of_birth }}</td>
           <td class="nhsuk-table__cell">
@@ -40,12 +41,15 @@
               <strong class="nhsuk-tag nhsuk-tag--blue">
                 Ready to book
               </strong>
+              <!-- <strong class="nhsuk-tag nhsuk-tag--green">
+                Booked
+              </strong> -->
             {% endif %}
           </td>
           <td class="nhsuk-table__cell">
             {% set participantId = participant.participantId or loop.index0 %}
             {% if participant.status == "unstaged" %}
-              <a href="/action/stage/{{ participantId }}">Add</a>
+              <a href="/action/stage/{{ participantId }}" class="nhsuk-button nhsuk-button--secondary-solid nhsuk-button--small nhsuk-u-margin-0">Add</a>
             {% else %}
               <a href="/action/unstage/{{ participantId }}">Remove</a>
             {% endif %}

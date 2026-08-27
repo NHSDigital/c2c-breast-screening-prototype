@@ -15,12 +15,18 @@
 @forward "components/participant-table";
 //@forward "components/participant-search";
 @forward "components/progress-bar";
+@forward "components/template-card";
+@forward "components/template-preview-dialog";
 @forward "components/workflow";
 
 //{% set containerClasses = "nhsuk-width-container-fluid" %}
 // Add your custom CSS/Sass styles below.
 .app-width-extended {
   width: 1280px;
+}
+
+a {
+  @extend .nhsuk-link--no-visited-state;
 }
 
 .app-card-editable {

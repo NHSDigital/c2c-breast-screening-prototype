@@ -8,19 +8,15 @@
         <p>
           {{ data.stagedCount }} participant{% if data.stagedCount > 1 %}s{% endif %} ready to book
         </p>
+        <a class="nhsuk-action-link" href="05-review">
+          <svg class="nhsuk-icon nhsuk-icon--arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+            <path d="M12 2a10 10 0 0 0-10 9h11.7l-4-4a1 1 0 0 1 1.5-1.4l5.6 5.7a1 1 0 0 1 0 1.4l-5.6 5.7a1 1 0 0 1-1.5 0 1 1 0 0 1 0-1.4l4-4H2A10 10 0 1 0 12 2z" />
+          </svg>
+          <span class="nhsuk-action-link__text">
+            Proceed to book participants
+          </span>
+        </a>
       {% endif %}
     </div>
   </div>
-</div>
-
-<div class="nhsuk-u-reading-width">
-  {% if data.stagedCount === 0 %}
-    <a class="nhsuk-button" href="javascript: return false;" style="opacity: 0.5;">
-      Book participants
-    </a>
-  {% else %}
-    <a class="nhsuk-button" href="05-review">
-      Book participants
-    </a>
-  {% endif %}
 </div>

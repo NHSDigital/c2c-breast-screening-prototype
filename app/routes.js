@@ -344,58 +344,6 @@ router.get(['/clinics-schedules/06-apply-session', OLDER_VERSIONS_PREFIX + '06-a
   res.render(clinicsScheduleView(req, '06-apply-session'))
 })
 
-router.get('/september-iteration-2/clickthru/04a-example-search-result', function (req, res) {
-  const query = (req.query['search-params'] || '').trim()
-  const allParticipants = (req.session.data.participants && req.session.data.participants.default) || []
-  const normalizedQuery = query.toLowerCase().replace(/\s+/g, ' ')
-  const nhsQuery = normalizedQuery.replace(/\s+/g, '')
-
-  const searchResults = (normalizedQuery ? allParticipants.map((participant, index) => {
-    const nhs = participant.nhs_number.toLowerCase().replace(/\s+/g, '')
-    const name = participant.full_name.toLowerCase()
-    const dob = participant.date_of_birth.toLowerCase()
-
-    if (
-      nhs.includes(nhsQuery) ||
-      name.includes(normalizedQuery) ||
-      dob.includes(normalizedQuery)
-    ) {
-      return Object.assign({}, participant, { participantIndex: index })
-    }
-
-    return null
-  }).filter(Boolean) : allParticipants.map((participant, index) => Object.assign({}, participant, { participantIndex: index })))
-
-  res.render('september-iteration-2/clickthru/04a-example-search-result', {
-    participants: searchResults,
-    searchQuery: query
-  })
-})
-
-router.get('/action/stage/:participantId', function (req, res) {
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
-  const participantIndex = participants.findIndex((participant) => participant.participantId === req.params.participantId)
-
-  if (participantIndex !== -1) {
-    participants[participantIndex].status = 'staged'
-    req.session.data.stagedCount++
-  }
-
-  res.redirect(req.get('referer') || '/september-iteration-2/clickthru/04-choose-participants')
-});
-
-router.get('/action/unstage/:participantId', function (req, res) {
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
-  const participantIndex = participants.findIndex((participant) => participant.participantId === req.params.participantId)
-
-  if (participantIndex !== -1) {
-    participants[participantIndex].status = 'unstaged'
-    req.session.data.stagedCount--
-  }
-
-  res.redirect(req.get('referer') || '/september-iteration-2/clickthru/04-choose-participants')
-});
-
 // ====== session setup handlers
 
 const isWholeNumber = str => /^\d+$/.test(str)
@@ -764,28 +712,6 @@ router.get(['/clinics-schedules/09-prototype-end', OLDER_VERSIONS_PREFIX + '09-p
   res.render(clinicsScheduleView(req, '09-prototype-end'))
 })
 
-router.get('/action/stage/:participantId', function (req, res) {
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
-  const participantIndex = participants.findIndex((participant) => participant.participantId === req.params.participantId)
-
-  if (participantIndex !== -1) {
-    participants[participantIndex].status = 'staged'
-    req.session.data.stagedCount++
-  }
-
-  res.redirect(req.get('referer') || '/september-iteration-2/clickthru/04-choose-participants')
-});
-
-router.get('/action/unstage/:participantId', function (req, res) {
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
-  const participantIndex = participants.findIndex((participant) => participant.participantId === req.params.participantId)
-
-  if (participantIndex !== -1) {
-    participants[participantIndex].status = 'unstaged'
-    req.session.data.stagedCount--
-  }
-})
-
 router.post('/sessions/02-organise-slots', function (req, res) {
   if (req.session.data.sessionCreationType === 'new session template') {
     res.redirect('/sessions/templating-03-name-and-description')
@@ -793,5 +719,9 @@ router.post('/sessions/02-organise-slots', function (req, res) {
     res.redirect('/sessions/03-prototype-end')
   }
 })
+
+
+// Isolated September Test (Mission 1) routes
+router.use(require('./routes/mission-1'));
 
 module.exports = router

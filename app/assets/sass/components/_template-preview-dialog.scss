@@ -1,0 +1,53 @@
+// Import NHS.UK frontend library
+@use "nhsuk-frontend/dist/nhsuk/core" as *;
+
+.app-template-preview-dialog {
+  position: fixed;
+  inset: 0;
+  width: 90vw;
+  max-width: 960px;
+  height: 90vh;
+  margin: 5vh auto;
+  padding: 0;
+  border: none;
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  &__content {
+    position: relative;
+  }
+
+  &__close {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    width: nhsuk-spacing(7);
+    height: nhsuk-spacing(7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: nhsuk-colour("white");
+    background-color: nhsuk-colour("black");
+    border: 0;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+
+
+    &:focus {
+      background-color: $nhsuk-focus-colour;
+      color: $nhsuk-focus-text-colour;
+      outline: $nhsuk-border-width solid $nhsuk-focus-text-colour;
+      outline-offset: 0;
+    }
+  }
+
+  &__frame {
+    width: 100%;
+    height: 90vh;
+    border: none;
+  }
+}
