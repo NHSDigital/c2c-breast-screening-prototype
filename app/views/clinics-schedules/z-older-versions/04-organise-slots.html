@@ -1,0 +1,652 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Create session: organise slots" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<style>
+
+  .slot {
+    background-color: #fff;
+    border: 1px solid #212b32;
+    padding-left: 8px;
+    user-select: none;
+    margin-bottom: 12px;
+  }
+
+  .slot-end { font-size: 16px; margin-right: 1rem; }
+  .slot-tag { font-size: 16px; margin-left: 1rem; }
+  
+  .slot.is-hold {}
+  .slot.is-staff-break {
+    background: transparent;
+    border-style: dashed;
+  }
+  .slot.is-special-appointment {}
+
+  .slot.is-merged {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  .slot.is-merged-child  {
+    border-top: 1px dashed #212b32;
+    height: 42px;
+  }
+  .slot.is-merged-child > .nhsuk-checkboxes__item { 
+    display: none;
+  }
+  .slot.is-merged-last-child { 
+    border-bottom: 1px solid #212b32;
+    margin-bottom: 12px;
+  }
+
+  .slot.is-staff-break.is-merged-last-child {
+    border-bottom-style: dashed;
+  }
+
+  .slot.is-merged-child > .slot-time,
+  .slot.is-merged-child > .slot-end {
+    display: none;
+  }
+
+  .slot .nhsuk-checkboxes__label {
+    width: 100%;
+  }
+
+  .panel-item { display: block; cursor: pointer; }
+  .panel-item.disabled { opacity: 0.38; cursor: default; pointer-events: none; }
+</style>
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          Create a clinic 
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="00-clinic-details">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Clinic details</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-create-schedule">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Create schedule</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="03-create-session">
+              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
+              <span class="app-workflow-side-nav__label">Create session</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">Organise slots</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">5</span>
+              <span class="app-workflow-side-nav__label">Apply session dates</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">6</span>
+              <span class="app-workflow-side-nav__label">Publish clinic</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+
+    <div class="nhsuk-u-reading-width">
+      <h1 class="nhsuk-heading-l">Organise slots</h1>
+      <h2 class="nhsuk-heading-m">
+        <span class="nhsuk-caption-m">Session time</span>
+        {{ data.newSession.startTime.hour | zeroPad }}:{{ data.newSession.startTime.minute | zeroPad }} to {{ data.newSession.endTime.hour | zeroPad }}:{{ data.newSession.endTime.minute | zeroPad }}
+      </h2>
+    </div>
+
+    <form action="05-save-as-template" method="post">
+
+      <input type="hidden" name="slotsAvailableCount">
+      <input type="hidden" name="slotsSpecialAvailableCount">
+      <input type="hidden" name="slotsHeldCount">
+      <input type="hidden" name="slotSummaryRowsJson">
+      <input type="hidden" name="slotDataJson">
+      
+      <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">
+        Click to select a slot. Hold shift and click to select a range.
+      </p>
+
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-three-quarters">
+          <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes"></div>
+        </div>
+        <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
+          <div class="side-panel" id="side-panel">
+            <h3 class="nhsuk-heading-s">With selected:</h3>
+            <ul class="nhsuk-list">
+              <li><a class="panel-item" id="panel-hold">Hold</a></li>
+              <li><a class="panel-item" id="panel-staff-break">Staff break</a></li>
+              <li><a class="panel-item" id="panel-special-appointment">Special appointment</a></li>
+              <li class="nhsuk-u-margin-top-4"><a class="panel-item app-link--error" id="panel-clear-type">Clear slot type</a></li>
+            </ul>
+            <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+            <ul class="nhsuk-list">
+              <li><a class="panel-item" id="panel-merge">Merge selected</a></li>
+              <li><a class="panel-item" id="panel-unmerge">Unmerge</a></li>
+            </ul>
+          </div>
+          <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+          <p>
+            <span id="available-slots">{{ data.newSession.totalSlots }}</span> slots available
+          </p>
+          <p>
+            <button class="nhsuk-button" type="submit">Continue</button>
+          </p>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <script type="text/javascript">
+    const sessionData = {{ data.newSession | toJSON | safe if data.newSession else '{}' }};
+    const initialSlotData = {{ data.organisedSlotData | toJSON | safe if data.organisedSlotData else '[]' }};
+
+    // ========== STATE ==========
+    let slotData = Array.isArray(initialSlotData) ? initialSlotData : [];
+    let selectedIndices = new Set();
+    let lastClickedIndex = null;
+    let totalSlotCount = 0;
+
+    // ========== UTILITY FUNCTIONS ==========
+    function parseMinutes(time) {
+      if (!time || typeof time !== 'object') return null;
+      const hour = Number(time.hour);
+      const minute = Number(time.minute);
+
+      if (!Number.isFinite(hour) || !Number.isFinite(minute)) {
+        return null;
+      }
+
+      return hour * 60 + minute;
+    }
+
+    function formatTime(m) {
+      const h = Math.floor(m / 60) % 24;
+      const mn = m % 60;
+      return `${String(h).padStart(2, '0')}:${String(mn).padStart(2, '0')}`;
+    }
+
+    function formatDuration(m) {
+      if (m < 60) return `${m}m`;
+      const h = Math.floor(m / 60);
+      const mn = m % 60;
+      return mn === 0 ? `${h}h` : `${h}h ${mn}m`;
+    }
+
+    function isConsecutive(indices) {
+      if (indices.length < 2) return false;
+      const sorted = [...indices].sort((a, b) => a - b);
+      for (let i = 1; i < sorted.length; i++) {
+        if (sorted[i] !== sorted[i - 1] + 1) return false;
+      }
+      return true;
+    }
+
+    function isSlotFree(i) {
+      const s = slotData[i];
+      return !s.merged && s.isMergedInto === undefined;
+    }
+
+    function resolveToMergeHead(i) {
+      return slotData[i].isMergedInto ?? i;
+    }
+
+    function getCheckedIndices() {
+      const checked = new Set();
+      document.querySelectorAll('#slots-container input[type="checkbox"]:checked').forEach(input => {
+        const idx = Number(input.value);
+        if (Number.isInteger(idx) && idx >= 0) {
+          checked.add(idx);
+        }
+      });
+      return checked;
+    }
+
+    function syncSelectedIndicesFromCheckboxes() {
+      selectedIndices = getCheckedIndices();
+    }
+
+    // ========== SLOT MANAGEMENT FUNCTIONS ==========
+    function unmergeAt(index) {
+      const slot = slotData[index];
+      const parentIndex = slot.isMergedInto ?? index;
+      const parent = slotData[parentIndex];
+
+      if (!parent.merged) return;
+
+      const span = parent.span;
+      const parentType = parent.type;
+
+      for (let j = parentIndex; j < parentIndex + span; j++) {
+        if (!slotData[j]) continue;
+
+        slotData[j].merged = false;
+        slotData[j].span = 1;
+        slotData[j].isMergedInto = undefined;
+        slotData[j].mergedEnd = null;
+        slotData[j].type = parentType;
+      }
+    }
+
+    function setSlotType(indices, type) {
+      [...indices].forEach(i => {
+        if (slotData[i]) slotData[i].type = type;
+      });
+    }
+
+    function mergeSlots(indices) {
+      const sel = [...indices].sort((a, b) => a - b);
+
+      if (!isConsecutive(sel)) return;
+
+      const canMerge = sel.every(i => isSlotFree(i));
+      if (!canMerge) return;
+
+      const first = sel[0];
+      const last = sel[sel.length - 1];
+      const span = sel.length;
+      const mergeType = slotData[first].type;
+
+      // reset (important when reusing slots)
+      for (let j = first; j <= last; j++) {
+        slotData[j].merged = false;
+        slotData[j].span = 1;
+        slotData[j].isMergedInto = undefined;
+        slotData[j].type = null;
+      }
+
+      slotData[first].merged = true;
+      slotData[first].span = span;
+      slotData[first].mergedEnd = formatTime(slotData[last].end);
+      slotData[first].type = mergeType;
+
+      for (let j = first + 1; j <= last; j++) {
+        slotData[j].isMergedInto = first;
+      }
+    }
+
+    // ========== DATA FUNCTIONS ==========
+    function render() {
+      const container = document.getElementById('slots-container');
+      const startMins = parseMinutes(sessionData.startTime);
+      const endMins = parseMinutes(sessionData.endTime);
+      const slotLen = Number(sessionData.duration);
+
+      if (!Number.isInteger(slotLen) || slotLen <= 0) {
+        container.innerHTML = '<div>Slot length is not configured correctly.</div>';
+        return;
+      }
+
+      if (startMins === null || endMins === null || endMins <= startMins) {
+        container.innerHTML = '<div>Session start and end times are not configured correctly.</div>';
+        return;
+      }
+
+      const totalMins = endMins - startMins;
+      const slotCount = Math.floor(totalMins / slotLen);
+
+      if (slotCount === 0) {
+        container.innerHTML = '<div>No complete slots fit in this window.</div>';
+        return;
+      }
+
+      totalSlotCount = slotCount;
+      const prevData = [...slotData];
+      slotData = [];
+
+      for (let i = 0; i < slotCount; i++) {
+        const s = startMins + i * slotLen;
+        const e = s + slotLen;
+        const key = `${formatTime(s)}-${formatTime(e)}`;
+        const prev = prevData.find(d => d.key === key) || {};
+
+        slotData.push({
+          idx: i,
+          start: s,
+          end: e,
+          key,
+          type: prev.type || null,
+          merged: prev.merged || false,
+          span: prev.span || 1,
+          isMergedInto: prev.isMergedInto ?? undefined,
+          mergedEnd: prev.mergedEnd || null
+        });
+      }
+
+      selectedIndices = new Set([...selectedIndices].filter(i => i < slotCount));
+      renderGrid();
+      setStats();
+    }
+
+    function setStats() {
+      const heads = slotData.filter(s => s.isMergedInto === undefined);
+      const nonAvail = heads.filter(s => s.type === 'hold' || s.type === 'staff-break' || s.merged).length;
+      const avail = totalSlotCount - nonAvail;
+      document.getElementById('available-slots').textContent = totalSlotCount ? avail : '—';
+
+      // additional counts for form fields
+      const specialCount = heads.filter(s => s.type === 'special-appointment').length;
+      const heldCount = heads.filter(s => s.type === 'hold').length;
+
+      const availInput = document.querySelector('input[name="slotsAvailableCount"]');
+      const specialInput = document.querySelector('input[name="slotsSpecialAvailableCount"]');
+      const heldInput = document.querySelector('input[name="slotsHeldCount"]');
+      const summaryRowsInput = document.querySelector('input[name="slotSummaryRowsJson"]');
+      const slotDataInput = document.querySelector('input[name="slotDataJson"]');
+
+      if (availInput) availInput.value = totalSlotCount ? String(avail) : '';
+      if (specialInput) specialInput.value = String(specialCount);
+      if (heldInput) heldInput.value = String(heldCount);
+      if (summaryRowsInput) summaryRowsInput.value = JSON.stringify(buildSummaryRows());
+      if (slotDataInput) slotDataInput.value = JSON.stringify(slotData);
+    }
+
+    function describeSlot(slot) {
+      const details = [];
+
+      if (slot.merged) details.push('Merged');
+
+      if (slot.type === 'special-appointment') {
+        details.push('Special appointment');
+      } else if (slot.type === 'staff-break') {
+        details.push('Staff break');
+      } else if (slot.type === 'hold') {
+        details.push('Held');
+      }
+
+      if (!details.length) {
+        details.push('Available');
+      }
+
+      return details.join(', ');
+    }
+
+    function buildSummaryRows() {
+      const heads = slotData
+        .filter(s => s.isMergedInto === undefined)
+        .sort((a, b) => a.start - b.start)
+        .map(s => {
+          const mergedEndIndex = s.merged ? (s.idx + s.span - 1) : s.idx;
+          const mergedEndSlot = slotData[mergedEndIndex];
+          return {
+            start: s.start,
+            end: mergedEndSlot ? mergedEndSlot.end : s.end,
+            details: describeSlot(s)
+          };
+        });
+
+      const collapsed = [];
+
+      heads.forEach(row => {
+        const last = collapsed[collapsed.length - 1];
+        const isMergedRow = row.details.includes('Merged');
+        if (last && !isMergedRow && last.details === row.details && last.end === row.start) {
+          last.end = row.end;
+        } else {
+          collapsed.push({ ...row });
+        }
+      });
+
+      return collapsed.map(row => ({
+        start: formatTime(row.start),
+        end: formatTime(row.end),
+        details: row.details
+      }));
+    }
+
+    function commit() {
+      renderGrid();
+      setStats();
+    }
+
+    function commitFromChecked() {
+      syncSelectedIndicesFromCheckboxes();
+      renderGrid();
+      setStats();
+    }
+
+    // ========== RENDERING FUNCTIONS ==========
+    function renderGrid() {
+      const container = document.getElementById('slots-container');
+      container.innerHTML = '';
+
+      slotData.forEach((sd, i) => {
+        const isChild = sd.isMergedInto !== undefined;
+        const headIndex = isChild ? sd.isMergedInto : i;
+        const headSlot = slotData[headIndex];
+
+        const classes = ['slot'];
+        const isSelected = selectedIndices.has(i) || (isChild && selectedIndices.has(headIndex));
+        const isMerged = sd.merged || isChild;
+        const slotType = isChild ? headSlot?.type : sd.type;
+        const isLastMergedChild = isChild && headSlot && i === headIndex + (headSlot.span || 1) - 1;
+
+        if (isSelected) classes.push('selected');
+        if (isMerged) classes.push('is-merged');
+        if (slotType === 'hold') classes.push('is-hold');
+        if (slotType === 'staff-break') classes.push('is-staff-break');
+        if (slotType === 'special-appointment') classes.push('is-special-appointment');
+        if (isChild) classes.push('is-merged-child');
+        if (isLastMergedChild) classes.push('is-merged-last-child');
+
+        const slotId = `slot-${i}`;
+        const div = document.createElement('div');
+        div.className = [...classes].join(' ');
+
+        const endTime = sd.merged ? sd.mergedEnd : formatTime(sd.end);
+
+        let mergedHtml = '';
+        if (isMerged) {
+          mergedHtml += `<span class="slot-tag">Merged (${sd.span})</span>`;
+        }
+
+        let typeHtml = '';
+        if (slotType && !isChild) {
+          const typeLabel = slotType === 'hold' ? 'Held' : slotType === 'staff-break' ? 'Staff break' : 'Special appointment';
+          const tagClass = slotType === 'hold' ? 'nhsuk-tag--grey' : slotType === 'staff-break' ? 'nhsuk-tag--grey' : 'nhsuk-tag--yellow';
+          typeHtml += `<span class="slot-tag"><span class="nhsuk-tag ${tagClass}">${typeLabel}</span></span>`;
+        }
+
+        div.innerHTML = `
+          <div class="nhsuk-checkboxes__item">
+            <input class="nhsuk-checkboxes__input" id="${slotId}" name="slots[]" type="checkbox" value="${i}">
+            <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId}">
+              <span class="slot-time">${formatTime(sd.start)}</span>
+              <span class="slot-end nhsuk-u-secondary-text-colour">to ${endTime}</span>
+              ${typeHtml}
+              ${mergedHtml}
+            </label>
+          </div>
+        `;
+
+        const checkbox = div.querySelector('input[type="checkbox"]');
+        const label = div.querySelector('label');
+
+        function handleCheckboxSelection(e, checked) {
+          const head = resolveToMergeHead(i);
+
+          if (e.shiftKey && lastClickedIndex !== null) {
+            const lo = Math.min(lastClickedIndex, i);
+            const hi = Math.max(lastClickedIndex, i);
+            for (let j = lo; j <= hi; j++) {
+              if (checked) {
+                selectedIndices.add(resolveToMergeHead(j));
+              } else {
+                selectedIndices.delete(resolveToMergeHead(j));
+              }
+            }
+          } else {
+            if (checked) {
+              selectedIndices.add(head);
+            } else {
+              selectedIndices.delete(head);
+            }
+          }
+
+          lastClickedIndex = i;
+          renderGrid();
+        }
+
+        if (checkbox) {
+          checkbox.checked = isSelected;
+          checkbox.addEventListener('click', e => {
+            handleCheckboxSelection(e, checkbox.checked);
+          });
+
+          if (label) {
+            label.addEventListener('click', e => {
+              // Handle label clicks explicitly so shift-click range selection works from the label text too.
+              e.preventDefault();
+              const nextChecked = !checkbox.checked;
+              checkbox.checked = nextChecked;
+              handleCheckboxSelection(e, nextChecked);
+            });
+          }
+        }
+
+        container.appendChild(div);
+      });
+
+      updatePanel();
+    }
+
+    function updatePanel() {
+      const sel = [...selectedIndices].sort((a, b) => a - b);
+
+      const canMerge = isConsecutive(sel) && sel.every(i => isSlotFree(i));
+      const hasMerged = sel.some(i => {
+        const s = slotData[i];
+        return s.merged || s.isMergedInto !== undefined;
+      });
+      
+      const typeSet = new Set(sel.map(i => slotData[i]?.type));
+      const allHold = typeSet.size === 1 && typeSet.has('hold');
+      const allStaffBreak = typeSet.size === 1 && typeSet.has('staff-break');
+      const allSpecialAppointment = typeSet.size === 1 && typeSet.has('special-appointment');
+      const anyType = sel.some(i => slotData[i]?.type !== null);
+
+      document.getElementById('panel-hold').classList.toggle('disabled', !sel.length || allHold);
+      document.getElementById('panel-staff-break').classList.toggle('disabled', !sel.length || allStaffBreak);
+      document.getElementById('panel-special-appointment').classList.toggle('disabled', !sel.length || allSpecialAppointment);
+      document.getElementById('panel-clear-type').classList.toggle('disabled', !sel.length || !anyType);
+      document.getElementById('panel-merge').classList.toggle('disabled', !canMerge);
+      document.getElementById('panel-unmerge').classList.toggle('disabled', !hasMerged);
+    }
+
+    // ========== EVENT ATTACHMENTS ==========
+    // No DOM form inputs on this page; session data is sourced from the server-side session.
+    const panelHold = document.getElementById('panel-hold');
+    const panelStaffBreak = document.getElementById('panel-staff-break');
+    const panelSpecialAppointment = document.getElementById('panel-special-appointment');
+    const panelClearType = document.getElementById('panel-clear-type');
+    const panelMerge = document.getElementById('panel-merge');
+    const panelUnmerge = document.getElementById('panel-unmerge');
+
+    if (panelHold) {
+      panelHold.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
+        setSlotType(selectedIndices, 'hold');
+        selectedIndices.clear();
+        renderGrid();
+        setStats();
+      });
+    }
+
+    if (panelStaffBreak) {
+      panelStaffBreak.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
+        setSlotType(selectedIndices, 'staff-break');
+        selectedIndices.clear();
+        renderGrid();
+        setStats();
+      });
+    }
+
+    if (panelSpecialAppointment) {
+      panelSpecialAppointment.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
+        setSlotType(selectedIndices, 'special-appointment');
+        selectedIndices.clear();
+        renderGrid();
+        setStats();
+      });
+    }
+
+    if (panelClearType) {
+      panelClearType.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
+        setSlotType(selectedIndices, null);
+        selectedIndices.clear();
+        renderGrid();
+        setStats();
+      });
+    }
+
+    if (panelMerge) {
+      panelMerge.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
+        mergeSlots(selectedIndices);
+        selectedIndices.clear();
+        renderGrid();
+        setStats();
+      });
+    }
+
+    if (panelUnmerge) {
+      panelUnmerge.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
+        [...selectedIndices].forEach(i => unmergeAt(i));
+        selectedIndices.clear();
+        renderGrid();
+        setStats();
+      });
+    }
+
+    // ========== INITIALIZATION ==========
+    render();
+  </script>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Clinics" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+  <nav>
+    <a class="nhsuk-back-link" href="/clinics/">
+      Back to clinics
+    </a>
+  </nav>
+{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+      <h1 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-l">Clinic</span>
+        Worthing - test day September 2026
+      </h1>
+      <p>
+        <a href="#">West Sussex Breast Screening Centre</a><br>
+        <a href="#">Worthing hospital</a>
+      </p>
+    </div>
+    <div class="nhsuk-grid-column-one-quarter">
+      <ul class="nhsuk-list">
+        <li>
+          <a href="#">Edit clinic name</a>
+        </li>
+        <li>
+          <a href="#">Change unit and location</a>
+        </li>
+        <li>
+          <a href="#" class="app-link--warning">Archive this clinic</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="app-card-editable">
+        <h2 class="nhsuk-heading-l">Schedules</h2>
+        {{ button({
+          text: "Add a new schedule",
+          href: "01-create-schedule",
+          classes: "nhsuk-button--secondary"
+        }) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <div class="nhsuk-card nhsuk-u-margin-bottom-4">
+      <div class="nhsuk-card__content">
+        <div class="nhsuk-grid-row">
+          <div class="nhsuk-grid-column-three-quarters">
+            <h3 class="nhsuk-heading-s nhsuk-u-margin-bottom-3">Standard day schedule</h3>
+          </div>
+          <div class="nhsuk-grid-column-one-quarter">
+            <p style="text-align: right;">
+              <a href="0c-schedule-detail">Edit this schedule</a><br>
+              <a href="#" class="app-link--warning">Delete this schedule</a>
+            </p>
+          </div>
+          <div class="nhsuk-grid-column-one-half">
+            <dl class="nhsuk-summary-list">
+              <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">
+                  Dates
+                </dt>
+                <dd class="nhsuk-summary-list__value">
+                  31 August 2026 to 9 October 2026
+                </dd>
+              </div>
+            </dl>
+          </div>
+          <div class="nhsuk-grid-column-one-half">
+            <dl class="nhsuk-summary-list">
+              <div class="nhsuk-summary-list__row">
+                <dt class="nhsuk-summary-list__key">
+                  Sessions added
+                </dt>
+                <dd class="nhsuk-summary-list__value">
+                  No sessions added
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Clinics" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+  <nav>
+    <a class="nhsuk-back-link" href="/clinics/">
+      Back to clinics
+    </a>
+  </nav>
+{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+      <h1 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-l">Schedule</span>
+        6 weeks Aug - Oct 2026
+      </h1>
+
+      <dl class="nhsuk-summary-list">
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Clinic
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            Worthing - test day September 2026
+          </dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Dates
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            31 August 2026 to 9 October 2026
+          </dd>
+        </div>
+      </dl>
+
+    </div>
+    <div class="nhsuk-grid-column-one-quarter">
+      <ul class="nhsuk-list">
+        <li>
+          <a href="#">Edit schedule details</a>
+        </li>
+        <li>
+          <a href="#" class="app-link--warning">Delete this schedule</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="app-card-editable">
+        <h2 class="nhsuk-heading-l">Sessions</h2>
+        {{ button({
+          text: "Add a new session",
+          href: "0c-schedule-detail-session-added",
+          classes: "nhsuk-button--secondary"
+        }) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <p>No sessions have been added yet</p>
+
+    </div>
+  </div>
+
+{% endblock %}
