@@ -230,7 +230,19 @@ const sanitizeOrganisedSlots = (slotData) => {
     .filter(slot => slot.key)
 }
 
-router.post('/clinics-schedules/01-create-schedule', function (req, res) {
+// Lets the "create a clinic" workflow pages also work when duplicated under z-older-versions/,
+// keeping session-driven rendering (e.g. calendars) and redirects on the same copy of the pages.
+const OLDER_VERSIONS_PREFIX = '/clinics-schedules/z-older-versions/'
+
+const isOlderVersionsRequest = (req) => req.path.startsWith(OLDER_VERSIONS_PREFIX)
+
+const clinicsScheduleView = (req, name) =>
+  isOlderVersionsRequest(req) ? `clinics-schedules/z-older-versions/${name}` : `clinics-schedules/${name}`
+
+const clinicsScheduleRedirect = (req, name) =>
+  isOlderVersionsRequest(req) ? `${OLDER_VERSIONS_PREFIX}${name}` : `/clinics-schedules/${name}`
+
+router.post(['/clinics-schedules/01-create-schedule', OLDER_VERSIONS_PREFIX + '01-create-schedule'], function (req, res) {
   const hasScheduleFields = req.body && (req.body.scheduleStartDate || req.body.scheduleEndDate)
 
   // Step 00 posts to this route and should move to step 01.
@@ -240,7 +252,7 @@ router.post('/clinics-schedules/01-create-schedule', function (req, res) {
     req.session.data.unit = (req.body && req.body.unit) || ''
     req.session.data.location = (req.body && req.body.location) || ''
 
-    return res.redirect('/clinics-schedules/01-create-schedule')
+    return res.redirect(clinicsScheduleRedirect(req, '01-create-schedule'))
   }
 
   const scheduleStartDateObj = (req.body && req.body.scheduleStartDate) || {}
@@ -261,17 +273,17 @@ router.post('/clinics-schedules/01-create-schedule', function (req, res) {
     req.session.data.calendars = []
   }
   
-  res.redirect('/clinics-schedules/02-choose-session-options')
+  res.redirect(clinicsScheduleRedirect(req, '02-choose-session-options'))
 })
 
-router.post('/clinics-schedules/03-create-session', function (req, res) {
+router.post(['/clinics-schedules/03-create-session', OLDER_VERSIONS_PREFIX + '03-create-session'], function (req, res) {
   const createSessionHints = (req.body && req.body.createSessionHints) || ''
   req.session.data.createSessionHints = createSessionHints
 
-  res.redirect('/clinics-schedules/03-create-session')
+  res.redirect(clinicsScheduleRedirect(req, '03-create-session'))
 })
 
-router.get('/clinics-schedules/06-apply-session', function (req, res) {
+router.get(['/clinics-schedules/06-apply-session', OLDER_VERSIONS_PREFIX + '06-apply-session'], function (req, res) {
   const scheduleStartDateObj = (req.session.data && req.session.data.scheduleStartDate) || {}
   const scheduleEndDateObj = (req.session.data && req.session.data.scheduleEndDate) || {}
 
@@ -329,7 +341,7 @@ router.get('/clinics-schedules/06-apply-session', function (req, res) {
     }
   }
 
-  res.render('clinics-schedules/06-apply-session')
+  res.render(clinicsScheduleView(req, '06-apply-session'))
 })
 
 router.get('/september-iteration-2/clickthru/04a-example-search-result', function (req, res) {
@@ -446,7 +458,7 @@ router.post('/sessions/01-set-timings', function (req, res) {
   res.redirect('/sessions/02-organise-slots')
 })
 
-router.post('/clinics-schedules/04-organise-slots', function (req, res) {
+router.post(['/clinics-schedules/04-organise-slots', OLDER_VERSIONS_PREFIX + '04-organise-slots'], function (req, res) {
   const session = (req.body && req.body.newSession) || {}
   const sessionName = (req.body && req.body.sessionName && req.body.sessionName.trim()) || ''
   const startTime = session.startTime || {}
@@ -503,18 +515,18 @@ router.post('/clinics-schedules/04-organise-slots', function (req, res) {
   req.session.data.sessionName = sessionName
 
   if (Object.keys(errors).length > 0) {
-    return res.render('clinics-schedules/03-create-session', {
+    return res.render(clinicsScheduleView(req, '03-create-session'), {
       errors
     })
   }
-  res.redirect('/clinics-schedules/04-organise-slots')
+  res.redirect(clinicsScheduleRedirect(req, '04-organise-slots'))
 })
 
-router.get('/clinics-schedules/05-save-as-template', function (req, res) {
-  res.render('clinics-schedules/05-save-as-template')
+router.get(['/clinics-schedules/05-save-as-template', OLDER_VERSIONS_PREFIX + '05-save-as-template'], function (req, res) {
+  res.render(clinicsScheduleView(req, '05-save-as-template'))
 })
 
-router.post('/clinics-schedules/05-save-as-template', function (req, res) {
+router.post(['/clinics-schedules/05-save-as-template', OLDER_VERSIONS_PREFIX + '05-save-as-template'], function (req, res) {
   const saveSessionHints = req.body && req.body.saveSessionHints
 
   const slotsAvailableCount = req.body && req.body.slotsAvailableCount
@@ -567,24 +579,24 @@ router.post('/clinics-schedules/05-save-as-template', function (req, res) {
   // Step 4 posts slot data here first; if no choice has been made yet,
   // send user to step 5 question page instead of skipping to step 6.
   if (!saveSessionHints) {
-    return res.redirect('/clinics-schedules/05-save-as-template')
+    return res.redirect(clinicsScheduleRedirect(req, '05-save-as-template'))
   }
 
   if (saveSessionHints === 'yes') {
-    return res.redirect('/clinics-schedules/05a-template-details')
+    return res.redirect(clinicsScheduleRedirect(req, '05a-template-details'))
   }
 
-  res.redirect('/clinics-schedules/06-apply-session')
+  res.redirect(clinicsScheduleRedirect(req, '06-apply-session'))
 })
 
-router.post('/clinics-schedules/06-apply-session', function (req, res) {
+router.post(['/clinics-schedules/06-apply-session', OLDER_VERSIONS_PREFIX + '06-apply-session'], function (req, res) {
   req.session.data.templateName = (req.body && req.body.templateName) || ''
   req.session.data.templateDescription = (req.body && req.body.templateDescription) || ''
 
-  res.redirect('/clinics-schedules/06-apply-session')
+  res.redirect(clinicsScheduleRedirect(req, '06-apply-session'))
 })
 
-router.post('/clinics-schedules/07-schedule-details', function (req, res) {
+router.post(['/clinics-schedules/07-schedule-details', OLDER_VERSIONS_PREFIX + '07-schedule-details'], function (req, res) {
   const selectedSessionDatesJson = req.body && req.body.selectedSessionDatesJson
 
   if (selectedSessionDatesJson) {
@@ -600,7 +612,7 @@ router.post('/clinics-schedules/07-schedule-details', function (req, res) {
     req.session.data.selectedSessionDates = []
   }
 
-  res.redirect('/clinics-schedules/07-schedule-details')
+  res.redirect(clinicsScheduleRedirect(req, '07-schedule-details'))
 })
 
 router.get('/clinics-schedules/add-another-session', function (req, res) {
@@ -639,7 +651,7 @@ router.get('/clinics-schedules/add-another-schedule', function (req, res) {
   res.redirect('/clinics-schedules/01-create-schedule')
 })
 
-router.get('/clinics-schedules/07-schedule-details', function (req, res) {
+router.get(['/clinics-schedules/07-schedule-details', OLDER_VERSIONS_PREFIX + '07-schedule-details'], function (req, res) {
   const scheduleStartDateObj = (req.session.data && req.session.data.scheduleStartDate) || {}
   const scheduleEndDateObj = (req.session.data && req.session.data.scheduleEndDate) || {}
 
@@ -692,14 +704,14 @@ router.get('/clinics-schedules/07-schedule-details', function (req, res) {
 
   req.session.data.scheduleSessions = scheduleSessions
 
-  res.render('clinics-schedules/07-schedule-details', {
+  res.render(clinicsScheduleView(req, '07-schedule-details'), {
     scheduleStartDateLabel,
     scheduleEndDateLabel,
     scheduleSessions
   })
 })
 
-router.get('/clinics-schedules/08-publish-clinic', function (req, res) {
+router.get(['/clinics-schedules/08-publish-clinic', OLDER_VERSIONS_PREFIX + '08-publish-clinic'], function (req, res) {
   const scheduleStartDateObj = (req.session.data && req.session.data.scheduleStartDate) || {}
   const scheduleEndDateObj = (req.session.data && req.session.data.scheduleEndDate) || {}
 
@@ -739,7 +751,7 @@ router.get('/clinics-schedules/08-publish-clinic', function (req, res) {
 
   req.session.data.createdSchedules = createdSchedules
 
-  res.render('clinics-schedules/08-publish-clinic', {
+  res.render(clinicsScheduleView(req, '08-publish-clinic'), {
     clinicName: (req.session.data && req.session.data.clinicName) || '-',
     clinicId: (req.session.data && req.session.data.clinicId) || 'HWO-NNN-standard-20260501',
     unit: (req.session.data && req.session.data.unit) || '-',
@@ -748,8 +760,8 @@ router.get('/clinics-schedules/08-publish-clinic', function (req, res) {
   })
 })
 
-router.get('/clinics-schedules/09-prototype-end', function (req, res) {
-  res.render('clinics-schedules/09-prototype-end')
+router.get(['/clinics-schedules/09-prototype-end', OLDER_VERSIONS_PREFIX + '09-prototype-end'], function (req, res) {
+  res.render(clinicsScheduleView(req, '09-prototype-end'))
 })
 
 router.get('/action/stage/:participantId', function (req, res) {

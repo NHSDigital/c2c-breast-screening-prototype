@@ -20,61 +20,8 @@
 {% endset %}
 
 <div class="nhsuk-grid-row">
-  <div class="nhsuk-grid-column-one-quarter">
-
-    <div class="app-workflow-side-nav-wrapper">
-      <nav class="app-workflow-side-nav">
-        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
-          <span class="nhsuk-caption-m">
-            Workflow steps
-          </span>
-          Create a clinic
-        </h2>
-        <ol class="app-workflow-side-nav__list">
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current  ">
-            <span class="app-workflow-side-nav__link" aria-current="page">
-              <span class="app-workflow-side-nav__number">
-                1
-              </span>
-              <span class="app-workflow-side-nav__label">Clinic details</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">2</span>
-              <span class="app-workflow-side-nav__label">Create schedule</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">3</span>
-              <span class="app-workflow-side-nav__label">Create session</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">4</span>
-              <span class="app-workflow-side-nav__label">Organise slots</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">5</span>
-              <span class="app-workflow-side-nav__label">Apply session dates</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">6</span>
-              <span class="app-workflow-side-nav__label">Publish clinic</span>
-            </span>
-          </li>
-        </ol>
-      </nav>
-    </div>
-
-  </div>
-  <div class="nhsuk-grid-column-three-quarters">
+  
+  <div class="nhsuk-grid-column-full">
     <div class="nhsuk-u-reading-width">
 
       {% if errorState === "true" %}
@@ -99,7 +46,7 @@
 
       <h1 class="nhsuk-heading-l">Clinic details</h1>
 
-      <form action="01-create-schedule" method="post">
+      <form action="0a-clinics-clinic-added" method="post">
 
         <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="clinic-name">

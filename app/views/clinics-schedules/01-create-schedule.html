@@ -20,65 +20,18 @@
 {% endset %}
 
 <div class="nhsuk-grid-row">
-  <div class="nhsuk-grid-column-one-quarter">
-
-    <div class="app-workflow-side-nav-wrapper">
-      <nav class="app-workflow-side-nav">
-        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
-          <span class="nhsuk-caption-m">
-            Workflow steps
-          </span>
-          Create a clinic 
-        </h2>
-        <ol class="app-workflow-side-nav__list">
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
-            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="00-clinic-details">
-              <span class="app-workflow-side-nav__number">{{ tickSvg | safe }}</span>
-              <span class="app-workflow-side-nav__label">Clinic details</span>
-            </a>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
-            <span class="app-workflow-side-nav__link aria-current="page"">
-              <span class="app-workflow-side-nav__number">2</span>
-              <span class="app-workflow-side-nav__label">Create schedule</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">3</span>
-              <span class="app-workflow-side-nav__label">Create session</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">4</span>
-              <span class="app-workflow-side-nav__label">Organise slots</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">5</span>
-              <span class="app-workflow-side-nav__label">Apply session dates</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">6</span>
-              <span class="app-workflow-side-nav__label">Publish clinic</span>
-            </span>
-          </li>
-        </ol>
-      </nav>
-    </div>
-
-  </div>
-  <div class="nhsuk-grid-column-three-quarters">
+  
+  <div class="nhsuk-grid-column-full">
     <div class="nhsuk-u-reading-width">
 
       {% if errorState === "true" %}
         {{ errorSummary({
           titleText: "There is a problem",
           errorList: [
+            {
+              text: "Schedule must be given a name",
+              href: "#"
+            },
             {
               text: "Schedule start date must be given a day, month, and year",
               href: "#"
@@ -101,7 +54,22 @@
 
       <h1 class="nhsuk-heading-l">Create schedule</h1>
 
-      <form action="01-create-schedule" method="post">
+      <form action="0b-clinic-detail-schedule-added" method="post">
+
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+          <label class="nhsuk-label nhsuk-label--m" for="schedule-name">
+            Schedule name
+          </label>
+          <div class="nhsuk-hint" id="naming-hint-text">
+            A memorable name for this schedule.
+          </div>
+          {% if errorState === "true" %}
+            <span class="nhsuk-error-message">
+              <span class="nhsuk-u-visually-hidden">Error:</span> Schedule must be given a name
+            </span>
+          {% endif %}
+          <input class="nhsuk-input {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="schedule-name" name="scheduleName" type="text" aria-describedby="naming-hint-text" value="{{ data.scheduleName if data.scheduleName else '' }}">
+        </div>
 
         <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset nhsuk-u-margin-bottom-4" role="group" aria-describedby="schedule-start-date-hint">
@@ -189,7 +157,7 @@
         </div>
         
         
-        <button class="nhsuk-button" type="submit">Continue</button>
+        <button class="nhsuk-button" type="submit">Create schedule</button>
 
       </form>
     </div>

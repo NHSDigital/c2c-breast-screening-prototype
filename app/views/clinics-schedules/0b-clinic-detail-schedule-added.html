@@ -1,0 +1,102 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Clinics" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+  <nav>
+    <a class="nhsuk-back-link" href="/clinics/">
+      Back to clinics
+    </a>
+  </nav>
+{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+      <h1 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-l">Clinic</span>
+        Worthing - test day September 2026
+      </h1>
+      <p>
+        <a href="#">West Sussex Breast Screening Centre</a><br>
+        <a href="#">Worthing hospital</a>
+      </p>
+    </div>
+    <div class="nhsuk-grid-column-one-quarter">
+      <ul class="nhsuk-list">
+        <li>
+          <a href="#">Edit clinic name</a>
+        </li>
+        <li>
+          <a href="#">Change unit and location</a>
+        </li>
+        <li>
+          <a href="#" class="app-link--warning">Archive this clinic</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="app-card-editable">
+        <h2 class="nhsuk-heading-l">Schedules</h2>
+        {{ button({
+          text: "Add a new schedule",
+          href: "01-create-schedule",
+          classes: "nhsuk-button--secondary"
+        }) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      {{ table({
+  firstCellIsHeader: false,
+  head: [
+    {
+      text: 'Schedule name'
+    },
+    {
+      text: 'Start date'
+    },
+    {
+      text: 'End date'
+    },
+    {
+      text: 'Current capacity'
+    }
+  ],
+  rows: [
+    [
+      {
+        html: '<a href="0c-schedule-detail">6 weeks Aug - Oct 2026<br></a>'
+      },
+      {
+        html: '01 September 2026'
+      },
+      {
+        html: '30 September 2026'
+      },
+      {
+        html: 'No sessions added</span>'
+      }
+    ]
+  ]
+}) }}
+
+
+    </div>
+  </div>
+
+{% endblock %}
