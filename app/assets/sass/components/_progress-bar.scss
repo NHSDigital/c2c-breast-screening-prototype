@@ -51,6 +51,9 @@
   &.--thin {
     min-height: 19px;
   }
+  &.--compact {
+    min-width: 0;
+  }
 }
 .app-progress-bar::-webkit-progress-bar {
   background: #fff;

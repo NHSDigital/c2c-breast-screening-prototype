@@ -13,6 +13,8 @@
   width: calc(100% - 4rem);
   margin: 0 auto 2rem auto;
 }
+
+
 .calendar-table {
   width: 100%;
   table-layout: fixed;
@@ -21,13 +23,13 @@
 }
 .calendar-table th,
 .calendar-table td {
+  @include nhsuk-font(16);
   width: 14.2857%;
   padding: 0.75rem;
   vertical-align: top;
   border-width: 1px;
 }
 .calendar-table td {
-  @include nhsuk-font(16);
   background-color: #fff;
 }
 .calendar-table td.calendar-table-capacity {
@@ -48,10 +50,10 @@
 .calendar-table td.calendar-table-no-data {
   background-color: transparent;
 }
-.calendar-table-date {
-  font-weight: bold;
-  display: block;
-}
+// .calendar-table-date {
+//   font-weight: bold;
+//   display: block;
+// }
 
 .calendar-table--apply-session {
   width: min(100%, 42rem);
@@ -87,4 +89,88 @@
 .calendar-table--apply-session td.calendar-table-cell--selected a,
 .calendar-table--apply-session td.calendar-table-cell--selected .calendar-table-date {
   color: #fff;
+}
+
+
+
+///
+/// 
+
+.calendar-table {
+
+  .--schedule-start {
+    position: relative;
+    border-left: 4px solid nhsuk-colour("grey-2");
+    padding-bottom: 2em;
+
+    // Chevron pointing into the cell from the left border
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -1px;
+      width: 8px;
+      height: 16px;
+      background-color: nhsuk-colour("grey-2");
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+      transform: translateY(-50%);
+    }
+  }
+  .--schedule-end {
+    position: relative;
+    border-right: 4px solid nhsuk-colour("grey-2");
+
+    // Chevron pointing into the cell from the right border
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -1px;
+      width: 8px;
+      height: 16px;
+      background-color: nhsuk-colour("grey-2");
+      clip-path: polygon(100% 0, 0 50%, 100% 100%);
+      transform: translateY(-50%);
+    }
+  }
+
+  // .calendar-table-schedule-name {
+  //   position: absolute;
+  //   bottom: 0;
+  //   left: 0;
+  //   height: 1.75em;
+  //   width: 100%;
+  //   box-sizing: border-box;
+  //   background-color: nhsuk-colour("grey-2");
+  //   color: #fff;
+  // }
+}
+
+.calendar-table.--sketch {
+  td:not(.calendar-table-no-data) {
+    height: 124px;
+    background-color: nhsuk-tint(nhsuk-colour("grey-5"), 50%);
+    &.--session-assigned {
+      background-color: nhsuk-colour("white");
+    }
+  }
+  .calendar-table-date {
+    display: block;
+  }
+
+  td.calendar-table-capacity {
+    background-color: #fff;
+    background-image:
+      linear-gradient(to top, rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
+      var(--generic-chart-hatch);
+    background-size:
+      100% 100%,
+      100% calc(var(--percentage, 0%));
+    background-position:
+      left top,
+      left bottom;
+    background-repeat:
+      no-repeat,
+      no-repeat;
+  }
 }
