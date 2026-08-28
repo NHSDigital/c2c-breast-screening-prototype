@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "Calendar view" %}
+{% set pageName = "" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -11,19 +11,10 @@
 
 {% block content %}
 
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-three-quarters">
-      <h1 class="nhsuk-heading-l">
-        Assign session templates
-        Session name
-      </h1>
-    </div>
-    <div class="nhsuk-grid-column-one-quarter">
-    </div>
-  </div>
+  {% include "create-capacity-from-zero/_local-includes/clinic-summary.html" %}
   
   <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-three-quarters">
+    <div class="nhsuk-grid-column-four-fifths">
 
         <table class="nhsuk-table nhsuk-table-responsive calendar-table">
           <caption class="nhsuk-table__caption nhsuk-table__caption--s nhsuk-u-font-weight-normal">
@@ -181,6 +172,9 @@
               <td class="nhsuk-table__cell calendar-table-no-data">
                 <span class="nhsuk-u-visually-hidden">No data</span>
               </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
               <td class="nhsuk-table__cell">
                 <span class="calendar-table-date">1</span>
               </td>
@@ -192,9 +186,6 @@
               </td>
               <td class="nhsuk-table__cell">
                 <span class="calendar-table-date">4</span>
-              </td>
-              <td class="nhsuk-table__cell">
-                <span class="calendar-table-date">5</span>
               </td>
             </tr>
             <tr class="nhsuk-table__row">
@@ -293,11 +284,11 @@
         </table>
     </div>
 
-    <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
+    <div class="nhsuk-grid-column-one-fifth" style="position: sticky; top: 0;">
       <div class="side-panel" id="side-panel">
         <h3 class="nhsuk-heading-s">With selected days:</h3>
         <ul class="nhsuk-list">
-          <li><a class="panel-item">Assign session template</a></li>
+          <li><a href="select-session-template" class="panel-item">Assign session template</a></li>
           <li><a class="panel-item">Remove template</a></li>
         </ul>
       </div>

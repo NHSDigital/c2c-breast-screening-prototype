@@ -1,19 +1,6 @@
 // Import NHS.UK frontend library
 @use "nhsuk-frontend/dist/nhsuk/core" as *;
 
-.app-full-viewport-width {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  border: solid #d8dde0;
-  border-width: 2px 0;
-  padding: 1.5rem 0 0 0;
-}
-.app-full-viewport-width .calendar-table {
-  width: calc(100% - 4rem);
-  margin: 0 auto 2rem auto;
-}
-
 
 .calendar-table {
   width: 100%;
@@ -26,39 +13,40 @@
     -moz-user-select: none;
     user-select: none;
   }
-}
-.calendar-table th,
-.calendar-table td {
-  @include nhsuk-font(16);
-  width: 14.2857%;
-  padding: 0.75rem;
-  vertical-align: top;
-  border-width: 1px;
-}
-.calendar-table td {
-  background-color: #fff;
-}
-.calendar-table td.calendar-table-no-data {
-  background-color: transparent;
-}
 
-td:not(.calendar-table-no-data) {
-  height: 124px;
-  background-color: nhsuk-tint(nhsuk-colour("grey-5"), 50%);
-  &.--session-assigned {
-    background-color: nhsuk-colour("white");
+  th,
+  td {
+    @include nhsuk-font(16);
+    width: 14.2857%;
+    padding: 0.75rem;
+    vertical-align: top;
+    border-width: 1px;
   }
-}
+  // td {
+  //   background-color: #fff;
+  // }
+  // td.calendar-table-no-data {
+  //   background-color: transparent;
+  // }
 
-.calendar-table-date {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  background-color: nhsuk-colour("grey-5");
-  margin-bottom: nhsuk-spacing(3);
+  td:not(.calendar-table-no-data) {
+    height: 124px;
+    background-color: nhsuk-tint(nhsuk-colour("grey-5"), 50%);
+    &.--session-assigned {
+      background-color: nhsuk-colour("white");
+    }
+  }
+
+  .calendar-table-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: nhsuk-colour("grey-5");
+    margin-bottom: nhsuk-spacing(3);
+  }
 }
 
 .calendar-table--apply-session {

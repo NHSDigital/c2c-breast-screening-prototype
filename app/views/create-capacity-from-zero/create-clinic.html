@@ -2,7 +2,7 @@
 
 {% set errorState = "false" %}
 
-{% set pageName = "Create day clinic" %}
+{% set pageName = "" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -46,7 +46,7 @@
 
       <h1 class="nhsuk-heading-l">Clinic details</h1>
 
-      <form action="0a-clinics-clinic-added" method="post">
+      <form action="clinic-summary-empty" method="post">
 
         <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="clinic-name">

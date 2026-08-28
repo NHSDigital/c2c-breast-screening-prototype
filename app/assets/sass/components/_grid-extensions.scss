@@ -1,0 +1,9 @@
+@use "nhsuk-frontend/dist/nhsuk/core" as *;
+
+.nhsuk-grid-column-four-fifths {
+	@include nhsuk-grid-column(four-fifths);
+}
+
+.nhsuk-grid-column-one-fifth {
+	@include nhsuk-grid-column(one-fifth);
+}

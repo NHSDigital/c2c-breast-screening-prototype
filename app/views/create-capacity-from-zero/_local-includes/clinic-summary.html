@@ -1,0 +1,47 @@
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-four-fifths">
+    <h1 class="nhsuk-heading-l">
+      <span class="nhsuk-caption-l">Clinic</span>
+      Chichester - St Richards
+    </h1>
+    <p>
+      <a href="#">Alpha van</a><br>
+      <a href="#">St Richard’s Hospital, Chichester</a>
+    </p>
+  </div>
+  <div class="nhsuk-grid-column-one-fifth">
+    <ul class="nhsuk-list">
+      <li>
+        <a href="#">Edit clinic name</a>
+      </li>
+      <li>
+        <a href="#">Change unit and location</a>
+      </li>
+      <li>
+        <a href="#" class="app-link--warning">Archive this clinic</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    {% set secondaryNavItems = [] %}
+
+    {% for item in [
+      { href: '#', label: 'Current schedules', selected: 'true' },
+      { href: '#', label: 'Past schedules' }
+    ] %}
+      {% set secondaryNavItems = secondaryNavItems | push({
+        text: item.label | safe,
+        href: item.href | trim,
+        current: true if item.selected == 'true'
+      }) %}
+    {% endfor %}
+
+    {{ appSecondaryNavigation({
+      visuallyHiddenTitle: "Secondary menu",
+      items: secondaryNavItems
+    }) }}
+  </div>
+</div>

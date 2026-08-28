@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "Calendar view" %}
+{% set pageName = "" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -24,58 +24,13 @@
 
 {% block content %}
 
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-three-quarters">
-      <h1 class="nhsuk-heading-l">
-        <span class="nhsuk-caption-l">Clinic</span>
-        Chichester - St Richards
-      </h1>
-      <p>
-        <a href="#">Alpha van</a><br>
-        <a href="#">St Richard’s Hospital, Chichester</a>
-      </p>
-    </div>
-    <div class="nhsuk-grid-column-one-quarter">
-      <ul class="nhsuk-list">
-        <li>
-          <a href="#">Edit clinic name</a>
-        </li>
-        <li>
-          <a href="#">Change unit and location</a>
-        </li>
-        <li>
-          <a href="#" class="app-link--warning">Archive this clinic</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      {% set secondaryNavItems = [] %}
-
-      {% for item in [
-        { href: '#', label: 'Current schedules', selected: 'true' },
-        { href: '#', label: 'Past schedules' }
-      ] %}
-        {% set secondaryNavItems = secondaryNavItems | push({
-          text: item.label | safe,
-          href: item.href | trim,
-          current: true if item.selected == 'true'
-        }) %}
-      {% endfor %}
-
-      {{ appSecondaryNavigation({
-        visuallyHiddenTitle: "Secondary menu",
-        items: secondaryNavItems
-      }) }}
-    </div>
-  </div>
+  {% include "create-capacity-from-zero/_local-includes/clinic-summary.html" %}
   
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-three-quarters">
       <p>No schedules yet</p>
-      <a href="#" class="nhsuk-button nhsuk-button--secondary-solid">Add a new schedule</a>
+      <a href="create-schedule" class="nhsuk-button nhsuk-button--secondary-solid">Add a new schedule</a>
     </div>
   </div>
+  
 {% endblock %}

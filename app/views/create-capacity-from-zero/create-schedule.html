@@ -2,7 +2,7 @@
 
 {% set errorState = "false" %}
 
-{% set pageName = "Create a schedule" %}
+{% set pageName = "" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -20,34 +20,6 @@
 {% endset %}
 
 <div class="nhsuk-grid-row">
-  <div class="nhsuk-grid-column-one-quarter">
-
-    <div class="app-workflow-side-nav-wrapper">
-      <nav class="app-workflow-side-nav">
-        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
-          <span class="nhsuk-caption-m">
-            Workflow steps
-          </span>
-          Create schedule
-        </h2>
-        <ol class="app-workflow-side-nav__list">
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">1</span>
-              <span class="app-workflow-side-nav__label">Schedule details</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">2</span>
-              <span class="app-workflow-side-nav__label">Add sessions</span>
-            </a>
-          </li>
-        </ol>
-      </nav>
-    </div>
-
-  </div>
   
   <div class="nhsuk-grid-column-three-quarters">
     <div class="nhsuk-u-reading-width">
@@ -82,7 +54,7 @@
 
       <h1 class="nhsuk-heading-l">Create schedule</h1>
 
-      <form action="0b-clinic-detail-schedule-added" method="post">
+      <form action="new-schedule-empty" method="post">
 
         <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="schedule-name">
