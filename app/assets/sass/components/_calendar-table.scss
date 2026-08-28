@@ -22,21 +22,23 @@
     vertical-align: top;
     border-width: 1px;
   }
-  // td {
-  //   background-color: #fff;
-  // }
-  // td.calendar-table-no-data {
-  //   background-color: transparent;
-  // }
 
-  td:not(.calendar-table-no-data) {
+  td {
     height: 124px;
     background-color: nhsuk-tint(nhsuk-colour("grey-5"), 50%);
-    &.--session-assigned {
-      background-color: nhsuk-colour("white");
-    }
   }
 
+  .calendar-table-no-data {
+    background-color: transparent;
+  }
+  .--session-assigned {
+    background-color: nhsuk-colour("white");
+  }
+  .--date-selected {
+    background-color: nhsuk-colour("pale-yellow");
+  }
+
+  // the number that is the date
   .calendar-table-date {
     display: flex;
     align-items: center;
@@ -47,50 +49,10 @@
     background-color: nhsuk-colour("grey-5");
     margin-bottom: nhsuk-spacing(3);
   }
-}
 
-.calendar-table--apply-session {
-  width: min(100%, 42rem);
-  margin-right: auto;
-}
-
-.calendar-table--apply-session th,
-.calendar-table--apply-session td {
-  padding: 1rem 0.4rem;
-}
-
-.calendar-table--apply-session th {
-  text-align: center;
-}
-
-.calendar-table--apply-session td {
-  min-height: 5.75rem;
-}
-
-.calendar-table--apply-session td a {
-  display: block;
-  min-height: 100%;
-}
-
-.calendar-table--apply-session td:not(.calendar-table-no-data) {
-  cursor: pointer;
-}
-
-.calendar-table--apply-session td.calendar-table-cell--selected {
-  background-color: var(--nhsuk-blue-colour, #005eb8);
-}
-
-.calendar-table--apply-session td.calendar-table-cell--selected a,
-.calendar-table--apply-session td.calendar-table-cell--selected .calendar-table-date {
-  color: #fff;
-}
-
-
-
-///
-/// 
-
-.calendar-table {
+  .--date-selected .calendar-table-date {
+    background-color: $nhsuk-focus-colour;
+  }
 
   .--schedule-start {
     position: relative;
@@ -126,14 +88,6 @@
       clip-path: polygon(0 0, 100% 0, 100% 100%);
     }
   }
-
-  td.--date-selected {
-    background-color: nhsuk-colour("pale-yellow");
-
-    .calendar-table-date {
-      background-color: $nhsuk-focus-colour;
-    }
-  }
 }
 
 .--session-locked {
@@ -142,4 +96,47 @@
   @include nhsuk-font-size(14);
   color: nhsuk-colour("grey-2");
   margin-bottom: nhsuk-spacing(2);
+}
+
+///
+/// 
+/// 
+///
+/// 
+/// 
+
+.calendar-table--apply-session {
+  width: min(100%, 42rem);
+  margin-right: auto;
+}
+
+.calendar-table--apply-session th,
+.calendar-table--apply-session td {
+  padding: 1rem 0.4rem;
+}
+
+.calendar-table--apply-session th {
+  text-align: center;
+}
+
+.calendar-table--apply-session td {
+  min-height: 5.75rem;
+}
+
+.calendar-table--apply-session td a {
+  display: block;
+  min-height: 100%;
+}
+
+.calendar-table--apply-session td:not(.calendar-table-no-data) {
+  cursor: pointer;
+}
+
+.calendar-table--apply-session td.calendar-table-cell--selected {
+  background-color: var(--nhsuk-blue-colour, #005eb8);
+}
+
+.calendar-table--apply-session td.calendar-table-cell--selected a,
+.calendar-table--apply-session td.calendar-table-cell--selected .calendar-table-date {
+  color: #fff;
 }
