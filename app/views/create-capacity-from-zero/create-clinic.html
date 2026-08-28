@@ -1,0 +1,212 @@
+{% extends 'layout.html' %}
+
+{% set errorState = "false" %}
+
+{% set pageName = "Create day clinic" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  
+  <div class="nhsuk-grid-column-full">
+    <div class="nhsuk-u-reading-width">
+
+      {% if errorState === "true" %}
+        {{ errorSummary({
+          titleText: "There is a problem",
+          errorList: [
+            {
+              text: "Clinic must be given a name",
+              href: "#"
+            },
+            {
+              text: "A unit must be chosen",
+              href: "#"
+            },
+            {
+              text: "A location must be chosen",
+              href: "#"
+            }
+          ]
+        }) }}
+      {% endif %}
+
+      <h1 class="nhsuk-heading-l">Clinic details</h1>
+
+      <form action="0a-clinics-clinic-added" method="post">
+
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+          <label class="nhsuk-label nhsuk-label--m" for="clinic-name">
+            Clinic name
+          </label>
+          {% if errorState === "true" %}
+            <span class="nhsuk-error-message">
+              <span class="nhsuk-u-visually-hidden">Error:</span> Clinic must be given a name
+            </span>
+          {% endif %}
+          <input class="nhsuk-input {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="clinic-name" name="clinicName" type="text" aria-describedby="naming-hint-text" value="{{ data.clinicName if data.clinicName else '' }}">
+        </div>
+
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-u-secondary-text-colour" for="clinic-id">
+            System generated clinic ID
+          </label>
+          <input class="nhsuk-input nhsuk-input--width-20" id="clinic-id" name="clinicIdDisplay" type="text" aria-describedby="id-hint-text" value="{{ data.clinicId if data.clinicId else 'HWO-NNN-standard-20260501' }}" disabled>
+          <input type="hidden" name="clinicId" value="{{ data.clinicId if data.clinicId else 'HWO-NNN-standard-20260501' }}">
+        </div>
+        
+        <hr class="nhsuk-u-margin-top-6 nhsuk-u-margin-bottom-4">
+
+        <div class="nhsuk-grid-row">
+
+          <div class="nhsuk-grid-column-one-half">
+            <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+              <fieldset class="nhsuk-fieldset">
+                <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
+                  Unit
+                </legend>
+                {% if errorState === "true" %}
+                  <span class="nhsuk-error-message">
+                    <span class="nhsuk-u-visually-hidden">Error:</span> A unit must be chosen
+                  </span>
+                {% endif %}
+                <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit" name="unit" type="radio" value="West Sussex Breast Care Centre" {% if data.unit == 'West Sussex Breast Care Centre' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit">
+                      West Sussex Breast Care Centre
+                    </label>
+                  </div>
+                  <hr class="nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-2">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-2" name="unit" type="radio" value="Alpha Van" {% if data.unit == 'Alpha Van' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-2">
+                      Alpha Van
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-3" name="unit" type="radio" value="Beta Van" {% if data.unit == 'Beta Van' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-3">
+                      Beta Van
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-4" name="unit" type="radio" value="Gamma Van" {% if data.unit == 'Gamma Van' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-4">
+                      Gamma Van
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="unit-5" name="unit" type="radio" value="Delta Van" {% if data.unit == 'Delta Van' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="unit-5">
+                      Delta Van
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="nhsuk-grid-column-one-half">
+            <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+              <fieldset class="nhsuk-fieldset">
+                <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--m">
+                  Location
+                </legend>
+                {% if errorState === "true" %}
+                  <span class="nhsuk-error-message">
+                    <span class="nhsuk-u-visually-hidden">Error:</span> A location must be chosen
+                  </span>
+                {% endif %}
+                <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-10" name="location" type="radio" value="Worthing hospital" {% if data.location == 'Worthing hospital' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-10">
+                      Worthing hospital
+                    </label>
+                  </div>
+                  <hr class="nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-2">
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location" name="location" type="radio" value="Bognor Regis" {% if data.location == 'Bognor Regis' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="location">
+                      Bognor Regis
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-2" name="location" type="radio" value="Burgess Hill" {% if data.location == 'Burgess Hill' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-2">
+                      Burgess Hill
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-3" name="location" type="radio" value="Chichester" {% if data.location == 'Chichester' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-3">
+                      Chichester
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-4" name="location" type="radio" value="Crawley" {% if data.location == 'Crawley' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-4">
+                      Crawley
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-5" name="location" type="radio" value="Haywards Heath" {% if data.location == 'Haywards Heath' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-5">
+                      Haywards Heath
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-6" name="location" type="radio" value="Horsham" {% if data.location == 'Horsham' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-6">
+                      Horsham
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-7" name="location" type="radio" value="Littlehampton" {% if data.location == 'Littlehampton' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-7">
+                      Littlehampton
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-8" name="location" type="radio" value="Shoreham-by-Sea" {% if data.location == 'Shoreham-by-Sea' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-8">
+                      Shoreham-by-Sea
+                    </label>
+                  </div>
+                  <div class="nhsuk-radios__item">
+                    <input class="nhsuk-radios__input" id="location-9" name="location" type="radio" value="Storrington" {% if data.location == 'Storrington' %}checked{% endif %}>
+                    <label class="nhsuk-label nhsuk-radios__label" for="location-9">
+                      Storrington
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+        </div>
+        
+        <hr class="nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
+        <button class="nhsuk-button" type="submit">Continue</button>
+
+      </form>
+    </div>
+  </div>
+
+
+
+{% endblock %}

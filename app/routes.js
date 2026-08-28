@@ -724,4 +724,7 @@ router.post('/sessions/02-organise-slots', function (req, res) {
 // Isolated September Test (Mission 1) routes
 router.use(require('./routes/mission-1'));
 
+// Isolated create capacity from zero routes
+router.use(require('./routes/create-capacity-from-zero'));
+
 module.exports = router

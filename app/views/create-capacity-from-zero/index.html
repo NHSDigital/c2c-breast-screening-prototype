@@ -1,0 +1,128 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Clinics" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+  {% set secondaryNavItems = [] %}
+
+  {% for item in [
+    { href: '/clinics/', label: 'Active clinics', selected: 'true' },
+    { href: '#', label: 'Archived clinics' },
+    { href: '/sessions/templating-01-listing', label: 'Manage session templates' }
+  ] %}
+    {% set secondaryNavItems = secondaryNavItems | push({
+      text: item.label | safe,
+      href: item.href | trim,
+      current: true if item.selected == 'true'
+    }) %}
+  {% endfor %}
+
+  {{ appSecondaryNavigation({
+    visuallyHiddenTitle: "Secondary menu",
+    items: secondaryNavItems
+  }) }}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="app-card-editable">
+        <h1 class="nhsuk-heading-l">Active clinics</h1>
+        {{ button({
+          text: "Create a new clinic",
+          href: "/create-capacity-from-zero/create-clinic",
+          classes: "nhsuk-button--secondary"
+        }) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <table class="nhsuk-table nhsuk-table-responsive">
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <th scope="col" class="nhsuk-table__header">
+              Clinic
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Unit and location
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Current schedules
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Current capacity
+            </th>
+          </tr>
+        </thead>
+        <tbody class="nhsuk-table__body">
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              <a href="clinic-detail">Chichester - St Richards<br></a>
+              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-standard-20260501</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              Alpha van<br>
+              St Richard’s Hospital, Chichester
+            </td>
+            <td class="nhsuk-table__cell">
+              31 August 2026 to 9 October 2026
+            </td>
+            <td class="nhsuk-table__cell">
+              1500 slots available<br>
+              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">of which 150 held</span>
+            </td>
+          </tr>
+
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell">
+              <a href="#">Chichester - St Richards<br></a>
+              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-standard-20260501</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              Alpha van<br>
+              St Richard’s Hospital, Chichester
+            </td>
+            <td class="nhsuk-table__cell">
+              <span class="nhsuk-u-secondary-text-colour">No active schedules</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              1500 slots available<br>
+              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">of which 150 held</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+        
+<!-- 
+    [
+      {
+        html: '<a href="#">Worthing - special slots May 2026<br></a><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-special-20260501</span>'
+      },
+      {
+        html: 'Worthing<br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">Worthing Hospital</span>'
+      },
+      {
+        html: 'Home base<br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-static-1</span> '
+      },
+      {
+        html: '<progress class="app-progress-bar --generic" value="60" max="100">60%</progress><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">40 slots available of 100</div>'
+      }
+    ]
+  ]
+}) }} -->
+
+
+    </div>
+  </div>
+
+{% endblock %}

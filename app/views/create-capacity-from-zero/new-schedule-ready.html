@@ -1,0 +1,516 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Calendar view" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set padlockSvg %}
+<div class="--session-locked">
+  <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <path d="M5.5 8V5.75C5.5 3.67893 7.17893 2 9.25 2C11.3211 2 13 3.67893 13 5.75V8" stroke="#4C6272" stroke-width="1.75" stroke-linecap="round"/>
+    <rect x="3" y="7" width="12.5" height="10" rx="1.5" fill="#4C6272"/>
+    <circle cx="9.25" cy="11.75" r="1.25" fill="white"/>
+    <path d="M9.25 13V14.5" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
+  </svg>
+  Locked
+</div>
+{% endset %}
+
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+      <h1 class="nhsuk-heading-l">
+        Assign session templates
+        Session name
+      </h1>
+    </div>
+    <div class="nhsuk-grid-column-one-quarter">
+    </div>
+  </div>
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+
+        <table class="nhsuk-table nhsuk-table-responsive calendar-table">
+          <caption class="nhsuk-table__caption nhsuk-table__caption--s nhsuk-u-font-weight-normal">
+            September 2026
+          </caption>
+          <thead class="nhsuk-table__head">
+            <tr class="nhsuk-table__row">
+              <th scope="col" class="nhsuk-table__header">Monday</th>
+              <th scope="col" class="nhsuk-table__header">Tuesday</th>
+              <th scope="col" class="nhsuk-table__header">Wednesday</th>
+              <th scope="col" class="nhsuk-table__header">Thursday</th>
+              <th scope="col" class="nhsuk-table__header">Friday</th>
+              <th scope="col" class="nhsuk-table__header">Saturday</th>
+              <th scope="col" class="nhsuk-table__header">Sunday</th>
+            </tr>
+          </thead>
+          <tbody class="nhsuk-table__body">
+            <!-- <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">1</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">2</span>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">3</span>
+              </td> 
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">4</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">5</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">6</span>
+              </td>
+            </tr> -->
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell --schedule-start">
+                <span class="calendar-table-date">7</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">8</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">9</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">10</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">11</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">12</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">13</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">14</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">15</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">16</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">17</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">18</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">19</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">20</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">21</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">22</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">23</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">24</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">25</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">26</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">27</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">28</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">29</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">30</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="nhsuk-table calendar-table">
+          <caption class="nhsuk-table__caption nhsuk-table__caption--s nhsuk-u-font-weight-normal">
+            October 2026
+          </caption>
+          <thead class="nhsuk-table__head">
+            <tr class="nhsuk-table__row">
+              <th scope="col" class="nhsuk-table__header">Monday</th>
+              <th scope="col" class="nhsuk-table__header">Tuesday</th>
+              <th scope="col" class="nhsuk-table__header">Wednesday</th>
+              <th scope="col" class="nhsuk-table__header">Thursday</th>
+              <th scope="col" class="nhsuk-table__header">Friday</th>
+              <th scope="col" class="nhsuk-table__header">Saturday</th>
+              <th scope="col" class="nhsuk-table__header">Sunday</th>
+            </tr>
+          </thead>
+          <tbody class="nhsuk-table__body">
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">1</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">2</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">3</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">4</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">5</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">6</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">7</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">8</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">9</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">10</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">11</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">12</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">13</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">14</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">15</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">16</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell --schedule-end">
+                <span class="calendar-table-date">17</span>
+                {{ padlockSvg | safe }}
+                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
+                <a href="#">42 slots</a><br>
+                0 booked<br>
+                8 held<br>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">18</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">19</span>
+              </td>
+            </tr>
+            <!-- <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">20</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">21</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">22</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">23</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">24</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">25</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">26</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">27</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">28</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">29</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">30</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">31</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+    </div>
+
+    <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
+      <div class="side-panel" id="side-panel">
+        <h3 class="nhsuk-heading-s">With selected days:</h3>
+        <ul class="nhsuk-list">
+          <li><a class="panel-item">Assign session template</a></li>
+          <li><a class="panel-item">Remove template</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block pageScripts %}
+<script type="text/javascript">
+  var lastSelectedCell = null;
+  var selectableCells = Array.from(document.querySelectorAll('.calendar-table td:not(.calendar-table-no-data)'));
+
+  document.querySelectorAll('.calendar-table').forEach(function (table) {
+    table.addEventListener('click', function (event) {
+      var link = event.target.closest('a');
+      var cell = event.target.closest('td');
+
+      if (link && table.contains(link)) {
+        return;
+      }
+
+      if (!cell || !table.contains(cell) || cell.classList.contains('calendar-table-no-data')) {
+        return;
+      }
+
+      if (event.shiftKey && lastSelectedCell) {
+        var startIndex = selectableCells.indexOf(lastSelectedCell);
+        var endIndex = selectableCells.indexOf(cell);
+
+        if (startIndex !== -1 && endIndex !== -1) {
+          var rangeStart = Math.min(startIndex, endIndex);
+          var rangeEnd = Math.max(startIndex, endIndex);
+
+          for (var index = rangeStart; index <= rangeEnd; index++) {
+            selectableCells[index].classList.add('--date-selected');
+          }
+        }
+      } else {
+        cell.classList.toggle('--date-selected');
+      }
+
+      lastSelectedCell = cell;
+    });
+
+    table.classList.add('--js-enabled');
+  });
+</script>
+{% endblock %}
