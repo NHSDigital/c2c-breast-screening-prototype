@@ -1,0 +1,843 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Calendar view" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+  <nav>
+    <ol class="app-clinic-level-breadcrumbs nhsuk-list">
+      <li class="--item">
+        <span class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">?</span>
+        <a href="#">Clinics</a>
+      </li>
+      <li class="--item">
+        <span class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">Clinic</span>
+        <a href="#">Chichester - St Richards</a>
+      </li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+      <h1 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-l">Clinic</span>
+        Chichester - St Richards
+      </h1>
+      <p>
+        <a href="#">Alpha van</a><br>
+        <a href="#">St Richard’s Hospital, Chichester</a>
+      </p>
+    </div>
+    <div class="nhsuk-grid-column-one-quarter">
+      <ul class="nhsuk-list">
+        <li>
+          <a href="#">Edit clinic name</a>
+        </li>
+        <li>
+          <a href="#">Change unit and location</a>
+        </li>
+        <li>
+          <a href="#" class="app-link--warning">Archive this clinic</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% set secondaryNavItems = [] %}
+
+      {% for item in [
+        { href: '#', label: 'Current schedules', selected: 'true' },
+        { href: '#', label: 'Past schedules' }
+      ] %}
+        {% set secondaryNavItems = secondaryNavItems | push({
+          text: item.label | safe,
+          href: item.href | trim,
+          current: true if item.selected == 'true'
+        }) %}
+      {% endfor %}
+
+      {{ appSecondaryNavigation({
+        visuallyHiddenTitle: "Secondary menu",
+        items: secondaryNavItems
+      }) }}
+    </div>
+  </div>
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+
+        
+
+        <table class="nhsuk-table calendar-table --sketch">
+                  <caption class="nhsuk-table__caption nhsuk-table__caption--s nhsuk-u-font-weight-normal">
+                    August 2026
+                  </caption>
+                  <thead class="nhsuk-table__head">
+                    <tr class="nhsuk-table__row">
+                      <th scope="col" class="nhsuk-table__header">Monday</th>
+                      <th scope="col" class="nhsuk-table__header">Tuesday</th>
+                      <th scope="col" class="nhsuk-table__header">Wednesday</th>
+                      <th scope="col" class="nhsuk-table__header">Thursday</th>
+                      <th scope="col" class="nhsuk-table__header">Friday</th>
+                      <th scope="col" class="nhsuk-table__header">Saturday</th>
+                      <th scope="col" class="nhsuk-table__header">Sunday</th>
+                    </tr>
+                  </thead>
+                  <tbody class="nhsuk-table__body">
+                    <tr class="nhsuk-table__row">
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">1</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">2</span>
+                      </td>
+                    </tr>
+                    <tr class="nhsuk-table__row">
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">3</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">4</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">5</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">6</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">7</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">8</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">9</span>
+                      </td>
+                    </tr>
+                    <tr class="nhsuk-table__row">
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">10</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">11</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">12</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">13</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">14</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">15</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">16</span>
+                      </td>
+                    </tr>
+                    <tr class="nhsuk-table__row">
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">17</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">18</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">19</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">20</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">21</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">22</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">23</span>
+                      </td>
+                    </tr>
+                    <tr class="nhsuk-table__row">
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">24</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">25</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">26</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">27</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">28</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">29</span>
+                      </td>
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">30</span>
+                      </td>
+                    </tr>
+                    <tr class="nhsuk-table__row">
+                      <td class="nhsuk-table__cell">
+                        <span class="calendar-table-date">31</span>
+                      </td>
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                      <td class="nhsuk-table__cell calendar-table-no-data">
+                        <span class="nhsuk-u-visually-hidden">No data</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+        <table class="nhsuk-table nhsuk-table-responsive calendar-table --sketch">
+          <caption class="nhsuk-table__caption nhsuk-table__caption--s nhsuk-u-font-weight-normal">
+            September 2026
+          </caption>
+          <thead class="nhsuk-table__head">
+            <tr class="nhsuk-table__row">
+              <th scope="col" class="nhsuk-table__header">Monday</th>
+              <th scope="col" class="nhsuk-table__header">Tuesday</th>
+              <th scope="col" class="nhsuk-table__header">Wednesday</th>
+              <th scope="col" class="nhsuk-table__header">Thursday</th>
+              <th scope="col" class="nhsuk-table__header">Friday</th>
+              <th scope="col" class="nhsuk-table__header">Saturday</th>
+              <th scope="col" class="nhsuk-table__header">Sunday</th>
+            </tr>
+          </thead>
+          <tbody class="nhsuk-table__body">
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">1</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">2</span>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">3</span>
+              </td> 
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">4</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">5</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">6</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell --schedule-start --session-assigned">
+                <span class="calendar-table-date">7</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="9" max="100">9%</progress>
+                <a href="#">38 available</a><br>
+                4 booked<br>
+                8 held<br>
+                <a href="#" class="calendar-table-schedule-name">Schedule name how?</a>
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">8</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="9" max="100">9%</progress>
+                <a href="#">38 available</a><br>
+                4 booked<br>
+                8 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">9</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="9" max="100">9%</progress>
+                <a href="#">38 available</a><br>
+                4 booked<br>
+                8 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">10</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="81" max="100">81%</progress>
+                <a href="#">8 available</a><br>
+                34 booked<br>
+                8 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">11</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="14" max="100">14%</progress>
+                <a href="#">36 available</a><br>
+                6 booked<br>
+                4 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">12</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="24" max="100">24%</progress>
+                <a href="#">32 available</a><br>
+                10 booked<br>
+                5 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">13</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="36" max="100">36%</progress>
+                <a href="#">27 available</a><br>
+                15 booked<br>
+                6 held
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">14</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="43" max="100">43%</progress>
+                <a href="#">24 available</a><br>
+                18 booked<br>
+                7 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">15</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="52" max="100">52%</progress>
+                <a href="#">20 available</a><br>
+                22 booked<br>
+                8 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">16</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="60" max="100">60%</progress>
+                <a href="#">17 available</a><br>
+                25 booked<br>
+                5 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">17</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="71" max="100">71%</progress>
+                <a href="#">12 available</a><br>
+                30 booked<br>
+                6 held
+              </td>
+
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">18</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="29" max="100">29%</progress>
+                <a href="#">30 available</a><br>
+                12 booked<br>
+                4 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">19</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="48" max="100">48%</progress>
+                <a href="#">22 available</a><br>
+                20 booked<br>
+                5 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">20</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="67" max="100">67%</progress>
+                <a href="#">14 available</a><br>
+                28 booked<br>
+                7 held
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">21</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="19" max="100">19%</progress>
+                <a href="#">34 available</a><br>
+                8 booked<br>
+                4 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">22</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="38" max="100">38%</progress>
+                <a href="#">26 available</a><br>
+                16 booked<br>
+                6 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">23</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="57" max="100">57%</progress>
+                <a href="#">18 available</a><br>
+                24 booked<br>
+                8 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">24</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="76" max="100">76%</progress>
+                <a href="#">10 available</a><br>
+                32 booked<br>
+                5 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">25</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="90" max="100">90%</progress>
+                <a href="#">4 available</a><br>
+                38 booked<br>
+                4 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">26</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="12" max="100">12%</progress>
+                <a href="#">37 available</a><br>
+                5 booked<br>
+                6 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">27</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="33" max="100">33%</progress>
+                <a href="#">28 available</a><br>
+                14 booked<br>
+                7 held
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">28</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="50" max="100">50%</progress>
+                <a href="#">21 available</a><br>
+                21 booked<br>
+                5 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">29</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="69" max="100">69%</progress>
+                <a href="#">13 available</a><br>
+                29 booked<br>
+                8 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">30</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="86" max="100">86%</progress>
+                <a href="#">6 available</a><br>
+                36 booked<br>
+                6 held
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="nhsuk-table calendar-table --sketch">
+          <caption class="nhsuk-table__caption nhsuk-table__caption--s nhsuk-u-font-weight-normal">
+            October 2026
+          </caption>
+          <thead class="nhsuk-table__head">
+            <tr class="nhsuk-table__row">
+              <th scope="col" class="nhsuk-table__header">Monday</th>
+              <th scope="col" class="nhsuk-table__header">Tuesday</th>
+              <th scope="col" class="nhsuk-table__header">Wednesday</th>
+              <th scope="col" class="nhsuk-table__header">Thursday</th>
+              <th scope="col" class="nhsuk-table__header">Friday</th>
+              <th scope="col" class="nhsuk-table__header">Saturday</th>
+              <th scope="col" class="nhsuk-table__header">Sunday</th>
+            </tr>
+          </thead>
+          <tbody class="nhsuk-table__body">
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">1</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="21" max="100">21%</progress>
+                <a href="#">33 available</a><br>
+                9 booked<br>
+                4 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">2</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="40" max="100">40%</progress>
+                <a href="#">25 available</a><br>
+                17 booked<br>
+                5 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">3</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="55" max="100">55%</progress>
+                <a href="#">19 available</a><br>
+                23 booked<br>
+                6 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">4</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="74" max="100">74%</progress>
+                <a href="#">11 available</a><br>
+                31 booked<br>
+                7 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">5</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="95" max="100">95%</progress>
+                <a href="#">2 available</a><br>
+                40 booked<br>
+                4 held
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">6</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="17" max="100">17%</progress>
+                <a href="#">35 available</a><br>
+                7 booked<br>
+                5 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">7</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="45" max="100">45%</progress>
+                <a href="#">23 available</a><br>
+                19 booked<br>
+                6 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">8</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="64" max="100">64%</progress>
+                <a href="#">15 available</a><br>
+                27 booked<br>
+                8 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">9</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="83" max="100">83%</progress>
+                <a href="#">7 available</a><br>
+                35 booked<br>
+                4 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">10</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="26" max="100">26%</progress>
+                <a href="#">31 available</a><br>
+                11 booked<br>
+                5 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">11</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="48" max="100">48%</progress>
+                <a href="#">22 available</a><br>
+                20 booked<br>
+                6 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">12</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="62" max="100">62%</progress>
+                <a href="#">16 available</a><br>
+                26 booked<br>
+                7 held
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">13</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="31" max="100">31%</progress>
+                <a href="#">29 available</a><br>
+                13 booked<br>
+                4 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">14</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="52" max="100">52%</progress>
+                <a href="#">20 available</a><br>
+                22 booked<br>
+                5 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">15</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="79" max="100">79%</progress>
+                <a href="#">9 available</a><br>
+                33 booked<br>
+                6 held
+              </td>
+              <td class="nhsuk-table__cell --session-assigned">
+                <span class="calendar-table-date">16</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="7" max="100">7%</progress>
+                <a href="#">39 available</a><br>
+                3 booked<br>
+                4 held
+              </td>
+              <td class="nhsuk-table__cell --schedule-end --session-assigned">
+                <!-- Schedule end marker -->
+                <span class="calendar-table-date">17</span>
+                <progress class="app-progress-bar --thin --compact --generic" value="98" max="100">98%</progress>
+                <a href="#">1 available</a><br>
+                41 booked<br>
+                8 held
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">18</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">19</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell --schedule-start">
+                <span class="calendar-table-date">20</span>
+                <a href="#" class="calendar-table-schedule-name">Schedule name</a>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">21</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">22</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">23</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">24</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">25</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">26</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">27</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">28</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">29</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">30</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">31</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <table class="nhsuk-table calendar-table --sketch">
+          <caption class="nhsuk-table__caption nhsuk-table__caption--s nhsuk-u-font-weight-normal">
+            November 2026
+          </caption>
+          <thead class="nhsuk-table__head">
+            <tr class="nhsuk-table__row">
+              <th scope="col" class="nhsuk-table__header">Monday</th>
+              <th scope="col" class="nhsuk-table__header">Tuesday</th>
+              <th scope="col" class="nhsuk-table__header">Wednesday</th>
+              <th scope="col" class="nhsuk-table__header">Thursday</th>
+              <th scope="col" class="nhsuk-table__header">Friday</th>
+              <th scope="col" class="nhsuk-table__header">Saturday</th>
+              <th scope="col" class="nhsuk-table__header">Sunday</th>
+            </tr>
+          </thead>
+          <tbody class="nhsuk-table__body">
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">1</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">2</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">3</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">4</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">5</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">6</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">7</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">8</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">9</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">10</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">11</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">12</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">13</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">14</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">15</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">16</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">17</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">18</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">19</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">20</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">21</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">22</span>
+              </td>
+            </tr>
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">23</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">24</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">25</span>
+              </td>
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">26</span>
+              </td>
+              <td class="nhsuk-table__cell --schedule-end">
+                <span class="calendar-table-date">27</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">28</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="calendar-table-date">29</span>
+              </td>
+            </tr>
+            <!-- <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <span class="calendar-table-date">30</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+              <td class="nhsuk-table__cell calendar-table-no-data">
+                <span class="nhsuk-u-visually-hidden">No data</span>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+       <a href="#" class="nhsuk-button nhsuk-button--secondary-solid">Add a new schedule</a>
+    </div>
+    <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
+      <div class="side-panel" id="side-panel">
+        <h3 class="nhsuk-heading-s">With selected days:</h3>
+        <ul class="nhsuk-list">
+          <li><a class="panel-item">Open for booking (make live)</a></li>
+          <li><a class="panel-item">Release all held slots</a></li>
+          <li><a class="panel-item">Do something else</a></li>
+          <li><a class="panel-item">Do something wild</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
