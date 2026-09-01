@@ -24,7 +24,7 @@
   }
 
   td {
-    height: 124px;
+    height: 220px;
     background-color: nhsuk-tint(nhsuk-colour("grey-5"), 50%);
   }
 
@@ -69,6 +69,17 @@
       height: 12px;
       background-color: nhsuk-colour("grey-2");
       clip-path: polygon(0 0, 100% 0, 0 100%);
+    }
+
+    .--schedule-name {
+      display: block;
+      border-radius: 4px;
+      background-color: nhsuk-colour("grey-2");
+      color: nhsuk-colour("white");
+      padding: nhsuk-spacing(1);
+      margin-top: nhsuk-spacing(2);
+      font-size: nhsuk-px-to-rem(14);
+      text-wrap: nowrap;
     }
   }
   .--schedule-end {

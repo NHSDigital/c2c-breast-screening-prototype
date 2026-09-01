@@ -59,12 +59,14 @@
           <tbody class="nhsuk-table__body">
             <tr class="nhsuk-table__row">
               <td class="nhsuk-table__cell --schedule-start --session-assigned">
-                <span class="calendar-table-date">7</span>
+                <span class="calendar-table-date">
+                  7
+                </span>
                 <progress class="app-progress-bar --thin --compact --generic" value="9" max="100">9%</progress>
                 <a href="#">38 available</a><br>
                 4 booked<br>
                 8 held<br>
-                <a href="#" class="calendar-table-schedule-name">Schedule name how?</a>
+                <span class="--schedule-name">Select schedule</span>
               </td>
               <td class="nhsuk-table__cell --session-assigned">
                 <span class="calendar-table-date">8</span>
@@ -273,14 +275,12 @@
                 <span class="calendar-table-date">4</span>
               </td>
             </tr>
-            <tr class="nhsuk-table__row">
               <td class="nhsuk-table__cell --session-assigned">
                 <span class="calendar-table-date">5</span>
-                {{ padlockSvg | safe }}
-                <!-- <progress class="app-progress-bar --thin --compact --generic" value="0" max="100">0%</progress> -->
-                <a href="#">42 slots</a><br>
-                0 booked<br>
-                8 held<br>
+                <progress class="app-progress-bar --thin --compact --generic" value="17" max="100">17%</progress>
+                <a href="#">35 available</a><br>
+                7 booked<br>
+                5 held
               </td>
               <td class="nhsuk-table__cell --session-assigned">
                 <span class="calendar-table-date">6</span>
@@ -734,43 +734,5 @@
 {% endblock %}
 
 {% block pageScripts %}
-<script type="text/javascript">
-  var lastSelectedCell = null;
-  var selectableCells = Array.from(document.querySelectorAll('.calendar-table td:not(.calendar-table-no-data)'));
-
-  document.querySelectorAll('.calendar-table').forEach(function (table) {
-    table.addEventListener('click', function (event) {
-      var link = event.target.closest('a');
-      var cell = event.target.closest('td');
-
-      if (link && table.contains(link)) {
-        return;
-      }
-
-      if (!cell || !table.contains(cell) || cell.classList.contains('calendar-table-no-data')) {
-        return;
-      }
-
-      if (event.shiftKey && lastSelectedCell) {
-        var startIndex = selectableCells.indexOf(lastSelectedCell);
-        var endIndex = selectableCells.indexOf(cell);
-
-        if (startIndex !== -1 && endIndex !== -1) {
-          var rangeStart = Math.min(startIndex, endIndex);
-          var rangeEnd = Math.max(startIndex, endIndex);
-
-          for (var index = rangeStart; index <= rangeEnd; index++) {
-            selectableCells[index].classList.add('--date-selected');
-          }
-        }
-      } else {
-        cell.classList.toggle('--date-selected');
-      }
-
-      lastSelectedCell = cell;
-    });
-
-    table.classList.add('--js-enabled');
-  });
-</script>
+<script type="text/javascript" src="/assets/javascript/calendar-table-actions.js"></script>
 {% endblock %}

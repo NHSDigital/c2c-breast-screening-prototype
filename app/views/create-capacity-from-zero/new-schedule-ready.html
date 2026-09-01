@@ -466,43 +466,5 @@
 {% endblock %}
 
 {% block pageScripts %}
-<script type="text/javascript">
-  var lastSelectedCell = null;
-  var selectableCells = Array.from(document.querySelectorAll('.calendar-table td:not(.calendar-table-no-data)'));
-
-  document.querySelectorAll('.calendar-table').forEach(function (table) {
-    table.addEventListener('click', function (event) {
-      var link = event.target.closest('a');
-      var cell = event.target.closest('td');
-
-      if (link && table.contains(link)) {
-        return;
-      }
-
-      if (!cell || !table.contains(cell) || cell.classList.contains('calendar-table-no-data')) {
-        return;
-      }
-
-      if (event.shiftKey && lastSelectedCell) {
-        var startIndex = selectableCells.indexOf(lastSelectedCell);
-        var endIndex = selectableCells.indexOf(cell);
-
-        if (startIndex !== -1 && endIndex !== -1) {
-          var rangeStart = Math.min(startIndex, endIndex);
-          var rangeEnd = Math.max(startIndex, endIndex);
-
-          for (var index = rangeStart; index <= rangeEnd; index++) {
-            selectableCells[index].classList.add('--date-selected');
-          }
-        }
-      } else {
-        cell.classList.toggle('--date-selected');
-      }
-
-      lastSelectedCell = cell;
-    });
-
-    table.classList.add('--js-enabled');
-  });
-</script>
+<script type="text/javascript" src="/assets/javascript/calendar-table-actions.js"></script>
 {% endblock %}
