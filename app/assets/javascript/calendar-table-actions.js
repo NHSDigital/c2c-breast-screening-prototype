@@ -9,7 +9,7 @@
 
   document.querySelectorAll('.calendar-table').forEach(function (table) {
     table.addEventListener('click', function (event) {
-      var link = event.target.closest('a');
+      var link = event.target.closest('button, a');
       var cell = event.target.closest('td');
       var clickedScheduleName = event.target.closest('span.--schedule-name');
       var clickedStartCell = clickedScheduleName ? clickedScheduleName.closest('td.--schedule-start') : null;
