@@ -35,7 +35,7 @@
 
         if (endIndex !== -1) {
           for (var rangeIndex = startIndex; rangeIndex <= endIndex; rangeIndex++) {
-            if (allCells[rangeIndex].classList.contains('--session-assigned')) {
+            if (!allCells[rangeIndex].classList.contains('calendar-table-no-data')) {
               rangeCells.push(allCells[rangeIndex]);
             }
           }
