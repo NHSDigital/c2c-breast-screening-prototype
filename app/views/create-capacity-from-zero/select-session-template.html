@@ -11,42 +11,6 @@
 
 {% block content %}
 <div class="nhsuk-grid-row">
-  <div class="nhsuk-grid-column-one-quarter">
-
-    <div class="app-workflow-side-nav-wrapper">
-      <nav class="app-workflow-side-nav">
-        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
-          <span class="nhsuk-caption-m">
-            Workflow steps
-          </span>
-          Pop sessions into schedule
-        </h2>
-        <ol class="app-workflow-side-nav__list">
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
-            <span class="app-workflow-side-nav__link" aria-current="page">
-              <span class="app-workflow-side-nav__number">
-                1
-              </span>
-              <span class="app-workflow-side-nav__label">Picky thing</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">2</span>
-              <span class="app-workflow-side-nav__label">Picky thing</span>
-            </span>
-          </li>
-          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
-            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
-              <span class="app-workflow-side-nav__number">3</span>
-              <span class="app-workflow-side-nav__label">etc</span>
-            </span>
-          </li>
-        </ol>
-      </nav>
-    </div>
-
-  </div>
 
   <div class="nhsuk-grid-column-three-quarters">
     <h1 class="nhsuk-heading-l">Choose session template</h1>
@@ -56,7 +20,7 @@
         <h2 class="nhsuk-heading-s">
           Standard day
         </h2>
-        <a href="#" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+        <a href="new-schedule-ready" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
           Select this template
         </a>
       </div>
@@ -123,7 +87,7 @@
         <h2 class="nhsuk-heading-s">
           Special appointments day
         </h2>
-        <a href="#" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+        <a href="new-schedule-ready" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
           Select this template
         </a>
       </div>
@@ -190,7 +154,7 @@
         <h2 class="nhsuk-heading-s">
           Default session template
         </h2>
-        <a href="#" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+        <a href="new-schedule-ready" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
           Select this template
         </a>
       </div>
@@ -267,7 +231,7 @@
       <span aria-hidden="true">&times;</span>
       <span class="nhsuk-u-visually-hidden">Close full template preview</span>
     </button>
-    <iframe class="app-template-preview-dialog__frame" src="/clinics/select-session-template-full-preview" title="Full template preview"></iframe>
+    <iframe class="app-template-preview-dialog__frame" src="select-session-template-full-preview" title="Full template preview"></iframe>
   </div>
 </dialog>
 {% endblock %}

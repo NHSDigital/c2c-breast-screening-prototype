@@ -1,59 +1,120 @@
 // Import NHS.UK frontend library
 @use "nhsuk-frontend/dist/nhsuk/core" as *;
 
-.app-full-viewport-width {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  border: solid #d8dde0;
-  border-width: 2px 0;
-  padding: 1.5rem 0 0 0;
-}
-.app-full-viewport-width .calendar-table {
-  width: calc(100% - 4rem);
-  margin: 0 auto 2rem auto;
-}
-
 
 .calendar-table {
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
   border: 1px solid #d8dde0;
+
+  &.--js-enabled {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  th,
+  td {
+    @include nhsuk-font(16);
+    width: 14.2857%;
+    padding: 0.75rem;
+    vertical-align: top;
+    border-width: 1px;
+  }
+
+  td {
+    height: 220px;
+    background-color: nhsuk-tint(nhsuk-colour("grey-5"), 50%);
+  }
+
+  .calendar-table-no-data {
+    background-color: transparent;
+  }
+  .--session-assigned {
+    background-color: nhsuk-colour("white");
+  }
+  .--date-selected {
+    background-color: nhsuk-colour("pale-yellow");
+  }
+
+  // the number that is the date
+  .calendar-table-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: nhsuk-colour("grey-5");
+    margin-bottom: nhsuk-spacing(3);
+  }
+
+  .--date-selected .calendar-table-date {
+    background-color: $nhsuk-focus-colour;
+  }
+
+  .--schedule-start {
+    position: relative;
+    border-left-color: nhsuk-colour("grey-2");
+    border-left-width: 2px;
+
+    // Triangle marking the top-left corner
+    &::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 12px;
+      height: 12px;
+      background-color: nhsuk-colour("grey-2");
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+    }
+
+    .--schedule-name {
+      display: block;
+      border-radius: 4px;
+      background-color: nhsuk-colour("grey-2");
+      color: nhsuk-colour("white");
+      padding: nhsuk-spacing(1);
+      margin-top: nhsuk-spacing(2);
+      font-size: nhsuk-px-to-rem(14);
+      text-wrap: nowrap;
+    }
+  }
+  .--schedule-end {
+    position: relative;
+    border-right-color: nhsuk-colour("grey-2");
+    border-right-width: 2px;
+
+    // Triangle marking the top-right corner
+    &::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      width: 12px;
+      height: 12px;
+      background-color: nhsuk-colour("grey-2");
+      clip-path: polygon(0 0, 100% 0, 100% 100%);
+    }
+  }
 }
-.calendar-table th,
-.calendar-table td {
-  @include nhsuk-font(16);
-  width: 14.2857%;
-  padding: 0.75rem;
-  vertical-align: top;
-  border-width: 1px;
+
+.--session-locked {
+  display: flex;
+  align-items: center;
+  @include nhsuk-font-size(14);
+  color: nhsuk-colour("grey-2");
+  margin-bottom: nhsuk-spacing(2);
 }
-.calendar-table td {
-  background-color: #fff;
-}
-.calendar-table td.calendar-table-capacity {
-  background-color: #fff;
-  background-image:
-    linear-gradient(to top, rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
-    var(--generic-chart-hatch);
-  background-size:
-    100% 100%,
-    100% calc(var(--percentage, 0%));
-  background-position:
-    left top,
-    left bottom;
-  background-repeat:
-    no-repeat,
-    no-repeat;
-}
-.calendar-table td.calendar-table-no-data {
-  background-color: transparent;
-}
-// .calendar-table-date {
-//   font-weight: bold;
-//   display: block;
-// }
+
+///
+/// 
+/// 
+///
+/// 
+/// 
 
 .calendar-table--apply-session {
   width: min(100%, 42rem);
@@ -89,88 +150,4 @@
 .calendar-table--apply-session td.calendar-table-cell--selected a,
 .calendar-table--apply-session td.calendar-table-cell--selected .calendar-table-date {
   color: #fff;
-}
-
-
-
-///
-/// 
-
-.calendar-table {
-
-  .--schedule-start {
-    position: relative;
-    border-left: 4px solid nhsuk-colour("grey-2");
-    padding-bottom: 2em;
-
-    // Chevron pointing into the cell from the left border
-    &::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: -1px;
-      width: 8px;
-      height: 16px;
-      background-color: nhsuk-colour("grey-2");
-      clip-path: polygon(0 0, 100% 50%, 0 100%);
-      transform: translateY(-50%);
-    }
-  }
-  .--schedule-end {
-    position: relative;
-    border-right: 4px solid nhsuk-colour("grey-2");
-
-    // Chevron pointing into the cell from the right border
-    &::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: -1px;
-      width: 8px;
-      height: 16px;
-      background-color: nhsuk-colour("grey-2");
-      clip-path: polygon(100% 0, 0 50%, 100% 100%);
-      transform: translateY(-50%);
-    }
-  }
-
-  // .calendar-table-schedule-name {
-  //   position: absolute;
-  //   bottom: 0;
-  //   left: 0;
-  //   height: 1.75em;
-  //   width: 100%;
-  //   box-sizing: border-box;
-  //   background-color: nhsuk-colour("grey-2");
-  //   color: #fff;
-  // }
-}
-
-.calendar-table.--sketch {
-  td:not(.calendar-table-no-data) {
-    height: 124px;
-    background-color: nhsuk-tint(nhsuk-colour("grey-5"), 50%);
-    &.--session-assigned {
-      background-color: nhsuk-colour("white");
-    }
-  }
-  .calendar-table-date {
-    display: block;
-  }
-
-  td.calendar-table-capacity {
-    background-color: #fff;
-    background-image:
-      linear-gradient(to top, rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
-      var(--generic-chart-hatch);
-    background-size:
-      100% 100%,
-      100% calc(var(--percentage, 0%));
-    background-position:
-      left top,
-      left bottom;
-    background-repeat:
-      no-repeat,
-      no-repeat;
-  }
 }

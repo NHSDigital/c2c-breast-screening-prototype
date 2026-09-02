@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}
+  <nav>
+    <ol class="app-clinic-level-breadcrumbs nhsuk-list">
+      <li class="--item">
+        <span class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">?</span>
+        <a href="#">Clinics</a>
+      </li>
+      <li class="--item">
+        <span class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">Clinic</span>
+        <a href="#">Chichester - St Richards</a>
+      </li>
+    </ol>
+  </nav>
+{% endblock %}
+
+{% block content %}
+
+  {% include "create-capacity-from-zero/_local-includes/clinic-summary.html" %}
+  
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-three-quarters">
+      <p>No schedules yet</p>
+      <a href="create-schedule" class="nhsuk-button nhsuk-button--secondary-solid">Add a new schedule</a>
+    </div>
+  </div>
+  
+{% endblock %}
