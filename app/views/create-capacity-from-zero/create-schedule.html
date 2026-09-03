@@ -9,15 +9,13 @@
   {{ primaryNavigation("Clinics", serviceName) }}
 {% endblock %}
 
-{% block beforeContent %}{% endblock %}
+{% block beforeContent %}
+  <a class="nhsuk-back-link" href="#">
+    Back to clinic
+  </a>
+{% endblock %}
 
 {% block content %}
-
-{% set tickSvg %}
-  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
-  </svg>
-{% endset %}
 
 <div class="nhsuk-grid-row">
   
