@@ -53,4 +53,6 @@
   {{ super() }}
   {# <script type="module" src="/assets/javascript/application.js"></script> #}
   {% block pageScripts %}{% endblock %}
+
+  {{ data.createCapacityFromZero.schedules | dump }}
 {% endblock %}
