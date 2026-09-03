@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% set errorState = "false" %}
+{% set errorState = "true" if errors else "false" %}
 
 {% set pageName = "" %}
 
@@ -9,15 +9,13 @@
   {{ primaryNavigation("Clinics", serviceName) }}
 {% endblock %}
 
-{% block beforeContent %}{% endblock %}
+{% block beforeContent %}
+  <a class="nhsuk-back-link" href="clinic-summary">
+    Back to clinic
+  </a>
+{% endblock %}
 
 {% block content %}
-
-{% set tickSvg %}
-  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
-  </svg>
-{% endset %}
 
 <div class="nhsuk-grid-row">
   
@@ -25,50 +23,39 @@
     <div class="nhsuk-u-reading-width">
 
       {% if errorState === "true" %}
+        {% set errorList = [] %}
+        {% if errors.scheduleName %}
+          {% set errorList = errorList.concat([{ text: errors.scheduleName, href: "#schedule-name" }]) %}
+        {% endif %}
+        {% if errors.scheduleStartDate %}
+          {% set errorList = errorList.concat([{ text: errors.scheduleStartDate, href: "#schedule-start-date-day" }]) %}
+        {% endif %}
+        {% if errors.scheduleEndDate %}
+          {% set errorList = errorList.concat([{ text: errors.scheduleEndDate, href: "#schedule-end-date-day" }]) %}
+        {% endif %}
         {{ errorSummary({
           titleText: "There is a problem",
-          errorList: [
-            {
-              text: "Schedule must be given a name",
-              href: "#"
-            },
-            {
-              text: "Schedule start date must be given a day, month, and year",
-              href: "#"
-            },
-            {
-              text: "Schedule start date must be in the future",
-              href: "#"
-            },
-            {
-              text: "Schedule end date must be given a day, month, and year",
-              href: "#"
-            },
-            {
-              text: "Schedule end date must be in the future",
-              href: "#"
-            }
-          ]
+          errorList: errorList
         }) }}
       {% endif %}
 
       <h1 class="nhsuk-heading-l">Create schedule</h1>
 
-      <form action="new-schedule-empty" method="post">
+      <form method="post">
 
-        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+        <div class="nhsuk-form-group {% if errors and errors.scheduleName %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="schedule-name">
             Schedule name
           </label>
-          {% if errorState === "true" %}
+          {% if errors and errors.scheduleName %}
             <span class="nhsuk-error-message">
-              <span class="nhsuk-u-visually-hidden">Error:</span> Schedule must be given a name
+              <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.scheduleName }}
             </span>
           {% endif %}
-          <input class="nhsuk-input {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="schedule-name" name="scheduleName" type="text" aria-describedby="naming-hint-text" value="{{ data.scheduleName if data.scheduleName else '' }}">
+          <input class="nhsuk-input {% if errors and errors.scheduleName %}nhsuk-input--error{% endif %}" id="schedule-name" name="scheduleName" type="text" aria-describedby="naming-hint-text" value="{{ data.createCapacityFromZero.scheduleName if data.createCapacityFromZero.scheduleName else '' }}">
         </div>
 
-        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+        <div class="nhsuk-form-group {% if errors and errors.scheduleStartDate %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset nhsuk-u-margin-bottom-4" role="group" aria-describedby="schedule-start-date-hint">
             <legend class="nhsuk-fieldset__legend nhsuk-label--m">
                 Start date
@@ -76,18 +63,18 @@
             <div class="nhsuk-hint" id="schedule-start-date-hint">
               For example, 18 6 2026
             </div>
-            {% if errorState === "true" %}
+            {% if errors and errors.scheduleStartDate %}
               <span class="nhsuk-error-message">
-                <span class="nhsuk-u-visually-hidden">Error:</span> Start date must be given a day, month, and year
+                <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.scheduleStartDate }}
               </span>
             {% endif %}
             <div class="nhsuk-date-input" id="schedule-start-date">
               <div class="nhsuk-date-input__item">
                 <div class="nhsuk-form-group">
-                  <label class="nhsuk-label nhsuk-date-input__label" for="clinic-date-day">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="schedule-start-date-day">
                     Day
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="schedule-start-date-day" name="scheduleStartDate[day]" type="text" inputmode="numeric" value="{{ data.scheduleStartDate.day if data.scheduleStartDate else '' }}">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.scheduleStartDate %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="schedule-start-date-day" name="scheduleStartDate[day]" type="text" inputmode="numeric" value="{{ data.createCapacityFromZero.scheduleStartDate.day if data.createCapacityFromZero.scheduleStartDate else '' }}">
                 </div>
               </div>
               <div class="nhsuk-date-input__item">
@@ -95,7 +82,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="schedule-start-date-month">
                     Month
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="schedule-start-date-month" name="scheduleStartDate[month]" type="text" inputmode="numeric" value="{{ data.scheduleStartDate.month if data.scheduleStartDate else '' }}">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.scheduleStartDate %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="schedule-start-date-month" name="scheduleStartDate[month]" type="text" inputmode="numeric" value="{{ data.createCapacityFromZero.scheduleStartDate.month if data.createCapacityFromZero.scheduleStartDate else '' }}">
                 </div>
               </div>
               <div class="nhsuk-date-input__item">
@@ -103,7 +90,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="schedule-start-date-year">
                     Year
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-4" id="schedule-start-date-year" name="scheduleStartDate[year]" type="text" inputmode="numeric" value="{{ data.scheduleStartDate.year if data.scheduleStartDate else '' }}">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.scheduleStartDate %}nhsuk-input--error{% endif %} nhsuk-input--width-4" id="schedule-start-date-year" name="scheduleStartDate[year]" type="text" inputmode="numeric" value="{{ data.createCapacityFromZero.scheduleStartDate.year if data.createCapacityFromZero.scheduleStartDate else '' }}">
                 </div>
               </div>
             </div>
@@ -111,7 +98,7 @@
 
         </div>
 
-        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+        <div class="nhsuk-form-group {% if errors and errors.scheduleEndDate %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset" role="group" aria-describedby="schedule-end-date-hint">
             <legend class="nhsuk-fieldset__legend nhsuk-label--m">
                 End date
@@ -119,9 +106,9 @@
             <div class="nhsuk-hint" id="schedule-end-date-hint">
               For example, 18 6 2026
             </div>
-            {% if errorState === "true" %}
+            {% if errors and errors.scheduleEndDate %}
               <span class="nhsuk-error-message">
-                <span class="nhsuk-u-visually-hidden">Error:</span> End date must be given a day, month, and year
+                <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.scheduleEndDate }}
               </span>
             {% endif %}
             <div class="nhsuk-date-input" id="schedule-end-date">
@@ -130,7 +117,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="schedule-end-date-day">
                     Day
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="schedule-start-date-day" name="scheduleEndDate[day]" type="text" inputmode="numeric" value="{{ data.scheduleEndDate.day if data.scheduleEndDate else '' }}">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.scheduleEndDate %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="schedule-end-date-day" name="scheduleEndDate[day]" type="text" inputmode="numeric" value="{{ data.createCapacityFromZero.scheduleEndDate.day if data.createCapacityFromZero.scheduleEndDate else '' }}">
                 </div>
               </div>
               <div class="nhsuk-date-input__item">
@@ -138,7 +125,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="schedule-end-date-month">
                     Month
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="schedule-end-date-month" name="scheduleEndDate[month]" type="text" inputmode="numeric" value="{{ data.scheduleEndDate.month if data.scheduleEndDate else '' }}">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.scheduleEndDate %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="schedule-end-date-month" name="scheduleEndDate[month]" type="text" inputmode="numeric" value="{{ data.createCapacityFromZero.scheduleEndDate.month if data.createCapacityFromZero.scheduleEndDate else '' }}">
                 </div>
               </div>
               <div class="nhsuk-date-input__item">
@@ -146,7 +133,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="schedule-end-date-year">
                     Year
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-4" id="schedule-end-date-year" name="scheduleEndDate[year]" type="text" inputmode="numeric" value="{{ data.scheduleEndDate.year if data.scheduleEndDate else '' }}">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.scheduleEndDate %}nhsuk-input--error{% endif %} nhsuk-input--width-4" id="schedule-end-date-year" name="scheduleEndDate[year]" type="text" inputmode="numeric" value="{{ data.createCapacityFromZero.scheduleEndDate.year if data.createCapacityFromZero.scheduleEndDate else '' }}">
                 </div>
               </div>
             </div>

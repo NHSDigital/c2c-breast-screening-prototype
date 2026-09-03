@@ -14,9 +14,9 @@
   {% set secondaryNavItems = [] %}
 
   {% for item in [
-    { href: '/clinics/', label: 'Active clinics', selected: 'true' },
+    { href: '/create-capacity-from-zero/', label: 'Active clinics', selected: 'true' },
     { href: '#', label: 'Archived clinics' },
-    { href: '/sessions/templating-01-listing', label: 'Manage session templates' }
+    { href: '#', label: 'Manage session templates' }
   ] %}
     {% set secondaryNavItems = secondaryNavItems | push({
       text: item.label | safe,
@@ -66,33 +66,15 @@
         <tbody class="nhsuk-table__body">
           <tr class="nhsuk-table__row">
             <td class="nhsuk-table__cell">
-              <a href="clinic-detail">Chichester - St Richards<br></a>
-              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-standard-20260501</span>
+              <a href="#">Existing clinic user defined name<br></a>
+              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">NNN-NNN-systemid-20260501</span>
             </td>
             <td class="nhsuk-table__cell">
-              Alpha van<br>
-              St Richard’s Hospital, Chichester
+              Unit label<br>
+              Location short name
             </td>
             <td class="nhsuk-table__cell">
               31 August 2026 to 9 October 2026
-            </td>
-            <td class="nhsuk-table__cell">
-              1500 slots available<br>
-              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">of which 150 held</span>
-            </td>
-          </tr>
-
-          <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell">
-              <a href="#">Chichester - St Richards<br></a>
-              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-standard-20260501</span>
-            </td>
-            <td class="nhsuk-table__cell">
-              Alpha van<br>
-              St Richard’s Hospital, Chichester
-            </td>
-            <td class="nhsuk-table__cell">
-              <span class="nhsuk-u-secondary-text-colour">No active schedules</span>
             </td>
             <td class="nhsuk-table__cell">
               1500 slots available<br>

@@ -8,18 +8,9 @@
 {% endblock %}
 
 {% block beforeContent %}
-  <nav>
-    <ol class="app-clinic-level-breadcrumbs nhsuk-list">
-      <li class="--item">
-        <span class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">?</span>
-        <a href="#">Clinics</a>
-      </li>
-      <li class="--item">
-        <span class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-0">Clinic</span>
-        <a href="#">Chichester - St Richards</a>
-      </li>
-    </ol>
-  </nav>
+  <a class="nhsuk-back-link" href="#">
+    Back to clinic listing
+  </a>
 {% endblock %}
 
 {% block content %}
@@ -28,7 +19,7 @@
   
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-three-quarters">
-      <p>No schedules yet</p>
+      <p>This clinic contains no schedules</p>
       <a href="create-schedule" class="nhsuk-button nhsuk-button--secondary-solid">Add a new schedule</a>
     </div>
   </div>
