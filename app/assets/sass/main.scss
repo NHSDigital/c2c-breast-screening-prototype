@@ -106,6 +106,24 @@ a {
   @extend .nhsuk-link--no-visited-state;
 }
 
+// Makes a <button> look and behave like the .panel-item links it sits alongside
+.app-link-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  font: inherit;
+  color: $nhsuk-link-colour;
+  cursor: pointer;
+
+  &:hover {
+    color: nhsuk-shade($nhsuk-link-colour, 20%);
+    text-decoration: underline;
+  }
+}
+
 .app-card-editable {
   display: flex;
   justify-content: space-between;

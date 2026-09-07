@@ -10,6 +10,14 @@ const router = express.Router()
 
 const isWholeNumber = str => /^\d+$/.test(str)
 
+// Formats a Date as a YYYY-MM-DD key, used to identify calendar days in session data
+const formatDateKey = (date) => {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 // Parses a { day, month, year } object into a Date, or null if invalid
 const parseDateFields = (dateObj) => {
   if (!dateObj || !isWholeNumber(dateObj.day) || !isWholeNumber(dateObj.month) || !isWholeNumber(dateObj.year)) {
@@ -43,9 +51,11 @@ const generateCalendarMonth = (year, month) => {
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
+    const fullDate = new Date(year, month - 1, day)
     days.push({
       date: day,
-      fullDate: new Date(year, month - 1, day)
+      fullDate,
+      dateKey: formatDateKey(fullDate)
     })
   }
 
@@ -132,9 +142,50 @@ router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
     }))
     .filter(schedule => schedule.startDate && schedule.endDate)
 
-  res.render('create-capacity-from-zero/clinic-summary', {
-    calendars: generateScheduleCalendars(schedules)
+  const dayTemplates = req.session.data.createCapacityFromZero.dayTemplates || {}
+
+  const calendars = generateScheduleCalendars(schedules).map(calendar => {
+    calendar.weeks = calendar.weeks.map(week => week.map(day => {
+      if (!day || !dayTemplates[day.dateKey]) {
+        return day
+      }
+
+      return Object.assign({}, day, {
+        templateName: dayTemplates[day.dateKey]
+      })
+    }))
+
+    return calendar
   })
+
+  res.render('create-capacity-from-zero/clinic-summary', {
+    calendars
+  })
+})
+
+router.post('/create-capacity-from-zero/select-days', function (req, res) {
+  const selectedDays = [].concat(req.body.selectedDays || [])
+
+  req.session.data.createCapacityFromZero.selectedDays = selectedDays
+
+  res.redirect('/create-capacity-from-zero/select-session-template')
+})
+
+router.post('/create-capacity-from-zero/apply-session-template', function (req, res) {
+  const templateName = (req.body.templateName || '').trim()
+  const selectedDays = req.session.data.createCapacityFromZero.selectedDays || []
+
+  if (!req.session.data.createCapacityFromZero.dayTemplates) {
+    req.session.data.createCapacityFromZero.dayTemplates = {}
+  }
+
+  if (templateName) {
+    selectedDays.forEach(dateKey => {
+      req.session.data.createCapacityFromZero.dayTemplates[dateKey] = templateName
+    })
+  }
+
+  res.redirect('/create-capacity-from-zero/clinic-summary')
 })
 
 router.post('/create-capacity-from-zero/create-clinic', function (req, res) {
