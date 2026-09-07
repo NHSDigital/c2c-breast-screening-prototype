@@ -15,6 +15,8 @@ module.exports = {
   clinicCapacityAvailable: "10",
   clinicCapacityTotal: "10",
   createCapacityFromZero: {
-    schedules: []
+    schedules: [],
+    selectedDays: [],
+    dayTemplates: {}
   }
 }

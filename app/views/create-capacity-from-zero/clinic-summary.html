@@ -41,10 +41,13 @@
             <tr class="nhsuk-table__row">
               {% for dayItem in week %}
               {% if dayItem %}
-              <td class="nhsuk-table__cell{% if dayItem.isScheduleStart %} --schedule-start{% endif %}{% if dayItem.isScheduleEnd %} --schedule-end{% endif %}">
+              <td class="nhsuk-table__cell{% if dayItem.isScheduleStart %} --schedule-start{% endif %}{% if dayItem.isScheduleEnd %} --schedule-end{% endif %}" data-date="{{ dayItem.dateKey }}">
                 <span class="calendar-table-date">{{ dayItem.date }}</span>
                 {% if dayItem.isScheduleStart %}
                   <span class="--schedule-name">{{ dayItem.scheduleName }}</span>
+                {% endif %}
+                {% if dayItem.templateName %}
+                  <span class="--template-name">{{ dayItem.templateName }}</span>
                 {% endif %}
               </td>
               {% else %}
@@ -63,14 +66,16 @@
       <div class="nhsuk-grid-column-one-fifth" style="position: sticky; top: 0;">
         <div class="side-panel" id="side-panel">
           <h3 class="nhsuk-heading-s">With selected days:</h3>
-          <ul class="nhsuk-list">
-            <li><a href="select-session-template" class="panel-item">Assign session template</a></li>
-            <li><a class="panel-item">Swap template</a></li>
-            <li><a class="panel-item">Remove template</a></li>
-            <li><a class="panel-item">Unlock for booking</a></li>
-            <li><a class="panel-item">Lock to booking</a></li>
-            <li><a class="panel-item">Release all held slots</a></li>
-          </ul>
+          <form method="post" action="/create-capacity-from-zero/select-days" id="select-days-form">
+            <ul class="nhsuk-list">
+              <li><button type="submit" class="panel-item nhsuk-link app-link-button">Assign session template</button></li>
+              <li><a class="panel-item">Swap template</a></li>
+              <li><a class="panel-item">Remove template</a></li>
+              <li><a class="panel-item">Unlock for booking</a></li>
+              <li><a class="panel-item">Lock to booking</a></li>
+              <li><a class="panel-item">Release all held slots</a></li>
+            </ul>
+          </form>
         </div>
       </div>
     </div>

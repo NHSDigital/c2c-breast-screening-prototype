@@ -92,4 +92,22 @@
 
     table.classList.add('--js-enabled');
   });
+
+  var selectDaysForm = document.getElementById('select-days-form');
+
+  if (selectDaysForm) {
+    selectDaysForm.addEventListener('submit', function () {
+      selectDaysForm.querySelectorAll('input[name="selectedDays"]').forEach(function (input) {
+        input.remove();
+      });
+
+      document.querySelectorAll('.calendar-table td.--date-selected[data-date]').forEach(function (cell) {
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'selectedDays';
+        input.value = cell.getAttribute('data-date');
+        selectDaysForm.appendChild(input);
+      });
+    });
+  }
   
