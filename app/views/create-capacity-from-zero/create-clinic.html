@@ -82,36 +82,20 @@
           {% endif %}
           <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
             <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="unit" name="unit" type="radio" value="Static site name" {% if data.createCapacityFromZero.unit == 'Static site name' %}checked{% endif %}>
-              <label class="nhsuk-label nhsuk-radios__label" for="unit">
-                Static site name
+              <input class="nhsuk-radios__input" id="unit-0" name="unit" type="radio" value="{{ staticBaseUnit }}" {% if data.createCapacityFromZero.unit == staticBaseUnit %}checked{% endif %}>
+              <label class="nhsuk-label nhsuk-radios__label" for="unit-0">
+                {{ staticBaseUnit }}
               </label>
             </div>
             <hr class="nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-2">
+            {% for mobileUnit in mobileUnits %}
             <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="unit-2" name="unit" type="radio" value="Alpha Van" {% if data.createCapacityFromZero.unit == 'Alpha Van' %}checked{% endif %}>
-              <label class="nhsuk-label nhsuk-radios__label" for="unit-2">
-                Alpha Van
+              <input class="nhsuk-radios__input" id="unit-{{ loop.index }}" name="unit" type="radio" value="{{ mobileUnit }}" {% if data.createCapacityFromZero.unit == mobileUnit %}checked="checked"{% endif %}>
+              <label class="nhsuk-label nhsuk-radios__label" for="unit-{{ loop.index }}">
+                {{ mobileUnit }}
               </label>
             </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="unit-3" name="unit" type="radio" value="Beta Van" {% if data.createCapacityFromZero.unit == 'Beta Van' %}checked{% endif %}>
-              <label class="nhsuk-label nhsuk-radios__label" for="unit-3">
-                Beta Van
-              </label>
-            </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="unit-4" name="unit" type="radio" value="Gamma Van" {% if data.createCapacityFromZero.unit == 'Gamma Van' %}checked{% endif %}>
-              <label class="nhsuk-label nhsuk-radios__label" for="unit-4">
-                Gamma Van
-              </label>
-            </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="unit-5" name="unit" type="radio" value="Delta Van" {% if data.createCapacityFromZero.unit == 'Delta Van' %}checked{% endif %}>
-              <label class="nhsuk-label nhsuk-radios__label" for="unit-5">
-                Delta Van
-              </label>
-            </div>
+            {% endfor %}
           </div>
         </fieldset>
       </div>
@@ -131,66 +115,20 @@
           {% endif %}
           <div class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios">
             <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="location-0" name="location" type="radio" value="static site location" {% if data.createCapacityFromZero.location == 'static site location' %}checked{% endif %}>
+              <input class="nhsuk-radios__input" id="location-0" name="location" type="radio" value="{{ staticLocationShort }}" {% if data.createCapacityFromZero.location == staticLocationShort %}checked="checked"{% endif %}>
               <label class="nhsuk-label nhsuk-radios__label" for="location-0">
-                Static site’s location
+                {{ staticLocationShort }}
               </label>
             </div>
             <hr class="nhsuk-u-margin-top-2 nhsuk-u-margin-bottom-2">
+            {% for locationShort in locationsShort %}
             <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="location-1" name="location" type="radio" value="location name" {% if data.createCapacityFromZero.location == 'location name' %}checked{% endif %}>
-              <label class="nhsuk-label nhsuk-radios__label" for="location-1">
-                Location name 1
+              <input class="nhsuk-radios__input" id="location-{{ loop.index }}" name="location" type="radio" value="{{ locationShort }}" {% if data.createCapacityFromZero.location == locationShort %}checked{% endif %}>
+              <label class="nhsuk-label nhsuk-radios__label" for="location-{{ loop.index }}">
+                {{ locationShort }}
               </label>
             </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="location-2" name="location" type="radio" value="location name" {% if data.createCapacityFromZero.location == 'location name' %}checked{% endif %}>
-              <label class="nhsuk-label nhsuk-radios__label" for="location-2">
-                Location name 2
-              </label>
-            </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="location-3" name="location" type="radio" value="Location name">
-              <label class="nhsuk-label nhsuk-radios__label" for="location-3">
-                Location name 3
-              </label>
-            </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="location-4" name="location" type="radio" value="Location name">
-              <label class="nhsuk-label nhsuk-radios__label" for="location-4">
-                Location name 4
-              </label>
-            </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="location-5" name="location" type="radio" value="Location name">
-              <label class="nhsuk-label nhsuk-radios__label" for="location-5">
-                Location name 5
-              </label>
-            </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="location-6" name="location" type="radio" value="Location name">
-              <label class="nhsuk-label nhsuk-radios__label" for="location-6">
-                Location name 6
-              </label>
-            </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="location-7" name="location" type="radio" value="Location name">
-              <label class="nhsuk-label nhsuk-radios__label" for="location-7">
-                Location name 7
-              </label>
-            </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="location-8" name="location" type="radio" value="Location">
-              <label class="nhsuk-label nhsuk-radios__label" for="location-8">
-                Location name 8
-              </label>
-            </div>
-            <div class="nhsuk-radios__item">
-              <input class="nhsuk-radios__input" id="location-9" name="location" type="radio" value="Location name">
-              <label class="nhsuk-label nhsuk-radios__label" for="location-9">
-                Location name 9
-              </label>
-            </div>
+            {% endfor %}
           </div>
         </fieldset>
       </div>
