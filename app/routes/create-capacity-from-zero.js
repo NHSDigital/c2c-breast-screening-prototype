@@ -188,6 +188,19 @@ router.post('/create-capacity-from-zero/apply-session-template', function (req, 
   res.redirect('/create-capacity-from-zero/clinic-summary')
 })
 
+router.post('/create-capacity-from-zero/remove-template', function (req, res) {
+  const selectedDays = [].concat(req.body.selectedDays || [])
+  const dayTemplates = req.session.data.createCapacityFromZero.dayTemplates || {}
+
+  selectedDays.forEach(dateKey => {
+    delete dayTemplates[dateKey]
+  })
+
+  req.session.data.createCapacityFromZero.dayTemplates = dayTemplates
+
+  res.redirect('/create-capacity-from-zero/clinic-summary')
+})
+
 router.post('/create-capacity-from-zero/create-clinic', function (req, res) {
   const clinicName = (req.body.clinicName || '').trim()
   const unit = req.body.unit || ''

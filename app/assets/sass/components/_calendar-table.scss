@@ -82,16 +82,6 @@
       text-wrap: nowrap;
     }
   }
-  .--template-name {
-    display: block;
-    border-radius: 4px;
-    background-color: nhsuk-colour("blue");
-    color: nhsuk-colour("white");
-    padding: nhsuk-spacing(1);
-    margin-top: nhsuk-spacing(2);
-    font-size: nhsuk-px-to-rem(14);
-    text-wrap: nowrap;
-  }
 
   .--schedule-end {
     position: relative;
@@ -118,6 +108,12 @@
   @include nhsuk-font-size(14);
   color: nhsuk-colour("grey-2");
   margin-bottom: nhsuk-spacing(2);
+}
+
+.--template-name {
+  display: block;
+  padding: nhsuk-spacing(1);
+  margin-top: nhsuk-spacing(2);
 }
 
 ///
