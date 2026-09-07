@@ -43,7 +43,7 @@
 
       <form method="post">
 
-        <div class="nhsuk-form-group {% if errors and errors.scheduleName %}nhsuk-form-group--error{% endif %}">
+        <!-- <div class="nhsuk-form-group {% if errors and errors.scheduleName %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="schedule-name">
             Schedule name
           </label>
@@ -53,7 +53,7 @@
             </span>
           {% endif %}
           <input class="nhsuk-input {% if errors and errors.scheduleName %}nhsuk-input--error{% endif %}" id="schedule-name" name="scheduleName" type="text" aria-describedby="naming-hint-text" value="{{ data.createCapacityFromZero.scheduleName if data.createCapacityFromZero.scheduleName else '' }}">
-        </div>
+        </div> -->
 
         <div class="nhsuk-form-group {% if errors and errors.scheduleStartDate %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset nhsuk-u-margin-bottom-4" role="group" aria-describedby="schedule-start-date-hint">

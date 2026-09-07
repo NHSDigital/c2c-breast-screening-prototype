@@ -100,7 +100,6 @@ const generateScheduleCalendars = (schedules) => {
       const endingSchedule = findScheduleEndingOn(day.fullDate, schedules)
 
       return Object.assign({}, day, {
-        scheduleName: startingSchedule ? startingSchedule.scheduleName : null,
         isScheduleStart: Boolean(startingSchedule),
         isScheduleEnd: Boolean(endingSchedule)
       })
@@ -136,7 +135,6 @@ const generateScheduleCalendars = (schedules) => {
 router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
   const schedules = (req.session.data.createCapacityFromZero.schedules || [])
     .map(schedule => ({
-      scheduleName: schedule.scheduleName,
       startDate: parseDateFields(schedule.scheduleStartDate),
       endDate: parseDateFields(schedule.scheduleEndDate)
     }))
@@ -235,19 +233,19 @@ router.post('/create-capacity-from-zero/create-clinic', function (req, res) {
 
 
 router.post('/create-capacity-from-zero/create-schedule', function (req, res) {
-  const scheduleName = (req.body.scheduleName || '').trim()
+  // const scheduleName = (req.body.scheduleName || '').trim()
   const scheduleStartDate = req.body.scheduleStartDate || {}
   const scheduleEndDate = req.body.scheduleEndDate || {}
 
-  req.session.data.createCapacityFromZero['scheduleName'] = scheduleName
+  // req.session.data.createCapacityFromZero['scheduleName'] = scheduleName
   req.session.data.createCapacityFromZero['scheduleStartDate'] = scheduleStartDate
   req.session.data.createCapacityFromZero['scheduleEndDate'] = scheduleEndDate
 
   const errors = {}
 
-  if (!scheduleName) {
-    errors.scheduleName = 'Schedule must be given a name'
-  }
+  // if (!scheduleName) {
+  //   errors.scheduleName = 'Schedule must be given a name'
+  // }
 
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -279,13 +277,13 @@ router.post('/create-capacity-from-zero/create-schedule', function (req, res) {
   }
 
   req.session.data.createCapacityFromZero.schedules.push({
-    scheduleName,
+    // scheduleName,
     scheduleStartDate,
     scheduleEndDate
   })
 
   // Clear the draft fields now this schedule has been saved, ready for the next one
-  req.session.data.createCapacityFromZero.scheduleName = ''
+  // req.session.data.createCapacityFromZero.scheduleName = ''
   req.session.data.createCapacityFromZero.scheduleStartDate = {}
   req.session.data.createCapacityFromZero.scheduleEndDate = {}
 
