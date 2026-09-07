@@ -1,6 +1,5 @@
 const participants = require('./participants')
 
-// currently just for the September Test "clickthru"
 module.exports = {
   participants,
   stagedCount: 0,
