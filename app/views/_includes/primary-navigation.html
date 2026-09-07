@@ -1,11 +1,11 @@
 {% from 'header/macro.njk' import header %}
 
-{% macro primaryNavigation(activeItem, serviceName) %}
+{% macro primaryNavigation(activeItem, serviceName, bsoName) %}
   {{ header({
     account: {
       items: [
         {
-          text: "Place Name BSO"
+          text: bsoName
         },
         {
           href: "#",
