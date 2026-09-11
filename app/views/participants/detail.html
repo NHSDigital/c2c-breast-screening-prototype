@@ -1,0 +1,162 @@
+{% extends 'layout.html' %}
+
+{% set pageName = 'Participant details' %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+{{ primaryNavigation("Participants", serviceName) }}
+{% endblock %}
+
+{% block content %}
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+        <span class="nhsuk-caption-l">Participant details</span>
+        <h1 class="nhsuk-heading-l">{{ participant.full_name }}</h1>
+    </div>
+</div>
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+        <section class="nhsuk-card nhsuk-u-margin-bottom-5{% if participant.is_breaching %} app-participant-due-date-card--warning{% endif %}"
+            aria-labelledby="next-test-due-date-heading next-screening-date-heading">
+            <div class="nhsuk-card__content">
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-full">
+                        {% if participant.is_breaching %}
+                        <strong class="nhsuk-tag nhsuk-tag--red nhsuk-u-margin-bottom-4">At risk of breaching</strong>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-half">
+                        <h2 class="nhsuk-card__heading nhsuk-heading-m" id="next-test-due-date-heading">Next test due date</h2>
+                        <p class="nhsuk-heading-s nhsuk-u-margin-bottom-1">{{ participant.next_test_due_date }}</p>
+                        <p class="nhsuk-hint nhsuk-u-margin-bottom-0">{{ participant.next_test_due_date_relative }}</p>
+                    </div>
+                    <div class="nhsuk-grid-column-one-half">
+                        <h2 class="nhsuk-card__heading nhsuk-heading-m" id="next-screening-date-heading">Next screening date</h2>
+                        {% if participant.next_appointment_date != 'Not known' %}
+                        <p class="nhsuk-heading-s nhsuk-u-margin-bottom-1">{{ participant.next_appointment_date }}</p>
+                        {% endif %}
+                        <p class="nhsuk-hint nhsuk-u-margin-bottom-0">{{ participant.next_appointment_date_relative }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{% set stageText = {
+'scheduled': 'Scheduled',
+'mammograms': 'Mammograms',
+'reading': 'Waiting for reading',
+'assessment': 'At assessment',
+'closed': 'Closed'
+}[participant.episode_stage] %}
+{% set stageColour = {
+'scheduled': 'blue',
+'mammograms': 'purple',
+'reading': 'yellow',
+'assessment': 'orange',
+'closed': 'grey'
+}[participant.episode_stage] %}
+
+<div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-two-thirds">
+        <section class="nhsuk-card nhsuk-u-margin-bottom-5">
+            <div class="nhsuk-card__content">
+                <h2 class="nhsuk-card__heading nhsuk-heading-m">Personal details</h2>
+                <dl class="nhsuk-summary-list">
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">NHS Number</dt>
+                        <dd class="nhsuk-summary-list__value">{{ participant.nhs_number }}</dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">SX Number</dt>
+                        <dd class="nhsuk-summary-list__value">{{ participant.sx_number }}</dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">Full name</dt>
+                        <dd class="nhsuk-summary-list__value">{{ participant.full_name }}</dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">Date of birth</dt>
+                        <dd class="nhsuk-summary-list__value">{{ participant.date_of_birth }} <br><span
+                                class="nhsuk-hint">({{ participant.age }} years old)</span></dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">Ethnicity</dt>
+                        <dd class="nhsuk-summary-list__value">{{ participant.ethnicity }}</dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
+        <section class="nhsuk-card nhsuk-u-margin-bottom-5">
+            <div class="nhsuk-card__content">
+                <h2 class="nhsuk-card__heading nhsuk-heading-m">Contact detail</h2>
+                <dl class="nhsuk-summary-list">
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">Address</dt>
+                        <dd class="nhsuk-summary-list__value">
+                            {{ participant.address.houseNumber }} {{ participant.address.street }}<br>
+                            {{ participant.address.town }}<br>
+                            {{ participant.address.postcode }}
+                        </dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">
+                            {% if participant.phone_numbers.mobile and participant.phone_numbers.home %}
+                            Phone numbers
+                            {% else %}
+                            Phone number
+                            {% endif %}
+                        </dt>
+                        <dd class="nhsuk-summary-list__value">
+                            {% if participant.phone_numbers.mobile %}{{ participant.phone_numbers.mobile }}{% endif %}
+                            {% if participant.phone_numbers.mobile and participant.phone_numbers.home %}<br>{% endif %}
+                            {% if participant.phone_numbers.home %}{{ participant.phone_numbers.home }}{% endif %}
+                        </dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">Email address</dt>
+                        <dd class="nhsuk-summary-list__value">{{ participant.email }}</dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">Special appointment required</dt>
+                        <dd class="nhsuk-summary-list__value">{{ participant.special_appointment_required }}</dd>
+                    </div>
+                    {% if participant.special_appointment_required == 'Yes' %}
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">Special appointment information</dt>
+                        <dd class="nhsuk-summary-list__value">{{ participant.special_appointment_information or '-' }}
+                        </dd>
+                    </div>
+                    {% endif %}
+                </dl>
+            </div>
+        </section>
+
+        <section class="nhsuk-card nhsuk-u-margin-bottom-5">
+            <div class="nhsuk-card__content">
+                <h2 class="nhsuk-card__heading nhsuk-heading-m">Current screening episode</h2>
+                <dl class="nhsuk-summary-list">
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">Stage</dt>
+                        <dd class="nhsuk-summary-list__value">
+                            <strong class="nhsuk-tag nhsuk-tag--{{ stageColour }}">{{ stageText }}</strong>
+                        </dd>
+                    </div>
+                    <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key">Next screening appointment</dt>
+                        <dd class="nhsuk-summary-list__value">
+                            {% if participant.next_appointment_date != 'Not known' %}{{ participant.next_appointment_date }}<br>{% endif %}
+                            <span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
