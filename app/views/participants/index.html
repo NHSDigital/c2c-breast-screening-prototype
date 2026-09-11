@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Participants" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Participants", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <div class="app-card-editable">
+        <h1 class="nhsuk-heading-l">{{ pageName }}</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <div class="app-participants-toolbar">
+        <p class="nhsuk-hint">Showing <strong>{{ firstRecord }}</strong> to <strong>{{ lastRecord }}</strong> of <strong>{{ totalParticipants }}</strong> participants</p>
+        <form method="get" action="/participants" class="app-participants-sort-form">
+          <label class="nhsuk-label" for="participant-sort">Sort by</label>
+          <select class="nhsuk-select" id="participant-sort" name="sort" onchange="this.form.submit()">
+            <option value="name-asc"{% if selectedSort == 'name-asc' %} selected{% endif %}>Name (A to Z)</option>
+            <option value="name-desc"{% if selectedSort == 'name-desc' %} selected{% endif %}>Name (Z to A)</option>
+            <option value="due-soonest"{% if selectedSort == 'due-soonest' %} selected{% endif %}>Next test due date (soonest)</option>
+            <option value="due-latest"{% if selectedSort == 'due-latest' %} selected{% endif %}>Next test due date (latest)</option>
+            <option value="screening-soonest"{% if selectedSort == 'screening-soonest' %} selected{% endif %}>Next screening (soonest)</option>
+            <option value="screening-latest"{% if selectedSort == 'screening-latest' %} selected{% endif %}>Next screening (latest)</option>
+            <option value="age-oldest"{% if selectedSort == 'age-oldest' %} selected{% endif %}>Age (oldest)</option>
+            <option value="age-youngest"{% if selectedSort == 'age-youngest' %} selected{% endif %}>Age (youngest)</option>
+          </select>
+        </form>
+      </div>
+
+      <table class="nhsuk-table nhsuk-table-responsive">
+        <thead class="nhsuk-table__head">
+          <tr class="nhsuk-table__row">
+            <th scope="col" class="nhsuk-table__header">
+              Name
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              NHS Number
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Next test due date
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Next screening
+            </th>
+          </tr>
+        </thead>
+        <tbody class="nhsuk-table__body">
+            {% for participant in participants %}
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell">
+                  <a href="/participants/{{ participant.participantId }}">{{ participant.full_name }}</a><br>
+                  <span class="nhsuk-hint">{{ participant.age }} years old</span>
+                </td>
+                <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
+                <td class="nhsuk-table__cell">
+                  {{ participant.next_test_due_date }}<br>
+                  <span class="nhsuk-hint">{{ participant.next_test_due_date_relative }}</span>
+                </td>
+                <td class="nhsuk-table__cell">
+                  {% if participant.next_appointment_date != 'Not known' %}{{ participant.next_appointment_date }}<br>{% endif %}
+                  <span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span>
+                </td>
+              </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+
+      {% if totalPages > 1 %}
+        <nav class="nhsuk-pagination nhsuk-pagination--numbered" role="navigation" aria-label="Pagination">
+          {% if currentPage > 1 %}
+            <a href="/participants?page={{ currentPage - 1 }}&sort={{ selectedSort }}" class="nhsuk-pagination__previous" rel="prev">
+              <svg class="nhsuk-icon nhsuk-icon--arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+                <path d="M10.7 6.3c.4.4.4 1 0 1.4L7.4 11H19a1 1 0 0 1 0 2H7.4l3.3 3.3c.4.4.4 1 0 1.4a1 1 0 0 1-1.4 0l-5-5A1 1 0 0 1 4 12c0-.3.1-.5.3-.7l5-5a1 1 0 0 1 1.4 0Z" />
+              </svg>
+              <span class="nhsuk-pagination__title">Previous<span class="nhsuk-u-visually-hidden"> page</span></span>
+            </a>
+          {% endif %}
+          <ul class="nhsuk-pagination__list">
+            {% for pageNumber in paginationPages %}
+              <li class="nhsuk-pagination__item{% if pageNumber == currentPage %} nhsuk-pagination__item--current{% endif %}">
+                {% if pageNumber == currentPage %}
+                  <span class="nhsuk-pagination__link" aria-current="page">{{ pageNumber }}</span>
+                {% else %}
+                  <a href="/participants?page={{ pageNumber }}&sort={{ selectedSort }}" class="nhsuk-pagination__link" aria-label="Page {{ pageNumber }}">{{ pageNumber }}</a>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+          {% if currentPage < totalPages %}
+            <a href="/participants?page={{ currentPage + 1 }}&sort={{ selectedSort }}" class="nhsuk-pagination__next" rel="next" aria-label="Next page">
+              <span class="nhsuk-pagination__title">Next<span class="nhsuk-u-visually-hidden"> page</span></span>
+              <svg class="nhsuk-icon nhsuk-icon--arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+                <path d="m14.7 6.3 5 5c.2.2.3.4.3.7 0 .3-.1.5-.3.7l-5 5a1 1 0 0 1-1.4-1.4l3.3-3.3H5a1 1 0 0 1 0-2h11.6l-3.3-3.3a1 1 0 1 1 1.4-1.4Z" />
+              </svg>
+            </a>
+          {% endif %}
+        </nav>
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}
