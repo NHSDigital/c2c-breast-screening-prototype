@@ -106,6 +106,36 @@ a {
   width: 100%;
 }
 
+.app-participants-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 24px;
+
+  > p {
+    margin-bottom: 0;
+  }
+}
+
+.app-participants-sort-form {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 0;
+
+  .nhsuk-label {
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+}
+
+@include nhsuk-media-query($from: tablet) {
+  .app-participants-sort-form {
+    flex-shrink: 0;
+  }
+}
+
 
 .nhsuk-grid-column-four-fifths {
   @include nhsuk-grid-column(four-fifths);

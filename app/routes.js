@@ -3,6 +3,63 @@ const express = require('express')
 
 const router = express.Router()
 
+const participantMonths = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+]
+
+const participantDateFromToday = (today, days) => {
+  const date = new Date(today)
+  date.setDate(date.getDate() + days)
+  return date
+}
+
+const formatParticipantDate = (date) => `${String(date.getDate()).padStart(2, '0')} ${participantMonths[date.getMonth()]} ${date.getFullYear()}`
+
+const formatParticipantRelativeDate = (date, today) => {
+  const days = Math.max(0, Math.round((date - today) / 86400000))
+
+  if (days < 7) {
+    return `In ${days} day${days === 1 ? '' : 's'}`
+  }
+
+  const weeks = Math.round(days / 7)
+  if (weeks < 8) {
+    return `In ${weeks} week${weeks === 1 ? '' : 's'}`
+  }
+
+  const months = Math.max(1, Math.round(days / 30))
+  return `In ${months} month${months === 1 ? '' : 's'}`
+}
+
+const refreshParticipantDates = (participant, today) => {
+  const nextTestDueDate = participantDateFromToday(today, participant.next_test_due_days)
+  const nextAppointmentDate = participant.next_appointment_days === null
+    ? null
+    : participantDateFromToday(today, participant.next_appointment_days)
+
+  return {
+    ...participant,
+    next_test_due_date: formatParticipantDate(nextTestDueDate),
+    next_test_due_date_value: nextTestDueDate.getTime(),
+    next_test_due_date_relative: formatParticipantRelativeDate(nextTestDueDate, today),
+    next_appointment_date: nextAppointmentDate ? formatParticipantDate(nextAppointmentDate) : 'Not known',
+    next_appointment_date_value: nextAppointmentDate ? nextAppointmentDate.getTime() : null,
+    next_appointment_date_relative: nextAppointmentDate ? formatParticipantRelativeDate(nextAppointmentDate, today) : 'Not known'
+  }
+}
+
+const compareAppointmentDates = (a, b, direction) => {
+  const aUnknown = a.next_appointment_date_value === null
+  const bUnknown = b.next_appointment_date_value === null
+
+  if (aUnknown && bUnknown) return 0
+  if (aUnknown) return 1
+  if (bUnknown) return -1
+
+  return direction * (a.next_appointment_date_value - b.next_appointment_date_value)
+}
+
 //======= September test specific for now
 
 // Utility function to generate calendar month data
@@ -723,6 +780,59 @@ router.post('/sessions/02-organise-slots', function (req, res) {
 
 // Isolated September Test (Mission 1) routes
 router.use(require('./routes/mission-1'));
+
+router.get('/participants', function (req, res) {
+  const sort = req.query.sort || 'due-soonest'
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const allParticipants = ((req.session.data.participants && req.session.data.participants.default) || [])
+    .map(participant => refreshParticipantDates(participant, today))
+  const sortComparators = {
+    'name-asc': (a, b) => a.surname_sort_value.localeCompare(b.surname_sort_value),
+    'name-desc': (a, b) => b.surname_sort_value.localeCompare(a.surname_sort_value),
+    'due-soonest': (a, b) => a.next_test_due_date_value - b.next_test_due_date_value,
+    'due-latest': (a, b) => b.next_test_due_date_value - a.next_test_due_date_value,
+    'screening-soonest': (a, b) => compareAppointmentDates(a, b, 1),
+    'screening-latest': (a, b) => compareAppointmentDates(a, b, -1),
+    'age-oldest': (a, b) => b.age - a.age,
+    'age-youngest': (a, b) => a.age - b.age
+  }
+
+  allParticipants.sort(sortComparators[sort] || sortComparators['name-asc'])
+
+  const pageSize = 100
+  const totalParticipants = allParticipants.length
+  const totalPages = Math.max(1, Math.ceil(totalParticipants / pageSize))
+  const requestedPage = parseInt(req.query.page, 10) || 1
+  const currentPage = Math.min(Math.max(requestedPage, 1), totalPages)
+  const firstRecord = totalParticipants ? ((currentPage - 1) * pageSize) + 1 : 0
+  const lastRecord = Math.min(currentPage * pageSize, totalParticipants)
+  const participants = allParticipants.slice(firstRecord - 1, lastRecord)
+
+  res.render('participants/index', {
+    participants,
+    selectedSort: sort,
+    currentPage,
+    totalPages,
+    firstRecord,
+    lastRecord,
+    totalParticipants,
+    paginationPages: Array.from({ length: totalPages }, (_, index) => index + 1)
+  })
+})
+
+router.get('/participants/:participantId', function (req, res) {
+  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const participant = participants.find(item => item.participantId === req.params.participantId)
+
+  if (!participant) {
+    return res.status(404).send('Participant not found')
+  }
+
+  res.render('participants/detail', { participant: refreshParticipantDates(participant, today) })
+})
 
 // Isolated create capacity from zero routes
 router.use(require('./routes/create-capacity-from-zero'));
