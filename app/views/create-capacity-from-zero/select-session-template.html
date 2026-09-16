@@ -7,7 +7,11 @@
   {{ primaryNavigation("Clinics", serviceName, bsoName) }}
 {% endblock %}
 
-{% block beforeContent %}{% endblock %}
+{% block beforeContent %}
+  <a class="nhsuk-back-link" href="clinic-summary">
+    Back to clinic: {{ data.createCapacityFromZero.clinicName }}
+  </a>
+{% endblock %}
 
 {% block content %}
 <div class="nhsuk-grid-row">

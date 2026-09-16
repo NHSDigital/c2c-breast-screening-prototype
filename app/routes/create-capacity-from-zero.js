@@ -72,6 +72,23 @@ const generateCalendarMonth = (year, month) => {
   }
 }
 
+// Formats a Date as e.g. "18 June 2026"
+const formatDateLabel = (date) => {
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ]
+
+  return `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`
+}
+
+// Finds the first existing schedule whose date range overlaps the given start/end dates
+const findOverlappingSchedule = (startDate, endDate, schedules) =>
+  schedules.find(schedule =>
+    schedule.startDate && schedule.endDate &&
+    startDate <= schedule.endDate && endDate >= schedule.startDate
+  )
+
 const findScheduleStartingOn = (date, schedules) =>
   schedules.find(schedule => date.getTime() === schedule.startDate.getTime())
 
@@ -273,6 +290,22 @@ router.post('/create-capacity-from-zero/create-schedule', function (req, res) {
     errors.scheduleEndDate = 'Schedule end date must be in the future'
   } else if (startDate && endDate < startDate) {
     errors.scheduleEndDate = 'Schedule end date must be the same as or after the schedule start date'
+  }
+
+  const existingSchedules = (req.session.data.createCapacityFromZero.schedules || [])
+    .map(schedule => ({
+      startDate: parseDateFields(schedule.scheduleStartDate),
+      endDate: parseDateFields(schedule.scheduleEndDate)
+    }))
+
+  if (!errors.scheduleStartDate && !errors.scheduleEndDate) {
+    const overlappingSchedule = findOverlappingSchedule(startDate, endDate, existingSchedules)
+
+    if (overlappingSchedule) {
+      const overlapMessage = `New dates must not overlap an existing schedule: (${formatDateLabel(overlappingSchedule.startDate)} to ${formatDateLabel(overlappingSchedule.endDate)})`
+      errors.scheduleStartDate = overlapMessage
+      errors.scheduleEndDate = overlapMessage
+    }
   }
 
   if (Object.keys(errors).length > 0) {
