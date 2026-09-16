@@ -25,6 +25,7 @@
 
   .slot-end { font-size: 16px; margin-right: 1rem; }
   .slot-tag { font-size: 16px; margin-left: 1rem; }
+  .slot-note { font-size: 16px; margin-left: 1rem; }
   
   .slot.is-hold {}
   .slot.is-staff-break {
@@ -181,6 +182,11 @@
             <ul class="nhsuk-list">
               <li><a class="panel-item" id="panel-merge">Merge selected</a></li>
               <li><a class="panel-item" id="panel-unmerge">Unmerge</a></li>
+            </ul>
+            <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+            <ul class="nhsuk-list">
+              <li><a class="panel-item" id="panel-add-note">Add note</a></li>
+              <li><a class="panel-item" id="panel-remove-note">Remove note</a></li>
             </ul>
           </div>
           <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
@@ -371,7 +377,8 @@
           merged: prev.merged || false,
           span: prev.span || 1,
           isMergedInto: prev.isMergedInto ?? undefined,
-          mergedEnd: prev.mergedEnd || null
+          mergedEnd: prev.mergedEnd || null,
+          note: prev.note || null
         });
       }
 
@@ -424,6 +431,7 @@
         const isSelected = selectedIndices.has(i) || (isChild && selectedIndices.has(headIndex));
         const isMerged = sd.merged || isChild;
         const slotType = isChild ? headSlot?.type : sd.type;
+        const slotNote = isChild ? headSlot?.note : sd.note;
         const isLastMergedChild = isChild && headSlot && i === headIndex + (headSlot.span || 1) - 1;
 
         if (isSelected) classes.push('selected');
@@ -452,6 +460,11 @@
           typeHtml += `<span class="slot-tag"><span class="nhsuk-tag ${tagClass}">${typeLabel}</span></span>`;
         }
 
+        let noteHtml = '';
+        if (slotNote && !isChild) {
+          noteHtml += `<span class="slot-note nhsuk-u-secondary-text-colour"><span class="nhsuk-u-visually-hidden">Note: </span>${slotNote.replace(/"/g, '&quot;')}</span>`;
+        }
+
         div.innerHTML = `
           <div class="nhsuk-checkboxes__item">
             <input class="nhsuk-checkboxes__input" id="${slotId}" name="slots[]" type="checkbox" value="${i}">
@@ -459,6 +472,7 @@
               <span class="slot-time">${formatTime(sd.start)}</span>
               <span class="slot-end nhsuk-u-secondary-text-colour">to ${endTime}</span>
               ${typeHtml}
+              ${noteHtml}
               ${mergedHtml}
             </label>
           </div>
@@ -536,6 +550,8 @@
       document.getElementById('panel-clear-type').classList.toggle('disabled', !sel.length || !anyType);
       document.getElementById('panel-merge').classList.toggle('disabled', !canMerge);
       document.getElementById('panel-unmerge').classList.toggle('disabled', !hasMerged);
+      document.getElementById('panel-add-note').classList.toggle('disabled', !sel.length);
+      document.getElementById('panel-remove-note').classList.toggle('disabled', !sel.length);
     }
 
     // ========== EVENT ATTACHMENTS ==========
@@ -546,6 +562,8 @@
     const panelClearType = document.getElementById('panel-clear-type');
     const panelMerge = document.getElementById('panel-merge');
     const panelUnmerge = document.getElementById('panel-unmerge');
+    const panelAddNote = document.getElementById('panel-add-note');
+    const panelRemoveNote = document.getElementById('panel-remove-note');
 
     if (panelHold) {
       panelHold.addEventListener('click', () => {
@@ -601,6 +619,36 @@
       panelUnmerge.addEventListener('click', () => {
         syncSelectedIndicesFromCheckboxes();
         [...selectedIndices].forEach(i => unmergeAt(i));
+        selectedIndices.clear();
+        renderGrid();
+        setStats();
+      });
+    }
+
+    if (panelAddNote) {
+      panelAddNote.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
+        if (!selectedIndices.size) return;
+        // Prompt is left blank rather than pre-filled: some browsers (e.g. Firefox) don't
+        // auto-select a default value, so typing would append to it instead of replacing it.
+        const noteText = window.prompt('Add a note for the selected slots:');
+        if (noteText === null || noteText.trim() === '') return;
+        const trimmedNote = noteText.trim();
+        [...selectedIndices].forEach(i => {
+          if (slotData[i]) slotData[i].note = trimmedNote;
+        });
+        selectedIndices.clear();
+        renderGrid();
+        setStats();
+      });
+    }
+
+    if (panelRemoveNote) {
+      panelRemoveNote.addEventListener('click', () => {
+        syncSelectedIndicesFromCheckboxes();
+        [...selectedIndices].forEach(i => {
+          if (slotData[i]) slotData[i].note = null;
+        });
         selectedIndices.clear();
         renderGrid();
         setStats();
