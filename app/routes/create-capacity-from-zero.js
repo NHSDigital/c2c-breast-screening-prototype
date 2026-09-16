@@ -10,6 +10,10 @@ const router = express.Router()
 
 const isWholeNumber = str => /^\d+$/.test(str)
 
+// Checks a { day, month, year } object has numeric values for each field, regardless of whether they form a real date
+const hasDateFields = (dateObj) =>
+  Boolean(dateObj) && isWholeNumber(dateObj.day) && isWholeNumber(dateObj.month) && isWholeNumber(dateObj.year)
+
 // Formats a Date as a YYYY-MM-DD key, used to identify calendar days in session data
 const formatDateKey = (date) => {
   const year = date.getFullYear()
@@ -20,7 +24,7 @@ const formatDateKey = (date) => {
 
 // Parses a { day, month, year } object into a Date, or null if invalid
 const parseDateFields = (dateObj) => {
-  if (!dateObj || !isWholeNumber(dateObj.day) || !isWholeNumber(dateObj.month) || !isWholeNumber(dateObj.year)) {
+  if (!hasDateFields(dateObj)) {
     return null
   }
 
@@ -252,15 +256,19 @@ router.post('/create-capacity-from-zero/create-schedule', function (req, res) {
   today.setHours(0, 0, 0, 0)
 
   const startDate = parseDateFields(scheduleStartDate)
-  if (!startDate) {
+  if (!hasDateFields(scheduleStartDate)) {
     errors.scheduleStartDate = 'Schedule start date must be given a day, month, and year'
+  } else if (!startDate) {
+    errors.scheduleStartDate = 'Schedule start date must be a real date'
   } else if (startDate <= today) {
     errors.scheduleStartDate = 'Schedule start date must be in the future'
   }
 
   const endDate = parseDateFields(scheduleEndDate)
-  if (!endDate) {
+  if (!hasDateFields(scheduleEndDate)) {
     errors.scheduleEndDate = 'Schedule end date must be given a day, month, and year'
+  } else if (!endDate) {
+    errors.scheduleEndDate = 'Schedule end date must be a real date'
   } else if (endDate <= today) {
     errors.scheduleEndDate = 'Schedule end date must be in the future'
   } else if (startDate && endDate < startDate) {

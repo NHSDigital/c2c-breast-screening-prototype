@@ -11,14 +11,12 @@
 
 {% block beforeContent %}
   <a class="nhsuk-back-link" href="clinic-summary">
-    Back to clinic
+    Back to clinic: {{ data.createCapacityFromZero.clinicName }}
   </a>
 {% endblock %}
 
 {% block content %}
-
 <div class="nhsuk-grid-row">
-  
   <div class="nhsuk-grid-column-three-quarters">
     <div class="nhsuk-u-reading-width">
 
@@ -41,19 +39,11 @@
 
       <h1 class="nhsuk-heading-l">Create schedule</h1>
 
-      <form method="post">
+      <!-- <p>
+        Enter start and end dates for your new schedule in clinic "{{ data.createCapacityFromZero.clinicName | lower }}"
+      </p> -->
 
-        <!-- <div class="nhsuk-form-group {% if errors and errors.scheduleName %}nhsuk-form-group--error{% endif %}">
-          <label class="nhsuk-label nhsuk-label--m" for="schedule-name">
-            Schedule name
-          </label>
-          {% if errors and errors.scheduleName %}
-            <span class="nhsuk-error-message">
-              <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.scheduleName }}
-            </span>
-          {% endif %}
-          <input class="nhsuk-input {% if errors and errors.scheduleName %}nhsuk-input--error{% endif %}" id="schedule-name" name="scheduleName" type="text" aria-describedby="naming-hint-text" value="{{ data.createCapacityFromZero.scheduleName if data.createCapacityFromZero.scheduleName else '' }}">
-        </div> -->
+      <form method="post">
 
         <div class="nhsuk-form-group {% if errors and errors.scheduleStartDate %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset nhsuk-u-margin-bottom-4" role="group" aria-describedby="schedule-start-date-hint">
@@ -146,7 +136,5 @@
       </form>
     </div>
   </div>
-
-
-
+</div>
 {% endblock %}
