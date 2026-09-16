@@ -65,6 +65,21 @@
 
   .panel-item { display: block; cursor: pointer; }
   .panel-item.disabled { opacity: 0.38; cursor: default; pointer-events: none; }
+
+  #note-dialog {
+    position: absolute;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #d8dde0;
+    border-radius: 4px;
+    padding: 24px;
+  }
+  #note-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.48);
+  }
+  #note-dialog .nhsuk-button {
+    margin-right: 8px;
+  }
 </style>
 
 {% set tickSvg %}
@@ -202,6 +217,19 @@
     </form>
   </div>
 </div>
+
+<dialog id="note-dialog">
+  <form method="dialog" id="note-form">
+    <div class="nhsuk-form-group">
+      <h2 class="nhsuk-label-wrapper">
+        <label class="nhsuk-label nhsuk-label--s" for="note-text">Note for selected slots</label>
+       </h2>
+      <input class="nhsuk-input" id="note-text" name="note-text" type="text" required>
+    </div>
+    <button class="nhsuk-button" type="submit" value="save">Save</button>
+    <button class="nhsuk-button nhsuk-button--secondary" type="submit" value="cancel" formnovalidate>Cancel</button>
+  </form>
+</dialog>
 
 {% endblock %}
 
@@ -564,6 +592,8 @@
     const panelUnmerge = document.getElementById('panel-unmerge');
     const panelAddNote = document.getElementById('panel-add-note');
     const panelRemoveNote = document.getElementById('panel-remove-note');
+    const noteDialog = document.getElementById('note-dialog');
+    const noteTextInput = document.getElementById('note-text');
 
     if (panelHold) {
       panelHold.addEventListener('click', () => {
@@ -629,13 +659,20 @@
       panelAddNote.addEventListener('click', () => {
         syncSelectedIndicesFromCheckboxes();
         if (!selectedIndices.size) return;
-        // Prompt is left blank rather than pre-filled: some browsers (e.g. Firefox) don't
-        // auto-select a default value, so typing would append to it instead of replacing it.
-        const noteText = window.prompt('Add a note for the selected slots:');
-        if (noteText === null || noteText.trim() === '') return;
-        const trimmedNote = noteText.trim();
+        const notes = [...selectedIndices].map(i => slotData[i]?.note || '');
+        noteTextInput.value = new Set(notes).size === 1 ? notes[0] : '';
+        noteDialog.returnValue = '';
+        noteDialog.showModal();
+      });
+    }
+
+    if (noteDialog) {
+      noteDialog.addEventListener('close', () => {
+        if (noteDialog.returnValue !== 'save') return;
+        const noteText = noteTextInput.value.trim();
+        if (!noteText) return;
         [...selectedIndices].forEach(i => {
-          if (slotData[i]) slotData[i].note = trimmedNote;
+          if (slotData[i]) slotData[i].note = noteText;
         });
         selectedIndices.clear();
         renderGrid();
