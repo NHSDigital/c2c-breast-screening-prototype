@@ -26,7 +26,8 @@ const parseDateFields = (dateObj) => {
 
   const day = parseInt(dateObj.day, 10)
   const month = parseInt(dateObj.month, 10)
-  const year = parseInt(dateObj.year, 10)
+  // Treat 2-digit years as shorthand for the 2000s, eg "26" becomes 2026
+  const year = dateObj.year.length === 2 ? parseInt(`20${dateObj.year}`, 10) : parseInt(dateObj.year, 10)
   const date = new Date(year, month - 1, day)
 
   if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
