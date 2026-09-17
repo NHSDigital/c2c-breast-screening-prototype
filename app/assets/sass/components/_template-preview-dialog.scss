@@ -1,7 +1,7 @@
 // Import NHS.UK frontend library
 @use "nhsuk-frontend/dist/nhsuk/core" as *;
 
-.app-template-preview-dialog {
+.app-dialog {
   position: fixed;
   inset: 0;
   width: 90vw;
@@ -50,4 +50,12 @@
     height: 90vh;
     border: none;
   }
+}
+
+.app-template-preview-dialog {
+
+}
+
+.app-dialog-nano {
+
 }
