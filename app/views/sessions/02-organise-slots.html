@@ -200,7 +200,7 @@
             </ul>
             <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
             <ul class="nhsuk-list">
-              <li><a class="panel-item" id="panel-add-note">Add note</a></li>
+              <li><button type="button" class="panel-item nhsuk-link" id="panel-add-note" popovertarget="note-dialog">Add note</button></li>
               <li><a class="panel-item" id="panel-remove-note">Remove note</a></li>
             </ul>
           </div>
@@ -218,17 +218,23 @@
   </div>
 </div>
 
-<dialog id="note-dialog">
-  <form method="dialog" id="note-form">
-    <div class="nhsuk-form-group">
-      <h2 class="nhsuk-label-wrapper">
-        <label class="nhsuk-label nhsuk-label--s" for="note-text">Note for selected slots</label>
-       </h2>
-      <input class="nhsuk-input" id="note-text" name="note-text" type="text" required>
-    </div>
-    <button class="nhsuk-button" type="submit" value="save">Save</button>
-    <button class="nhsuk-button nhsuk-button--secondary" type="submit" value="cancel" formnovalidate>Cancel</button>
-  </form>
+<dialog id="note-dialog" class="app-dialog" popover>
+  <div class="app-dialog__content">
+    <button type="button" class="app-dialog__close" popovertarget="note-dialog" popovertargetaction="hide">
+      <span aria-hidden="true">&times;</span>
+      <span class="nhsuk-u-visually-hidden">Close</span>
+    </button>
+    <form method="dialog" id="note-form">
+      <div class="nhsuk-form-group">
+        <h2 class="nhsuk-label-wrapper">
+          <label class="nhsuk-label nhsuk-label--s" for="note-text">Note for selected slots</label>
+        </h2>
+        <input class="nhsuk-input" id="note-text" name="note-text" type="text" required>
+      </div>
+      <button class="nhsuk-button" type="submit" popovertarget="note-dialog" popovertargetaction="hide">Save</button>
+      <button class="nhsuk-button nhsuk-button--secondary" type="button" popovertarget="note-dialog" popovertargetaction="hide">Cancel</button>
+    </form>
+  </div>
 </dialog>
 
 {% endblock %}
@@ -590,9 +596,9 @@
     const panelClearType = document.getElementById('panel-clear-type');
     const panelMerge = document.getElementById('panel-merge');
     const panelUnmerge = document.getElementById('panel-unmerge');
-    const panelAddNote = document.getElementById('panel-add-note');
     const panelRemoveNote = document.getElementById('panel-remove-note');
     const noteDialog = document.getElementById('note-dialog');
+    const noteForm = document.getElementById('note-form');
     const noteTextInput = document.getElementById('note-text');
 
     if (panelHold) {
@@ -655,28 +661,28 @@
       });
     }
 
-    if (panelAddNote) {
-      panelAddNote.addEventListener('click', () => {
+    // Opening/closing the popover (trigger click, Cancel/close buttons, Escape, light-dismiss) is
+    // handled natively via popovertarget; JS only needs to sync app state around those events.
+    if (noteDialog) {
+      noteDialog.addEventListener('beforetoggle', event => {
+        if (event.newState !== 'open') return;
         syncSelectedIndicesFromCheckboxes();
-        if (!selectedIndices.size) return;
         const notes = [...selectedIndices].map(i => slotData[i]?.note || '');
         noteTextInput.value = new Set(notes).size === 1 ? notes[0] : '';
-        noteDialog.returnValue = '';
-        noteDialog.showModal();
       });
     }
 
-    if (noteDialog) {
-      noteDialog.addEventListener('close', () => {
-        if (noteDialog.returnValue !== 'save') return;
+    if (noteForm) {
+      noteForm.addEventListener('submit', () => {
         const noteText = noteTextInput.value.trim();
-        if (!noteText) return;
         [...selectedIndices].forEach(i => {
           if (slotData[i]) slotData[i].note = noteText;
         });
         selectedIndices.clear();
         renderGrid();
         setStats();
+        // Firefox doesn't close a popover-dialog via the form's method="dialog" behaviour.
+        noteDialog.hidePopover();
       });
     }
 
