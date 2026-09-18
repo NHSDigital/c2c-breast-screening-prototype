@@ -4,10 +4,14 @@
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Clinics", serviceName) }}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
 {% endblock %}
 
-{% block beforeContent %}{% endblock %}
+{% block beforeContent %}
+  <a class="nhsuk-back-link" href="clinic-summary">
+    Back to clinic: {{ data.createCapacityFromZero.clinicName }}
+  </a>
+{% endblock %}
 
 {% block content %}
 <div class="nhsuk-grid-row">
@@ -18,11 +22,14 @@
     <div class="nhsuk-card nhsuk-u-padding-4 nhsuk-u-padding-bottom-0">
       <div class="app-card-editable">
         <h2 class="nhsuk-heading-s">
-          Standard day
+          Standard
         </h2>
-        <a href="new-schedule-ready" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
-          Select this template
-        </a>
+        <form method="post" action="/create-capacity-from-zero/apply-session-template">
+          <input type="hidden" name="templateName" value="Standard">
+          <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+            Select this template
+          </button>
+        </form>
       </div>
       <div class="app-template-card">
         <div>
@@ -85,11 +92,14 @@
     <div class="nhsuk-card nhsuk-u-padding-4 nhsuk-u-padding-bottom-0">
       <div class="app-card-editable">
         <h2 class="nhsuk-heading-s">
-          Special appointments day
+          Special appointments
         </h2>
-        <a href="new-schedule-ready" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
-          Select this template
-        </a>
+        <form method="post" action="/create-capacity-from-zero/apply-session-template">
+          <input type="hidden" name="templateName" value="Special appointments">
+          <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+            Select this template
+          </button>
+        </form>
       </div>
       <div class="app-template-card">
         <div>
@@ -152,11 +162,14 @@
     <div class="nhsuk-card nhsuk-u-padding-4 nhsuk-u-padding-bottom-0">
       <div class="app-card-editable">
         <h2 class="nhsuk-heading-s">
-          Default session template
+          Rubie default
         </h2>
-        <a href="new-schedule-ready" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
-          Select this template
-        </a>
+        <form method="post" action="/create-capacity-from-zero/apply-session-template">
+          <input type="hidden" name="templateName" value="Rubie default">
+          <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+            Select this template
+          </button>
+        </form>
       </div>
       <div class="app-template-card">
         <div>
