@@ -2,10 +2,10 @@
   <div class="nhsuk-grid-column-four-fifths">
     <h1 class="nhsuk-heading-l">
       <span class="nhsuk-caption-l">Clinic</span>
-      {{ data.createCapacityFromZero.clinicName }}
+      {{ data.createCapacityFromZero.clinicName or pageVarClinicName }}
     </h1>
     <p>
-      <a href="#">{{ data.createCapacityFromZero.unit }}</a> at <a href="#">{{ data.createCapacityFromZero.location }}</a>
+      <a href="#">{{ data.createCapacityFromZero.unit or pageVarUnit }}</a> at <a href="#">{{ data.createCapacityFromZero.location or pageVarLocation }}</a>
     </p>
   </div>
   <div class="nhsuk-grid-column-one-fifth">
@@ -33,8 +33,9 @@
             Slots available:
           </th>
           <td class="nhsuk-table__cell">
-            0
-            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">of which 0 held</span>
+            {{ totalAvailableSlots or 0 }}
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">
+              of which {{ totalAvailableSlotsHeld or 0 }} held</span>
           </td>
         </tr>
         <tr class="nhsuk-table__row">
@@ -42,7 +43,7 @@
             Locked slots:
           </th>
           <td class="nhsuk-table__cell">
-            {{ totalSlotsAvailable }}
+            {{ totalLockedSlots or 0 }}
             <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">(including held)</span>
           </td>
         </tr>
@@ -51,7 +52,7 @@
             Appointments booked:
           </th>
           <td class="nhsuk-table__cell">
-            0
+            {{ totalAppointmentsBooked or 0 }}
           </td>
         </tr>
         <tr class="nhsuk-table__row">
@@ -59,7 +60,7 @@
             Total:
           </th>
           <td class="nhsuk-table__cell">
-            {{ totalSlotsAvailable }}
+            {{ (totalAvailableSlots or 0) + (totalLockedSlots or 0) + (totalAppointmentsBooked or 0) }}
           </td>
         </tr>
       </tbody>
