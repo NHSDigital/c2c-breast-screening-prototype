@@ -190,14 +190,14 @@ router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
     return calendar
   })
 
-  const totalSlotsAvailable = calendars
+  const totalLockedSlots = calendars
     .flatMap(calendar => calendar.weeks.flat())
     .filter(day => day && day.templateName)
     .reduce((total, day) => total + (day.totalSlots || 0), 0)
 
   res.render('create-capacity-from-zero/clinic-summary', {
     calendars,
-    totalSlotsAvailable
+    totalLockedSlots
   })
 })
 
