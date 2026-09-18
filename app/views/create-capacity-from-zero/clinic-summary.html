@@ -58,9 +58,9 @@
                 {% if dayItem.templateName %}
                   {{ padlockSvg | safe }}
                   <button type="button" class="nhsuk-link" popovertarget="template-preview-standard">{{ dayItem.templateName }}</button><br>
-                  42 slots<br>
+                  {{ dayItem.totalSlots }} slots<br>
                   0 booked<br>
-                  8 held<br>
+                  {{ dayItem.heldSlots }} held<br>
                 {% endif %}
                 {% if dayItem.isScheduleStart %}
                   <span class="--schedule-name">Select schedule</span>
