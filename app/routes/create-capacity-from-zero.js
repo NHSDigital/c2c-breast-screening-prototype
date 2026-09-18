@@ -8,6 +8,13 @@ const router = express.Router()
 
 */
 
+// Slot/held totals per session template, matching select-session-template.html
+const sessionTemplates = {
+  'Standard': { totalSlots: 42, heldSlots: 8 },
+  'Special appointments': { totalSlots: 42, heldSlots: 42 },
+  'Rubie default': { totalSlots: 42, heldSlots: 0 }
+}
+
 const isWholeNumber = str => /^\d+$/.test(str)
 
 // Checks a { day, month, year } object has numeric values for each field, regardless of whether they form a real date
@@ -170,16 +177,27 @@ router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
         return day
       }
 
+      const templateName = dayTemplates[day.dateKey]
+      const template = sessionTemplates[templateName] || {}
+
       return Object.assign({}, day, {
-        templateName: dayTemplates[day.dateKey]
+        templateName,
+        totalSlots: template.totalSlots,
+        heldSlots: template.heldSlots
       })
     }))
 
     return calendar
   })
 
+  const totalSlotsAvailable = calendars
+    .flatMap(calendar => calendar.weeks.flat())
+    .filter(day => day && day.templateName)
+    .reduce((total, day) => total + (day.totalSlots || 0), 0)
+
   res.render('create-capacity-from-zero/clinic-summary', {
-    calendars
+    calendars,
+    totalSlotsAvailable
   })
 })
 
