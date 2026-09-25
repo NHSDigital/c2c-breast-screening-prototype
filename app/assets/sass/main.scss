@@ -197,3 +197,6 @@ a {
 .nhsuk-grid-column-one-fifth {
   @include nhsuk-grid-column(one-fifth);
 }
+.app-tag--attached {
+  margin-right: -1px;
+}
