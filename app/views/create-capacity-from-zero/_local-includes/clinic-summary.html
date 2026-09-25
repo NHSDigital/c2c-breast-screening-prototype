@@ -49,10 +49,10 @@
         </tr>
         <tr class="nhsuk-table__row">
           <th class="nhsuk-table__header" scope="row">
-            Appointments booked:
+            Slots booked:
           </th>
           <td class="nhsuk-table__cell">
-            {{ totalAppointmentsBooked or 0 }}
+            {{ totalSlotsBooked or 0 }}
           </td>
         </tr>
         <tr class="nhsuk-table__row">
@@ -60,7 +60,7 @@
             Total:
           </th>
           <td class="nhsuk-table__cell">
-            {{ (totalAvailableSlots or 0) + (totalLockedSlots or 0) + (totalAppointmentsBooked or 0) }}
+            {{ (totalAvailableSlots or 0) + (totalLockedSlots or 0) + (totalSlotsBooked or 0) }}
           </td>
         </tr>
       </tbody>
