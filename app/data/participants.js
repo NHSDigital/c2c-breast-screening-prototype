@@ -64,6 +64,12 @@ const towns = [
   { name: 'Westcombe', postcode: 'WC6 9LM' }
 ]
 
+const appointmentUnits = ['West Sussex Breast Care Centre', 'Alpha Van', 'Beta Van', 'Gamma Van', 'Delta Van']
+const appointmentLocations = [
+  'Bognor Regis', 'Burgess Hill', 'Chichester', 'Crawley', 'Haywards Heath',
+  'Horsham', 'Littlehampton', 'Shoreham-by-Sea', 'Storrington'
+]
+
 const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
@@ -71,16 +77,36 @@ const months = [
 
 const pad = (value, width = 2) => String(value).padStart(width, '0')
 const formatDate = (date) => `${pad(date.getDate())} ${months[date.getMonth()]} ${date.getFullYear()}`
+const postcodeFor = (index, postcode) => {
+  const outwardCode = postcode.split(' ')[0]
+  const letters = 'ABCDEFGHJKLMNPRSTUWXYZ'
+  const suffixIndex = Math.floor(index / 9)
+  const firstLetter = letters[Math.floor(suffixIndex / letters.length)]
+  const secondLetter = letters[suffixIndex % letters.length]
+  return `${outwardCode} ${(index % 9) + 1}${firstLetter}${secondLetter}`
+}
+
+const gpPractices = [
+  { practice_code: 'DEMO001', name: 'Ash Grove Medical Centre', phone: '01632 960101', address: { houseNumber: '12', street: 'Ash Grove', town: 'Brightmere', postcode: 'BM1 4AC' } },
+  { practice_code: 'DEMO002', name: 'Cedarford Family Practice', phone: '01632 960102', address: { houseNumber: '24', street: 'Cedar Road', town: 'Cedarford', postcode: 'CF2 7CE' } },
+  { practice_code: 'DEMO003', name: 'Fairview Health Centre', phone: '01632 960103', address: { houseNumber: '8', street: 'Fairview Drive', town: 'Fairwick', postcode: 'FW3 5EG' } },
+  { practice_code: 'DEMO004', name: 'Greystone Medical Practice', phone: '01632 960104', address: { houseNumber: '31', street: 'Church Street', town: 'Greystone', postcode: 'GS4 8GJ' } },
+  { practice_code: 'DEMO005', name: 'Oakminster Surgery', phone: '01632 960105', address: { houseNumber: '5', street: 'Oak Street', town: 'Oakminster', postcode: 'OM5 2JL' } },
+  { practice_code: 'DEMO006', name: 'Westcombe Medical Centre', phone: '01632 960106', address: { houseNumber: '17', street: 'Station Road', town: 'Westcombe', postcode: 'WC6 9LN' } },
+  { practice_code: 'DEMO007', name: 'Meadow Lane Health Centre', phone: '01632 960107', address: { houseNumber: '42', street: 'Meadow Lane', town: 'Brightmere', postcode: 'BM1 4AD' } },
+  { practice_code: 'DEMO008', name: 'Willow Drive Family Practice', phone: '01632 960108', address: { houseNumber: '3', street: 'Willow Drive', town: 'Cedarford', postcode: 'CF2 7CF' } }
+]
+
 const addDays = (date, days) => {
   const result = new Date(date)
   result.setDate(result.getDate() + days)
   return result
 }
 
-const formatRelativeDate = (date, today) => {
+const formatRelativeDate = (date, today, daysThreshold = 7) => {
   const days = Math.max(0, Math.round((date - today) / 86400000))
 
-  if (days < 7) {
+  if (days < daysThreshold) {
     return `In ${days} day${days === 1 ? '' : 's'}`
   }
 
@@ -91,6 +117,13 @@ const formatRelativeDate = (date, today) => {
 
   const months = Math.max(1, Math.round(days / 30))
   return `In ${months} month${months === 1 ? '' : 's'}`
+}
+
+const lastScreenedDaysAgoFor = (index) => {
+  if (index % 30 === 0) return null
+  if (index % 20 < 4) return 365 + ((index * 37) % 1095)
+  if (index % 37 === 0) return 1826 + ((index * 11) % 1095)
+  return 1095 + ((index * 13) % 181)
 }
 
 const calculateAge = (dateOfBirth, today) => {
@@ -123,6 +156,8 @@ const createParticipant = (index, today) => {
   const dateOfBirth = dateOfBirthFor(index, today)
   const nextTestDueDays = 7 + ((index * 11) % 84)
   const dueDate = addDays(today, nextTestDueDays)
+  const lastScreenedDaysAgo = lastScreenedDaysAgoFor(index)
+  const lastScreenedDate = lastScreenedDaysAgo === null ? null : addDays(today, -lastScreenedDaysAgo)
   const isBreaching = index === 7 || index === 83
   const hasScheduledAppointment = isBreaching || (index % 4 === 0 && index !== 4 && index !== 8)
   const nextAppointmentDays = !hasScheduledAppointment
@@ -131,8 +166,15 @@ const createParticipant = (index, today) => {
     ? nextTestDueDays + 5 + (index % 4)
     : 3 + ((index * 9) % Math.max(4, nextTestDueDays - 2))
   const appointmentDate = nextAppointmentDays === null ? null : addDays(today, nextAppointmentDays)
+  const appointmentUnit = nextAppointmentDays === null
+    ? null
+    : appointmentUnits[Math.floor(Math.random() * appointmentUnits.length)]
+  const appointmentLocation = nextAppointmentDays === null
+    ? null
+    : appointmentUnit === 'West Sussex Breast Care Centre'
+      ? 'Worthing Hospital'
+      : appointmentLocations[Math.floor(Math.random() * appointmentLocations.length)]
   const specialAppointmentRequired = index % 17 === 0
-  const episodeStages = ['scheduled', 'scheduled', 'scheduled', 'scheduled', 'mammograms', 'reading', 'assessment', 'closed']
   const mobile = `07700 9${pad(index % 100)}${pad((index * 13) % 1000, 3)}`
   const home = `01632 960${pad((index * 17) % 1000, 3)}`
 
@@ -149,20 +191,25 @@ const createParticipant = (index, today) => {
       houseNumber: String(1 + ((index * 13) % 98)),
       street: streets[index % streets.length],
       town: town.name,
-      postcode: town.postcode
+      postcode: postcodeFor(index, town.postcode)
     },
+    gp_practice: gpPractices[index % gpPractices.length],
     phone_numbers: { mobile, home: index % 4 === 0 ? home : '' },
     email: `${firstName.toLowerCase()}.${surname.toLowerCase()}${index + 1}@example.com`,
     sx_number: `ECX${String((index * 7919 + 104729) % 1000000).padStart(6, '0')}`,
+    last_screened_days_ago: lastScreenedDaysAgo,
+    last_screened_date: lastScreenedDate ? formatDate(lastScreenedDate) : 'Never screened',
     next_test_due_days: nextTestDueDays,
     next_test_due_date: formatDate(dueDate),
     next_test_due_date_value: dueDate.getTime(),
-    next_test_due_date_relative: formatRelativeDate(dueDate, today),
-    episode_stage: episodeStages[index % episodeStages.length],
+    next_test_due_date_relative: formatRelativeDate(dueDate, today, 28),
+    episode_stage: 'scheduled',
     next_appointment_days: nextAppointmentDays,
     next_appointment_date: appointmentDate ? formatDate(appointmentDate) : 'Not known',
     next_appointment_date_value: appointmentDate ? appointmentDate.getTime() : null,
     next_appointment_date_relative: appointmentDate ? formatRelativeDate(appointmentDate, today) : 'Not known',
+    next_appointment_unit: appointmentUnit,
+    next_appointment_location: appointmentLocation,
     special_appointment_required: specialAppointmentRequired ? 'Yes' : 'No',
     special_appointment_information: '',
     further_information: '',

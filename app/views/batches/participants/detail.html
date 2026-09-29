@@ -4,7 +4,7 @@
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-{{ primaryNavigation("Batches" if participantsPath == "/batches/participants" else "Participants", serviceName) }}
+{{ primaryNavigation("Batches", serviceName) }}
 {% endblock %}
 
 {% block content %}
@@ -12,28 +12,22 @@
 <nav class="nhsuk-breadcrumb nhsuk-u-margin-bottom-4" aria-label="Breadcrumb">
     <ol class="nhsuk-breadcrumb__list">
         <li class="nhsuk-breadcrumb__list-item">
-            <a class="nhsuk-breadcrumb__link" href="{{ participantsPath }}">
-                Participants
-            </a>
+            <a class="nhsuk-breadcrumb__link" href="/batches/participants">Participants</a>
         </li>
+    </ol>
 </nav>
 
-
 <div class="nhsuk-grid-row">
-
     <div class="nhsuk-grid-column-full">
-
         <span class="nhsuk-caption-l">Participant details</span>
         <h1 class="nhsuk-heading-l">{{ participant.full_name }}</h1>
     </div>
-
 </div>
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-        {% if participant.is_breaching %}
-        <strong class="nhsuk-tag nhsuk-tag--red nhsuk-u-margin-bottom-4">At risk of breaching</strong>
-        {% endif %}
+        {% if participant.is_breaching %}<strong class="nhsuk-tag nhsuk-tag--red nhsuk-u-margin-bottom-4">At risk of
+            breaching</strong>{% endif %}
     </div>
 </div>
 
@@ -54,23 +48,20 @@
 
 <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
-
         <section class="nhsuk-card nhsuk-u-margin-bottom-5">
             <div class="nhsuk-card__content">
                 <h2 class="nhsuk-card__heading nhsuk-heading-m">Screening details</h2>
                 <dl class="nhsuk-summary-list">
                     <div class="nhsuk-summary-list__row">
                         <dt class="nhsuk-summary-list__key">Next test due date</dt>
-                        <dd class="nhsuk-summary-list__value">{{ participant.next_test_due_date }}<br>
-                            <span class="nhsuk-hint">{{ participant.next_test_due_date_relative }}
-                            </span>
-                        </dd>
+                        <dd class="nhsuk-summary-list__value">{{ participant.next_test_due_date }}<br><span
+                                class="nhsuk-hint">{{ participant.next_test_due_date_relative }}</span></dd>
                     </div>
                     <div class="nhsuk-summary-list__row">
                         <dt class="nhsuk-summary-list__key">Next screening appointment</dt>
-                        <dd class="nhsuk-summary-list__value">{% if participant.next_appointment_date != 'Not known'
-                            %}{{ participant.next_appointment_date }}<br>{% endif
-                            %}
+                        <dd class="nhsuk-summary-list__value">
+                            {% if participant.next_appointment_date != 'Not known' %}{{
+                            participant.next_appointment_date }}<br>{% endif %}
                             <span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span>
                             {% if participant.next_appointment_unit %}<br>
                             <span aria-hidden="true">{{ participant.next_appointment_unit }}, {{
@@ -100,13 +91,9 @@
                         <dt class="nhsuk-summary-list__key">NHS Number</dt>
                         <dd class="nhsuk-summary-list__value">{{ participant.nhs_number }}</dd>
                     </div>
-                    <!--<div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">SX Number</dt>
-                        <dd class="nhsuk-summary-list__value">{{ participant.sx_number }}</dd>
-                    </div>-->
                     <div class="nhsuk-summary-list__row">
                         <dt class="nhsuk-summary-list__key">Date of birth</dt>
-                        <dd class="nhsuk-summary-list__value">{{ participant.date_of_birth }} <br><span
+                        <dd class="nhsuk-summary-list__value">{{ participant.date_of_birth }}<br><span
                                 class="nhsuk-hint">({{ participant.age }} years old)</span></dd>
                     </div>
                     <div class="nhsuk-summary-list__row">
@@ -134,18 +121,12 @@
                         </dd>
                     </div>
                     <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key">
-                            {% if participant.phone_numbers.mobile and participant.phone_numbers.home %}
-                            Phone numbers
-                            {% else %}
-                            Phone number
-                            {% endif %}
-                        </dt>
-                        <dd class="nhsuk-summary-list__value">
-                            {% if participant.phone_numbers.mobile %}{{ participant.phone_numbers.mobile }}{% endif %}
-                            {% if participant.phone_numbers.mobile and participant.phone_numbers.home %}<br>{% endif %}
-                            {% if participant.phone_numbers.home %}{{ participant.phone_numbers.home }}{% endif %}
-                        </dd>
+                        <dt class="nhsuk-summary-list__key">{% if participant.phone_numbers.mobile and
+                            participant.phone_numbers.home %}Phone numbers{% else %}Phone number{% endif %}</dt>
+                        <dd class="nhsuk-summary-list__value">{% if participant.phone_numbers.mobile %}{{
+                            participant.phone_numbers.mobile }}{% endif %}{% if participant.phone_numbers.mobile and
+                            participant.phone_numbers.home %}<br>{% endif %}{% if participant.phone_numbers.home %}{{
+                            participant.phone_numbers.home }}{% endif %}</dd>
                     </div>
                     <div class="nhsuk-summary-list__row">
                         <dt class="nhsuk-summary-list__key">Email address</dt>
@@ -187,9 +168,8 @@
                 <dl class="nhsuk-summary-list">
                     <div class="nhsuk-summary-list__row">
                         <dt class="nhsuk-summary-list__key">Stage</dt>
-                        <dd class="nhsuk-summary-list__value">
-                            <strong class="nhsuk-tag nhsuk-tag--{{ stageColour }}">{{ stageText }}</strong>
-                        </dd>
+                        <dd class="nhsuk-summary-list__value"><strong class="nhsuk-tag nhsuk-tag--{{ stageColour }}">{{
+                                stageText }}</strong></dd>
                     </div>
                     <div class="nhsuk-summary-list__row">
                         <dt class="nhsuk-summary-list__key">Next screening appointment</dt>
@@ -197,10 +177,9 @@
                             {% if participant.next_appointment_date != 'Not known' %}{{
                             participant.next_appointment_date }}<br>{% endif %}
                             <span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span>
-                            {% if participant.next_appointment_unit %}<br>
-                            <span aria-hidden="true">{{ participant.next_appointment_unit }}, {{
-                                participant.next_appointment_location }}</span>
-                            <span class="nhsuk-u-visually-hidden">Appointment taking place at {{
+                            {% if participant.next_appointment_unit %}<br><span aria-hidden="true">{{
+                                participant.next_appointment_unit }}, {{ participant.next_appointment_location
+                                }}</span><span class="nhsuk-u-visually-hidden">Appointment taking place at {{
                                 participant.next_appointment_unit }} in {{ participant.next_appointment_location
                                 }}</span>{% endif %}
                         </dd>
@@ -210,15 +189,11 @@
                 <dl class="nhsuk-summary-list">
                     <div class="nhsuk-summary-list__row">
                         <dt class="nhsuk-summary-list__key">Last screened</dt>
-                        <dd class="nhsuk-summary-list__value">
-                            {{ participant.last_screened_date or '-' }}
-                        </dd>
+                        <dd class="nhsuk-summary-list__value">{{ participant.last_screened_date or '-' }}</dd>
                     </div>
                 </dl>
             </div>
         </section>
-
-
     </div>
 </div>
 {% endblock %}
