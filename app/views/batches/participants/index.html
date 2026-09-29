@@ -1,0 +1,166 @@
+{% extends 'layout.html' %}
+
+{% set pageName = participantListTitle %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+{{ primaryNavigation("Batches", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <div class="app-card-editable">
+      <h1 class="nhsuk-heading-l">
+    <span class="nhsuk-caption-l">{{ batchName }}</span>
+    {{ pageName }}
+  </h1>
+    </div>
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+    <form method="get" action="/batches/participants">
+      <input type="hidden" name="sort" value="{{ selectedSort }}">
+    <div class="nhsuk-card nhsuk-card--feature app-card--feature-grey app-filter-panel__card">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-s">Search and filter</h2>
+        <div class="nhsuk-form-group nhsuk-search-input app-filter-panel__group">
+          <label class="nhsuk-label" for="participant-search">Search by name, postcode, NHS or SX number</label>
+          <div class="nhsuk-input-wrapper nhsuk-search-input__wrapper">
+            <input class="nhsuk-input nhsuk-search-input__input" id="participant-search" name="search" type="search" value="{{ search }}" autocomplete="off">
+            <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--icon nhsuk-button--small nhsuk-search-input__button" data-module="nhsuk-button" type="submit" aria-label="Search">
+              <svg class="nhsuk-icon nhsuk-icon--search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+                <path d="m20.7 18.9-4.1-4.1a7 7 0 1 0-1.4 1.4l4 4.1a1 1 0 0 0 1.5 0c.4-.4.4-1 0-1.4ZM6 10.6a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"></path>
+              </svg>
+            </button>
+          </div>
+          <br>
+          <p><a href="/batches/participants?sort={{ selectedSort }}{% if clearSearchQuery %}&{{ clearSearchQuery }}{% endif %}">Clear search</a></p>
+        </div>
+        <div class="nhsuk-form-group">
+          <fieldset class="nhsuk-fieldset">
+            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--s">Next test due date</legend>
+            <div class="nhsuk-checkboxes nhsuk-checkboxes--small app-filter-panel__group" data-module="nhsuk-checkboxes">
+              {% for value, label in [['within_week', 'Within the next week'], ['within_month', 'Within the next month'], ['within_3_months', 'Within the next 3 months'], ['within_6_months', 'Within the next 6 months']] %}
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="filter-due-{{ loop.index }}" name="nextTestDue" type="checkbox" value="{{ value }}" onchange="this.form.submit()"{% if value in selectedNextTestDue %} checked{% endif %}>
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="filter-due-{{ loop.index }}">{{ label }}</label>
+              </div>
+              {% endfor %}
+            </div>
+          </fieldset>
+        </div>
+        <div class="nhsuk-form-group">
+          <fieldset class="nhsuk-fieldset">
+            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--s">Next screening</legend>
+            <div class="nhsuk-checkboxes nhsuk-checkboxes--small app-filter-panel__group" data-module="nhsuk-checkboxes">
+              {% for value, label in [['within_week', 'Within the next week'], ['within_month', 'Within the next month'], ['within_3_months', 'Within the next 3 months'], ['within_6_months', 'Within the next 6 months'], ['not_known', 'Not known']] %}
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="filter-screening-{{ loop.index }}" name="nextScreening" type="checkbox" value="{{ value }}" onchange="this.form.submit()"{% if value in selectedNextScreening %} checked{% endif %}>
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="filter-screening-{{ loop.index }}">{{ label }}</label>
+              </div>
+              {% endfor %}
+            </div>
+          </fieldset>
+        </div>
+        <div class="nhsuk-form-group">
+          <fieldset class="nhsuk-fieldset">
+            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--s">Last screened</legend>
+            <div class="nhsuk-checkboxes nhsuk-checkboxes--small app-filter-panel__group" data-module="nhsuk-checkboxes">
+              {% for value, label in [['within_3_years', 'Within the last 3 years'], ['3_to_5_years', '3 to 5 years ago'], ['over_5_years', 'More than 5 years ago'], ['never', 'Never screened']] %}
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="filter-last-screened-{{ loop.index }}" name="lastScreened" type="checkbox" value="{{ value }}" onchange="this.form.submit()"{% if value in selectedLastScreened %} checked{% endif %}>
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="filter-last-screened-{{ loop.index }}">{{ label }}</label>
+              </div>
+              {% endfor %}
+            </div>
+          </fieldset>
+        </div>
+        <div class="nhsuk-form-group">
+          <fieldset class="nhsuk-fieldset">
+            <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--s">Breach risk</legend>
+            <div class="nhsuk-checkboxes nhsuk-checkboxes--small app-filter-panel__group" data-module="nhsuk-checkboxes">
+              {% for value, label in [['at_risk', 'Participant at risk of breaching'], ['not_at_risk', 'Participant not at risk of breaching']] %}
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="filter-breach-risk-{{ loop.index }}" name="breachRisk" type="checkbox" value="{{ value }}" onchange="this.form.submit()"{% if value in selectedBreachRisk %} checked{% endif %}>
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="filter-breach-risk-{{ loop.index }}">{{ label }}</label>
+              </div>
+              {% endfor %}
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+    <div class="app-participants-toolbar">
+      <p class="nhsuk-hint">Showing <strong>{{ firstRecord }}</strong> to <strong>{{ lastRecord }}</strong> of <strong>{{ totalParticipants }}</strong> participants</p>
+      <form method="get" action="/batches/participants" class="app-participants-sort-form">
+        <input type="hidden" name="search" value="{{ search }}">
+        {% for filter in selectedNextTestDue %}<input type="hidden" name="nextTestDue" value="{{ filter }}">{% endfor %}
+        {% for filter in selectedNextScreening %}<input type="hidden" name="nextScreening" value="{{ filter }}">{% endfor %}
+        {% for filter in selectedLastScreened %}<input type="hidden" name="lastScreened" value="{{ filter }}">{% endfor %}
+        {% for filter in selectedBreachRisk %}<input type="hidden" name="breachRisk" value="{{ filter }}">{% endfor %}
+        <label class="nhsuk-label" for="participant-sort">Sort by</label>
+        <select class="nhsuk-select" id="participant-sort" name="sort" onchange="this.form.submit()">
+          <option value="name-asc"{% if selectedSort == 'name-asc' %} selected{% endif %}>Name (A to Z)</option>
+          <option value="name-desc"{% if selectedSort == 'name-desc' %} selected{% endif %}>Name (Z to A)</option>
+          <option value="due-soonest"{% if selectedSort == 'due-soonest' %} selected{% endif %}>Next test due date (soonest)</option>
+          <option value="due-latest"{% if selectedSort == 'due-latest' %} selected{% endif %}>Next test due date (latest)</option>
+          <option value="screening-soonest"{% if selectedSort == 'screening-soonest' %} selected{% endif %}>Next screening (soonest)</option>
+          <option value="screening-latest"{% if selectedSort == 'screening-latest' %} selected{% endif %}>Next screening (latest)</option>
+          <option value="age-oldest"{% if selectedSort == 'age-oldest' %} selected{% endif %}>Age (oldest)</option>
+          <option value="age-youngest"{% if selectedSort == 'age-youngest' %} selected{% endif %}>Age (youngest)</option>
+        </select>
+      </form>
+    </div>
+    <table class="nhsuk-table nhsuk-table-responsive">
+      <thead class="nhsuk-table__head">
+        <tr class="nhsuk-table__row">
+          <th scope="col" class="nhsuk-table__header">Name</th>
+          <th scope="col" class="nhsuk-table__header">Postcode</th>
+          <th scope="col" class="nhsuk-table__header">NHS number</th>
+          <th scope="col" class="nhsuk-table__header">Next test due date</th>
+          <th scope="col" class="nhsuk-table__header">Next screening</th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+        {% for participant in participants %}
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell"><a href="/batches/participants/{{ participant.participantId }}">{{ participant.full_name }}</a><br><span class="nhsuk-hint">{{ participant.age }} years old</span></td>
+          <td class="nhsuk-table__cell">{{ participant.address.postcode }}</td>
+          <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
+          <td class="nhsuk-table__cell">{{ participant.next_test_due_date }}<br><span class="nhsuk-hint">{{ participant.next_test_due_date_relative }}</span></td>
+          <td class="nhsuk-table__cell">{% if participant.next_appointment_date != 'Not known' %}{{ participant.next_appointment_date }}<br>{% endif %}<span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if totalPages > 1 %}
+    <nav class="nhsuk-pagination nhsuk-pagination--numbered" role="navigation" aria-label="Pagination">
+      {% if currentPage > 1 %}
+      <a href="/batches/participants?page={{ currentPage - 1 }}&sort={{ selectedSort }}{% if participantFilterQuery %}&{{ participantFilterQuery }}{% endif %}" class="nhsuk-pagination__previous" rel="prev">Previous</a>
+      {% endif %}
+      <ul class="nhsuk-pagination__list">
+        {% for pageNumber in paginationPages %}
+        <li class="nhsuk-pagination__item{% if pageNumber == currentPage %} nhsuk-pagination__item--current{% endif %}">
+          {% if pageNumber == currentPage %}<span class="nhsuk-pagination__link" aria-current="page">{{ pageNumber }}</span>
+          {% else %}<a href="/batches/participants?page={{ pageNumber }}&sort={{ selectedSort }}{% if participantFilterQuery %}&{{ participantFilterQuery }}{% endif %}" class="nhsuk-pagination__link" aria-label="Page {{ pageNumber }}">{{ pageNumber }}</a>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% if currentPage < totalPages %}
+      <a href="/batches/participants?page={{ currentPage + 1 }}&sort={{ selectedSort }}{% if participantFilterQuery %}&{{ participantFilterQuery }}{% endif %}" class="nhsuk-pagination__next" rel="next" aria-label="Next page">Next</a>
+      {% endif %}
+    </nav>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
