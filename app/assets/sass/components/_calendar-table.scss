@@ -82,6 +82,7 @@
       text-wrap: nowrap;
     }
   }
+
   .--schedule-end {
     position: relative;
     border-right-color: nhsuk-colour("grey-2");
@@ -107,6 +108,12 @@
   @include nhsuk-font-size(14);
   color: nhsuk-colour("grey-2");
   margin-bottom: nhsuk-spacing(2);
+}
+
+.--template-name {
+  display: block;
+  padding: nhsuk-spacing(1);
+  margin-top: nhsuk-spacing(2);
 }
 
 ///

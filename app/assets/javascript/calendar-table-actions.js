@@ -1,6 +1,3 @@
-  var lastSelectedCell = null;
-  var selectableCells = Array.from(document.querySelectorAll('.calendar-table td:not(.calendar-table-no-data)'));
-
   function clearSelectedDays() {
     document.querySelectorAll('.calendar-table td.--date-selected').forEach(function (cell) {
       cell.classList.remove('--date-selected');
@@ -59,7 +56,6 @@
           clickedScheduleName.textContent = isAlreadySelected ? 'Select schedule' : 'Deselect schedule';
         }
 
-        lastSelectedCell = clickedStartCell;
         return;
       }
 
@@ -71,25 +67,27 @@
         return;
       }
 
-      if (event.shiftKey && lastSelectedCell) {
-        var startIndex = selectableCells.indexOf(lastSelectedCell);
-        var endIndex = selectableCells.indexOf(cell);
-
-        if (startIndex !== -1 && endIndex !== -1) {
-          var rangeStart = Math.min(startIndex, endIndex);
-          var rangeEnd = Math.max(startIndex, endIndex);
-
-          for (var index = rangeStart; index <= rangeEnd; index++) {
-            selectableCells[index].classList.add('--date-selected');
-          }
-        }
-      } else {
-        cell.classList.toggle('--date-selected');
-      }
-
-      lastSelectedCell = cell;
+      cell.classList.toggle('--date-selected');
     });
 
     table.classList.add('--js-enabled');
   });
+
+  var selectDaysForm = document.getElementById('select-days-form');
+
+  if (selectDaysForm) {
+    selectDaysForm.addEventListener('submit', function () {
+      selectDaysForm.querySelectorAll('input[name="selectedDays"]').forEach(function (input) {
+        input.remove();
+      });
+
+      document.querySelectorAll('.calendar-table td.--date-selected[data-date]').forEach(function (cell) {
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'selectedDays';
+        input.value = cell.getAttribute('data-date');
+        selectDaysForm.appendChild(input);
+      });
+    });
+  }
   

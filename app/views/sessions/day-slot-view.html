@@ -4,7 +4,7 @@
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Clinics", serviceName) }}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -130,7 +130,9 @@
               <a href="#">Daphne Hart</a>
               <div class="nhsuk-u-secondary-text-colour">NHS: 999 374 0952</div>
               <span class="nhsuk-tag nhsuk-tag--yellow">
-                Special appointment 2 slots
+                Special appointment
+              </span><span class="nhsuk-tag nhsuk-tag--white">
+                2 slots
               </span><br>
               <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a special appointment</span>
             </td>
@@ -596,6 +598,10 @@
             <td colspan="2" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--orange">
                 Held
+              </span><span class="nhsuk-tag nhsuk-tag--white">
+                hold type
+              </span><span class="nhsuk-tag nhsuk-tag--white">
+                x slots
               </span><br>
               <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a non-standard hold</span>
             </td>
@@ -631,6 +637,8 @@
             <td colspan="2" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--orange">
                 Held
+              </span><span class="nhsuk-tag nhsuk-tag--white">
+                hold type
               </span><br>
               <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a non-standard hold</span>
             </td>
@@ -682,6 +690,8 @@
             <td colspan="2" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--orange">
                 Held
+              </span><span class="nhsuk-tag nhsuk-tag--white">
+                hold type
               </span><br>
               <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a non-standard hold</span>
             </td>
@@ -920,8 +930,10 @@
               </div>
             </td>
             <td colspan="2" class="nhsuk-table__cell">
-              <span class="nhsuk-tag nhsuk-tag--yellow">
-                Special appointment 3 slots
+              <span class="nhsuk-tag nhsuk-tag--yellow app-tag--attached">
+                Special appointment
+              </span><span class="nhsuk-tag nhsuk-tag--white">
+                3 slots
               </span>
             </td>
             <td class="nhsuk-table__cell">

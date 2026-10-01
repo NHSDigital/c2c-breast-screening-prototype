@@ -1,11 +1,11 @@
 {% from 'header/macro.njk' import header %}
 
-{% macro primaryNavigation(activeItem, serviceName) %}
+{% macro primaryNavigation(activeItem, serviceName, bsoName) %}
   {{ header({
     account: {
       items: [
         {
-          text: "West Sussex BSO"
+          text: bsoName
         },
         {
           href: "#",
@@ -27,7 +27,7 @@
         {
           href: "#",
           text: "Dashboard",
-          active: activeItem === "Dashboard"
+          active: activeItem === "Dashboard/home"
         },
         {
           href: "/batches/",
@@ -35,7 +35,7 @@
           active: activeItem === "Batches"
         },
         {
-          href: "/clinics/",
+          href: "/create-capacity-from-zero/",
           text: "Clinics",
           active: activeItem === "Clinics"
         },
@@ -43,6 +43,11 @@
           href: "#",
           text: "Participants",
           active: activeItem === "Participants"
+        },
+        {
+          href: "#",
+          text: "Image reading",
+          active: activeItem === "Image reading"
         },
         {
           href: "/bso-objects/",
@@ -53,6 +58,16 @@
           href: "#",
           text: "Reports",
           active: activeItem === "Reports"
+        },
+        {
+          href: "#",
+          text: "Messages",
+          active: activeItem === "Messages"
+        },
+        {
+          href: "#",
+          text: "Help and support",
+          active: activeItem === "Help and support"
         }
       ]
     }

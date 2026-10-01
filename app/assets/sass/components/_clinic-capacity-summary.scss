@@ -1,0 +1,18 @@
+@use "nhsuk-frontend/dist/nhsuk/core" as *;
+
+.app-clinic-capacity-summary {
+  @include nhsuk-responsive-margin(4, "bottom");
+
+  .nhsuk-table__body {
+    display: flex;
+  }
+    .nhsuk-table__header:not(:last-child) {
+      @include nhsuk-responsive-padding(1, "right");
+      border: 0;
+    }
+    .nhsuk-table__cell {
+      @include nhsuk-responsive-padding(5, "right");
+      border: 0;
+    }
+
+}

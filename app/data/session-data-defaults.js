@@ -1,6 +1,5 @@
 const participants = require('./participants')
 
-// currently just for the September Test "clickthru"
 module.exports = {
   participants,
   stagedCount: 0,
@@ -14,5 +13,10 @@ module.exports = {
   clinicLength: "1 day",
   clinicCapacityPercentBooked: "0",
   clinicCapacityAvailable: "10",
-  clinicCapacityTotal: "10"
+  clinicCapacityTotal: "10",
+  createCapacityFromZero: {
+    schedules: [],
+    selectedDays: [],
+    dayTemplates: {}
+  }
 }

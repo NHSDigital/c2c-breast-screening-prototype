@@ -55,34 +55,44 @@
     min-width: 0;
   }
 }
-.app-progress-bar::-webkit-progress-bar {
+::-webkit-progress-bar {
   background: #fff;
 }
 .app-progress-bar::-moz-progress-bar {
   background: #fff;
 }
 
-.app-progress-bar.--generic::-webkit-progress-value,
+.app-progress-bar.--generic::-webkit-progress-value {
+  background: var(--generic-chart-hatch);
+}
 .app-progress-bar.--generic::-moz-progress-bar {
   background: var(--generic-chart-hatch);
 }
 
-.app-progress-bar.--standard::-webkit-progress-value,
+.app-progress-bar.--standard::-webkit-progress-value {
+  background: var(--standard-chart-hatch);
+}
 .app-progress-bar.--standard::-moz-progress-bar {
   background: var(--standard-chart-hatch);
 }
 
-.app-progress-bar.--special::-webkit-progress-value,
+.app-progress-bar.--special::-webkit-progress-value {
+  background: var(--special-chart-hatch);
+}
 .app-progress-bar.--special::-moz-progress-bar {
   background: var(--special-chart-hatch);
 }
 
-.app-progress-bar.--ceased::-webkit-progress-value,
+.app-progress-bar.--ceased::-webkit-progress-value {
+  background: var(--ceased-chart-hatch);
+}
 .app-progress-bar.--ceased::-moz-progress-bar {
   background: var(--ceased-chart-hatch);
 }
 
-.app-progress-bar.--vhr::-webkit-progress-value,
+.app-progress-bar.--vhr::-webkit-progress-value {
+  background: var(--vhr-chart-hatch);
+}
 .app-progress-bar.--vhr::-moz-progress-bar {
   background: var(--vhr-chart-hatch);
 }
