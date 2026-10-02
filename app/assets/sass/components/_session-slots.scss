@@ -16,10 +16,12 @@
 .slot-tag { margin-left: 1rem; }
 
 .slot.is-hold {}
+
 .slot.is-staff-break {
-  background: transparent;
-  border-style: dashed;
+  background: repeating-linear-gradient(130deg, nhsuk-colour("grey-4"), nhsuk-colour("grey-4") 1px, transparent 1px, transparent 12px);
+  border-color: $nhsuk-border-colour;
 }
+
 .slot.is-special-appointment {}
 
 .slot.is-merged {
