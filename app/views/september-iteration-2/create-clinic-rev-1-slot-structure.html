@@ -25,16 +25,16 @@
         </h2>
         <ol class="app-workflow-side-nav__list">
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
-            <span class="app-workflow-side-nav__link">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="create-clinic-rev-1">
               <span class="app-workflow-side-nav__number">1</span>
               <span class="app-workflow-side-nav__label">Clinic details</span>
-            </span>
+            </a>
           </li>
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
-            <span class="app-workflow-side-nav__link">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="create-clinic-rev-1-set-timings">
               <span class="app-workflow-side-nav__number">2</span>
               <span class="app-workflow-side-nav__label">Clinic session times</span>
-            </span>
+            </a>
           </li>
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
             <span class="app-workflow-side-nav__link" aria-current="page">
@@ -53,23 +53,98 @@
     </div>
 
   </div>
+
   <div class="nhsuk-grid-column-three-quarters">
-    <div class="nhsuk-u-reading-width">
+    <form action="create-clinic-rev-1-publish-check" method="post">
 
-      {% if errorState === "true" %}
-        {{ errorSummary({
-          titleText: "There is a problem",
-          errorList: [
-            {
-              text: "Date of clinic must be given a day, month, and year",
-              href: "#"
-            }
-          ]
-        }) }}
-      {% endif %}
+      <div class="nhsuk-u-reading-width">
+        <h1 class="nhsuk-heading-l">Slot structure</h1>
+        <h2 class="nhsuk-heading-m">
+          <span class="nhsuk-caption-m">Session time</span>
+          10:00 to 17:00
+        </h2>
+      </div>
 
-      <h1 class="nhsuk-heading-l">Slot structure</h1>
-    </div>
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes">
+
+            <div class="slot is-staff-break">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="slot-0" name="slots[]" type="checkbox" value="0">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="slot-0">
+                  <span class="slot-time">10:00</span>
+                  <span class="slot-end nhsuk-u-secondary-text-colour">to 10:08</span>
+                  <span class="slot-tag">
+                    <span class="nhsuk-tag nhsuk-tag--grey">Staff break</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="slot is-staff-break">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="slot-2" name="slots[]" type="checkbox" value="2">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="slot-2">
+                  <span class="slot-time">10:16</span>
+                  <span class="slot-end nhsuk-u-secondary-text-colour">to 10:24</span>
+                  <span class="slot-tag">
+                    <span class="nhsuk-tag nhsuk-tag--grey">Staff break</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="slot">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="slot-6" name="slots[]" type="checkbox" value="6">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="slot-6">
+                  <span class="slot-time">10:48</span>
+                  <span class="slot-end nhsuk-u-secondary-text-colour">to 10:56</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="slot">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="slot-7" name="slots[]" type="checkbox" value="7">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="slot-7">
+                  <span class="slot-time">10:56</span>
+                  <span class="slot-end nhsuk-u-secondary-text-colour">to 11:04</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="slot">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="slot-8" name="slots[]" type="checkbox" value="8">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="slot-8">
+                  <span class="slot-time">11:04</span>
+                  <span class="slot-end nhsuk-u-secondary-text-colour">to 11:12</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
+          <div class="side-panel" id="side-panel">
+            <h3 class="nhsuk-heading-s">With selected slots:</h3>
+            <button class="nhsuk-link nhsuk-u-font-size-19" formaction="url">Set as staff break</button>
+            <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+            <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="url">Clear slot type</button>
+          </div>
+          <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+          <p>
+            <span id="available-slots">50</span> bookable slots
+          </p>
+          <p>
+            <button class="nhsuk-button" type="submit">Continue</button>
+          </p>
+        </div>
+      </div>
+
+    </form>
   </div>
 </div>
 
