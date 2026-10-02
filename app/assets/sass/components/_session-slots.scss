@@ -9,7 +9,10 @@
   min-height: nhsuk-px-to-rem(46px);
 }
 
-.slot-end { font-size: 16px; margin-right: 1rem; }
+.slot-end {
+  @include nhsuk-font-size(16);
+  margin-right: 1rem;
+}
 .slot-tag { margin-left: 1rem; }
 
 .slot.is-hold {}

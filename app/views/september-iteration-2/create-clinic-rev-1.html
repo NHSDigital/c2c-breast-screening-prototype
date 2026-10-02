@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% set errorState = "false" %}
+{% set errorState = "true" if errors else "false" %}
 
 {% set pageName = "Create day clinic" %}
 
@@ -57,42 +57,36 @@
     <div class="nhsuk-u-reading-width">
 
       {% if errorState === "true" %}
+        {% set errorList = [] %}
+        {% if errors.clinicName %}
+          {% set errorList = errorList.concat([{ text: errors.clinicName, href: "#clinic-name" }]) %}
+        {% endif %}
+        {% if errors.clinicDate %}
+          {% set errorList = errorList.concat([{ text: errors.clinicDate, href: "#clinic-date-day" }]) %}
+        {% endif %}
         {{ errorSummary({
           titleText: "There is a problem",
-          errorList: [
-            {
-              text: "Clinic must be given a name",
-              href: "#"
-            },
-            {
-              text: "Date of clinic must be given a day, month, and year",
-              href: "#"
-            },
-            {
-              text: "Date of clinic must be in the future",
-              href: "#"
-            }
-          ]
+          errorList: errorList
         }) }}
       {% endif %}
 
       <h1 class="nhsuk-heading-l">Clinic details</h1>
 
-      <form action="create-clinic-rev-1-set-timings" method="post">
+      <form method="post">
 
-        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+        <div class="nhsuk-form-group {% if errors and errors.clinicName %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="clinic-name">
             Clinic name
           </label>
-          {% if errorState === "true" %}
+          {% if errors and errors.clinicName %}
             <span class="nhsuk-error-message">
-              <span class="nhsuk-u-visually-hidden">Error:</span> Clinic must be given a name
+              <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.clinicName }}
             </span>
           {% endif %}
-          <input class="nhsuk-input nhsuk-u-width-three-quarters {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="clinic-name" name="clinicName" type="text" aria-describedby="naming-hint-text">
+          <input class="nhsuk-input nhsuk-u-width-three-quarters {% if errors and errors.clinicName %}nhsuk-input--error{% endif %}" id="clinic-name" name="clinicName" type="text" aria-describedby="naming-hint-text" value="{{ data.missionOne.clinicName }}">
         </div>
 
-        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+        <div class="nhsuk-form-group {% if errors and errors.clinicDate %}nhsuk-form-group--error{% endif %}">
           <fieldset class="nhsuk-fieldset" role="group" aria-describedby="clinic-date-hint">
             <legend class="nhsuk-fieldset__legend nhsuk-label--m">
                 Clinic session date
@@ -100,9 +94,9 @@
             <div class="nhsuk-hint" id="clinic-date-hint">
               For example, 18 6 2026
             </div>
-            {% if errorState === "true" %}
+            {% if errors and errors.clinicDate %}
               <span class="nhsuk-error-message">
-                <span class="nhsuk-u-visually-hidden">Error:</span> Date of clinic must be given a day, month, and year
+                <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.clinicDate }}
               </span>
             {% endif %}
             <div class="nhsuk-date-input" id="appointment-date">
@@ -111,7 +105,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="clinic-date-day">
                     Day
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="clinic-date-day" name="clinicDate[day]" type="text" inputmode="numeric">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.clinicDate %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="clinic-date-day" name="clinicDate[day]" type="text" inputmode="numeric" value="{{ data.missionOne.clinicDate.day }}">
                 </div>
               </div>
               <div class="nhsuk-date-input__item">
@@ -119,7 +113,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="clinic-date-month">
                     Month
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="clinic-date-month" name="clinicDate[month]" type="text" inputmode="numeric">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.clinicDate %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="clinic-date-month" name="clinicDate[month]" type="text" inputmode="numeric" value="{{ data.missionOne.clinicDate.month }}">
                 </div>
               </div>
               <div class="nhsuk-date-input__item">
@@ -127,7 +121,7 @@
                   <label class="nhsuk-label nhsuk-date-input__label" for="clinic-date-year">
                     Year
                   </label>
-                  <input class="nhsuk-input nhsuk-date-input__input {% if errorState === 'true' %}nhsuk-input--error{% endif %} nhsuk-input--width-4" id="clinic-date-year" name="clinicDate[year]" type="text" inputmode="numeric">
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.clinicDate %}nhsuk-input--error{% endif %} nhsuk-input--width-4" id="clinic-date-year" name="clinicDate[year]" type="text" inputmode="numeric" value="{{ data.missionOne.clinicDate.year }}">
                 </div>
               </div>
             </div>
