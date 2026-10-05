@@ -86,22 +86,40 @@ router.get('/action/unstage/:participantId', function (req, res) {
   res.redirect(req.get('referer') || '/september-iteration-2/clickthru/04-choose-participants')
 });
 
-// validating clinic name and session date for 1 day clinic creation
+// validating clinic name for 1 day clinic creation
 router.post('/september-iteration-2/create-clinic-rev-1', function (req, res) {
   const clinicName = (req.body.clinicName || '').trim()
-  const clinicDate = req.body.clinicDate || {}
 
-  if (typeof req.session.data.missionOne !== 'object') {
+  if (!req.session.data.missionOne || typeof req.session.data.missionOne !== 'object') {
     req.session.data.missionOne = {}
   }
   req.session.data.missionOne.clinicName = clinicName
-  req.session.data.missionOne.clinicDate = clinicDate
 
   const errors = {}
 
   if (!clinicName) {
     errors.clinicName = 'Clinic must be given a name'
   }
+
+  if (Object.keys(errors).length > 0) {
+    return res.render('september-iteration-2/create-clinic-rev-1', {
+      errors
+    })
+  }
+
+  res.redirect('/september-iteration-2/create-clinic-rev-1-schedule')
+})
+
+// validating the scheduled date for 1 day clinic creation
+router.post('/september-iteration-2/create-clinic-rev-1-schedule', function (req, res) {
+  const clinicDate = req.body.clinicDate || {}
+
+  if (!req.session.data.missionOne || typeof req.session.data.missionOne !== 'object') {
+    req.session.data.missionOne = {}
+  }
+  req.session.data.missionOne.clinicDate = clinicDate
+
+  const errors = {}
 
   if (!hasDateFields(clinicDate)) {
     errors.clinicDate = 'Date of clinic must be given a day, month, and year'
@@ -116,7 +134,7 @@ router.post('/september-iteration-2/create-clinic-rev-1', function (req, res) {
   }
 
   if (Object.keys(errors).length > 0) {
-    return res.render('september-iteration-2/create-clinic-rev-1', {
+    return res.render('september-iteration-2/create-clinic-rev-1-schedule', {
       errors
     })
   }
