@@ -3,6 +3,105 @@ const express = require('express')
 
 const router = express.Router()
 
+const participantMonths = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+]
+
+const participantFullMonths = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+]
+
+const participantDateFromToday = (today, days) => {
+  const date = new Date(today)
+  date.setDate(date.getDate() + days)
+  return date
+}
+
+const formatParticipantDate = (date) => `${String(date.getDate()).padStart(2, '0')} ${participantMonths[date.getMonth()]} ${date.getFullYear()}`
+const formatParticipantFullDate = (date) => `${String(date.getDate()).padStart(2, '0')} ${participantFullMonths[date.getMonth()]} ${date.getFullYear()}`
+
+const formatParticipantRelativeDate = (date, today, daysThreshold = 7) => {
+  const days = Math.max(0, Math.round((date - today) / 86400000))
+
+  if (days < daysThreshold) {
+    return `In ${days} day${days === 1 ? '' : 's'}`
+  }
+
+  const weeks = Math.round(days / 7)
+  if (weeks < 8) {
+    return `In ${weeks} week${weeks === 1 ? '' : 's'}`
+  }
+
+  const months = Math.max(1, Math.round(days / 30))
+  return `In ${months} month${months === 1 ? '' : 's'}`
+}
+
+const refreshParticipantDates = (participant, today, dateFormatter = formatParticipantDate) => {
+  const nextTestDueDate = participantDateFromToday(today, participant.next_test_due_days)
+  const nextAppointmentDate = participant.next_appointment_days === null
+    ? null
+    : participantDateFromToday(today, participant.next_appointment_days)
+  const lastScreenedDate = participant.last_screened_days_ago === null
+    ? null
+    : participantDateFromToday(today, -participant.last_screened_days_ago)
+
+  return {
+    ...participant,
+    last_screened_date: lastScreenedDate ? dateFormatter(lastScreenedDate) : 'Never screened',
+    next_test_due_date: dateFormatter(nextTestDueDate),
+    next_test_due_date_value: nextTestDueDate.getTime(),
+    next_test_due_date_relative: formatParticipantRelativeDate(nextTestDueDate, today, 28),
+    next_appointment_date: nextAppointmentDate ? dateFormatter(nextAppointmentDate) : 'Not known',
+    next_appointment_date_value: nextAppointmentDate ? nextAppointmentDate.getTime() : null,
+    next_appointment_date_relative: nextAppointmentDate ? formatParticipantRelativeDate(nextAppointmentDate, today) : 'Not known'
+  }
+}
+
+const compareAppointmentDates = (a, b, direction) => {
+  const aUnknown = a.next_appointment_date_value === null
+  const bUnknown = b.next_appointment_date_value === null
+
+  if (aUnknown && bUnknown) return 0
+  if (aUnknown) return 1
+  if (bUnknown) return -1
+
+  return direction * (a.next_appointment_date_value - b.next_appointment_date_value)
+}
+
+const queryValues = value => (Array.isArray(value) ? value : value ? [value] : [])
+  .filter(item => item !== '_unchecked')
+
+const matchesDateRange = (days, range) => {
+  if (typeof days !== 'number') return false
+  if (range === 'within_week') return days <= 7
+  if (range === 'within_month') return days <= 30
+  if (range === 'within_3_months') return days <= 90
+  if (range === 'within_6_months') return days <= 180
+  return true
+}
+
+const matchesLastScreenedFilter = (participant, filter) => {
+  const days = participant.last_screened_days_ago
+  if (filter === 'never') return days === null
+  if (typeof days !== 'number') return false
+  if (filter === 'within_3_years') return days <= 1095
+  if (filter === '3_to_5_years') return days > 1095 && days <= 1825
+  if (filter === 'over_5_years') return days > 1825
+  return true
+}
+
+const participantFilterQuery = (search, nextTestDue, nextScreening, lastScreened, breachRisk) => {
+  const params = new URLSearchParams()
+  if (search) params.set('search', search)
+  nextTestDue.forEach(value => params.append('nextTestDue', value))
+  nextScreening.forEach(value => params.append('nextScreening', value))
+  lastScreened.forEach(value => params.append('lastScreened', value))
+  breachRisk.forEach(value => params.append('breachRisk', value))
+  return params.toString()
+}
+
 //======= September test specific for now
 
 // Utility function to generate calendar month data
@@ -723,6 +822,111 @@ router.post('/sessions/02-organise-slots', function (req, res) {
 
 // Isolated September Test (Mission 1) routes
 router.use(require('./routes/mission-1'));
+
+router.get(['/participants', '/batches/participants'], function (req, res) {
+  const participantsPath = req.path.startsWith('/batches/') ? '/batches/participants' : '/participants'
+  const sort = req.query.sort || 'due-soonest'
+  const search = String(req.query.search || '').trim()
+  const nextTestDue = queryValues(req.query.nextTestDue)
+  const nextScreening = queryValues(req.query.nextScreening)
+  const lastScreened = queryValues(req.query.lastScreened)
+  const breachRisk = queryValues(req.query.breachRisk)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  let allParticipants = ((req.session.data.participants && req.session.data.participants.default) || [])
+    .map(participant => refreshParticipantDates(participant, today))
+
+  if (search) {
+    const searchTerm = search.toLowerCase().replace(/\s+/g, ' ')
+    allParticipants = allParticipants.filter(participant => [
+      participant.full_name,
+      participant.surname_sort_value,
+      participant.address.postcode,
+      participant.nhs_number,
+      participant.sx_number
+    ].some(value => String(value || '').toLowerCase().replace(/\s+/g, ' ').includes(searchTerm)))
+  }
+
+  if (nextTestDue.length) {
+    allParticipants = allParticipants.filter(participant =>
+      nextTestDue.some(range => matchesDateRange(participant.next_test_due_days, range)))
+  }
+
+  if (nextScreening.length) {
+    allParticipants = allParticipants.filter(participant => nextScreening.some(range => range === 'not_known'
+      ? participant.next_appointment_days === null
+      : matchesDateRange(participant.next_appointment_days, range)))
+  }
+
+  if (lastScreened.length) {
+    allParticipants = allParticipants.filter(participant =>
+      lastScreened.some(filter => matchesLastScreenedFilter(participant, filter)))
+  }
+
+  if (breachRisk.length) {
+    allParticipants = allParticipants.filter(participant => breachRisk.some(filter =>
+      filter === 'at_risk' ? participant.is_breaching : !participant.is_breaching))
+  }
+  const sortComparators = {
+    'name-asc': (a, b) => a.surname_sort_value.localeCompare(b.surname_sort_value),
+    'name-desc': (a, b) => b.surname_sort_value.localeCompare(a.surname_sort_value),
+    'due-soonest': (a, b) => a.next_test_due_date_value - b.next_test_due_date_value,
+    'due-latest': (a, b) => b.next_test_due_date_value - a.next_test_due_date_value,
+    'screening-soonest': (a, b) => compareAppointmentDates(a, b, 1),
+    'screening-latest': (a, b) => compareAppointmentDates(a, b, -1),
+    'age-oldest': (a, b) => b.age - a.age,
+    'age-youngest': (a, b) => a.age - b.age
+  }
+
+  allParticipants.sort(sortComparators[sort] || sortComparators['name-asc'])
+
+  const pageSize = 100
+  const totalParticipants = allParticipants.length
+  const totalPages = Math.max(1, Math.ceil(totalParticipants / pageSize))
+  const requestedPage = parseInt(req.query.page, 10) || 1
+  const currentPage = Math.min(Math.max(requestedPage, 1), totalPages)
+  const firstRecord = totalParticipants ? ((currentPage - 1) * pageSize) + 1 : 0
+  const lastRecord = Math.min(currentPage * pageSize, totalParticipants)
+  const participants = allParticipants.slice(firstRecord - 1, lastRecord)
+
+  res.render(participantsPath === '/batches/participants' ? 'batches/participants/index' : 'participants/index', {
+    participants,
+    participantsPath,
+    batchName: participantsPath === '/batches/participants' ? 'Chichester - Parklands' : null,
+    participantListTitle: participantsPath === '/batches/participants' ? 'Standard participants' : 'Participants',
+    selectedSort: sort,
+    currentPage,
+    totalPages,
+    firstRecord,
+    lastRecord,
+    totalParticipants,
+    paginationPages: Array.from({ length: totalPages }, (_, index) => index + 1),
+    search,
+    selectedNextTestDue: nextTestDue,
+    selectedNextScreening: nextScreening,
+    selectedLastScreened: lastScreened,
+    selectedBreachRisk: breachRisk,
+    participantFilterQuery: participantFilterQuery(search, nextTestDue, nextScreening, lastScreened, breachRisk),
+    clearSearchQuery: participantFilterQuery('', nextTestDue, nextScreening, lastScreened, breachRisk)
+  })
+})
+
+router.get(['/participants/:participantId', '/batches/participants/:participantId'], function (req, res) {
+  const participantsPath = req.path.startsWith('/batches/') ? '/batches/participants' : '/participants'
+  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const participant = participants.find(item => item.participantId === req.params.participantId)
+
+  if (!participant) {
+    return res.status(404).send('Participant not found')
+  }
+
+  res.render(participantsPath === '/batches/participants' ? 'batches/participants/detail' : 'participants/detail', {
+    participant: refreshParticipantDates(participant, today, formatParticipantFullDate),
+    participantsPath
+  })
+})
 
 // Isolated create capacity from zero routes
 router.use(require('./routes/create-capacity-from-zero'));
