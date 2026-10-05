@@ -87,7 +87,7 @@ router.get('/action/unstage/:participantId', function (req, res) {
 });
 
 // validating clinic name for 1 day clinic creation
-router.post('/september-iteration-2/create-clinic-rev-1', function (req, res) {
+router.post('/september-iteration-2/create-clinic-rev-1-name', function (req, res) {
   const clinicName = (req.body.clinicName || '').trim()
 
   if (!req.session.data.missionOne || typeof req.session.data.missionOne !== 'object') {
@@ -102,7 +102,7 @@ router.post('/september-iteration-2/create-clinic-rev-1', function (req, res) {
   }
 
   if (Object.keys(errors).length > 0) {
-    return res.render('september-iteration-2/create-clinic-rev-1', {
+    return res.render('september-iteration-2/create-clinic-rev-1-name', {
       errors
     })
   }
@@ -113,6 +113,10 @@ router.post('/september-iteration-2/create-clinic-rev-1', function (req, res) {
 // validating the scheduled date for 1 day clinic creation
 router.post('/september-iteration-2/create-clinic-rev-1-schedule', function (req, res) {
   const clinicDate = req.body.clinicDate || {}
+
+  if (typeof clinicDate.year === 'string' && /^\d{2}$/.test(clinicDate.year)) {
+    clinicDate.year = `20${clinicDate.year}`
+  }
 
   if (!req.session.data.missionOne || typeof req.session.data.missionOne !== 'object') {
     req.session.data.missionOne = {}
