@@ -4,7 +4,7 @@ const router = express.Router()
 // Routes and functions specific to Mission 1 prototypes
 /*
 
-/app/views/mission-1/september-iteration-2/
+/app/views/mission-1/current-iteration/
 
 */
 
@@ -34,7 +34,7 @@ const parseDateFields = (dateObj) => {
 }
 
 // simple search
-router.get('/mission-1/september-iteration-2/clickthru/04a-example-search-result', function (req, res) {
+router.get('/mission-1/current-iteration/clickthru/04a-example-search-result', function (req, res) {
   const query = (req.query['search-params'] || '').trim()
   const allParticipants = (req.session.data.participants && req.session.data.participants.default) || []
   const normalizedQuery = query.toLowerCase().replace(/\s+/g, ' ')
@@ -56,7 +56,7 @@ router.get('/mission-1/september-iteration-2/clickthru/04a-example-search-result
     return null
   }).filter(Boolean) : allParticipants.map((participant, index) => Object.assign({}, participant, { participantIndex: index })))
 
-  res.render('mission-1/september-iteration-2/clickthru/04a-example-search-result', {
+  res.render('mission-1/current-iteration/clickthru/04a-example-search-result', {
     participants: searchResults,
     searchQuery: query
   })
@@ -72,7 +72,7 @@ router.get('/action/stage/:participantId', function (req, res) {
     req.session.data.stagedCount++
   }
 
-  res.redirect(req.get('referer') || '/mission-1/september-iteration-2/clickthru/04-choose-participants')
+  res.redirect(req.get('referer') || '/mission-1/current-iteration/clickthru/04-choose-participants')
 });
 router.get('/action/unstage/:participantId', function (req, res) {
   const participants = (req.session.data.participants && req.session.data.participants.default) || []
@@ -83,11 +83,11 @@ router.get('/action/unstage/:participantId', function (req, res) {
     req.session.data.stagedCount--
   }
 
-  res.redirect(req.get('referer') || '/mission-1/september-iteration-2/clickthru/04-choose-participants')
+  res.redirect(req.get('referer') || '/mission-1/current-iteration/clickthru/04-choose-participants')
 });
 
 // validating clinic name for 1 day clinic creation
-router.post('/mission-1/september-iteration-2/create-clinic-rev-1-name', function (req, res) {
+router.post('/mission-1/current-iteration/create-clinic-rev-1-name', function (req, res) {
   const clinicName = (req.body.clinicName || '').trim()
 
   if (!req.session.data.missionOne || typeof req.session.data.missionOne !== 'object') {
@@ -102,16 +102,16 @@ router.post('/mission-1/september-iteration-2/create-clinic-rev-1-name', functio
   }
 
   if (Object.keys(errors).length > 0) {
-    return res.render('mission-1/september-iteration-2/create-clinic-rev-1-name', {
+    return res.render('mission-1/current-iteration/create-clinic-rev-1-name', {
       errors
     })
   }
 
-  res.redirect('/mission-1/september-iteration-2/create-clinic-rev-1-schedule')
+  res.redirect('/mission-1/current-iteration/create-clinic-rev-1-schedule')
 })
 
 // validating the scheduled date for 1 day clinic creation
-router.post('/mission-1/september-iteration-2/create-clinic-rev-1-schedule', function (req, res) {
+router.post('/mission-1/current-iteration/create-clinic-rev-1-schedule', function (req, res) {
   const clinicDate = req.body.clinicDate || {}
 
   if (typeof clinicDate.year === 'string' && /^\d{2}$/.test(clinicDate.year)) {
@@ -138,16 +138,16 @@ router.post('/mission-1/september-iteration-2/create-clinic-rev-1-schedule', fun
   }
 
   if (Object.keys(errors).length > 0) {
-    return res.render('mission-1/september-iteration-2/create-clinic-rev-1-schedule', {
+    return res.render('mission-1/current-iteration/create-clinic-rev-1-schedule', {
       errors
     })
   }
 
-  res.redirect('/mission-1/september-iteration-2/create-clinic-rev-1-set-timings')
+  res.redirect('/mission-1/current-iteration/create-clinic-rev-1-set-timings')
 })
 
 // validating clinic session times for 1 day clinic creation
-router.post('/mission-1/september-iteration-2/create-clinic-rev-1-set-timings', function (req, res) {
+router.post('/mission-1/current-iteration/create-clinic-rev-1-set-timings', function (req, res) {
   const newSession = req.body.newSession || {}
   const startTime = newSession.startTime || {}
   const endTime = newSession.endTime || {}
@@ -200,12 +200,12 @@ router.post('/mission-1/september-iteration-2/create-clinic-rev-1-set-timings', 
   req.session.data.missionOne.duration = durationStr
 
   if (Object.keys(errors).length > 0) {
-    return res.render('mission-1/september-iteration-2/create-clinic-rev-1-set-timings', {
+    return res.render('mission-1/current-iteration/create-clinic-rev-1-set-timings', {
       errors
     })
   }
 
-  res.redirect('/mission-1/september-iteration-2/create-clinic-rev-1-slot-structure')
+  res.redirect('/mission-1/current-iteration/create-clinic-rev-1-slot-structure')
 })
 
 // Formats a total minutes-from-midnight value as e.g. "10:08"
@@ -256,14 +256,14 @@ const buildSessionSlots = (missionOne) => {
 }
 
 // computing the real slot structure from the submitted session times for 1 day clinic creation
-router.get('/mission-1/september-iteration-2/create-clinic-rev-1-slot-structure', function (req, res) {
+router.get('/mission-1/current-iteration/create-clinic-rev-1-slot-structure', function (req, res) {
   const missionOne = req.session.data.missionOne || {}
 
-  res.render('mission-1/september-iteration-2/create-clinic-rev-1-slot-structure', buildSessionSlots(missionOne))
+  res.render('mission-1/current-iteration/create-clinic-rev-1-slot-structure', buildSessionSlots(missionOne))
 })
 
 // marking the selected slots as staff breaks for 1 day clinic creation
-router.post('/mission-1/september-iteration-2/mark-staff-break', function (req, res) {
+router.post('/mission-1/current-iteration/mark-staff-break', function (req, res) {
   const missionOne = req.session.data.missionOne || {}
   // nhsuk-frontend's checkboxes component submits an "_unchecked" sentinel for every untoggled box, so filter down to real indices
   const selectedSlots = [].concat(req.body.computedSlots || []).map(Number).filter(Number.isInteger)
@@ -274,7 +274,7 @@ router.post('/mission-1/september-iteration-2/mark-staff-break', function (req, 
   }
 
   if (Object.keys(errors).length > 0) {
-    return res.render('mission-1/september-iteration-2/create-clinic-rev-1-slot-structure', Object.assign({ errors }, buildSessionSlots(missionOne)))
+    return res.render('mission-1/current-iteration/create-clinic-rev-1-slot-structure', Object.assign({ errors }, buildSessionSlots(missionOne)))
   }
 
   const staffBreakSlots = new Set((missionOne.staffBreakSlots || []).map(Number).filter(Number.isInteger))
@@ -282,11 +282,11 @@ router.post('/mission-1/september-iteration-2/mark-staff-break', function (req, 
   missionOne.staffBreakSlots = Array.from(staffBreakSlots)
   req.session.data.missionOne = missionOne
 
-  res.redirect('/mission-1/september-iteration-2/create-clinic-rev-1-slot-structure')
+  res.redirect('/mission-1/current-iteration/create-clinic-rev-1-slot-structure')
 })
 
 // clearing staff break status from the selected slots for 1 day clinic creation
-router.post('/mission-1/september-iteration-2/clear-slot-type', function (req, res) {
+router.post('/mission-1/current-iteration/clear-slot-type', function (req, res) {
   const missionOne = req.session.data.missionOne || {}
   // nhsuk-frontend's checkboxes component submits an "_unchecked" sentinel for every untoggled box, so filter down to real indices
   const selectedSlots = [].concat(req.body.computedSlots || []).map(Number).filter(Number.isInteger)
@@ -297,18 +297,18 @@ router.post('/mission-1/september-iteration-2/clear-slot-type', function (req, r
   }
 
   if (Object.keys(errors).length > 0) {
-    return res.render('mission-1/september-iteration-2/create-clinic-rev-1-slot-structure', Object.assign({ errors }, buildSessionSlots(missionOne)))
+    return res.render('mission-1/current-iteration/create-clinic-rev-1-slot-structure', Object.assign({ errors }, buildSessionSlots(missionOne)))
   }
 
   const selectedSet = new Set(selectedSlots)
   missionOne.staffBreakSlots = (missionOne.staffBreakSlots || []).map(Number).filter(Number.isInteger).filter((index) => !selectedSet.has(index))
   req.session.data.missionOne = missionOne
 
-  res.redirect('/mission-1/september-iteration-2/create-clinic-rev-1-slot-structure')
+  res.redirect('/mission-1/current-iteration/create-clinic-rev-1-slot-structure')
 })
 
 // creating and passing Total Slots through for 1 day clinic creation
-router.post('/mission-1/september-iteration-2/create-clinic-rev-1-publish-check', function (req, res) {
+router.post('/mission-1/current-iteration/create-clinic-rev-1-publish-check', function (req, res) {
   const newSession = req.session.data.newSession || {}
   const startTime = newSession.startTime || {}
   const endTime = newSession.endTime || {}
@@ -319,7 +319,7 @@ router.post('/mission-1/september-iteration-2/create-clinic-rev-1-publish-check'
 
   newSession.totalSlots = duration > 0 ? Math.floor((endMinutes - startMinutes) / duration) : 0
 
-  res.render('mission-1/september-iteration-2/create-clinic-rev-1-publish-check')
+  res.render('mission-1/current-iteration/create-clinic-rev-1-publish-check')
 })
 
 module.exports = router
