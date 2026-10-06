@@ -1,5 +1,5 @@
 {% macro clinic_listing(options) %}
-  <table class="nhsuk-table">
+  <table class="nhsuk-table nhsuk-table--striped nhsuk-table--compact">
     <thead class="nhsuk-table__head">
       <tr class="nhsuk-table__row">
         <th scope="col" class="nhsuk-table__header">
@@ -49,7 +49,7 @@
         </td>
         {% if options.controls != false %}
           <td>
-            <a href="{{ clinic.button_url }}" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+            <a href="{{ clinic.button_url }}" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
               Select this clinic
             </a>
           </td>
