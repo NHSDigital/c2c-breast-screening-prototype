@@ -270,7 +270,7 @@ router.post('/mission-1/current-iteration/mark-staff-break', function (req, res)
 
   const errors = {}
   if (selectedSlots.length === 0) {
-    errors.slots = 'you need to select some slots'
+    errors.slots = 'Select at least one slot'
   }
 
   if (Object.keys(errors).length > 0) {
@@ -293,7 +293,7 @@ router.post('/mission-1/current-iteration/clear-slot-type', function (req, res) 
 
   const errors = {}
   if (selectedSlots.length === 0) {
-    errors.slots = 'you need to select some slots'
+    errors.slots = 'Select at least one slot'
   }
 
   if (Object.keys(errors).length > 0) {
