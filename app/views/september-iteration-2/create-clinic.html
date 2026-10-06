@@ -5,6 +5,20 @@
 
 {% block content %}
 
+{% if data.missionOne and data.missionOne.clinicName %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% set html %}
+        <p class="nhsuk-notification-banner__heading">Clinic created</p>
+      {% endset %}
+      {{ notificationBanner({
+        html: html,
+        type: "success"
+      }) }}
+    </div>
+  </div>
+{% endif %}
+
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-full">
     <div class="app-card-editable">
@@ -18,11 +32,9 @@
   </div>
 </div>
 
-
-
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-full">
-    <table class="nhsuk-table">
+    <table class="nhsuk-table nhsuk-table--striped">
       <thead class="nhsuk-table__head">
         <tr class="nhsuk-table__row">
           <th scope="col" class="nhsuk-table__header">
@@ -51,12 +63,15 @@
           <tr class="nhsuk-table__row">
             <th scope="row" class="nhsuk-table__header">
               {{ data.missionOne.clinicName }}
+              <strong class="nhsuk-tag nhsuk-tag--blue">New</strong>
             </th>
             <td class="nhsuk-table__cell">
-              no data
+              Hard coded<br>
+              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">as per mission #1</span>
             </td>
             <td class="nhsuk-table__cell">
-              no data
+              Hard coded<br>
+              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">as per mission #1</span>
             </td>
             <td class="nhsuk-table__cell">
               {% if data.missionOne.clinicDate %}
@@ -75,7 +90,7 @@
               {% endif %}
             </td>
             <td>
-              <a href="#" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+              <a href="#" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
                 Select this clinic
               </a>
             </td>
@@ -104,7 +119,7 @@
             <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">48 slots available of 48</span>
           </td>
           <td>
-            <a href="search-and-results" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+            <a href="search-and-results" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
               Select this clinic
             </a>
           </td>
@@ -132,7 +147,7 @@
             <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">48 slots available of 48</span>
           </td>
           <td>
-            <a href="search-and-results" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+            <a href="search-and-results" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
               Select this clinic
             </a>
           </td>
@@ -159,7 +174,7 @@
             <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">40 slots available of 100</div>
           </td>
           <td>
-            <a href="#" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+            <a href="#" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
               Select this clinic
             </a>
           </td>
