@@ -1,5 +1,5 @@
 {% macro participant_listing(options) %}
-  <table id="search-results" class="nhsuk-table nhsuk-table--compact nhsuk-table--striped">
+  <table id="search-results" class="nhsuk-table nhsuk-table--striped">
     <caption>
       {% set totalCount = options.totalCount or options.participants.length %}
       {% if options.mode == "search" %}
