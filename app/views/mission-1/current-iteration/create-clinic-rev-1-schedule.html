@@ -4,6 +4,11 @@
 
 {% set pageName = "Create day clinic" %}
 
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
+{% endblock %}
+
 {% block content %}
 
 {% set tickSvg %}

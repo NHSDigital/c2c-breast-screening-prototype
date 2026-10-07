@@ -2,9 +2,9 @@
 
 {% set pageName = "" %}
 
-{% from "mission-1/z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation() }}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
 {% endblock %}
 
 {% block beforeContent %}{% endblock %}

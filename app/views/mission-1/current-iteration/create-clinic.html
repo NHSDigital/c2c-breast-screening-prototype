@@ -2,6 +2,11 @@
 
 {% set pageName = "Clinics" %}
 
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
+{% endblock %}
+
 
 {% block content %}
 
@@ -22,7 +27,7 @@
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-full">
     <div class="app-card-editable">
-      <h1 class="nhsuk-heading-l">Clinics</h1>
+      <h1 class="nhsuk-heading-l">Select clinic</h1>
       {{ button({
         text: "Create a new clinic",
         href: "create-clinic-rev-1-name",
