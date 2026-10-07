@@ -1,5 +1,5 @@
 {% macro clinic_listing(options) %}
-  <table class="nhsuk-table nhsuk-table--striped nhsuk-table--compact">
+  <table class="nhsuk-table nhsuk-table--striped">
     <thead class="nhsuk-table__head">
       <tr class="nhsuk-table__row">
         <th scope="col" class="nhsuk-table__header">
@@ -48,11 +48,11 @@
           <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ clinic.clinic_capacity_available }} slots available of {{ clinic.clinic_capacity_total }}</span>
         </td>
         {% if options.controls != false %}
-          <td>
-            <a href="{{ clinic.button_url }}" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
-              Select this clinic
-            </a>
-          </td>
+        <td class="nhsuk-table__cell">
+          <a href="{{ clinic.button_url }}" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
+            Select this clinic
+          </a>
+        </td>
         {% endif %}
       </tr>
       {% endfor %}
