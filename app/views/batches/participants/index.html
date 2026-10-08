@@ -111,13 +111,13 @@
           <th scope="col" class="nhsuk-table__header" scope="col" data-sort>
             Postcode
           </th>
-          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
+          <th scope="col" class="nhsuk-table__header nhsuk-u-nowrap" scope="col" data-sort>
             NHS number
           </th>
-          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" aria-sort="ascending" scope="col" data-sort>
+          <th scope="col" class="nhsuk-table__header nhsuk-u-nowrap" aria-sort="ascending" scope="col" data-sort>
             Next test due date
           </th>
-          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
+          <th scope="col" class="nhsuk-table__header nhsuk-u-nowrap" scope="col" data-sort>
             Next screening
           </th>
         </tr>
@@ -131,11 +131,11 @@
           </td>
           <td class="nhsuk-table__cell">{{ participant.address.postcode }}</td>
           <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
-          <td class="nhsuk-table__cell nhsuk-table__cell--numeric" data-sort-value="{{ participant.next_test_due_date_iso }}">
+          <td class="nhsuk-table__cell" data-sort-value="{{ participant.next_test_due_date_iso }}">
             {{ participant.next_test_due_date }}<br>
             <span class="nhsuk-hint">{{ participant.next_test_due_date_relative }}</span>
           </td>
-          <td class="nhsuk-table__cell nhsuk-table__cell--numeric" data-sort-value="{{ participant.next_appointment_date_iso }}">
+          <td class="nhsuk-table__cell" data-sort-value="{{ participant.next_appointment_date_iso }}">
             {% if participant.next_appointment_date != 'Not known' %}{{ participant.next_appointment_date }}<br>{% endif
             %}
             <span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span>
