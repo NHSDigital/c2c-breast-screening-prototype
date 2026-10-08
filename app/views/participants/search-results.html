@@ -71,7 +71,7 @@
         {% for participant in participants %}
         <tr class="nhsuk-table__row">
           <td class="nhsuk-table__cell">
-            <a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.full_name }}</a><br>
+            <a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.display_name }}</a><br>
             <span class="nhsuk-hint">{{ participant.age }} years old</span>
           </td>
           <td class="nhsuk-table__cell">{{ participant.date_of_birth }}</td>
