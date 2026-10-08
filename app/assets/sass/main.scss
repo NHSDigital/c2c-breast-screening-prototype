@@ -214,6 +214,10 @@ a {
   }
 }
 
+.app-search-criteria dd {
+  margin-inline-start: 0;
+}
+
 @include nhsuk-media-query($from: tablet) {
   .app-participants-sort-form {
     flex-shrink: 0;

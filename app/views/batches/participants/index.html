@@ -99,45 +99,47 @@
     </form>
   </div>
   <div class="nhsuk-grid-column-three-quarters">
-    <div class="app-participants-toolbar">
+    <div class="app-participants-toolbar nhsuk-u-margin-bottom-0">
       <p class="nhsuk-hint">Showing <strong>{{ firstRecord }}</strong> to <strong>{{ lastRecord }}</strong> of <strong>{{ totalParticipants }}</strong> participants</p>
-      <form method="get" action="/batches/participants" class="app-participants-sort-form">
-        <input type="hidden" name="search" value="{{ search }}">
-        {% for filter in selectedNextTestDue %}<input type="hidden" name="nextTestDue" value="{{ filter }}">{% endfor %}
-        {% for filter in selectedNextScreening %}<input type="hidden" name="nextScreening" value="{{ filter }}">{% endfor %}
-        {% for filter in selectedLastScreened %}<input type="hidden" name="lastScreened" value="{{ filter }}">{% endfor %}
-        {% for filter in selectedBreachRisk %}<input type="hidden" name="breachRisk" value="{{ filter }}">{% endfor %}
-        <label class="nhsuk-label" for="participant-sort">Sort by</label>
-        <select class="nhsuk-select" id="participant-sort" name="sort" onchange="this.form.submit()">
-          <option value="name-asc"{% if selectedSort == 'name-asc' %} selected{% endif %}>Name (A to Z)</option>
-          <option value="name-desc"{% if selectedSort == 'name-desc' %} selected{% endif %}>Name (Z to A)</option>
-          <option value="due-soonest"{% if selectedSort == 'due-soonest' %} selected{% endif %}>Next test due date (soonest)</option>
-          <option value="due-latest"{% if selectedSort == 'due-latest' %} selected{% endif %}>Next test due date (latest)</option>
-          <option value="screening-soonest"{% if selectedSort == 'screening-soonest' %} selected{% endif %}>Next screening (soonest)</option>
-          <option value="screening-latest"{% if selectedSort == 'screening-latest' %} selected{% endif %}>Next screening (latest)</option>
-          <option value="age-oldest"{% if selectedSort == 'age-oldest' %} selected{% endif %}>Age (oldest)</option>
-          <option value="age-youngest"{% if selectedSort == 'age-youngest' %} selected{% endif %}>Age (youngest)</option>
-        </select>
-      </form>
     </div>
-    <table class="nhsuk-table nhsuk-table-responsive">
+    <table class="nhsuk-table nhsuk-table-responsive nhsuk-table--striped nhsuk-table--sortable" data-module="nhsuk-table">
       <thead class="nhsuk-table__head">
         <tr class="nhsuk-table__row">
-          <th scope="col" class="nhsuk-table__header">Name</th>
-          <th scope="col" class="nhsuk-table__header">Postcode</th>
-          <th scope="col" class="nhsuk-table__header">NHS number</th>
-          <th scope="col" class="nhsuk-table__header">Next test due date</th>
-          <th scope="col" class="nhsuk-table__header">Next screening</th>
+          <th scope="col" class="nhsuk-table__header" scope="col" data-sort>
+            Name
+          </th>
+          <th scope="col" class="nhsuk-table__header" scope="col" data-sort>
+            Postcode
+          </th>
+          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
+            NHS number
+          </th>
+          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" aria-sort="ascending" scope="col" data-sort>
+            Next test due date
+          </th>
+          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
+            Next screening
+          </th>
         </tr>
       </thead>
       <tbody class="nhsuk-table__body">
         {% for participant in participants %}
         <tr class="nhsuk-table__row">
-          <td class="nhsuk-table__cell"><a href="/batches/participants/{{ participant.participantId }}">{{ participant.full_name }}</a><br><span class="nhsuk-hint">{{ participant.age }} years old</span></td>
+          <td class="nhsuk-table__cell">
+            <p class="nhsuk-u-margin-bottom-1 nhsuk-u-font-weight-bold"><a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.full_name }}</a></p>
+            <p class="nhsuk-hint">{{ participant.age }} years old</p>
+          </td>
           <td class="nhsuk-table__cell">{{ participant.address.postcode }}</td>
           <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
-          <td class="nhsuk-table__cell">{{ participant.next_test_due_date }}<br><span class="nhsuk-hint">{{ participant.next_test_due_date_relative }}</span></td>
-          <td class="nhsuk-table__cell">{% if participant.next_appointment_date != 'Not known' %}{{ participant.next_appointment_date }}<br>{% endif %}<span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span></td>
+          <td class="nhsuk-table__cell nhsuk-table__cell--numeric" data-sort-value="{{ participant.next_test_due_date_iso }}">
+            {{ participant.next_test_due_date }}<br>
+            <span class="nhsuk-hint">{{ participant.next_test_due_date_relative }}</span>
+          </td>
+          <td class="nhsuk-table__cell nhsuk-table__cell--numeric" data-sort-value="{{ participant.next_appointment_date_iso }}">
+            {% if participant.next_appointment_date != 'Not known' %}{{ participant.next_appointment_date }}<br>{% endif
+            %}
+            <span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span>
+          </td>
         </tr>
         {% endfor %}
       </tbody>

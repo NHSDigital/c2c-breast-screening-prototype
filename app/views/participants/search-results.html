@@ -1,0 +1,99 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Search results" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+{{ primaryNavigation("Participants", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <div class="app-card-editable">
+      <h1 class="nhsuk-heading-l">{{ pageName }}</h1>
+    </div>
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+    <div class="nhsuk-card nhsuk-card--feature app-card--feature-grey app-filter-panel__card">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-s">
+          You searched for
+        </h2>
+        {% if hasCriteria %}
+        <dl class="nhsuk-body-s app-search-criteria">
+          {% if criteria.firstName %}<dt><strong>First name</strong></dt><dd>{{ criteria.firstName }}</dd>{% endif %}
+          {% if criteria.lastName %}<dt><strong>Last name</strong></dt><dd>{{ criteria.lastName }}</dd>{% endif %}
+          {% if criteria.nhsNumber %}<dt><strong>NHS number</strong></dt><dd>{{ criteria.nhsNumber }}</dd>{% endif %}
+          {% if criteria.sxNumber %}<dt><strong>SX number</strong></dt><dd>{{ criteria.sxNumber }}</dd>{% endif %}
+          {% if criteria.dobDay or criteria.dobMonth or criteria.dobYear %}
+          <dt><strong>Date of birth</strong></dt>
+          <dd>{{ criteria.dobDay or "–" }} / {{ criteria.dobMonth or "–" }} / {{ criteria.dobYear or "–" }}</dd>
+          {% endif %}
+          {% if criteria.postcode %}<dt><strong>Postcode</strong></dt><dd>{{ criteria.postcode }}</dd>{% endif %}
+          {% if criteria.emailAddress %}<dt><strong>Email address</strong></dt><dd>{{ criteria.emailAddress }}</dd>{% endif %}
+        </dl>
+        {% else %}
+        <p class="nhsuk-body-s">No search terms entered</p>
+        {% endif %}
+        <p class="nhsuk-body-s"><a href="/participants/search{% if searchQuery %}?{{ searchQuery }}{% endif %}">Change search</a></p>
+        <p class="nhsuk-body-s"><a href="/participants/search">New search</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+
+    <div class="app-participants-toolbar">
+      <p class="nhsuk-hint">
+        <strong>{{ participants | length }}</strong> participant{% if participants | length != 1 %}s{% endif %} found
+      </p>
+    </div>
+
+    {% if participants | length %}
+    <table class="nhsuk-table nhsuk-table-responsive">
+      <thead class="nhsuk-table__head">
+        <tr class="nhsuk-table__row">
+          <th scope="col" class="nhsuk-table__header">Name</th>
+          <th scope="col" class="nhsuk-table__header">Date of birth</th>
+          <th scope="col" class="nhsuk-table__header">Postcode</th>
+          <th scope="col" class="nhsuk-table__header">NHS number</th>
+          <th scope="col" class="nhsuk-table__header">Next test due date</th>
+          <th scope="col" class="nhsuk-table__header">Next screening</th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+        {% for participant in participants %}
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">
+            <a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.full_name }}</a><br>
+            <span class="nhsuk-hint">{{ participant.age }} years old</span>
+          </td>
+          <td class="nhsuk-table__cell">{{ participant.date_of_birth }}</td>
+          <td class="nhsuk-table__cell">{{ participant.address.postcode }}</td>
+          <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
+          <td class="nhsuk-table__cell">
+            {{ participant.next_test_due_date }}<br>
+            <span class="nhsuk-hint">{{ participant.next_test_due_date_relative }}</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            {% if participant.next_appointment_date != 'Not known' %}{{ participant.next_appointment_date }}<br>{% endif %}
+            <span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No participants match your search. Check the details you entered or <a href="/participants/search{% if searchQuery %}?{{ searchQuery }}{% endif %}">change your search</a>.</p>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

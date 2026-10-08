@@ -1,0 +1,121 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "Participants" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+{{ primaryNavigation("Batches" if participantsPath == "/batches/participants" else "Participants", serviceName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <div class="app-card-editable">
+      <h1 class="nhsuk-heading-l">Search for a participant</h1>
+    </div>
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+
+  <div class="nhsuk-grid-column-three-quarters">
+
+    <form method="get" action="/participants/search-results" novalidate autocomplete="off">
+
+    <div class="nhsuk-form-group">
+      <label class="nhsuk-label nhsuk-label--s" for="first-name">
+        First name
+      </label>
+      <input class="nhsuk-input nhsuk-input--width-20" id="first-name" name="firstName" type="text" autocomplete="off" value="{{ criteria.firstName }}">
+    </div>
+
+    <div class="nhsuk-form-group">
+      <label class="nhsuk-label nhsuk-label--s" for="last-name">
+        Last name
+      </label>
+      <input class="nhsuk-input nhsuk-input--width-20" id="last-name" name="lastName" type="text" autocomplete="off" value="{{ criteria.lastName }}">
+    </div>
+
+    <div class="nhsuk-form-group">
+      <label class="nhsuk-label nhsuk-label--s" for="nhs-number">
+        NHS number
+      </label>
+      <input class="nhsuk-input nhsuk-input--width-10" id="nhs-number" name="nhsNumber" type="text" autocomplete="off" value="{{ criteria.nhsNumber }}">
+    </div>
+
+    <div class="nhsuk-form-group">
+      <label class="nhsuk-label nhsuk-label--s" for="sx-number">
+        SX number
+      </label>
+      <input class="nhsuk-input nhsuk-input--width-10" id="sx-number" name="sxNumber" type="text" autocomplete="off" value="{{ criteria.sxNumber }}">
+    </div>
+
+    <div class="nhsuk-form-group">
+      <fieldset class="nhsuk-fieldset" role="group" aria-describedby="dob-hint">
+        <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--s">
+          <label class="nhsuk-fieldset__heading nhsuk-label--s">
+            Date of birth
+          </label>
+        </legend>
+        <div class="nhsuk-hint" id="dob-hint">
+          For example, 18 9 1960
+        </div>
+        <div class="nhsuk-date-input" id="dob-date">
+          <div class="nhsuk-date-input__item">
+            <div class="nhsuk-form-group">
+              <label class="nhsuk-label nhsuk-date-input__label" for="dob-date-day">
+                Day
+              </label>
+              <input class="nhsuk-input nhsuk-input--width-2 nhsuk-date-input__input" id="dob-date-day"
+                name="dobDay" type="text" inputmode="numeric" autocomplete="off" value="{{ criteria.dobDay }}">
+            </div>
+          </div>
+          <div class="nhsuk-date-input__item">
+            <div class="nhsuk-form-group">
+              <label class="nhsuk-label nhsuk-date-input__label" for="dob-date-month">
+                Month
+              </label>
+              <input class="nhsuk-input nhsuk-input--width-2 nhsuk-date-input__input" id="dob-date-month"
+                name="dobMonth" type="text" inputmode="numeric" autocomplete="off" value="{{ criteria.dobMonth }}">
+            </div>
+          </div>
+          <div class="nhsuk-date-input__item">
+            <div class="nhsuk-form-group">
+              <label class="nhsuk-label nhsuk-date-input__label" for="dob-date-year">
+                Year
+              </label>
+              <input class="nhsuk-input nhsuk-input--width-4 nhsuk-date-input__input" id="dob-date-year"
+                name="dobYear" type="text" inputmode="numeric" autocomplete="off" value="{{ criteria.dobYear }}">
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="nhsuk-form-group">
+      <label class="nhsuk-label nhsuk-label--s" for="postcode">
+        Postcode
+      </label>
+      <input class="nhsuk-input nhsuk-input--width-10" id="postcode" name="postcode" type="text" autocomplete="off" value="{{ criteria.postcode }}">
+    </div>
+
+    <div class="nhsuk-form-group">
+      <label class="nhsuk-label nhsuk-label--s" for="email-address">
+        Email address
+      </label>
+      <input class="nhsuk-input nhsuk-input--width-20" id="email-address" name="emailAddress" type="text" autocomplete="off" value="{{ criteria.emailAddress }}">
+    </div>
+
+    <button class="nhsuk-button" data-module="nhsuk-button" type="submit">
+      Search
+    </button>
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

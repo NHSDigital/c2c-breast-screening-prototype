@@ -20,6 +20,7 @@ const participantDateFromToday = (today, days) => {
 }
 
 const formatParticipantDate = (date) => `${String(date.getDate()).padStart(2, '0')} ${participantMonths[date.getMonth()]} ${date.getFullYear()}`
+const formatParticipantIsoDate = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
 const formatParticipantFullDate = (date) => `${String(date.getDate()).padStart(2, '0')} ${participantFullMonths[date.getMonth()]} ${date.getFullYear()}`
 
 const formatParticipantRelativeDate = (date, today, daysThreshold = 7) => {
@@ -52,9 +53,11 @@ const refreshParticipantDates = (participant, today, dateFormatter = formatParti
     last_screened_date: lastScreenedDate ? dateFormatter(lastScreenedDate) : 'Never screened',
     next_test_due_date: dateFormatter(nextTestDueDate),
     next_test_due_date_value: nextTestDueDate.getTime(),
+    next_test_due_date_iso: formatParticipantIsoDate(nextTestDueDate),
     next_test_due_date_relative: formatParticipantRelativeDate(nextTestDueDate, today, 28),
     next_appointment_date: nextAppointmentDate ? dateFormatter(nextAppointmentDate) : 'Not known',
     next_appointment_date_value: nextAppointmentDate ? nextAppointmentDate.getTime() : null,
+    next_appointment_date_iso: nextAppointmentDate ? formatParticipantIsoDate(nextAppointmentDate) : '9999-12-31',
     next_appointment_date_relative: nextAppointmentDate ? formatParticipantRelativeDate(nextAppointmentDate, today) : 'Not known'
   }
 }
@@ -911,7 +914,65 @@ router.get(['/participants', '/batches/participants'], function (req, res) {
   })
 })
 
-router.get(['/participants/:participantId', '/batches/participants/:participantId'], function (req, res) {
+const participantSearchFields = ['firstName', 'lastName', 'nhsNumber', 'sxNumber', 'dobDay', 'dobMonth', 'dobYear', 'postcode', 'emailAddress']
+
+const participantSearchCriteria = query => Object.fromEntries(participantSearchFields
+  .map(field => [field, String(query[field] || '').trim()]))
+
+const normaliseSearchValue = value => String(value || '').toLowerCase().replace(/\s+/g, '')
+
+const matchesParticipantSearch = (participant, criteria) => {
+  const includes = (value, term) => !term || normaliseSearchValue(value).includes(normaliseSearchValue(term))
+  const [dobDay, dobMonthName, dobYear] = participant.date_of_birth.split(' ')
+  const dobMonth = participantFullMonths.indexOf(dobMonthName) + 1
+  const matchesDatePart = (actual, term) => !term || parseInt(term, 10) === parseInt(actual, 10)
+  const matchesYear = !criteria.dobYear || (criteria.dobYear.length === 2
+    ? dobYear.endsWith(criteria.dobYear)
+    : parseInt(criteria.dobYear, 10) === parseInt(dobYear, 10))
+
+  return includes(participant.full_name.split(', ')[1], criteria.firstName) &&
+    includes(participant.surname_sort_value, criteria.lastName) &&
+    includes(participant.nhs_number, criteria.nhsNumber) &&
+    includes(participant.sx_number, criteria.sxNumber) &&
+    includes(participant.address.postcode, criteria.postcode) &&
+    includes(participant.email, criteria.emailAddress) &&
+    matchesDatePart(dobDay, criteria.dobDay) &&
+    matchesDatePart(dobMonth, criteria.dobMonth) &&
+    matchesYear
+}
+
+router.get('/participants/search', function (req, res) {
+  res.render('participants/search', {
+    participantsPath: '/participants',
+    criteria: participantSearchCriteria(req.query)
+  })
+})
+
+router.get('/participants/search-results', function (req, res) {
+  const criteria = participantSearchCriteria(req.query)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const participants = ((req.session.data.participants && req.session.data.participants.default) || [])
+    .filter(participant => matchesParticipantSearch(participant, criteria))
+    .map(participant => refreshParticipantDates(participant, today))
+    .sort((a, b) => a.full_name.localeCompare(b.full_name))
+  const searchQuery = new URLSearchParams(Object.entries(criteria).filter(([, value]) => value)).toString()
+
+  res.render('participants/search-results', {
+    participants,
+    participantsPath: '/participants',
+    criteria,
+    hasCriteria: Boolean(searchQuery),
+    searchQuery
+  })
+})
+
+router.get(['/participants/:participantId', '/batches/participants/:participantId'], function (req, res, next) {
+  // Let static pages such as /participants/search fall through to auto-routing
+  if (!/^p\d+$/.test(req.params.participantId)) {
+    return next()
+  }
+
   const participantsPath = req.path.startsWith('/batches/') ? '/batches/participants' : '/participants'
   const participants = (req.session.data.participants && req.session.data.participants.default) || []
   const today = new Date()
