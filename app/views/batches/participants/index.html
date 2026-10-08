@@ -126,8 +126,8 @@
         {% for participant in participants %}
         <tr class="nhsuk-table__row">
           <td class="nhsuk-table__cell">
-            <p class="nhsuk-u-margin-bottom-1 nhsuk-u-font-weight-bold"><a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.full_name }}</a></p>
-            <p class="nhsuk-hint">{{ participant.age }} years old</p>
+            <p class="nhsuk-u-margin-bottom-1 nhsuk-u-font-weight-bold"><a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.display_name }}</a></p>
+            <p class="nhsuk-hint nhsuk-u-margin-bottom-0">{{ participant.age }} years old</p>
           </td>
           <td class="nhsuk-table__cell">{{ participant.address.postcode }}</td>
           <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>

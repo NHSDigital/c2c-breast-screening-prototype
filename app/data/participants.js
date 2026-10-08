@@ -180,7 +180,8 @@ const createParticipant = (index, today) => {
 
   return {
     participantId: `p${pad(index + 1)}`,
-    full_name: `${surname.toUpperCase()}, ${firstName}${middleName}`,
+    full_name: `${firstName} ${middleName} ${surname}`,
+    display_name: `${surname.toUpperCase()}, ${firstName}`,
     surname_sort_value: surname.toUpperCase(),
     nhs_number: `999 ${pad((index * 37) % 1000, 3)} ${pad((index * 97 + 1) % 10000, 4)}`,
     date_of_birth: formatDate(dateOfBirth),
