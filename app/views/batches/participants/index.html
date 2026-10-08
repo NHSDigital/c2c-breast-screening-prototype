@@ -111,7 +111,6 @@
           <th scope="col" class="nhsuk-table__header" scope="col" data-sort>
             Postcode
           </th>
-<<<<<<< HEAD
           <th scope="col" class="nhsuk-table__header nhsuk-u-nowrap" scope="col" data-sort>
             NHS number
           </th>
@@ -119,15 +118,6 @@
             Next test due date
           </th>
           <th scope="col" class="nhsuk-table__header nhsuk-u-nowrap" scope="col" data-sort>
-=======
-          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
-            NHS number
-          </th>
-          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" aria-sort="ascending" scope="col" data-sort>
-            Next test due date
-          </th>
-          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
->>>>>>> 01a9cd1 (added initial search ideation and added sortable and striped tables to participant lists)
             Next screening
           </th>
         </tr>
@@ -136,6 +126,7 @@
         {% for participant in participants %}
         <tr class="nhsuk-table__row">
           <td class="nhsuk-table__cell">
+<<<<<<< HEAD
 <<<<<<< HEAD
             <p class="nhsuk-u-margin-bottom-1 nhsuk-u-font-weight-bold"><a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.display_name }}</a></p>
             <p class="nhsuk-hint nhsuk-u-margin-bottom-0">{{ participant.age }} years old</p>
@@ -150,6 +141,10 @@
 =======
             <p class="nhsuk-u-margin-bottom-1 nhsuk-u-font-weight-bold"><a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.full_name }}</a></p>
             <p class="nhsuk-hint">{{ participant.age }} years old</p>
+=======
+            <p class="nhsuk-u-margin-bottom-1 nhsuk-u-font-weight-bold"><a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.display_name }}</a></p>
+            <p class="nhsuk-hint nhsuk-u-margin-bottom-0">{{ participant.age }} years old</p>
+>>>>>>> 3d4d363 (Changes to name formatting)
           </td>
           <td class="nhsuk-table__cell">{{ participant.address.postcode }}</td>
           <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
