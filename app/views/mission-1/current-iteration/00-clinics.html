@@ -4,13 +4,13 @@
 
 {% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Batches", serviceName, bsoName) }}
+  {{ primaryNavigation("Manage clinics", serviceName, bsoName) }}
 {% endblock %}
 
 
 {% block content %}
 
-{% if data.missionOne and data.missionOne.clinicName %}
+{% if data.missionOne and data.missionOne.saved %}
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
       {% set html %}
@@ -27,10 +27,10 @@
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-full">
     <div class="app-card-editable">
-      <h1 class="nhsuk-heading-l">Select clinic</h1>
+      <h1 class="nhsuk-heading-l">Clinics</h1>
       {{ button({
         text: "Create a new clinic",
-        href: "create-clinic-rev-1-name",
+        href: "create-clinic-rev-1-name?returnTo=clinics",
         classes: "nhsuk-button--secondary"
       }) }}
     </div>
@@ -64,7 +64,7 @@
       </thead>
       <tbody class="nhsuk-table__body">
 
-        {% if data.missionOne and data.missionOne.clinicName %}
+        {% if data.missionOne and data.missionOne.saved %}
           <tr class="nhsuk-table__row">
             <th scope="row" class="nhsuk-table__header">
               {{ data.missionOne.clinicName }}
@@ -94,11 +94,6 @@
                 no data
               {% endif %}
             </td>
-            <td>
-              <a href="clickthru/04-choose-participants" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
-                Select this clinic
-              </a>
-            </td>
           </tr>
         {% endif %}
 
@@ -123,11 +118,6 @@
             <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: 0%;"></div>
             <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">48 slots available of 48</span>
           </td>
-          <td>
-            <a href="clickthru/04-choose-participants" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
-              Select this clinic
-            </a>
-          </td>
         </tr>
         <tr class="nhsuk-table__row">
           <th scope="row" class="nhsuk-table__header">
@@ -149,11 +139,6 @@
           <td class="nhsuk-table__cell">
             <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: 60%;"></div>
             <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">40 slots available of 100</div>
-          </td>
-          <td>
-            <a href="clickthru/04-choose-participants" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
-              Select this clinic
-            </a>
           </td>
         </tr>
       </tbody>
