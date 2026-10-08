@@ -49,40 +49,49 @@
   </div>
   <div class="nhsuk-grid-column-three-quarters">
 
-    <div class="app-participants-toolbar">
+    <div class="app-participants-toolbar nhsuk-u-margin-bottom-0">
       <p class="nhsuk-hint">
         <strong>{{ participants | length }}</strong> participant{% if participants | length != 1 %}s{% endif %} found
       </p>
     </div>
 
     {% if participants | length %}
-    <table class="nhsuk-table nhsuk-table-responsive">
+    <table class="nhsuk-table nhsuk-table-responsive nhsuk-table--striped nhsuk-table--sortable" data-module="nhsuk-table">
       <thead class="nhsuk-table__head">
         <tr class="nhsuk-table__row">
-          <th scope="col" class="nhsuk-table__header">Name</th>
-          <th scope="col" class="nhsuk-table__header">Date of birth</th>
-          <th scope="col" class="nhsuk-table__header">Postcode</th>
-          <th scope="col" class="nhsuk-table__header">NHS number</th>
-          <th scope="col" class="nhsuk-table__header">Next test due date</th>
-          <th scope="col" class="nhsuk-table__header">Next screening</th>
+          <th scope="col" class="nhsuk-table__header" scope="col" aria-sort="ascending" data-sort>
+            Name
+          </th>
+          <th scope="col" class="nhsuk-table__header" scope="col" data-sort>
+            Postcode
+          </th>
+          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
+            NHS number
+          </th>
+          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
+            Next test due date
+          </th>
+          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
+            Next screening
+          </th>
         </tr>
       </thead>
       <tbody class="nhsuk-table__body">
         {% for participant in participants %}
         <tr class="nhsuk-table__row">
           <td class="nhsuk-table__cell">
-            <a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.display_name }}</a><br>
-            <span class="nhsuk-hint">{{ participant.age }} years old</span>
+            <p class="nhsuk-u-margin-bottom-1 nhsuk-u-font-weight-bold"><a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.display_name }}</a></p>
+            <p class="nhsuk-hint nhsuk-u-margin-bottom-0">{{ participant.age }} years old</p>
           </td>
-          <td class="nhsuk-table__cell">{{ participant.date_of_birth }}</td>
           <td class="nhsuk-table__cell">{{ participant.address.postcode }}</td>
           <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
-          <td class="nhsuk-table__cell">
+          <td class="nhsuk-table__cell nhsuk-table__cell--numeric" data-sort-value="{{ participant.next_test_due_date_iso }}">
             {{ participant.next_test_due_date }}<br>
             <span class="nhsuk-hint">{{ participant.next_test_due_date_relative }}</span>
           </td>
-          <td class="nhsuk-table__cell">
-            {% if participant.next_appointment_date != 'Not known' %}{{ participant.next_appointment_date }}<br>{% endif %}
+          <td class="nhsuk-table__cell nhsuk-table__cell--numeric" data-sort-value="{{ participant.next_appointment_date_iso }}">
+            {% if participant.next_appointment_date != 'Not known' %}{{ participant.next_appointment_date }}<br>{% endif
+            %}
             <span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span>
           </td>
         </tr>
