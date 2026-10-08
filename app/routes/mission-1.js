@@ -34,7 +34,7 @@ const parseDateFields = (dateObj) => {
 }
 
 // simple search
-router.get('/mission-1/current-iteration/clickthru/04a-example-search-result', function (req, res) {
+router.get('/mission-1/current-iteration/04a-example-search-result', function (req, res) {
   const query = (req.query['search-params'] || '').trim()
   const allParticipants = (req.session.data.participants && req.session.data.participants.default) || []
   const normalizedQuery = query.toLowerCase().replace(/\s+/g, ' ')
@@ -56,7 +56,7 @@ router.get('/mission-1/current-iteration/clickthru/04a-example-search-result', f
     return null
   }).filter(Boolean) : allParticipants.map((participant, index) => Object.assign({}, participant, { participantIndex: index })))
 
-  res.render('mission-1/current-iteration/clickthru/04a-example-search-result', {
+  res.render('mission-1/current-iteration/04a-example-search-result', {
     participants: searchResults,
     searchQuery: query
   })
@@ -72,7 +72,7 @@ router.get('/action/stage/:participantId', function (req, res) {
     req.session.data.stagedCount++
   }
 
-  res.redirect(req.get('referer') || '/mission-1/current-iteration/clickthru/04-choose-participants')
+  res.redirect(req.get('referer') || '/mission-1/current-iteration/04-choose-participants')
 });
 router.get('/action/unstage/:participantId', function (req, res) {
   const participants = (req.session.data.participants && req.session.data.participants.default) || []
@@ -83,8 +83,28 @@ router.get('/action/unstage/:participantId', function (req, res) {
     req.session.data.stagedCount--
   }
 
-  res.redirect(req.get('referer') || '/mission-1/current-iteration/clickthru/04-choose-participants')
+  res.redirect(req.get('referer') || '/mission-1/current-iteration/04-choose-participants')
 });
+
+// Allowlist of pages the create clinic flow can return to, keyed by the returnTo query value
+const createClinicReturnPaths = {
+  'clinics': '/mission-1/current-iteration/00-clinics',
+  'select-clinic': '/mission-1/current-iteration/03-select-clinic'
+}
+
+// recording where the 1 day clinic creation flow was started from
+router.get('/mission-1/current-iteration/create-clinic-rev-1-name', function (req, res) {
+  const returnTo = req.query.returnTo
+
+  if (Object.prototype.hasOwnProperty.call(createClinicReturnPaths, returnTo)) {
+    if (!req.session.data.missionOne || typeof req.session.data.missionOne !== 'object') {
+      req.session.data.missionOne = {}
+    }
+    req.session.data.missionOne.returnTo = returnTo
+  }
+
+  res.render('mission-1/current-iteration/create-clinic-rev-1-name')
+})
 
 // validating clinic name for 1 day clinic creation
 router.post('/mission-1/current-iteration/create-clinic-rev-1-name', function (req, res) {
@@ -307,19 +327,23 @@ router.post('/mission-1/current-iteration/clear-slot-type', function (req, res) 
   res.redirect('/mission-1/current-iteration/create-clinic-rev-1-slot-structure')
 })
 
-// creating and passing Total Slots through for 1 day clinic creation
+// refreshing slot counts before the check and confirm step for 1 day clinic creation
 router.post('/mission-1/current-iteration/create-clinic-rev-1-publish-check', function (req, res) {
-  const newSession = req.session.data.newSession || {}
-  const startTime = newSession.startTime || {}
-  const endTime = newSession.endTime || {}
-
-  const startMinutes = (parseInt(startTime.hour, 10) || 0) * 60 + (parseInt(startTime.minute, 10) || 0)
-  const endMinutes = (parseInt(endTime.hour, 10) || 0) * 60 + (parseInt(endTime.minute, 10) || 0)
-  const duration = parseInt(newSession.duration, 10) || 0
-
-  newSession.totalSlots = duration > 0 ? Math.floor((endMinutes - startMinutes) / duration) : 0
+  const missionOne = req.session.data.missionOne || {}
+  buildSessionSlots(missionOne)
+  req.session.data.missionOne = missionOne
 
   res.render('mission-1/current-iteration/create-clinic-rev-1-publish-check')
+})
+
+// saving the clinic and returning to where the 1 day clinic creation flow was started from
+router.post('/mission-1/current-iteration/create-clinic-rev-1-save', function (req, res) {
+  const missionOne = req.session.data.missionOne || {}
+  missionOne.saved = true
+  req.session.data.missionOne = missionOne
+
+  const returnPath = createClinicReturnPaths[missionOne.returnTo] || createClinicReturnPaths['select-clinic']
+  res.redirect(returnPath)
 })
 
 module.exports = router

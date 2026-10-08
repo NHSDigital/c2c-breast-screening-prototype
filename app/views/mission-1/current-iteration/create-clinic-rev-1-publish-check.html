@@ -4,7 +4,7 @@
 
 {% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Batches", serviceName, bsoName) }}
+  {{ primaryNavigation("Manage clinics" if data.missionOne and data.missionOne.returnTo == "clinics" else "Batches", serviceName, bsoName) }}
 {% endblock %}
 
 {% block content %}
@@ -95,7 +95,7 @@
             Session times
           </dt>
           <dd class="nhsuk-summary-list__value">
-            {{ data.missionOne.startTime.hour | zeroPad }}:{{ data.newSession.startTime.minute | zeroPad }} to {{ data.newSession.endTime.hour | zeroPad }}:{{ data.newSession.endTime.minute | zeroPad }}<br>
+            {{ data.missionOne.startTime.hour | zeroPad }}:{{ data.missionOne.startTime.minute | zeroPad }} to {{ data.missionOne.endTime.hour | zeroPad }}:{{ data.missionOne.endTime.minute | zeroPad }}<br>
             {{ data.missionOne.duration }} minute slot length
           </dd>
           <dd class="nhsuk-summary-list__actions">
@@ -116,9 +116,9 @@
         </div>
       </dl>
 
-      <p class="nhsuk-u-margin-top-4">
-        <a class="nhsuk-button" href="create-clinic">Save clinic session</a>
-      </p>
+      <form method="post" action="create-clinic-rev-1-save" class="nhsuk-u-margin-top-4">
+        <button class="nhsuk-button" type="submit">Save clinic session</button>
+      </form>
 
     </div>
   </div>
