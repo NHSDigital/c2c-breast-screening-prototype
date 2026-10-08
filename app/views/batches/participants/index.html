@@ -111,6 +111,7 @@
           <th scope="col" class="nhsuk-table__header" scope="col" data-sort>
             Postcode
           </th>
+<<<<<<< HEAD
           <th scope="col" class="nhsuk-table__header nhsuk-u-nowrap" scope="col" data-sort>
             NHS number
           </th>
@@ -118,6 +119,15 @@
             Next test due date
           </th>
           <th scope="col" class="nhsuk-table__header nhsuk-u-nowrap" scope="col" data-sort>
+=======
+          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
+            NHS number
+          </th>
+          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" aria-sort="ascending" scope="col" data-sort>
+            Next test due date
+          </th>
+          <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric nhsuk-u-nowrap" scope="col" data-sort>
+>>>>>>> 01a9cd1 (added initial search ideation and added sortable and striped tables to participant lists)
             Next screening
           </th>
         </tr>
@@ -126,6 +136,7 @@
         {% for participant in participants %}
         <tr class="nhsuk-table__row">
           <td class="nhsuk-table__cell">
+<<<<<<< HEAD
             <p class="nhsuk-u-margin-bottom-1 nhsuk-u-font-weight-bold"><a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.display_name }}</a></p>
             <p class="nhsuk-hint nhsuk-u-margin-bottom-0">{{ participant.age }} years old</p>
           </td>
@@ -136,6 +147,18 @@
             <span class="nhsuk-hint">{{ participant.next_test_due_date_relative }}</span>
           </td>
           <td class="nhsuk-table__cell" data-sort-value="{{ participant.next_appointment_date_iso }}">
+=======
+            <p class="nhsuk-u-margin-bottom-1 nhsuk-u-font-weight-bold"><a href="{{ participantsPath }}/{{ participant.participantId }}">{{ participant.full_name }}</a></p>
+            <p class="nhsuk-hint">{{ participant.age }} years old</p>
+          </td>
+          <td class="nhsuk-table__cell">{{ participant.address.postcode }}</td>
+          <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
+          <td class="nhsuk-table__cell nhsuk-table__cell--numeric" data-sort-value="{{ participant.next_test_due_date_iso }}">
+            {{ participant.next_test_due_date }}<br>
+            <span class="nhsuk-hint">{{ participant.next_test_due_date_relative }}</span>
+          </td>
+          <td class="nhsuk-table__cell nhsuk-table__cell--numeric" data-sort-value="{{ participant.next_appointment_date_iso }}">
+>>>>>>> 01a9cd1 (added initial search ideation and added sortable and striped tables to participant lists)
             {% if participant.next_appointment_date != 'Not known' %}{{ participant.next_appointment_date }}<br>{% endif
             %}
             <span class="nhsuk-hint">{{ participant.next_appointment_date_relative }}</span>
