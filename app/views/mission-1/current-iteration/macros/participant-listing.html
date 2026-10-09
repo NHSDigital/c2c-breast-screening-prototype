@@ -20,10 +20,10 @@
         <th scope="col" class="nhsuk-table__header">
           Date of birth
         </th>
-        <th scope="col" class="nhsuk-table__header">
+        <th scope="col" class="nhsuk-table__header app-table-column-status">
           Status
         </th>
-        <th scope="col" class="nhsuk-table__header">
+        <th scope="col" class="nhsuk-table__header app-table-column-actions">
           <span class="nhsuk-u-visually-hidden">Actions</span>
         </th>
       </tr>
@@ -46,10 +46,10 @@
               </strong> -->
             {% endif %}
           </td>
-          <td class="nhsuk-table__cell">
+          <td class="nhsuk-table__cell app-table-cell-actions">
             {% set participantId = participant.participantId or loop.index0 %}
             {% if participant.status == "unstaged" %}
-              <a href="/action/stage/{{ participantId }}" class="nhsuk-button nhsuk-button--secondary-solid nhsuk-button--small nhsuk-u-margin-0">Add</a>
+              <a href="/action/stage/{{ participantId }}" class="nhsuk-button nhsuk-button--secondary-solid nhsuk-button--small">Add</a>
             {% else %}
               <a href="/action/unstage/{{ participantId }}">Remove</a>
             {% endif %}
