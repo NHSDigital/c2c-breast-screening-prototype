@@ -1,0 +1,58 @@
+@use "nhsuk-frontend/dist/nhsuk/core" as *;
+
+.slot {
+  background-color: nhsuk-colour("white");
+  border: 1px solid $nhsuk-input-border-colour;
+  padding-left: nhsuk-spacing(2);
+  user-select: none;
+  @include nhsuk-responsive-margin(2, "bottom");
+  min-height: nhsuk-px-to-rem(46px);
+}
+
+.slot-end {
+  @include nhsuk-font-size(16);
+  margin-right: 1rem;
+}
+.slot-tag { margin-left: 1rem; }
+
+.slot.is-hold {}
+
+.slot.is-staff-break {
+  background: repeating-linear-gradient(130deg, nhsuk-colour("grey-4"), nhsuk-colour("grey-4") 1px, transparent 1px, transparent 12px);
+  border-color: $nhsuk-border-colour;
+}
+
+.slot.is-special-appointment {}
+
+.slot.is-merged {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.slot.is-merged-child  {
+  border-top: 1px dashed #212b32;
+  height: 42px;
+}
+.slot.is-merged-child > .nhsuk-checkboxes__item,
+.slot.is-merged-child > div { 
+  display: none;
+}
+.slot.is-merged-last-child { 
+  border-bottom: 1px solid #212b32;
+  margin-bottom: 12px;
+}
+
+.slot.is-staff-break.is-merged-last-child {
+  border-bottom-style: dashed;
+}
+
+.slot.is-merged-child > .slot-time,
+.slot.is-merged-child > .slot-end {
+  display: none;
+}
+
+.slot .nhsuk-checkboxes__label {
+  width: 100%;
+}
+
+.panel-item { display: block; cursor: pointer; }
+.panel-item.disabled { opacity: 0.38; cursor: default; pointer-events: none; }

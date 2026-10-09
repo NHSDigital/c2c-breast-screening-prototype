@@ -1,0 +1,187 @@
+{% extends 'layout.html' %}
+
+{% set errorState = "true" if errors else "false" %}
+
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage clinics" if data.missionOne and data.missionOne.returnTo == "clinics" else "Batches", serviceName, bsoName) }}
+{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          Create clinic session
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="create-clinic-rev-1-name">
+              <span class="app-workflow-side-nav__number">1</span>
+              <span class="app-workflow-side-nav__label">Clinic name</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="create-clinic-rev-1-schedule">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Scheduled date</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Session times</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">Slot structure</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">5</span>
+              <span class="app-workflow-side-nav__label">Check and confirm</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+    <div class="nhsuk-u-reading-width">
+
+      {% if errorState === "true" %}
+        {% set errorList = [] %}
+        {% if errors.startTime %}
+          {% set errorList = errorList.concat([{ text: errors.startTime, href: "#start-time-hour" }]) %}
+        {% endif %}
+        {% if errors.endTime %}
+          {% set errorList = errorList.concat([{ text: errors.endTime, href: "#end-time-hour" }]) %}
+        {% endif %}
+        {% if errors.duration %}
+          {% set errorList = errorList.concat([{ text: errors.duration, href: "#duration" }]) %}
+        {% endif %}
+        {{ errorSummary({
+          titleText: "There is a problem",
+          errorList: errorList
+        }) }}
+      {% endif %}
+
+      <h1 class="nhsuk-heading-l">Clinic session times</h1>
+
+      <form method="post">
+        
+        <div class="nhsuk-form-group {% if errors and errors.startTime %}nhsuk-form-group--error{% endif %}">
+          <fieldset class="nhsuk-fieldset" role="group" aria-describedby="start-time-hint">
+            <legend class="nhsuk-fieldset__legend nhsuk-label--m">
+              Session start time
+            </legend>
+            <div id="start-time-hint" class="nhsuk-hint">
+              Use 24 hour format, for example, 10:00
+            </div>
+            {% if errors and errors.startTime %}
+              <span class="nhsuk-error-message">
+                <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.startTime }}
+              </span>
+            {% endif %}
+
+            <div id="start-time" class="nhsuk-date-input">
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="start-time-hour">
+                    Hour
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.startTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-hour"
+                    name="newSession[startTime][hour]" type="text" inputmode="numeric" value="{{ data.missionOne.startTime.hour }}">
+                </div>
+              </div>
+
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="start-time-minute">
+                    Minute
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.startTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-minute"
+                    name="newSession[startTime][minute]" type="text" inputmode="numeric" value="{{ data.missionOne.startTime.minute }}">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="nhsuk-form-group {% if errors and errors.endTime %}nhsuk-form-group--error{% endif %}">
+          <fieldset class="nhsuk-fieldset" role="group" aria-describedby="end-time-hint">
+            <legend class="nhsuk-fieldset__legend nhsuk-label--m">
+              Session end time
+            </legend>
+            <div id="end-time-hint" class="nhsuk-hint">
+              Use 24 hour format, for example, 17:00
+            </div>
+            {% if errors and errors.endTime %}
+              <span class="nhsuk-error-message">
+                <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.endTime }}
+              </span>
+            {% endif %}
+
+            <div id="end-time" class="nhsuk-date-input">
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="end-time-hour">
+                    Hour
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.endTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-hour"
+                    name="newSession[endTime][hour]" type="text" inputmode="numeric" value="{{ data.missionOne.endTime.hour }}">
+                </div>
+              </div>
+              <div class="nhsuk-date-input__item">
+                <div class="nhsuk-form-group">
+                  <label class="nhsuk-label nhsuk-date-input__label" for="end-time-minute">
+                    Minute
+                  </label>
+                  <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.endTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-minute"
+                    name="newSession[endTime][minute]" type="text" inputmode="numeric" value="{{ data.missionOne.endTime.minute }}">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="nhsuk-form-group {% if errors and errors.duration %}nhsuk-form-group--error{% endif %}">
+          <label class="nhsuk-label nhsuk-label--m" for="duration">
+            Slot length
+          </label>
+          {% if errors and errors.duration %}
+            <span class="nhsuk-error-message">
+              <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.duration }}
+            </span>
+          {% endif %}
+          <div class="nhsuk-input-wrapper">
+            <input class="nhsuk-input nhsuk-input--width-2 {% if errors and errors.duration %}nhsuk-input--error{% endif %}" id="duration" name="newSession[duration]" type="text"
+              spellcheck="false" value="{{ data.missionOne.duration }}" aria-describedby="duration-hint" inputmode="numeric">
+            <div class="nhsuk-input-wrapper__suffix" aria-hidden="true">minutes</div>
+          </div>
+        </div>
+
+        <button class="nhsuk-button" type="submit">Continue</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

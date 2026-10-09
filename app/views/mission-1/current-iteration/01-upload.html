@@ -1,16 +1,15 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "" %}
 
-{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation() }}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
 {% endblock %}
 
 {% block beforeContent %}{% endblock %}
 
 {% block content %}
-  {% from "september-iteration-2/macros/batch-upload.html" import upload %}
+  {% from "mission-1/current-iteration/macros/batch-upload.html" import upload %}
   {{ upload({
     button_url:"02-batch-detail"
   }) }}

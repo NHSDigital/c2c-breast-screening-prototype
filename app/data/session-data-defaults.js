@@ -14,6 +14,7 @@ module.exports = {
   clinicCapacityPercentBooked: "0",
   clinicCapacityAvailable: "10",
   clinicCapacityTotal: "10",
+  missionOne: {},
   createCapacityFromZero: {
     schedules: [],
     selectedDays: [],

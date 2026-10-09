@@ -1,0 +1,131 @@
+{% extends 'layout.html' %}
+
+{% set errorState = "true" if errors else "false" %}
+
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage clinics" if data.missionOne and data.missionOne.returnTo == "clinics" else "Batches", serviceName, bsoName) }}
+{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          Create clinic session
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="create-clinic-rev-1-name">
+              <span class="app-workflow-side-nav__number">1</span>
+              <span class="app-workflow-side-nav__label">Clinic name</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="create-clinic-rev-1-schedule">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Scheduled date</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="create-clinic-rev-1-set-timings">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Session times</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">Slot structure</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">5</span>
+              <span class="app-workflow-side-nav__label">Check and confirm</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+
+  <div class="nhsuk-grid-column-three-quarters">
+    <form method="post">
+
+      <div class="nhsuk-u-reading-width">
+        {% if errorState === "true" %}
+          {% set errorList = [] %}
+          {% if errors.slots %}
+            {% set errorList = errorList.concat([{ text: errors.slots, href: "#computed-slot-0" }]) %}
+          {% endif %}
+          {{ errorSummary({
+            titleText: "There is a problem",
+            errorList: errorList
+          }) }}
+        {% endif %}
+        <h1 class="nhsuk-heading-l">Slot structure</h1>
+        <h2 class="nhsuk-heading-m">
+          <span class="nhsuk-caption-m">Session time</span>
+          {{ sessionStartLabel }} to {{ sessionEndLabel }}
+        </h2>
+      </div>
+
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-two-thirds">
+          <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes">
+
+            {% for slot in slots %}
+            <div class="slot{% if slot.isStaffBreak %} is-staff-break{% endif %}">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="computed-slot-{{ slot.index }}" name="computedSlots[]" type="checkbox" value="{{ slot.index }}">
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="computed-slot-{{ slot.index }}">
+                  <span class="slot-time">{{ slot.startLabel }}</span>
+                  <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
+                  {% if slot.isStaffBreak %}
+                  <span class="slot-tag">
+                    <span class="nhsuk-tag nhsuk-tag--grey">Staff break</span>
+                  </span>
+                  {% endif %}
+                </label>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+        <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
+          <div class="side-panel" id="side-panel">
+            <h3 class="nhsuk-heading-s">Set selected slots as:</h3>
+            <button class="nhsuk-link nhsuk-u-font-size-19" formaction="mark-staff-break">Staff break</button>
+            <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+            <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="clear-slot-type">Clear slot type</button>
+          </div>
+          <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+          <p>
+            <span id="available-slots">{{ bookableSlotCount }}</span> bookable slots
+          </p>
+          <p>
+            <button class="nhsuk-button" formaction="create-clinic-rev-1-publish-check">Continue</button>
+          </p>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

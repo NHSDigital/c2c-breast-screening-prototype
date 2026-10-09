@@ -1,0 +1,55 @@
+{% from 'header/macro.njk' import header %}
+
+{% macro primaryNavigation(activeItem, serviceName, bsoName) %}
+  {{ header({
+    account: {
+      items: [
+        {
+          text: bsoName
+        },
+        {
+          href: "#",
+          text: "Thomas Pynchon",
+          icon: true
+        },
+        {
+          href: "/",
+          text: "Log out"
+        }
+      ]
+    },
+    service: {
+      text: serviceName,
+      href: "/"
+    },
+    navigation: {
+      items: [
+        {
+          href: "#",
+          text: "Home",
+          active: activeItem === "Home"
+        },
+        {
+          href: "#",
+          text: "Screening",
+          active: activeItem === "Screening"
+        },
+        {
+          href: "#",
+          text: "Reading",
+          active: activeItem === "Reading"
+        },
+        {
+          href: "00-batches",
+          text: "Batches",
+          active: activeItem === "Batches"
+        },
+        {
+          href: "00-clinics",
+          text: "Manage clinics",
+          active: activeItem === "Manage clinics"
+        }
+      ]
+    }
+  }) }}
+{% endmacro %}

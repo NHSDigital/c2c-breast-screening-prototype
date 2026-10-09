@@ -1,10 +1,8 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "" %}
-
-{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation() }}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
 {% endblock %}
 
 {% block beforeContent %}{% endblock %}
@@ -23,7 +21,7 @@
     </div>
   </div>
 
-  {% from "september-iteration-2/macros/batch-detail.html" import batch_detail %}
+  {% from "mission-1/current-iteration/macros/batch-detail.html" import batch_detail %}
   {{ batch_detail({
     participant_count: data.participants.default.length,
     button_url:"03-select-clinic"

@@ -1,0 +1,166 @@
+{% extends 'layout.html' %}
+
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
+{% endblock %}
+
+
+{% block content %}
+
+{% if data.missionOne and data.missionOne.saved %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% set html %}
+        <p class="nhsuk-notification-banner__heading">Clinic created</p>
+      {% endset %}
+      {{ notificationBanner({
+        html: html,
+        type: "success"
+      }) }}
+    </div>
+  </div>
+{% endif %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <div class="app-card-editable">
+      <h1 class="nhsuk-heading-l">Select clinic</h1>
+      {{ button({
+        text: "Create a new clinic",
+        href: "create-clinic-rev-1-name?returnTo=select-clinic",
+        classes: "nhsuk-button--secondary"
+      }) }}
+    </div>
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <table class="nhsuk-table nhsuk-table--striped">
+      <thead class="nhsuk-table__head">
+        <tr class="nhsuk-table__row">
+          <th scope="col" class="nhsuk-table__header">
+            Clinic
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Location
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Unit
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Timeframe
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Capacity
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            <span class="nhsuk-u-visually-hidden">Action</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+
+        {% if data.missionOne and data.missionOne.saved %}
+          <tr class="nhsuk-table__row">
+            <th scope="row" class="nhsuk-table__header">
+              {{ data.missionOne.clinicName }}
+              <strong class="nhsuk-tag nhsuk-tag--blue">New</strong>
+            </th>
+            <td class="nhsuk-table__cell">
+              Hard coded<br>
+              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">as per mission #1</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              Hard coded<br>
+              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">as per mission #1</span>
+            </td>
+            <td class="nhsuk-table__cell">
+              {% if data.missionOne.clinicDate %}
+                {{ data.missionOne.clinicDate | formatDate }}<br>
+                <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">1 day</span>
+              {% else %}
+                no data
+              {% endif %}
+            </td>
+            <td class="nhsuk-table__cell">
+              {% if data.missionOne.bookableSlotCount is not undefined %}
+                <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: 0%;"></div>
+                <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ data.missionOne.bookableSlotCount }} slots available of {{ data.missionOne.bookableSlotCount }}</span>
+              {% else %}
+                no data
+              {% endif %}
+            </td>
+            <td>
+              <a href="04-choose-participants" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
+                Select this clinic
+              </a>
+            </td>
+          </tr>
+        {% endif %}
+
+        <tr class="nhsuk-table__row">
+          <th scope="row" class="nhsuk-table__header">
+            Chichester - standard slots May 2026<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-standard-20260501</span>
+          </th>
+          <td class="nhsuk-table__cell">
+            Chichester<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">St Richard’s Hospital</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            Alpha van<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-mobile-1</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            31 May 2026<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">1 day</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: 0%;"></div>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">48 slots available of 48</span>
+          </td>
+          <td>
+            <a href="04-choose-participants" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
+              Select this clinic
+            </a>
+          </td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <th scope="row" class="nhsuk-table__header">
+            Worthing - special slots May 2026<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-special-20260501</span>
+          </th>
+          <td class="nhsuk-table__cell">
+            Worthing<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">Worthing Hospital</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            Home base<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-static-1</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            7, 21 May 2026<br>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">2 days</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            <div class="app-simple-progress-bar --generic --thin nhsuk-u-padding-1 nhsuk-u-margin-bottom-1" style="--percentage: 60%;"></div>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">40 slots available of 100</div>
+          </td>
+          <td>
+            <a href="04-choose-participants" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">
+              Select this clinic
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}

@@ -1,10 +1,8 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "Assign slots to participants" %}
-
-{% from "z-september-transactional-journey/_includes/min-primary-navigation.html" import primaryNavigation %}
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation() }}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
 {% endblock %}
 
 {% block beforeContent %}{% endblock %}
@@ -94,7 +92,11 @@
       </details>
           
       <div class="nhsuk-u-reading-width">
-        <p>Participants will be booked in random order.</p>
+        <div class="nhsuk-inset-text">
+          <span class="nhsuk-u-visually-hidden">Information: </span>
+          <p>Booking {{ data.stagedCount }} people into this clinic will leave {{ data.clinicCapacityAvailable - data.stagedCount }} slots available</p>
+          <p>Participants will be booked in random order</p>
+        </div>
       </div>
 
     </div>

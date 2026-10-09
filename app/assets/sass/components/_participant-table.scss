@@ -49,3 +49,12 @@
 
 }
 
+.app-table-column-status {
+  width: 15%;
+}
+.app-table-column-actions {
+  width: 7%;
+}
+.app-table-cell-actions > .nhsuk-button {
+  margin: -4px 0;
+}
