@@ -2,8 +2,6 @@
 
 {% set errorState = "true" if errors else "false" %}
 
-{% set pageName = "Create day clinic" %}
-
 {% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
   {{ primaryNavigation("Manage clinics" if data.missionOne and data.missionOne.returnTo == "clinics" else "Batches", serviceName, bsoName) }}
