@@ -1,7 +1,5 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "Publish clinic" %}
-
 {% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
   {{ primaryNavigation("Manage clinics" if data.missionOne and data.missionOne.returnTo == "clinics" else "Batches", serviceName, bsoName) }}
