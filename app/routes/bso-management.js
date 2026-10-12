@@ -6,8 +6,6 @@ const router = express.Router()
 
 */
 
-require('dotenv').config()
-
 router.get('/bso-objects/bso/bso-internal-details', function (req, res) {
   res.render('bso-objects/bso/bso-internal-details.html', {
     mapsAPI: process.env.MAPS_API
