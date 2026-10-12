@@ -1,0 +1,106 @@
+{% extends 'layout.html' %}
+
+{% set errorState = "true" if errors else "false" %}
+
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Manage clinics" if data.missionOne and data.missionOne.returnTo == "clinics" else "Batches", serviceName, bsoName) }}
+{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-quarter">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          Create clinic session
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">1</span>
+              <span class="app-workflow-side-nav__label">Clinic name</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Scheduled date</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Session times</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">Slot structure</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">5</span>
+              <span class="app-workflow-side-nav__label">Check and confirm</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-three-quarters">
+    <div class="nhsuk-u-reading-width">
+
+      {% if errorState === "true" %}
+        {% set errorList = [] %}
+        {% if errors.clinicName %}
+          {% set errorList = errorList.concat([{ text: errors.clinicName, href: "#clinic-name" }]) %}
+        {% endif %}
+        {% if errors.clinicDate %}
+          {% set errorList = errorList.concat([{ text: errors.clinicDate, href: "#clinic-date-day" }]) %}
+        {% endif %}
+        {{ errorSummary({
+          titleText: "There is a problem",
+          errorList: errorList
+        }) }}
+      {% endif %}
+
+      <form method="post">
+
+        <div class="nhsuk-form-group {% if errors and errors.clinicName %}nhsuk-form-group--error{% endif %}">
+            <h1 class="nhsuk-label-wrapper">
+            <label class="nhsuk-label nhsuk-label--l" for="clinic-name">
+              Clinic name
+            </label>
+          </h1>
+          {% if errors and errors.clinicName %}
+            <span class="nhsuk-error-message">
+              <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.clinicName }}
+            </span>
+          {% endif %}
+          <input class="nhsuk-input nhsuk-u-width-three-quarters {% if errors and errors.clinicName %}nhsuk-input--error{% endif %}" id="clinic-name" name="clinicName" type="text" aria-describedby="naming-hint-text" value="{{ data.missionOne.clinicName }}">
+        </div>
+
+        <button class="nhsuk-button" type="submit">Continue</button>
+
+      </form>
+    </div>
+  </div>
+
+
+
+{% endblock %}

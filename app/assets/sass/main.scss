@@ -20,8 +20,6 @@
   $nhsuk-gutter: 24px,
 
   // Reduce layout spacing points (5–9). Points 0–4 stay at NHS defaults.
-  // Checkbox and radio geometry is fixed in px rather than driven by the spacing scale,
-  // and _compact.scss applies the --small variant to all checkboxes/radios.
   $nhsuk-spacing-points: (
       0: 0,
       1: 4px,
@@ -94,36 +92,16 @@
 @forward "components/participant-table";
 //@forward "components/participant-search";
 @forward "components/progress-bar";
+@forward "components/session-slots";
 @forward "components/template-card";
 @forward "components/template-preview-dialog";
 @forward "components/workflow";
 
 //{% set containerClasses = "nhsuk-width-container-fluid" %}
 // Add your custom CSS/Sass styles below.
-.app-width-extended {
-  width: 1280px;
-}
 
 a {
   @extend .nhsuk-link--no-visited-state;
-}
-
-// Makes a <button> look and behave like the .panel-item links it sits alongside
-.app-link-button {
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  background: none;
-  text-align: left;
-  font: inherit;
-  color: $nhsuk-link-colour;
-  cursor: pointer;
-
-  &:hover {
-    color: nhsuk-shade($nhsuk-link-colour, 20%);
-    text-decoration: underline;
-  }
 }
 
 .app-card-editable {
@@ -230,4 +208,7 @@ a {
 }
 .app-tag--attached {
   margin-right: -1px;
+}
+.app-nowrap {
+  white-space: nowrap;
 }

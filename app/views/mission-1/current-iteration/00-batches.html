@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <div class="app-card-editable">
+      <h1 class="nhsuk-heading-l">Batches</h1>
+      {{ button({
+        text: "Upload a new batch",
+        href: "01-upload",
+        classes: "nhsuk-button--secondary"
+      }) }}
+    </div>
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <table class="nhsuk-table nhsuk-table--striped">
+      <thead class="nhsuk-table__head">
+        <tr class="nhsuk-table__row">
+          <th scope="col" class="nhsuk-table__header">
+            Batch
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            BSO batch ID
+          </th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+        <tr class="nhsuk-table__row">
+          <th scope="row" class="nhsuk-table__header">
+            E2E test 4 batch (3000 participants)
+          </th>
+          <td class="nhsuk-table__cell">
+            E2E-TEST-4-BATCH 
+          </td>
+        </tr>
+        <tr class="nhsuk-table__row">
+          <th scope="row" class="nhsuk-table__header">
+            E2E test 3 batch (1000 participants)
+          </th>
+          <td class="nhsuk-table__cell">
+            E2E-TEST-3-BATCH 
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}
