@@ -1,0 +1,172 @@
+{% extends 'layout.html' %}
+{% set pageName = "" %}
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+
+<h1 class="nhsuk-heading-m">Sketchpad</h1>
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-one-quarter">
+      <div class="nhsuk-form-group">
+        <fieldset class="nhsuk-fieldset">
+          <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--s">
+            <h3 class="nhsuk-fieldset__heading">
+              Slot type
+            </h3>
+          </legend>
+          <div class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes">
+            <div class="nhsuk-checkboxes__item">
+              <input class="nhsuk-checkboxes__input" id="available" name="slot-type" type="checkbox" value="available">
+              <label class="nhsuk-label nhsuk-checkboxes__label" for="available">
+                <strong class="nhsuk-tag nhsuk-tag--green">Available</strong>
+              </label>
+            </div>
+            <div class="nhsuk-checkboxes__item">
+              <input class="nhsuk-checkboxes__input" id="held-rebooking" name="slot-type" type="checkbox" value="held-rebooking">
+              <label class="nhsuk-label nhsuk-checkboxes__label" for="held-rebooking">
+                <span class="nhsuk-tag nhsuk-tag--orange app-tag--attached">Held</span><span class="nhsuk-tag nhsuk-tag--white">rebooking</span>
+              </label>
+            </div>
+            <div class="nhsuk-checkboxes__item">
+              <input class="nhsuk-checkboxes__input" id="held-web-rebooking" name="slot-type" type="checkbox" value="held-web-rebooking">
+              <label class="nhsuk-label nhsuk-checkboxes__label" for="held-web-rebooking">
+                <span class="nhsuk-tag nhsuk-tag--orange app-tag--attached">Held</span><span class="nhsuk-tag nhsuk-tag--white">web rebooking</span>
+              </label>
+            </div>
+            <div class="nhsuk-checkboxes__item">
+              <input class="nhsuk-checkboxes__input" id="held-technical-recall" name="slot-type" type="checkbox" value="held-technical-recall">
+              <label class="nhsuk-label nhsuk-checkboxes__label" for="held-technical-recall">
+                <span class="nhsuk-tag nhsuk-tag--orange app-tag--attached">Held</span><span class="nhsuk-tag nhsuk-tag--white">technical recall</span>
+              </label>
+            </div>
+            <div class="nhsuk-checkboxes__item">
+              <input class="nhsuk-checkboxes__input" id="special-appointment" name="slot-type" type="checkbox" value="special-appointment">
+              <label class="nhsuk-label nhsuk-checkboxes__label" for="special-appointment">
+                <span class="nhsuk-tag nhsuk-tag--yellow app-tag--attached">Special appointment</span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="nhsuk-grid-column-one-half">
+
+      <p><a href="#">Earlier clinic sessions (days)</a></p>
+
+      <div id="slots-container" class="nhsuk-radios nhsuk-radios--small" data-module="nhsuk-radios" data-nhsuk-radios-init="">
+
+        <h3 class="nhsuk-heading-m">
+          <span class="nhsuk-caption-m">Tuesday</span>
+          1 September 2026
+        </h3>
+
+        <div class="slot is-hold">
+          <div class="nhsuk-radios__item">
+            <input class="nhsuk-radios__input" id="slot-0" name="slots[]" type="radio" value="0">
+            <label class="nhsuk-label nhsuk-radios__label" for="slot-0">
+              <span class="slot-time">10:00</span>
+              <span class="slot-end nhsuk-u-secondary-text-colour">to 10:08</span>
+              <span class="slot-tag">
+                <span class="nhsuk-tag nhsuk-tag--orange app-tag--attached">Held</span><span class="nhsuk-tag nhsuk-tag--white">rebooking</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="slot"></div>
+        
+        <div class="slot is-special-appointment">
+          <div class="nhsuk-radios__item">
+            <input class="nhsuk-radios__input" id="slot-2" name="slots[]" type="radio" value="2">
+            <label class="nhsuk-label nhsuk-radios__label" for="slot-2">
+              <span class="slot-time">10:16</span>
+              <span class="slot-end nhsuk-u-secondary-text-colour">to 10:24</span>
+              <span class="slot-tag"><span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="slot is-merged">
+          <div class="nhsuk-radios__item">
+            <input class="nhsuk-radios__input" id="slot-3" name="slots[]" type="radio" value="3">
+            <label class="nhsuk-label nhsuk-radios__label" for="slot-3">
+              <span class="slot-time">10:24</span>
+              <span class="slot-end nhsuk-u-secondary-text-colour">to 10:48</span>
+              <span class="slot-tag">
+                <strong class="nhsuk-tag nhsuk-tag--green app-tag--attached">Available</strong><span class="nhsuk-tag nhsuk-tag--white">3 slots</span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="slot is-merged is-merged-child">
+          <div class="nhsuk-radios__item">
+            <input class="nhsuk-radios__input" id="slot-4" name="slots[]" type="radio" value="4">
+            <label class="nhsuk-label nhsuk-radios__label" for="slot-4">
+              <span class="slot-time">10:32</span>
+              <span class="slot-end nhsuk-u-secondary-text-colour">to 10:40</span>
+              <span class="slot-tag">Merged (1)</span>
+            </label>
+          </div>
+        </div>
+        <div class="slot is-merged is-merged-child is-merged-last-child">
+          <div class="nhsuk-radios__item">
+            <input class="nhsuk-radios__input" id="slot-5" name="slots[]" type="radio" value="5">
+            <label class="nhsuk-label nhsuk-radios__label" for="slot-5">
+              <span class="slot-time">10:40</span>
+              <span class="slot-end nhsuk-u-secondary-text-colour">to 10:48</span>
+              <span class="slot-tag">Merged (1)</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="slot">
+          <div class="nhsuk-radios__item">
+            <input class="nhsuk-radios__input" id="slot-6" name="slots[]" type="radio" value="6">
+            <label class="nhsuk-label nhsuk-radios__label" for="slot-6">
+              <span class="slot-time">10:48</span>
+              <span class="slot-end nhsuk-u-secondary-text-colour">to 10:56</span>
+              <span class="slot-tag">
+                <strong class="nhsuk-tag nhsuk-tag--green">Available</strong>
+              </span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="slot">
+          <div class="nhsuk-radios__item">
+            <input class="nhsuk-radios__input" id="slot-7" name="slots[]" type="radio" value="7">
+            <label class="nhsuk-label nhsuk-radios__label" for="slot-7">
+              <span class="slot-time">10:56</span>
+              <span class="slot-end nhsuk-u-secondary-text-colour">to 11:04</span>
+              <span class="slot-tag">
+                <strong class="nhsuk-tag nhsuk-tag--green">Available</strong>
+              </span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="slot">
+          <div class="nhsuk-radios__item">
+            <input class="nhsuk-radios__input" id="slot-8" name="slots[]" type="radio" value="8">
+            <label class="nhsuk-label nhsuk-radios__label" for="slot-8">
+              <span class="slot-time">11:04</span>
+              <span class="slot-end nhsuk-u-secondary-text-colour">to 11:12</span>
+              <span class="slot-tag">
+                <strong class="nhsuk-tag nhsuk-tag--green">Available</strong>
+              </span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <p><a href="#">Later clinic sessions (days)</a></p>
+
+    </div>
+  </div>
+  
+{% endblock %}

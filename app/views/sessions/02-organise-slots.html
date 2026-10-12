@@ -13,59 +13,6 @@
 
 {% block content %}
 
-<style>
-
-  .slot {
-    background-color: #fff;
-    border: 1px solid #212b32;
-    padding-left: 8px;
-    user-select: none;
-    margin-bottom: 12px;
-  }
-
-  .slot-end { font-size: 16px; margin-right: 1rem; }
-  .slot-tag { font-size: 16px; margin-left: 1rem; }
-  
-  .slot.is-hold {}
-  .slot.is-staff-break {
-    background: transparent;
-    border-style: dashed;
-  }
-  .slot.is-special-appointment {}
-
-  .slot.is-merged {
-    border-bottom: none;
-    margin-bottom: 0;
-  }
-  .slot.is-merged-child  {
-    border-top: 1px dashed #212b32;
-    height: 42px;
-  }
-  .slot.is-merged-child > .nhsuk-checkboxes__item { 
-    display: none;
-  }
-  .slot.is-merged-last-child { 
-    border-bottom: 1px solid #212b32;
-    margin-bottom: 12px;
-  }
-
-  .slot.is-staff-break.is-merged-last-child {
-    border-bottom-style: dashed;
-  }
-
-  .slot.is-merged-child > .slot-time,
-  .slot.is-merged-child > .slot-end {
-    display: none;
-  }
-
-  .slot .nhsuk-checkboxes__label {
-    width: 100%;
-  }
-
-  .panel-item { display: block; cursor: pointer; }
-  .panel-item.disabled { opacity: 0.38; cursor: default; pointer-events: none; }
-</style>
-
 {% set tickSvg %}
   <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
     <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
@@ -448,7 +395,7 @@
         let typeHtml = '';
         if (slotType && !isChild) {
           const typeLabel = slotType === 'hold' ? 'Held' : slotType === 'staff-break' ? 'Staff break' : 'Special appointment';
-          const tagClass = slotType === 'hold' ? 'nhsuk-tag--grey' : slotType === 'staff-break' ? 'nhsuk-tag--grey' : 'nhsuk-tag--yellow';
+          const tagClass = slotType === 'hold' ? 'nhsuk-tag--orange' : slotType === 'staff-break' ? 'nhsuk-tag--grey' : 'nhsuk-tag--yellow';
           typeHtml += `<span class="slot-tag"><span class="nhsuk-tag ${tagClass}">${typeLabel}</span></span>`;
         }
 
