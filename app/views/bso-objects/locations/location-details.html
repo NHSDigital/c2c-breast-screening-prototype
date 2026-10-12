@@ -203,8 +203,6 @@
   </script>
 
   <script>
-    const apiKey = '';
-
     const landmarks = [
       { lat: 50.817976594630125, lng: -0.36331999221959543, type: 'location', name: 'Worthing Hospital' }
     ];
@@ -216,7 +214,10 @@
 
     // Load and display vector tile layer on the map.
     const gl = L.maplibreGL({
-        style: 'https://api.os.uk/maps/vector/v1/vts/resources/styles?srs=3857&key=' + apiKey
+        style: '/os-maps/resources/styles?srs=3857',
+        transformRequest: (url) => ({
+          url: url.replace('https://api.os.uk/maps/vector/v1/vts', location.origin + '/os-maps')
+        })
     }).addTo(map);
 
     map.setView([landmarks[0].lat, landmarks[0].lng], 13);

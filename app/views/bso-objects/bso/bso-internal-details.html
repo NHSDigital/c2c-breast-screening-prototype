@@ -218,8 +218,6 @@
 
   <script>
 
-    const apiKey = '';
-
     landmarks.forEach(({ lat, lng, type, name }) => {
       const icon = landmarkIcons[type] || landmarkIcons.default;
       L.marker([lat, lng], { icon }).bindPopup(name).addTo(map);
@@ -227,7 +225,10 @@
 
     // Load and display vector tile layer on the map.
     const gl = L.maplibreGL({
-        style: 'https://api.os.uk/maps/vector/v1/vts/resources/styles?srs=3857&key=' + apiKey
+        style: '/os-maps/resources/styles?srs=3857',
+        transformRequest: (url) => ({
+          url: url.replace('https://api.os.uk/maps/vector/v1/vts', location.origin + '/os-maps')
+        })
     }).addTo(map);
 
     const geojsonLayer = L.geoJSON(geojsonData, {
