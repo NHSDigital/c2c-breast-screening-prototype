@@ -155,7 +155,7 @@
   }) %}
     <div class="app-map-container" id="app-map" style="aspect-ratio: 4 / 3;"></div>
   {% endcall %}
-
+  
 {% endblock %}
 
 {% block bodyEnd %}
@@ -218,7 +218,7 @@
 
   <script>
 
-    const apiKey = 'lWF9hAvJ3ALTasfGgV8MqmfAWJ2L9fhU';
+    const apiKey = '{{ mapsAPI }}';
 
     landmarks.forEach(({ lat, lng, type, name }) => {
       const icon = landmarkIcons[type] || landmarkIcons.default;

@@ -3,6 +3,13 @@ const express = require('express')
 
 const router = express.Router()
 
+// Isolated September Test (Mission 1) routes
+router.use(require('./routes/mission-1'));
+// Isolated create capacity from zero routes
+router.use(require('./routes/create-capacity-from-zero'));
+// Isolated BSO management routes
+router.use(require('./routes/bso-management'));
+
 const participantMonths = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -819,10 +826,6 @@ router.post('/sessions/02-organise-slots', function (req, res) {
   }
 })
 
-
-// Isolated September Test (Mission 1) routes
-router.use(require('./routes/mission-1'));
-
 router.get(['/participants', '/batches/participants'], function (req, res) {
   const participantsPath = req.path.startsWith('/batches/') ? '/batches/participants' : '/participants'
   const sort = req.query.sort || 'due-soonest'
@@ -927,8 +930,5 @@ router.get(['/participants/:participantId', '/batches/participants/:participantI
     participantsPath
   })
 })
-
-// Isolated create capacity from zero routes
-router.use(require('./routes/create-capacity-from-zero'));
 
 module.exports = router
