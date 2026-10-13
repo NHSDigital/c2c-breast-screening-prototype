@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% set pageName = "Session templates" %}
+{% set errorState = "true" if errors else "false" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -30,7 +31,7 @@
         </h2>
         <ol class="app-workflow-side-nav__list">
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
-            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="00-template-listing">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-template-name">
               <span class="app-workflow-side-nav__number">1</span>
               <span class="app-workflow-side-nav__label">Template name</span>
             </a>
@@ -103,7 +104,7 @@
                     Hour
                   </label>
                   <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.startTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-hour"
-                    name="newSession[startTime][hour]" type="text" inputmode="numeric" value="{{ data.missionOne.startTime.hour }}">
+                    name="newSession[startTime][hour]" type="text" inputmode="numeric" value="{{ data.createSessionTemplate.startTime.hour }}">
                 </div>
               </div>
 
@@ -113,7 +114,7 @@
                     Minute
                   </label>
                   <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.startTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="start-time-minute"
-                    name="newSession[startTime][minute]" type="text" inputmode="numeric" value="{{ data.missionOne.startTime.minute }}">
+                    name="newSession[startTime][minute]" type="text" inputmode="numeric" value="{{ data.createSessionTemplate.startTime.minute }}">
                 </div>
               </div>
             </div>
@@ -141,7 +142,7 @@
                     Hour
                   </label>
                   <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.endTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-hour"
-                    name="newSession[endTime][hour]" type="text" inputmode="numeric" value="{{ data.missionOne.endTime.hour }}">
+                    name="newSession[endTime][hour]" type="text" inputmode="numeric" value="{{ data.createSessionTemplate.endTime.hour }}">
                 </div>
               </div>
               <div class="nhsuk-date-input__item">
@@ -150,7 +151,7 @@
                     Minute
                   </label>
                   <input class="nhsuk-input nhsuk-date-input__input {% if errors and errors.endTime %}nhsuk-input--error{% endif %} nhsuk-input--width-2" id="end-time-minute"
-                    name="newSession[endTime][minute]" type="text" inputmode="numeric" value="{{ data.missionOne.endTime.minute }}">
+                    name="newSession[endTime][minute]" type="text" inputmode="numeric" value="{{ data.createSessionTemplate.endTime.minute }}">
                 </div>
               </div>
             </div>
@@ -168,7 +169,7 @@
           {% endif %}
           <div class="nhsuk-input-wrapper">
             <input class="nhsuk-input nhsuk-input--width-2 {% if errors and errors.duration %}nhsuk-input--error{% endif %}" id="duration" name="newSession[duration]" type="text"
-              spellcheck="false" value="{{ data.missionOne.duration }}" aria-describedby="duration-hint" inputmode="numeric">
+              spellcheck="false" value="{{ data.createSessionTemplate.duration }}" aria-describedby="duration-hint" inputmode="numeric">
             <div class="nhsuk-input-wrapper__suffix" aria-hidden="true">minutes</div>
           </div>
         </div>

@@ -5,10 +5,10 @@ const router = express.Router()
 
 // Isolated September Test (Mission 1) routes
 router.use(require('./routes/mission-1'));
-// Isolated create capacity from zero routes
-router.use(require('./routes/create-capacity-from-zero'));
-// Isolated BSO management routes
+//
 router.use(require('./routes/bso-management'));
+router.use(require('./routes/create-capacity-from-zero'));
+router.use(require('./routes/clinic-sessions'));
 
 const participantMonths = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',

@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% set pageName = "Session templates" %}
+{% set errorState = "true" if errors else "false" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}

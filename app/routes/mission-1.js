@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const { validateSessionTimes } = require('./session-times-handlers')
+const { buildSessionSlots } = require('./slot-structure-handlers')
 
 // Routes and functions specific to Mission 1 prototypes
 /*
@@ -168,56 +170,14 @@ router.post('/mission-1/current-iteration/create-clinic-rev-1-schedule', functio
 
 // validating clinic session times for 1 day clinic creation
 router.post('/mission-1/current-iteration/create-clinic-rev-1-set-timings', function (req, res) {
-  const newSession = req.body.newSession || {}
-  const startTime = newSession.startTime || {}
-  const endTime = newSession.endTime || {}
-
-  const startHourStr = (startTime.hour || '').trim()
-  const startMinuteStr = (startTime.minute || '').trim()
-  const endHourStr = (endTime.hour || '').trim()
-  const endMinuteStr = (endTime.minute || '').trim()
-  const durationStr = (newSession.duration || '').trim()
-
-  const startHour = parseInt(startHourStr, 10)
-  const startMinute = parseInt(startMinuteStr, 10)
-  const endHour = parseInt(endHourStr, 10)
-  const endMinute = parseInt(endMinuteStr, 10)
-  const duration = parseInt(durationStr, 10)
-
-  const validStartHour = isWholeNumber(startHourStr) && startHour >= 0 && startHour <= 23
-  const validStartMinute = isWholeNumber(startMinuteStr) && startMinute >= 0 && startMinute <= 59
-  const validEndHour = isWholeNumber(endHourStr) && endHour >= 0 && endHour <= 23
-  const validEndMinute = isWholeNumber(endMinuteStr) && endMinute >= 0 && endMinute <= 59
-
-  const errors = {}
-
-  if (!validStartHour || !validStartMinute) {
-    errors.startTime = 'Start time must be entered, in 24 hour format'
-  }
-
-  if (!validEndHour || !validEndMinute) {
-    errors.endTime = 'End time must be entered, in 24 hour format'
-  }
-
-  if (!isWholeNumber(durationStr) || duration <= 0) {
-    errors.duration = 'Slot length must be entered, in minutes'
-  }
-
-  if (!errors.startTime && !errors.endTime) {
-    const startTotalMinutes = startHour * 60 + startMinute
-    const endTotalMinutes = endHour * 60 + endMinute
-    if (endTotalMinutes <= startTotalMinutes) {
-      errors.startTime = 'Start time must be earlier than end time'
-      errors.endTime = 'End time must be later than start time'
-    }
-  }
+  const { startTime, endTime, duration, errors } = validateSessionTimes(req.body.newSession)
 
   if (typeof req.session.data.missionOne !== 'object') {
     req.session.data.missionOne = {}
   }
   req.session.data.missionOne.startTime = startTime
   req.session.data.missionOne.endTime = endTime
-  req.session.data.missionOne.duration = durationStr
+  req.session.data.missionOne.duration = duration
 
   if (Object.keys(errors).length > 0) {
     return res.render('mission-1/current-iteration/create-clinic-rev-1-set-timings', {
@@ -227,53 +187,6 @@ router.post('/mission-1/current-iteration/create-clinic-rev-1-set-timings', func
 
   res.redirect('/mission-1/current-iteration/create-clinic-rev-1-slot-structure')
 })
-
-// Formats a total minutes-from-midnight value as e.g. "10:08"
-const formatClock = (totalMinutes) => {
-  const hour = Math.floor(totalMinutes / 60) % 24
-  const minute = totalMinutes % 60
-  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`
-}
-
-// Builds the slot checkbox data for a clinic session, flagging any slots marked as staff breaks
-const buildSessionSlots = (missionOne) => {
-  const startTime = missionOne.startTime || {}
-  const endTime = missionOne.endTime || {}
-
-  const startMinutes = (parseInt(startTime.hour, 10) || 0) * 60 + (parseInt(startTime.minute, 10) || 0)
-  const endMinutes = (parseInt(endTime.hour, 10) || 0) * 60 + (parseInt(endTime.minute, 10) || 0)
-  const duration = parseInt(missionOne.duration, 10) || 0
-  const staffBreakSlots = (missionOne.staffBreakSlots || []).map(Number).filter(Number.isInteger)
-
-  const slots = []
-
-  if (duration > 0 && endMinutes > startMinutes) {
-    const slotCount = Math.floor((endMinutes - startMinutes) / duration)
-
-    for (let i = 0; i < slotCount; i++) {
-      const slotStartMinutes = startMinutes + (i * duration)
-      slots.push({
-        index: i,
-        startLabel: formatClock(slotStartMinutes),
-        endLabel: formatClock(slotStartMinutes + duration),
-        isStaffBreak: staffBreakSlots.includes(i)
-      })
-    }
-  }
-
-  const bookableSlotCount = slots.filter((slot) => !slot.isStaffBreak).length
-  const staffBreakSlotCount = slots.filter((slot) => slot.isStaffBreak).length
-  missionOne.bookableSlotCount = bookableSlotCount
-  missionOne.staffBreakSlotCount = staffBreakSlotCount
-
-  return {
-    slots,
-    bookableSlotCount,
-    staffBreakSlotCount,
-    sessionStartLabel: formatClock(startMinutes),
-    sessionEndLabel: formatClock(endMinutes)
-  }
-}
 
 // computing the real slot structure from the submitted session times for 1 day clinic creation
 router.get('/mission-1/current-iteration/create-clinic-rev-1-slot-structure', function (req, res) {

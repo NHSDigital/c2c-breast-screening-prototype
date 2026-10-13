@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% set pageName = "Session templates" %}
+{% set errorState = "true" if errors else "false" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -61,7 +62,18 @@
   <div class="nhsuk-grid-column-three-quarters">
     <div class="nhsuk-u-reading-width">
 
-      <form action="templating-04-check-answers" method="post">
+      {% if errorState === "true" %}
+        {% set errorList = [] %}
+        {% if errors.sessionTemplateName %}
+          {% set errorList = errorList.concat([{ text: errors.sessionTemplateName, href: "#session-template-name" }]) %}
+        {% endif %}
+        {{ errorSummary({
+          titleText: "There is a problem",
+          errorList: errorList
+        }) }}
+      {% endif %}
+
+      <form method="post">
 
         <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
             <h1 class="nhsuk-label-wrapper">
@@ -71,20 +83,20 @@
           </h1>
           {% if errorState === "true" %}
             <span class="nhsuk-error-message">
-              <span class="nhsuk-u-visually-hidden">Error:</span> Template must be given a name
+              <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.sessionTemplateName }}
             </span>
           {% endif %}
-          <input class="nhsuk-input {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="session-template-name" name="sessionTemplateName" type="text" aria-describedby="naming-hint-text">
+          <input class="nhsuk-input nhsuk-u-width-three-quarters {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="session-template-name" name="sessionTemplateName" type="text" value="{{ data.createSessionTemplate.sessionTemplateName }}">
         </div>
 
         <div class="nhsuk-form-group">
           <label class="nhsuk-label nhsuk-label--s" for="session-template-description">
-            Description (optional)
+            Note (optional)
           </label>
           <div class="nhsuk-hint" id="description-hint-text">
-            Put in a description so you can remember stuff
+            Put in a short note so you can remember stuff
           </div>
-          <textarea class="nhsuk-textarea" id="session-template-description" name="sessionTemplateDescription" rows="5" aria-describedby="description-hint-text"></textarea>
+          <input class="nhsuk-input nhsuk-u-width-three-quarters" id="session-template-description" name="sessionTemplateNote" type="text" aria-describedby="description-hint-text" value="{{ data.createSessionTemplate.sessionTemplateNote }}">
         </div>
 
         <button class="nhsuk-button" type="submit">Continue</button>
