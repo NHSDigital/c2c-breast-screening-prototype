@@ -30,7 +30,7 @@
 {% set secondaryNavItems = [] %}
 
 {% for item in [
-  { href: '/clinics/', label: 'Active clinics' },
+  { href: '/create-capacity-from-zero/', label: 'Active clinics' },
   { href: '#', label: 'Archived clinics' },
   { href: '/sessions/00-template-listing', label: 'Manage session templates', selected: 'true' }
 ] %}
@@ -54,7 +54,7 @@
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-full">
 
-    {% for template in data.sessionTemplates %}
+    {% for template in data.sessionTemplates | reverse %}
     <div class="nhsuk-card nhsuk-u-padding-4">
       <div class="app-card-editable">
         <h2 class="nhsuk-heading-m">
@@ -62,7 +62,7 @@
           {% if template.note %}
           <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal nhsuk-u-secondary-text-colour">{{ template.note }}</span>
           {% endif %}
-          {% if templateCreated %}<span class="nhsuk-tag nhsuk-tag--blue">New</span>{% endif %}
+          {% if templateCreated and loop.first %}<span class="nhsuk-tag nhsuk-tag--blue">New</span>{% endif %}
         </h2>
         <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
           Edit this template
