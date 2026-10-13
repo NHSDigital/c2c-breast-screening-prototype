@@ -19,7 +19,7 @@
 {% endset %}
 
 <div class="nhsuk-grid-row">
-  <div class="nhsuk-grid-column-one-quarter">
+  <div class="nhsuk-grid-column-one-fifth">
 
     <div class="app-workflow-side-nav-wrapper">
       <nav class="app-workflow-side-nav">
@@ -31,13 +31,13 @@
         </h2>
         <ol class="app-workflow-side-nav__list">
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
-            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="00-template-listing">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-template-name">
               <span class="app-workflow-side-nav__number">1</span>
               <span class="app-workflow-side-nav__label">Template name</span>
             </a>
           </li>
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
-            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-template-name">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="02-session-times">
               <span class="app-workflow-side-nav__number">2</span>
               <span class="app-workflow-side-nav__label">Session times</span>
             </a>
@@ -60,7 +60,7 @@
 
   </div>
 
-  <div class="nhsuk-grid-column-three-quarters">
+  <div class="nhsuk-grid-column-four-fifths">
     <form method="post">
 
       <div class="nhsuk-u-reading-width">
@@ -92,11 +92,18 @@
                 <label class="nhsuk-label nhsuk-checkboxes__label" for="computed-slot-{{ slot.index }}">
                   <span class="slot-time">{{ slot.startLabel }}</span>
                   <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
-                  {% if slot.isStaffBreak %}
                   <span class="slot-tag">
-                    <span class="nhsuk-tag nhsuk-tag--grey">Staff break</span>
+                    {% if slot.isStaffBreak %}
+                      <span class="nhsuk-tag nhsuk-tag--grey">Staff break</span>
+                    {% elseif slot.isSpecialAppointment %}
+                      <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
+                    {% elseif slot.isHold %}
+                      <span class="nhsuk-tag nhsuk-tag--orange">Held</span><span class="nhsuk-tag nhsuk-tag--white">{{ slot.holdReason }}</span>
+                    {% endif %}
+                    {% if slot.isCombined %}
+                      <span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>
+                    {% endif %}
                   </span>
-                  {% endif %}
                 </label>
               </div>
             </div>
@@ -104,19 +111,56 @@
 
           </div>
         </div>
-        <div class="nhsuk-grid-column-one-quarter" style="position: sticky; top: 0;">
-          <div class="side-panel" id="side-panel">
-            <h3 class="nhsuk-heading-s">Set selected slots as:</h3>
-            <button class="nhsuk-link nhsuk-u-font-size-19" formaction="mark-staff-break">Staff break</button>
-            <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
-            <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="clear-slot-type">Clear slot type</button>
+        <div class="nhsuk-grid-column-one-third app-side-panel">
+
+          <div class="nhsuk-card nhsuk-card--feature app-card--feature-grey nhsuk-u-margin-top-0">
+            <div class="nhsuk-card__content">
+              <h3 class="nhsuk-card__heading nhsuk-u-font-size-22">
+                Tag slots
+              </h3>
+              <h4 class="nhsuk-body-m nhsuk-u-font-weight-bold nhsuk-u-margin-bottom-2">Hold as:</h4>
+              <ul class="nhsuk-list">
+                <li>
+                  <button class="nhsuk-link" formaction="mark-hold-rebooking">Rebooking capacity</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-hold-web-rebooking">Web rebooking</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-special-appointment">Special appointment</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-hold-technical-recall">Technical recall</button>
+                </li>
+              </ul>
+              <h4 class="nhsuk-body-m nhsuk-u-font-weight-bold nhsuk-u-margin-bottom-2">Make non-bookable:</h4>
+              <ul class="nhsuk-list">
+                <li>
+                  <button class="nhsuk-link" formaction="mark-staff-break">Staff break</button>
+                </li>
+              </ul>
+              <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+              <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="clear-slot-type">Remove tags from selected</button>   
+            </div>
           </div>
+          
+          <div class="nhsuk-card nhsuk-card--feature app-card--feature-grey">
+            <div class="nhsuk-card__content">
+              <h3 class="nhsuk-card__heading nhsuk-u-font-size-22">
+                Combine slots
+              </h3>
+              <button class="nhsuk-link nhsuk-u-font-size-19" formaction="combine-slots">Combine selected</button>
+              <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+              <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="divide-slots">Divide selected</button>   
+            </div>
+          </div>
+
           <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
           <p>
             <span id="available-slots">{{ bookableSlotCount }}</span> bookable slots
           </p>
           <p>
-            <button class="nhsuk-button" formaction="create-clinic-rev-1-publish-check">Continue</button>
+            <button class="nhsuk-button" type="submit">Continue</button>
           </p>
         </div>
       </div>

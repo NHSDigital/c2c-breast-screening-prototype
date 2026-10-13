@@ -1,7 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const { validateSessionTimes } = require('./session-times-handlers')
-const { buildSessionSlots } = require('./slot-structure-handlers')
+const {
+  buildSessionSlots,
+  staffBreakHandler,
+  holdHandler,
+  specialAppointmentHandler,
+  combineSlotsHandler,
+  divideSlotsHandler
+} = require('./slot-structure-handlers')
 /*
 
 /app/views/sessions/
@@ -61,5 +68,62 @@ router.get('/sessions/03-slot-structure', function (req, res) {
 
   res.render('sessions/03-slot-structure', buildSessionSlots(req.session.data.createSessionTemplate))
 })
+
+router.post('/sessions/03-slot-structure', function (req, res) {
+  if (!req.session.data.createSessionTemplate) {
+    req.session.data.createSessionTemplate = {}
+  }
+
+  // Refreshes the stored slot counts for the check page
+  buildSessionSlots(req.session.data.createSessionTemplate)
+
+  res.redirect('/sessions/04-check-template')
+})
+
+router.post('/sessions/save-template', function (req, res) {
+  const template = req.session.data.createSessionTemplate || {}
+  const { bookableSlotCount, staffBreakSlotCount, sessionStartLabel, sessionEndLabel } = buildSessionSlots(template)
+  const standard = (template.bookableBreakdown || []).find((item) => item.label === 'Standard')
+  const openSlotCount = standard ? standard.count : 0
+
+  if (!Array.isArray(req.session.data.sessionTemplates)) {
+    req.session.data.sessionTemplates = []
+  }
+
+  req.session.data.sessionTemplates.push({
+    name: template.sessionTemplateName,
+    note: template.sessionTemplateNote,
+    sessionStartLabel,
+    sessionEndLabel,
+    duration: template.duration,
+    totalSlotCount: bookableSlotCount + staffBreakSlotCount,
+    openSlotCount,
+    heldSlotCount: bookableSlotCount - openSlotCount,
+    unavailableSlotCount: staffBreakSlotCount
+  })
+
+  req.session.data.createSessionTemplate = {}
+  req.session.data.sessionTemplateCreated = true
+
+  res.redirect('/sessions/00-template-listing')
+})
+
+// Shows the success banner once, straight after a template is saved
+router.get('/sessions/00-template-listing', function (req, res) {
+  const templateCreated = Boolean(req.session.data.sessionTemplateCreated)
+  delete req.session.data.sessionTemplateCreated
+
+  res.render('sessions/00-template-listing', { templateCreated })
+})
+
+const sessionsSlotStructure = { dataKey: 'createSessionTemplate', view: 'sessions/03-slot-structure' }
+router.post('/sessions/mark-staff-break', staffBreakHandler({ action: 'mark', ...sessionsSlotStructure }))
+router.post('/sessions/clear-slot-type', staffBreakHandler({ action: 'clear', ...sessionsSlotStructure }))
+router.post('/sessions/mark-hold-rebooking', holdHandler({ reason: 'rebooking', ...sessionsSlotStructure }))
+router.post('/sessions/mark-hold-web-rebooking', holdHandler({ reason: 'web rebooking', ...sessionsSlotStructure }))
+router.post('/sessions/mark-hold-technical-recall', holdHandler({ reason: 'technical recall', ...sessionsSlotStructure }))
+router.post('/sessions/mark-special-appointment', specialAppointmentHandler(sessionsSlotStructure))
+router.post('/sessions/combine-slots', combineSlotsHandler(sessionsSlotStructure))
+router.post('/sessions/divide-slots', divideSlotsHandler(sessionsSlotStructure))
 
 module.exports = router
