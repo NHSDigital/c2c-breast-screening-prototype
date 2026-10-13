@@ -67,6 +67,7 @@
     <form method="post">
 
       <div class="nhsuk-u-reading-width">
+        <div id="slot-errors">
         {% if errorState === "true" %}
           {% set errorList = [] %}
           {% if errors.slots %}
@@ -77,6 +78,7 @@
             errorList: errorList
           }) }}
         {% endif %}
+        </div>
         <h1 class="nhsuk-heading-l">Slot structure</h1>
         <h2 class="nhsuk-heading-m">
           <span class="nhsuk-caption-m">Session time</span>
@@ -115,7 +117,7 @@
             <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="clear-slot-type">Clear slot type</button>
           </div>
           <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
-          <p>
+          <p aria-live="polite">
             <span id="available-slots">{{ bookableSlotCount }}</span> bookable slots
           </p>
           <p>
@@ -128,4 +130,60 @@
   </div>
 </div>
 
+{% endblock %}
+
+{% block pageScripts %}
+<script>
+  // Submits slot actions in the background and swaps in the server-rendered result; falls back to a normal submit on failure
+  (function () {
+    var form = document.querySelector('#slots-container').closest('form')
+    var enhancedActions = ['mark-staff-break', 'clear-slot-type']
+    var bypass = false
+
+    var swap = function (doc, id) {
+      var current = document.getElementById(id)
+      var updated = doc.getElementById(id)
+      if (current && updated) {
+        current.innerHTML = updated.innerHTML
+      }
+    }
+
+    form.addEventListener('submit', function (event) {
+      var submitter = event.submitter
+      var action = submitter && submitter.getAttribute('formaction')
+      if (bypass || enhancedActions.indexOf(action) === -1) {
+        return
+      }
+      event.preventDefault()
+
+      fetch(submitter.formAction, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(form)),
+        credentials: 'same-origin'
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error('Request failed: ' + response.status)
+          }
+          return response.text()
+        })
+        .then(function (html) {
+          var doc = new DOMParser().parseFromString(html, 'text/html')
+          swap(doc, 'slots-container')
+          swap(doc, 'available-slots')
+          swap(doc, 'slot-errors')
+
+          var errorSummary = document.querySelector('#slot-errors .nhsuk-error-summary')
+          if (errorSummary) {
+            errorSummary.setAttribute('tabindex', '-1')
+            errorSummary.focus()
+          }
+        })
+        .catch(function () {
+          bypass = true
+          form.requestSubmit(submitter)
+        })
+    })
+  })()
+</script>
 {% endblock %}
