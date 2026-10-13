@@ -11,6 +11,22 @@
 
 {% block content %}
 
+{% if templateCreated %}
+<div class="nhsuk-notification-banner nhsuk-notification-banner--success" data-module="nhsuk-notification-banner" role="alert" aria-labelledby="nhsuk-notification-banner-title">
+  <div class="nhsuk-notification-banner__header">
+    <h2 class="nhsuk-notification-banner__title" id="nhsuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="nhsuk-notification-banner__content">
+    <h3 class="nhsuk-notification-banner__heading">
+      Session template created
+    </h3>
+  </div>
+</div>
+{% endif %}
+
+
 {% set secondaryNavItems = [] %}
 
 {% for item in [
@@ -38,6 +54,86 @@
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-full">
 
+    {% for template in data.sessionTemplates %}
+    <div class="nhsuk-card nhsuk-u-padding-4">
+      <div class="app-card-editable">
+        <h2 class="nhsuk-heading-m">
+          {{ template.name }}
+          {% if template.note %}
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal nhsuk-u-secondary-text-colour">{{ template.note }}</span>
+          {% endif %}
+          {% if templateCreated %}<span class="nhsuk-tag nhsuk-tag--blue">New</span>{% endif %}
+        </h2>
+        <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+          Edit this template
+        </button>
+      </div>
+      <div class="app-session-template-card">
+        <div class="app-session-template-preview-image">
+          <img src="/assets/images/placeholder-session-template.png" alt="">
+          <button class="nhsuk-link nhsuk-u-font-size-19" popovertarget="template-preview-standard">Full preview</button>
+        </div>
+        <div>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Session times
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.sessionStartLabel }} to {{ template.sessionEndLabel }}
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Slot length
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.duration }} minutes
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Total slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.totalSlotCount }}
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <h3 class="nhsuk-u-visually-hidden">Slot breakdown</h3>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Standard slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.openSlotCount if template.openSlotCount else 0 }}
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Held
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.heldSlotCount if template.heldSlotCount else 0 }}
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Unavailable to book
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.unavailableSlotCount if template.unavailableSlotCount else 0 }}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
     <div class="nhsuk-card nhsuk-u-padding-4">
       <div class="app-card-editable">
         <h2 class="nhsuk-heading-m">
@@ -57,14 +153,6 @@
           <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
             <div class="nhsuk-summary-list__row">
               <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Total capacity
-              </dt>
-              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
-                42 slots
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
                 Session times
               </dt>
               <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
@@ -79,6 +167,14 @@
                 10 minutes
               </dd>
             </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Total slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                42
+              </dd>
+            </div>
           </dl>
         </div>
         <div>
@@ -86,18 +182,18 @@
           <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
             <div class="nhsuk-summary-list__row">
               <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Open slots
+                Standard slots
               </dt>
               <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
-                32 total
+                32
               </dd>
             </div>
             <div class="nhsuk-summary-list__row">
               <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Held slots
+                Held
               </dt>
               <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
-                4 total
+                4
               </dd>
             </div>
             <div class="nhsuk-summary-list__row">
@@ -105,7 +201,7 @@
                 Unavailable to book
               </dt>
               <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
-                6 total
+                6
               </dd>
             </div>
           </dl>
@@ -132,14 +228,6 @@
           <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
             <div class="nhsuk-summary-list__row">
               <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Total capacity
-              </dt>
-              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
-                42 slots
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
                 Session times
               </dt>
               <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
@@ -154,6 +242,14 @@
                 10 minutes
               </dd>
             </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Total slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                42
+              </dd>
+            </div>
           </dl>
         </div>
         <div>
@@ -161,7 +257,7 @@
           <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
             <div class="nhsuk-summary-list__row">
               <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Open slots
+                Standard slots
               </dt>
               <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
                 0
@@ -169,10 +265,10 @@
             </div>
             <div class="nhsuk-summary-list__row">
               <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Held slots
+                Held
               </dt>
               <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
-                36 total
+                36
               </dd>
             </div>
             <div class="nhsuk-summary-list__row">
@@ -180,7 +276,7 @@
                 Unavailable to book
               </dt>
               <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
-                6 total
+                6
               </dd>
             </div>
           </dl>

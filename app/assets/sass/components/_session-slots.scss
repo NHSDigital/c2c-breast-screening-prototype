@@ -1,5 +1,10 @@
 @use "nhsuk-frontend/dist/nhsuk/core" as *;
 
+.app-side-panel {
+  position: sticky;
+  top: 1em;
+}
+
 .slot {
   background-color: nhsuk-colour("white");
   border: 1px solid $nhsuk-input-border-colour;

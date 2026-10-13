@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { validateSessionTimes } = require('./session-times-handlers')
-const { buildSessionSlots } = require('./slot-structure-handlers')
+const { buildSessionSlots, staffBreakHandler } = require('./slot-structure-handlers')
 
 // Routes and functions specific to Mission 1 prototypes
 /*
@@ -195,50 +195,9 @@ router.get('/mission-1/current-iteration/create-clinic-rev-1-slot-structure', fu
   res.render('mission-1/current-iteration/create-clinic-rev-1-slot-structure', buildSessionSlots(missionOne))
 })
 
-// marking the selected slots as staff breaks for 1 day clinic creation
-router.post('/mission-1/current-iteration/mark-staff-break', function (req, res) {
-  const missionOne = req.session.data.missionOne || {}
-  // nhsuk-frontend's checkboxes component submits an "_unchecked" sentinel for every untoggled box, so filter down to real indices
-  const selectedSlots = [].concat(req.body.computedSlots || []).map(Number).filter(Number.isInteger)
-
-  const errors = {}
-  if (selectedSlots.length === 0) {
-    errors.slots = 'Select at least one slot'
-  }
-
-  if (Object.keys(errors).length > 0) {
-    return res.render('mission-1/current-iteration/create-clinic-rev-1-slot-structure', Object.assign({ errors }, buildSessionSlots(missionOne)))
-  }
-
-  const staffBreakSlots = new Set((missionOne.staffBreakSlots || []).map(Number).filter(Number.isInteger))
-  selectedSlots.forEach((index) => staffBreakSlots.add(index))
-  missionOne.staffBreakSlots = Array.from(staffBreakSlots)
-  req.session.data.missionOne = missionOne
-
-  res.redirect('/mission-1/current-iteration/create-clinic-rev-1-slot-structure')
-})
-
-// clearing staff break status from the selected slots for 1 day clinic creation
-router.post('/mission-1/current-iteration/clear-slot-type', function (req, res) {
-  const missionOne = req.session.data.missionOne || {}
-  // nhsuk-frontend's checkboxes component submits an "_unchecked" sentinel for every untoggled box, so filter down to real indices
-  const selectedSlots = [].concat(req.body.computedSlots || []).map(Number).filter(Number.isInteger)
-
-  const errors = {}
-  if (selectedSlots.length === 0) {
-    errors.slots = 'Select at least one slot'
-  }
-
-  if (Object.keys(errors).length > 0) {
-    return res.render('mission-1/current-iteration/create-clinic-rev-1-slot-structure', Object.assign({ errors }, buildSessionSlots(missionOne)))
-  }
-
-  const selectedSet = new Set(selectedSlots)
-  missionOne.staffBreakSlots = (missionOne.staffBreakSlots || []).map(Number).filter(Number.isInteger).filter((index) => !selectedSet.has(index))
-  req.session.data.missionOne = missionOne
-
-  res.redirect('/mission-1/current-iteration/create-clinic-rev-1-slot-structure')
-})
+const missionOneSlotStructure = { dataKey: 'missionOne', view: 'mission-1/current-iteration/create-clinic-rev-1-slot-structure' }
+router.post('/mission-1/current-iteration/mark-staff-break', staffBreakHandler({ action: 'mark', ...missionOneSlotStructure }))
+router.post('/mission-1/current-iteration/clear-slot-type', staffBreakHandler({ action: 'clear', ...missionOneSlotStructure }))
 
 // refreshing slot counts before the check and confirm step for 1 day clinic creation
 router.post('/mission-1/current-iteration/create-clinic-rev-1-publish-check', function (req, res) {
