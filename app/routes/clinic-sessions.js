@@ -3,7 +3,8 @@ const router = express.Router()
 const { validateSessionTimes } = require('./session-times-handlers')
 const {
   buildSessionSlots,
-  staffBreakHandler,
+  clearTagsHandler,
+  nonBookableHandler,
   holdHandler,
   specialAppointmentHandler,
   combineSlotsHandler,
@@ -82,7 +83,7 @@ router.post('/sessions/03-slot-structure', function (req, res) {
 
 router.post('/sessions/save-template', function (req, res) {
   const template = req.session.data.createSessionTemplate || {}
-  const { bookableSlotCount, staffBreakSlotCount, sessionStartLabel, sessionEndLabel } = buildSessionSlots(template)
+  const { bookableSlotCount, nonBookableSlotCount, sessionStartLabel, sessionEndLabel } = buildSessionSlots(template)
   const standard = (template.bookableBreakdown || []).find((item) => item.label === 'Standard')
   const openSlotCount = standard ? standard.count : 0
 
@@ -96,10 +97,10 @@ router.post('/sessions/save-template', function (req, res) {
     sessionStartLabel,
     sessionEndLabel,
     duration: template.duration,
-    totalSlotCount: bookableSlotCount + staffBreakSlotCount,
+    totalSlotCount: bookableSlotCount + nonBookableSlotCount,
     openSlotCount,
     heldSlotCount: bookableSlotCount - openSlotCount,
-    unavailableSlotCount: staffBreakSlotCount
+    unavailableSlotCount: nonBookableSlotCount
   })
 
   req.session.data.createSessionTemplate = {}
@@ -117,12 +118,14 @@ router.get('/sessions/00-template-listing', function (req, res) {
 })
 
 const sessionsSlotStructure = { dataKey: 'createSessionTemplate', view: 'sessions/03-slot-structure' }
-router.post('/sessions/mark-staff-break', staffBreakHandler({ action: 'mark', ...sessionsSlotStructure }))
-router.post('/sessions/clear-slot-type', staffBreakHandler({ action: 'clear', ...sessionsSlotStructure }))
+router.post('/sessions/mark-staff-break', nonBookableHandler({ reason: 'staff break', ...sessionsSlotStructure }))
+router.post('/sessions/clear-slot-type', clearTagsHandler(sessionsSlotStructure))
 router.post('/sessions/mark-hold-rebooking', holdHandler({ reason: 'rebooking', ...sessionsSlotStructure }))
 router.post('/sessions/mark-hold-web-rebooking', holdHandler({ reason: 'web rebooking', ...sessionsSlotStructure }))
 router.post('/sessions/mark-hold-technical-recall', holdHandler({ reason: 'technical recall', ...sessionsSlotStructure }))
+router.post('/sessions/mark-hold-generic', holdHandler(sessionsSlotStructure))
 router.post('/sessions/mark-special-appointment', specialAppointmentHandler(sessionsSlotStructure))
+router.post('/sessions/mark-non-bookable-generic', nonBookableHandler(sessionsSlotStructure))
 router.post('/sessions/combine-slots', combineSlotsHandler(sessionsSlotStructure))
 router.post('/sessions/divide-slots', divideSlotsHandler(sessionsSlotStructure))
 

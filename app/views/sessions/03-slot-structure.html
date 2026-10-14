@@ -88,19 +88,19 @@
           <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes">
 
             {% for slot in slots %}
-            <div class="slot{% if slot.isStaffBreak %} is-staff-break{% endif %}">
+            <div class="slot{% if slot.isNonBookable %} is-staff-break{% endif %}">
               <div class="nhsuk-checkboxes__item">
                 <input class="nhsuk-checkboxes__input" id="computed-slot-{{ slot.index }}" name="computedSlots[]" type="checkbox" value="{{ slot.index }}">
                 <label class="nhsuk-label nhsuk-checkboxes__label" for="computed-slot-{{ slot.index }}">
                   <span class="slot-time">{{ slot.startLabel }}</span>
                   <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
                   <span class="slot-tag">
-                    {% if slot.isStaffBreak %}
-                      <span class="nhsuk-tag nhsuk-tag--grey">Staff break</span>
+                    {% if slot.isNonBookable %}
+                      <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.nonBookableReason }}</span>{% endif %}
                     {% elseif slot.isSpecialAppointment %}
                       <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
                     {% elseif slot.isHold %}
-                      <span class="nhsuk-tag nhsuk-tag--orange">Held</span><span class="nhsuk-tag nhsuk-tag--white">{{ slot.holdReason }}</span>
+                      <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.holdReason }}</span>{% endif %}
                     {% endif %}
                     {% if slot.isCombined %}
                       <span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>
@@ -120,7 +120,7 @@
               <h3 class="nhsuk-card__heading nhsuk-u-font-size-22">
                 Tag slots
               </h3>
-              <h4 class="nhsuk-body-m nhsuk-u-font-weight-bold nhsuk-u-margin-bottom-2">Hold as:</h4>
+              <h4 class="nhsuk-body-m nhsuk-u-font-weight-bold nhsuk-u-margin-bottom-2">Hold:</h4>
               <ul class="nhsuk-list">
                 <li>
                   <button class="nhsuk-link" formaction="mark-hold-rebooking">Rebooking capacity</button>
@@ -129,16 +129,22 @@
                   <button class="nhsuk-link" formaction="mark-hold-web-rebooking">Web rebooking</button>
                 </li>
                 <li>
+                  <button class="nhsuk-link" formaction="mark-hold-technical-recall">Technical recall</button>
+                </li>
+                <li>
                   <button class="nhsuk-link" formaction="mark-special-appointment">Special appointment</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-hold-technical-recall">Technical recall</button>
+                  <button class="nhsuk-link" formaction="mark-hold-generic">Generic</button>
                 </li>
               </ul>
               <h4 class="nhsuk-body-m nhsuk-u-font-weight-bold nhsuk-u-margin-bottom-2">Make non-bookable:</h4>
               <ul class="nhsuk-list">
                 <li>
                   <button class="nhsuk-link" formaction="mark-staff-break">Staff break</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-non-bookable-generic">Generic</button>
                 </li>
               </ul>
               <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
@@ -179,10 +185,12 @@
     var form = document.querySelector('#slots-container').closest('form')
     var enhancedActions = [
       'mark-staff-break',
+      'mark-non-bookable-generic',
       'clear-slot-type',
       'mark-hold-rebooking',
       'mark-hold-web-rebooking',
       'mark-hold-technical-recall',
+      'mark-hold-generic',
       'mark-special-appointment',
       'combine-slots',
       'divide-slots'

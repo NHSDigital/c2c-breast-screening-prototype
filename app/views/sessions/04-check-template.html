@@ -98,7 +98,7 @@
                 {% endfor %}
               </ul>
             {% endif %}
-            {{ data.createSessionTemplate.staffBreakSlotCount }} non-bookable slots
+            {{ data.createSessionTemplate.nonBookableSlotCount }} non-bookable slots
             {% if data.createSessionTemplate.nonBookableBreakdown | length %}
               <ul class="nhsuk-list nhsuk-list--bullet nhsuk-u-margin-bottom-0">
                 {% for item in data.createSessionTemplate.nonBookableBreakdown %}

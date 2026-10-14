@@ -91,15 +91,15 @@
           <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes">
 
             {% for slot in slots %}
-            <div class="slot{% if slot.isStaffBreak %} is-staff-break{% endif %}">
+            <div class="slot{% if slot.isNonBookable %} is-staff-break{% endif %}">
               <div class="nhsuk-checkboxes__item">
                 <input class="nhsuk-checkboxes__input" id="computed-slot-{{ slot.index }}" name="computedSlots[]" type="checkbox" value="{{ slot.index }}">
                 <label class="nhsuk-label nhsuk-checkboxes__label" for="computed-slot-{{ slot.index }}">
                   <span class="slot-time">{{ slot.startLabel }}</span>
                   <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
-                  {% if slot.isStaffBreak %}
+                  {% if slot.isNonBookable %}
                   <span class="slot-tag">
-                    <span class="nhsuk-tag nhsuk-tag--grey">Staff break</span>
+                    <span class="nhsuk-tag nhsuk-tag--grey">{{ slot.nonBookableReason | capitalize if slot.nonBookableReason else "Non-bookable" }}</span>
                   </span>
                   {% endif %}
                 </label>

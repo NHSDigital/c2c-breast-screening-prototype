@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { validateSessionTimes } = require('./session-times-handlers')
-const { buildSessionSlots, staffBreakHandler } = require('./slot-structure-handlers')
+const { buildSessionSlots, nonBookableHandler, clearTagsHandler } = require('./slot-structure-handlers')
 
 // Routes and functions specific to Mission 1 prototypes
 /*
@@ -196,8 +196,8 @@ router.get('/mission-1/current-iteration/create-clinic-rev-1-slot-structure', fu
 })
 
 const missionOneSlotStructure = { dataKey: 'missionOne', view: 'mission-1/current-iteration/create-clinic-rev-1-slot-structure' }
-router.post('/mission-1/current-iteration/mark-staff-break', staffBreakHandler({ action: 'mark', ...missionOneSlotStructure }))
-router.post('/mission-1/current-iteration/clear-slot-type', staffBreakHandler({ action: 'clear', ...missionOneSlotStructure }))
+router.post('/mission-1/current-iteration/mark-staff-break', nonBookableHandler({ reason: 'staff break', ...missionOneSlotStructure }))
+router.post('/mission-1/current-iteration/clear-slot-type', clearTagsHandler(missionOneSlotStructure))
 
 // refreshing slot counts before the check and confirm step for 1 day clinic creation
 router.post('/mission-1/current-iteration/create-clinic-rev-1-publish-check', function (req, res) {
