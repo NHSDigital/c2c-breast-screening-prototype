@@ -10,6 +10,7 @@ pids
 *.pid
 *.seed
 *.pid.lock
+app/assets/images/session-templates/*.svg
 
 # node-waf configuration
 .lock-wscript
