@@ -5,7 +5,12 @@ const formatClock = (totalMinutes) => {
   return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`
 }
 
-// Builds the slot checkbox data for a session, flagging any slots marked as staff breaks
+// Reason-tagged slots are stored as { [index]: reason }, with `true` for no reason; ignores data saved in older shapes
+const asTagMap = (value) => (value && typeof value === 'object' && !Array.isArray(value)) ? value : {}
+
+const tagReason = (value) => typeof value === 'string' ? value : null
+
+// Builds the slot checkbox data for a session, flagging each slot's tag
 const buildSessionSlots = (sessionData) => {
   const startTime = sessionData.startTime || {}
   const endTime = sessionData.endTime || {}
@@ -13,8 +18,8 @@ const buildSessionSlots = (sessionData) => {
   const startMinutes = (parseInt(startTime.hour, 10) || 0) * 60 + (parseInt(startTime.minute, 10) || 0)
   const endMinutes = (parseInt(endTime.hour, 10) || 0) * 60 + (parseInt(endTime.minute, 10) || 0)
   const duration = parseInt(sessionData.duration, 10) || 0
-  const staffBreakSlots = (sessionData.staffBreakSlots || []).map(Number).filter(Number.isInteger)
-  const heldSlots = sessionData.heldSlots || {}
+  const heldSlots = asTagMap(sessionData.heldSlots)
+  const nonBookableSlots = asTagMap(sessionData.nonBookableSlots)
   const specialAppointmentSlots = (sessionData.specialAppointmentSlots || []).map(Number).filter(Number.isInteger)
   const combinedSlots = sessionData.combinedSlots || []
 
@@ -33,9 +38,10 @@ const buildSessionSlots = (sessionData) => {
         endLabel: formatClock(startMinutes + ((lastIndex + 1) * duration)),
         isCombined: Boolean(range),
         span: lastIndex - i + 1,
-        isStaffBreak: staffBreakSlots.includes(i),
+        isNonBookable: Boolean(nonBookableSlots[i]),
+        nonBookableReason: tagReason(nonBookableSlots[i]),
         isHold: Boolean(heldSlots[i]),
-        holdReason: heldSlots[i],
+        holdReason: tagReason(heldSlots[i]),
         isSpecialAppointment: specialAppointmentSlots.includes(i)
       })
       i = lastIndex + 1
@@ -44,14 +50,15 @@ const buildSessionSlots = (sessionData) => {
 
   // Counts are in base slots, so combining never changes them
   const sumSpans = (list) => list.reduce((total, slot) => total + slot.span, 0)
-  const bookableSlotCount = sumSpans(slots.filter((slot) => !slot.isStaffBreak))
-  const staffBreakSlotCount = sumSpans(slots.filter((slot) => slot.isStaffBreak))
+  const bookableSlotCount = sumSpans(slots.filter((slot) => !slot.isNonBookable))
+  const nonBookableSlotCount = sumSpans(slots.filter((slot) => slot.isNonBookable))
   sessionData.bookableSlotCount = bookableSlotCount
-  sessionData.staffBreakSlotCount = staffBreakSlotCount
+  sessionData.nonBookableSlotCount = nonBookableSlotCount
 
+  const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1)
   const slotTypeLabel = (slot) => {
-    if (slot.isStaffBreak) return 'Staff break'
-    if (slot.isHold) return `Held for ${slot.holdReason}`
+    if (slot.isNonBookable) return slot.nonBookableReason ? capitalise(slot.nonBookableReason) : 'Non-bookable'
+    if (slot.isHold) return slot.holdReason ? `Held for ${slot.holdReason}` : 'Held'
     if (slot.isSpecialAppointment) return 'Special appointment'
     return 'Standard'
   }
@@ -66,13 +73,13 @@ const buildSessionSlots = (sessionData) => {
     }
     return items
   }, [])
-  sessionData.bookableBreakdown = breakdown(slots.filter((slot) => !slot.isStaffBreak))
-  sessionData.nonBookableBreakdown = breakdown(slots.filter((slot) => slot.isStaffBreak))
+  sessionData.bookableBreakdown = breakdown(slots.filter((slot) => !slot.isNonBookable))
+  sessionData.nonBookableBreakdown = breakdown(slots.filter((slot) => slot.isNonBookable))
 
   return {
     slots,
     bookableSlotCount,
-    staffBreakSlotCount,
+    nonBookableSlotCount,
     sessionStartLabel: formatClock(startMinutes),
     sessionEndLabel: formatClock(endMinutes)
   }
@@ -93,16 +100,16 @@ const slotUpdateHandler = ({ dataKey, view, update }) => function (req, res) {
   }
 
   const tags = {
-    staffBreakSlots: new Set((sessionData.staffBreakSlots || []).map(Number).filter(Number.isInteger)),
-    heldSlots: Object.assign({}, sessionData.heldSlots),
+    heldSlots: Object.assign({}, asTagMap(sessionData.heldSlots)),
+    nonBookableSlots: Object.assign({}, asTagMap(sessionData.nonBookableSlots)),
     specialAppointmentSlots: new Set((sessionData.specialAppointmentSlots || []).map(Number).filter(Number.isInteger))
   }
   selectedSlots.forEach((index) => {
     clearTags(index, tags)
     update(index, tags)
   })
-  sessionData.staffBreakSlots = Array.from(tags.staffBreakSlots)
   sessionData.heldSlots = tags.heldSlots
+  sessionData.nonBookableSlots = tags.nonBookableSlots
   sessionData.specialAppointmentSlots = Array.from(tags.specialAppointmentSlots)
 
   res.redirect('/' + view)
@@ -110,19 +117,24 @@ const slotUpdateHandler = ({ dataKey, view, update }) => function (req, res) {
 
 // A slot carries at most one tag, so every update starts by clearing existing ones
 const clearTags = (index, tags) => {
-  tags.staffBreakSlots.delete(index)
   delete tags.heldSlots[index]
+  delete tags.nonBookableSlots[index]
   tags.specialAppointmentSlots.delete(index)
 }
 
-// 'mark' tags the selected slots as staff breaks; 'clear' removes all tags from them
-const staffBreakHandler = ({ action, dataKey, view }) => slotUpdateHandler({
+// Removes all tags from the selected slots
+const clearTagsHandler = ({ dataKey, view }) => slotUpdateHandler({
+  dataKey,
+  view,
+  update: () => {}
+})
+
+// Makes the selected slots non-bookable for `reason`
+const nonBookableHandler = ({ reason, dataKey, view }) => slotUpdateHandler({
   dataKey,
   view,
   update: (index, tags) => {
-    if (action === 'mark') {
-      tags.staffBreakSlots.add(index)
-    }
+    tags.nonBookableSlots[index] = reason || true
   }
 })
 
@@ -131,7 +143,8 @@ const holdHandler = ({ reason, dataKey, view }) => slotUpdateHandler({
   dataKey,
   view,
   update: (index, tags) => {
-    tags.heldSlots[index] = reason
+    // Holds without a reason are stored as `true`
+    tags.heldSlots[index] = reason || true
   }
 })
 
@@ -186,9 +199,10 @@ const combineSlotsHandler = ({ dataKey, view }) => function (req, res) {
     .sort((a, b) => a.start - b.start)
 
   const isAbsorbed = (index) => index > start && index <= end
-  sessionData.staffBreakSlots = (sessionData.staffBreakSlots || []).map(Number).filter((index) => !isAbsorbed(index))
+  const withoutAbsorbed = (tagMap) => Object.fromEntries(Object.entries(asTagMap(tagMap)).filter(([index]) => !isAbsorbed(Number(index))))
   sessionData.specialAppointmentSlots = (sessionData.specialAppointmentSlots || []).map(Number).filter((index) => !isAbsorbed(index))
-  sessionData.heldSlots = Object.fromEntries(Object.entries(sessionData.heldSlots || {}).filter(([index]) => !isAbsorbed(Number(index))))
+  sessionData.heldSlots = withoutAbsorbed(sessionData.heldSlots)
+  sessionData.nonBookableSlots = withoutAbsorbed(sessionData.nonBookableSlots)
 
   res.redirect('/' + view)
 }
@@ -217,7 +231,8 @@ const divideSlotsHandler = ({ dataKey, view }) => function (req, res) {
 module.exports = {
   formatClock,
   buildSessionSlots,
-  staffBreakHandler,
+  clearTagsHandler,
+  nonBookableHandler,
   holdHandler,
   specialAppointmentHandler,
   combineSlotsHandler,
