@@ -24,7 +24,7 @@
           <span class="nhsuk-caption-m">
             Workflow steps
           </span>
-          Create session template
+          {{ "Edit" if data.editingTemplateId else "Create" }} session template
         </h2>
         <ol class="app-workflow-side-nav__list">
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
@@ -100,11 +100,14 @@
                   </span>
                 </summary>
                 <div class="nhsuk-details__text">
-                  <ul class="nhsuk-list">
+                  <dl class="nhsuk-summary-list">
                     {% for item in data.createSessionTemplate.bookableBreakdown %}
-                      <li class="nhsuk-u-margin-bottom-0">{{ item.count }} {{ item.label | lower }}</li>
+                      <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half app-nowrap">{{ item.label }}</dt>
+                        <dd class="nhsuk-summary-list__value">{{ item.count }}</dd>
+                      </div>
                     {% endfor %}
-                  </ul>
+                  </dl>
                 </div>
               </details>
             {% else %}
@@ -118,11 +121,14 @@
                   </span>
                 </summary>
                 <div class="nhsuk-details__text">
-                  <ul class="nhsuk-list">
+                  <dl class="nhsuk-summary-list">
                     {% for item in data.createSessionTemplate.nonBookableBreakdown %}
-                      <li class="nhsuk-u-margin-bottom-0">{{ item.count }} {{ item.label | lower }}</li>
+                      <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half app-nowrap">{{ item.label }}</dt>
+                        <dd class="nhsuk-summary-list__value">{{ item.count }}</dd>
+                      </div>
                     {% endfor %}
-                  </ul>
+                  </dl>
                 </div>
               </details>
             {% else %}
@@ -136,7 +142,14 @@
       </dl>
 
       <form method="post" action="save-template" class="nhsuk-u-margin-top-4">
+        {% if data.editingTemplateId %}
+        <div class="nhsuk-button-group">
+          <button class="nhsuk-button" type="submit">Save changes</button>
+          <a class="nhsuk-link" href="cancel-edit">Cancel</a>
+        </div>
+        {% else %}
         <button class="nhsuk-button" type="submit">Save session template</button>
+        {% endif %}
       </form>
 
   </div>

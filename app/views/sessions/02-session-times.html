@@ -27,7 +27,7 @@
           <span class="nhsuk-caption-m">
             Workflow steps
           </span>
-          Create session template
+          {{ "Edit" if data.editingTemplateId else "Create" }} session template
         </h2>
         <ol class="app-workflow-side-nav__list">
           <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">

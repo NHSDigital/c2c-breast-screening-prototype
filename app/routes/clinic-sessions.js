@@ -1,4 +1,5 @@
 const express = require('express')
+const { randomUUID } = require('crypto')
 const router = express.Router()
 const { validateSessionTimes } = require('./session-times-handlers')
 const {
@@ -10,7 +11,7 @@ const {
   combineSlotsHandler,
   divideSlotsHandler
 } = require('./slot-structure-handlers')
-const { saveSessionMapImage, sessionMapImageExists } = require('../lib/session-map-svg')
+const { deleteSessionMapImage, saveSessionMapImage, sessionMapImageExists } = require('../lib/session-map-svg')
 /*
 
 /app/views/sessions/
@@ -82,6 +83,7 @@ router.post('/sessions/03-slot-structure', function (req, res) {
   res.redirect('/sessions/04-check-template')
 })
 
+// Saves the draft as a template, overwriting the template being edited if there is one
 router.post('/sessions/save-template', function (req, res) {
   const template = req.session.data.createSessionTemplate || {}
   const sessionSlots = buildSessionSlots(template)
@@ -92,8 +94,18 @@ router.post('/sessions/save-template', function (req, res) {
   if (!Array.isArray(req.session.data.sessionTemplates)) {
     req.session.data.sessionTemplates = []
   }
+  const templates = req.session.data.sessionTemplates
 
-  req.session.data.sessionTemplates.push({
+  const existingIndex = templates.findIndex((saved) => saved.id === req.session.data.editingTemplateId)
+  const existing = templates[existingIndex]
+  if (existing) {
+    deleteSessionMapImage(existing.imagePath)
+    templates.splice(existingIndex, 1)
+  }
+
+  // Pushed to the end so it lists first, as the listing is reversed
+  templates.push({
+    id: existing ? existing.id : randomUUID(),
     name: template.sessionTemplateName,
     note: template.sessionTemplateNote,
     sessionStartLabel,
@@ -103,19 +115,48 @@ router.post('/sessions/save-template', function (req, res) {
     openSlotCount,
     heldSlotCount: bookableSlotCount - openSlotCount,
     unavailableSlotCount: nonBookableSlotCount,
+    source: JSON.parse(JSON.stringify(template)),
     ...saveSessionMapImage(sessionSlots)
   })
 
   req.session.data.createSessionTemplate = {}
-  req.session.data.sessionTemplateCreated = true
+  delete req.session.data.editingTemplateId
+  req.session.data.sessionTemplateSaved = existing ? 'updated' : 'created'
+
+  res.redirect('/sessions/00-template-listing')
+})
+
+router.get('/sessions/new-template', function (req, res) {
+  req.session.data.createSessionTemplate = {}
+  delete req.session.data.editingTemplateId
+
+  res.redirect('/sessions/01-template-name')
+})
+
+router.get('/sessions/edit-template/:id', function (req, res) {
+  const template = (req.session.data.sessionTemplates || []).find((saved) => saved.id === req.params.id)
+
+  if (!template || !template.source) {
+    return res.redirect('/sessions/00-template-listing')
+  }
+
+  req.session.data.createSessionTemplate = JSON.parse(JSON.stringify(template.source))
+  req.session.data.editingTemplateId = template.id
+
+  res.redirect('/sessions/04-check-template')
+})
+
+router.get('/sessions/cancel-edit', function (req, res) {
+  req.session.data.createSessionTemplate = {}
+  delete req.session.data.editingTemplateId
 
   res.redirect('/sessions/00-template-listing')
 })
 
 // Shows the success banner once, straight after a template is saved
 router.get('/sessions/00-template-listing', function (req, res) {
-  const templateCreated = Boolean(req.session.data.sessionTemplateCreated)
-  delete req.session.data.sessionTemplateCreated
+  const templateSaved = req.session.data.sessionTemplateSaved
+  delete req.session.data.sessionTemplateSaved
 
   // Images can be pruned or lost on restart while a template still references them
   const templates = req.session.data.sessionTemplates || []
@@ -126,11 +167,12 @@ router.get('/sessions/00-template-listing', function (req, res) {
     }
   })
 
-  res.render('sessions/00-template-listing', { templateCreated })
+  res.render('sessions/00-template-listing', { templateSaved })
 })
 
 const sessionsSlotStructure = { dataKey: 'createSessionTemplate', view: 'sessions/03-slot-structure' }
 router.post('/sessions/mark-staff-break', nonBookableHandler({ reason: 'staff break', ...sessionsSlotStructure }))
+router.post('/sessions/mark-staff-meeting', nonBookableHandler({ reason: 'staff meeting', ...sessionsSlotStructure }))
 router.post('/sessions/clear-slot-type', clearTagsHandler(sessionsSlotStructure))
 router.post('/sessions/mark-hold-rebooking', holdHandler({ reason: 'rebooking', ...sessionsSlotStructure }))
 router.post('/sessions/mark-hold-web-rebooking', holdHandler({ reason: 'web rebooking', ...sessionsSlotStructure }))

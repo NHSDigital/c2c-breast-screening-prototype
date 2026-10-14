@@ -105,4 +105,9 @@ const saveSessionMapImage = (sessionSlots) => {
 const sessionMapImageExists = (imagePath) =>
   typeof imagePath === 'string' && fs.existsSync(path.join(imageDir, path.basename(imagePath)))
 
-module.exports = { buildSessionMapSvg, clearSessionMapImages, saveSessionMapImage, sessionMapImageExists }
+const deleteSessionMapImage = (imagePath) => {
+  if (typeof imagePath !== 'string') return
+  fs.rmSync(path.join(imageDir, path.basename(imagePath)), { force: true })
+}
+
+module.exports = { buildSessionMapSvg, clearSessionMapImages, deleteSessionMapImage, saveSessionMapImage, sessionMapImageExists }
