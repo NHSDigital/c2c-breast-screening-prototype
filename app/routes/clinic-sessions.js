@@ -10,6 +10,7 @@ const {
   combineSlotsHandler,
   divideSlotsHandler
 } = require('./slot-structure-handlers')
+const { saveSessionMapImage, sessionMapImageExists } = require('../lib/session-map-svg')
 /*
 
 /app/views/sessions/
@@ -83,7 +84,8 @@ router.post('/sessions/03-slot-structure', function (req, res) {
 
 router.post('/sessions/save-template', function (req, res) {
   const template = req.session.data.createSessionTemplate || {}
-  const { bookableSlotCount, nonBookableSlotCount, sessionStartLabel, sessionEndLabel } = buildSessionSlots(template)
+  const sessionSlots = buildSessionSlots(template)
+  const { bookableSlotCount, nonBookableSlotCount, sessionStartLabel, sessionEndLabel } = sessionSlots
   const standard = (template.bookableBreakdown || []).find((item) => item.label === 'Standard')
   const openSlotCount = standard ? standard.count : 0
 
@@ -100,7 +102,8 @@ router.post('/sessions/save-template', function (req, res) {
     totalSlotCount: bookableSlotCount + nonBookableSlotCount,
     openSlotCount,
     heldSlotCount: bookableSlotCount - openSlotCount,
-    unavailableSlotCount: nonBookableSlotCount
+    unavailableSlotCount: nonBookableSlotCount,
+    ...saveSessionMapImage(sessionSlots)
   })
 
   req.session.data.createSessionTemplate = {}
@@ -113,6 +116,15 @@ router.post('/sessions/save-template', function (req, res) {
 router.get('/sessions/00-template-listing', function (req, res) {
   const templateCreated = Boolean(req.session.data.sessionTemplateCreated)
   delete req.session.data.sessionTemplateCreated
+
+  // Images can be pruned or lost on restart while a template still references them
+  const templates = req.session.data.sessionTemplates || []
+  templates.forEach((template) => {
+    if (template.imagePath && !sessionMapImageExists(template.imagePath)) {
+      delete template.imagePath
+      delete template.imageAlt
+    }
+  })
 
   res.render('sessions/00-template-listing', { templateCreated })
 })

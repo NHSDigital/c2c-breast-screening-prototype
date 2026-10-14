@@ -70,7 +70,11 @@
       </div>
       <div class="app-session-template-card">
         <div class="app-session-template-preview-image">
+          {% if template.imagePath %}
+          <img src="{{ template.imagePath }}" alt="{{ template.imageAlt }}">
+          {% else %}
           <img src="/assets/images/placeholder-session-template.png" alt="">
+          {% endif %}
           <button class="nhsuk-link nhsuk-u-font-size-19" popovertarget="template-preview-standard">Full preview</button>
         </div>
         <div>
@@ -146,7 +150,7 @@
       </div>
       <div class="app-session-template-card">
         <div class="app-session-template-preview-image">
-          <img src="/assets/images/placeholder-session-template.png" alt="">
+          <img src="/assets/images/session-template-map-standard-day.svg" alt="">
           <button class="nhsuk-link nhsuk-u-font-size-19" popovertarget="template-preview-standard">Full preview</button>
         </div>
         <div>
@@ -221,7 +225,7 @@
       </div>
       <div class="app-session-template-card">
         <div class="app-session-template-preview-image">
-          <img src="/assets/images/placeholder-session-template-special-held.png" alt="">
+          <img src="/assets/images/session-template-map-specials-day.svg" alt="">
           <button class="nhsuk-link nhsuk-u-font-size-19" popovertarget="template-preview-standard">Full preview</button>
         </div>
         <div>
