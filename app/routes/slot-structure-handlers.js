@@ -81,7 +81,7 @@ const buildSessionSlots = (sessionData) => {
     'Special appointment', 'Held', 'Standard'
   ])
   sessionData.nonBookableBreakdown = breakdown(slots.filter((slot) => slot.isNonBookable), [
-    'Staff break', 'Non-bookable'
+    'Staff break', 'Staff meeting', 'Non-bookable'
   ])
 
   return {

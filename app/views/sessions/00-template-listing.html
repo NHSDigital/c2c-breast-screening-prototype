@@ -11,7 +11,7 @@
 
 {% block content %}
 
-{% if templateCreated %}
+{% if templateSaved %}
 <div class="nhsuk-notification-banner nhsuk-notification-banner--success" data-module="nhsuk-notification-banner" role="alert" aria-labelledby="nhsuk-notification-banner-title">
   <div class="nhsuk-notification-banner__header">
     <h2 class="nhsuk-notification-banner__title" id="nhsuk-notification-banner-title">
@@ -20,7 +20,7 @@
   </div>
   <div class="nhsuk-notification-banner__content">
     <h3 class="nhsuk-notification-banner__heading">
-      Session template created
+      Session template {{ templateSaved }}
     </h3>
   </div>
 </div>
@@ -48,7 +48,7 @@
 
 <div class="app-card-editable">
   <h1 class="nhsuk-heading-l">Session templates</h1>
-  <a href="01-template-name" class="nhsuk-button nhsuk-button--secondary">Create a new session template</a>
+  <a href="new-template" class="nhsuk-button nhsuk-button--secondary">Create a new session template</a>
 </div>
 
 <div class="nhsuk-grid-row">
@@ -62,11 +62,13 @@
           {% if template.note %}
           <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal nhsuk-u-secondary-text-colour">{{ template.note }}</span>
           {% endif %}
-          {% if templateCreated and loop.first %}<span class="nhsuk-tag nhsuk-tag--blue">New</span>{% endif %}
+          {% if templateSaved and loop.first %}<span class="nhsuk-tag nhsuk-tag--blue">{{ "Updated" if templateSaved == "updated" else "New" }}</span>{% endif %}
         </h2>
-        <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
+        {% if template.id and template.source %}
+        <a href="edit-template/{{ template.id }}" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
           Edit this template
-        </button>
+        </a>
+        {% endif %}
       </div>
       <div class="app-session-template-card">
         <div class="app-session-template-preview-image">
