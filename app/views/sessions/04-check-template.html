@@ -1,8 +1,10 @@
 {% extends 'layout.html' %}
 
-{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
+{% set pageName = "" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-  {{ primaryNavigation("Manage clinics" if data.missionOne and data.missionOne.returnTo == "clinics" else "Batches", serviceName, bsoName) }}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
 {% endblock %}
 
 {% block content %}
@@ -90,21 +92,41 @@
             Slot structure
           </dt>
           <dd class="nhsuk-summary-list__value">
-            {{ data.createSessionTemplate.bookableSlotCount }} bookable slots
             {% if data.createSessionTemplate.bookableBreakdown | length %}
-              <ul class="nhsuk-list nhsuk-list--bullet nhsuk-u-margin-bottom-2">
-                {% for item in data.createSessionTemplate.bookableBreakdown %}
-                  <li class="nhsuk-u-margin-bottom-0">{{ item.count }} {{ item.label | lower }}</li>
-                {% endfor %}
-              </ul>
+              <details class="nhsuk-details nhsuk-u-margin-bottom-1">
+                <summary class="nhsuk-details__summary">
+                  <span class="nhsuk-details__summary-text">
+                    {{ data.createSessionTemplate.bookableSlotCount }} bookable slots
+                  </span>
+                </summary>
+                <div class="nhsuk-details__text">
+                  <ul class="nhsuk-list">
+                    {% for item in data.createSessionTemplate.bookableBreakdown %}
+                      <li class="nhsuk-u-margin-bottom-0">{{ item.count }} {{ item.label | lower }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </details>
+            {% else %}
+              <p>{{ data.createSessionTemplate.bookableSlotCount }} bookable slots</p>
             {% endif %}
-            {{ data.createSessionTemplate.nonBookableSlotCount }} non-bookable slots
             {% if data.createSessionTemplate.nonBookableBreakdown | length %}
-              <ul class="nhsuk-list nhsuk-list--bullet nhsuk-u-margin-bottom-0">
-                {% for item in data.createSessionTemplate.nonBookableBreakdown %}
-                  <li class="nhsuk-u-margin-bottom-0">{{ item.count }} {{ item.label | lower }}</li>
-                {% endfor %}
-              </ul>
+              <details class="nhsuk-details">
+                <summary class="nhsuk-details__summary nhsuk-u-margin-bottom-1">
+                  <span class="nhsuk-details__summary-text">
+                    {{ data.createSessionTemplate.nonBookableSlotCount }} non-bookable slots
+                  </span>
+                </summary>
+                <div class="nhsuk-details__text">
+                  <ul class="nhsuk-list">
+                    {% for item in data.createSessionTemplate.nonBookableBreakdown %}
+                      <li class="nhsuk-u-margin-bottom-0">{{ item.count }} {{ item.label | lower }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </details>
+            {% else %}
+              <p>{{ data.createSessionTemplate.nonBookableSlotCount }} non-bookable slots</p>
             {% endif %}
           </dd>
           <dd class="nhsuk-summary-list__actions">

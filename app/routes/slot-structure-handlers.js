@@ -62,8 +62,7 @@ const buildSessionSlots = (sessionData) => {
     if (slot.isSpecialAppointment) return 'Special appointment'
     return 'Standard'
   }
-  // Returns [{ label, count }] in first-seen order, counted in base slots
-  const breakdown = (list) => list.reduce((items, slot) => {
+  const breakdown = (list, order) => list.reduce((items, slot) => {
     const label = slotTypeLabel(slot)
     const item = items.find((existing) => existing.label === label)
     if (item) {
@@ -72,9 +71,18 @@ const buildSessionSlots = (sessionData) => {
       items.push({ label, count: slot.span })
     }
     return items
-  }, [])
-  sessionData.bookableBreakdown = breakdown(slots.filter((slot) => !slot.isNonBookable))
-  sessionData.nonBookableBreakdown = breakdown(slots.filter((slot) => slot.isNonBookable))
+  }, []).sort((first, second) => {
+    const firstIndex = order.indexOf(first.label)
+    const secondIndex = order.indexOf(second.label)
+    return (firstIndex === -1 ? order.length : firstIndex) - (secondIndex === -1 ? order.length : secondIndex)
+  })
+  sessionData.bookableBreakdown = breakdown(slots.filter((slot) => !slot.isNonBookable), [
+    'Held for rebooking', 'Held for web rebooking', 'Held for technical recall',
+    'Special appointment', 'Held', 'Standard'
+  ])
+  sessionData.nonBookableBreakdown = breakdown(slots.filter((slot) => slot.isNonBookable), [
+    'Staff break', 'Non-bookable'
+  ])
 
   return {
     slots,
