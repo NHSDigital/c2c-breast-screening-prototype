@@ -31,7 +31,9 @@
     <tbody class="nhsuk-table__body">
       {% for participant in options.participants %}
         <tr class="nhsuk-table__row">
-          <td class="nhsuk-table__cell">{{ participant.nhs_number }}</td>
+          <td class="nhsuk-table__cell">
+            <span class="nhsuk-u-font-code nhsuk-u-nowrap">{{ participant.nhs_number }}</span>
+          </td>
           <td class="nhsuk-table__cell">{{ participant.full_name }}</td>
           <td class="nhsuk-table__cell">{{ participant.date_of_birth }}</td>
           <td class="nhsuk-table__cell">
