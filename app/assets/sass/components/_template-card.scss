@@ -3,7 +3,7 @@
 
 .app-session-template-card {
   display: flex;
-  gap: 1.75rem;
+  gap: 2rem;
 }
 
 .app-session-template-preview-image {
@@ -14,4 +14,9 @@
     outline: 1px solid $nhsuk-input-border-colour;
     margin-bottom: nhsuk-spacing(3);
   }
+}
+
+.app-session-template-controls {
+  flex-shrink: 0;
+  width: max-content;
 }

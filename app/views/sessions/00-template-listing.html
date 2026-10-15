@@ -64,11 +64,6 @@
           {% endif %}
           {% if templateSaved and loop.first %}<span class="nhsuk-tag nhsuk-tag--blue">{{ "Updated" if templateSaved == "updated" else "New" }}</span>{% endif %}
         </h2>
-        {% if template.id and template.source %}
-        <a href="edit-template/{{ template.id }}" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
-          Edit this template
-        </a>
-        {% endif %}
       </div>
       <div class="app-session-template-card">
         <div class="app-session-template-preview-image">
@@ -136,20 +131,29 @@
             </div>
           </dl>
         </div>
+        <ul class="nhsuk-list app-session-template-controls">
+          <li>
+            {% if template.id and template.source %}
+            <a href="edit-template/{{ template.id }}" class="nhsuk-link">
+              Edit this template
+            </a>
+            {% endif %}
+          </li>
+          <li>
+            <a href="#" class="nhsuk-link app-link--error">
+              Archive this template
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
     {% endfor %}
 
     <div class="nhsuk-card nhsuk-u-padding-4">
-      <div class="app-card-editable">
-        <h2 class="nhsuk-heading-m">
-          Standard day
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal nhsuk-u-secondary-text-colour">This is where a short note would go</span>
-        </h2>
-        <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
-          Edit this template
-        </button>
-      </div>
+      <h2 class="nhsuk-heading-m">
+        Standard day
+        <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal nhsuk-u-secondary-text-colour">This is where a short note would go</span>
+      </h2>
       <div class="app-session-template-card">
         <div class="app-session-template-preview-image">
           <img src="/assets/images/session-template-map-standard-day.svg" alt="">
@@ -212,19 +216,26 @@
             </div>
           </dl>
         </div>
+        <ul class="nhsuk-list app-session-template-controls">
+          <li>
+            <button type="submit" class="nhsuk-link">
+              Edit this template
+            </button>
+          </li>
+          <li>
+            <button class="nhsuk-link app-link--error">
+              Archive this template
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
 
     <div class="nhsuk-card nhsuk-u-padding-4">
-      <div class="app-card-editable">
-        <h2 class="nhsuk-heading-m">
-          Special appointments
-          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal nhsuk-u-secondary-text-colour">18 double appointment slots</span>
-        </h2>
-        <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
-          Edit this template
-        </button>
-      </div>
+      <h2 class="nhsuk-heading-m">
+        Special appointments
+        <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal nhsuk-u-secondary-text-colour">18 double appointment slots</span>
+      </h2>
       <div class="app-session-template-card">
         <div class="app-session-template-preview-image">
           <img src="/assets/images/session-template-map-specials-day.svg" alt="">
@@ -287,6 +298,18 @@
             </div>
           </dl>
         </div>
+        <ul class="nhsuk-list app-session-template-controls">
+          <li>
+            <button type="submit" class="nhsuk-link">
+              Edit this template
+            </button>
+          </li>
+          <li>
+            <button class="nhsuk-link app-link--error">
+              Archive this template
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
 
