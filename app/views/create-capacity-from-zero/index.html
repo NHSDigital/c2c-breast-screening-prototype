@@ -16,7 +16,7 @@
   {% for item in [
     { href: '/create-capacity-from-zero/', label: 'Active clinics', selected: 'true' },
     { href: '#', label: 'Archived clinics' },
-    { href: '#', label: 'Manage session templates' }
+    { href: '/sessions/00-template-listing', label: 'Manage session templates' }
   ] %}
     {% set secondaryNavItems = secondaryNavItems | push({
       text: item.label | safe,

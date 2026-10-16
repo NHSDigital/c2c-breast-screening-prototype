@@ -1,0 +1,329 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% if templateSaved %}
+<div class="nhsuk-notification-banner nhsuk-notification-banner--success" data-module="nhsuk-notification-banner" role="alert" aria-labelledby="nhsuk-notification-banner-title">
+  <div class="nhsuk-notification-banner__header">
+    <h2 class="nhsuk-notification-banner__title" id="nhsuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="nhsuk-notification-banner__content">
+    <h3 class="nhsuk-notification-banner__heading">
+      Session template {{ templateSaved }}
+    </h3>
+  </div>
+</div>
+{% endif %}
+
+
+{% set secondaryNavItems = [] %}
+
+{% for item in [
+  { href: '/create-capacity-from-zero/', label: 'Active clinics' },
+  { href: '#', label: 'Archived clinics' },
+  { href: '/sessions/00-template-listing', label: 'Manage session templates', selected: 'true' }
+] %}
+  {% set secondaryNavItems = secondaryNavItems | push({
+    text: item.label | safe,
+    href: item.href | trim,
+    current: true if item.selected == 'true'
+  }) %}
+{% endfor %}
+
+{{ appSecondaryNavigation({
+  visuallyHiddenTitle: "Secondary menu",
+  items: secondaryNavItems
+}) }}
+
+<div class="app-card-editable">
+  <h1 class="nhsuk-heading-l">Session templates</h1>
+  <a href="new-template" class="nhsuk-button nhsuk-button--secondary">Create a new session template</a>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+
+    {% for template in data.sessionTemplates | reverse %}
+    <div class="nhsuk-card nhsuk-u-padding-4">
+      <div class="app-card-editable">
+        <h2 class="nhsuk-heading-m">
+          {{ template.name }}
+          {% if template.note %}
+          <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal nhsuk-u-secondary-text-colour">{{ template.note }}</span>
+          {% endif %}
+          {% if templateSaved and loop.first %}<span class="nhsuk-tag nhsuk-tag--blue">{{ "Updated" if templateSaved == "updated" else "New" }}</span>{% endif %}
+        </h2>
+      </div>
+      <div class="app-session-template-card">
+        <div class="app-session-template-preview-image">
+          {% if template.imagePath %}
+          <img src="{{ template.imagePath }}" alt="{{ template.imageAlt }}">
+          {% else %}
+          <img src="/assets/images/placeholder-session-template.png" alt="">
+          {% endif %}
+          <button class="nhsuk-link nhsuk-u-font-size-19" popovertarget="template-preview-standard">Full preview</button>
+        </div>
+        <div>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Session times
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.sessionStartLabel }} to {{ template.sessionEndLabel }}
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Slot length
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.duration }} minutes
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Total slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.totalSlotCount }}
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <h3 class="nhsuk-u-visually-hidden">Slot breakdown</h3>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Standard slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.openSlotCount if template.openSlotCount else 0 }}
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Held
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.heldSlotCount if template.heldSlotCount else 0 }}
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Unavailable to book
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.unavailableSlotCount if template.unavailableSlotCount else 0 }}
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <ul class="nhsuk-list app-session-template-controls">
+          <li>
+            {% if template.id and template.source %}
+            <a href="edit-template/{{ template.id }}" class="nhsuk-link">
+              Edit this template
+            </a>
+            {% endif %}
+          </li>
+          <li>
+            <a href="#" class="nhsuk-link app-link--error">
+              Archive this template
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="nhsuk-card nhsuk-u-padding-4">
+      <h2 class="nhsuk-heading-m">
+        Standard day
+        <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal nhsuk-u-secondary-text-colour">This is where a short note would go</span>
+      </h2>
+      <div class="app-session-template-card">
+        <div class="app-session-template-preview-image">
+          <img src="/assets/images/session-template-map-standard-day.svg" alt="">
+          <button class="nhsuk-link nhsuk-u-font-size-19" popovertarget="template-preview-standard">Full preview</button>
+        </div>
+        <div>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Session times
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                09:00 to 17:00
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Slot length
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                10 minutes
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Total slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                42
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <h3 class="nhsuk-u-visually-hidden">Slot breakdown</h3>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Standard slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                32
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Held
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                4
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Unavailable to book
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                6
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <ul class="nhsuk-list app-session-template-controls">
+          <li>
+            <button type="submit" class="nhsuk-link">
+              Edit this template
+            </button>
+          </li>
+          <li>
+            <button class="nhsuk-link app-link--error">
+              Archive this template
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="nhsuk-card nhsuk-u-padding-4">
+      <h2 class="nhsuk-heading-m">
+        Special appointments
+        <span class="nhsuk-u-font-size-16 nhsuk-u-font-weight-normal nhsuk-u-secondary-text-colour">18 double appointment slots</span>
+      </h2>
+      <div class="app-session-template-card">
+        <div class="app-session-template-preview-image">
+          <img src="/assets/images/session-template-map-specials-day.svg" alt="">
+          <button class="nhsuk-link nhsuk-u-font-size-19" popovertarget="template-preview-standard">Full preview</button>
+        </div>
+        <div>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Session times
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                09:00 to 17:00
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Slot length
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                10 minutes
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Total slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                42
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <h3 class="nhsuk-u-visually-hidden">Slot breakdown</h3>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Standard slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                0
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Held
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                36
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Unavailable to book
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                6
+              </dd>
+            </div>
+          </dl>
+        </div>
+        <ul class="nhsuk-list app-session-template-controls">
+          <li>
+            <button type="submit" class="nhsuk-link">
+              Edit this template
+            </button>
+          </li>
+          <li>
+            <button class="nhsuk-link app-link--error">
+              Archive this template
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <h2 class="nhsuk-u-visually-hidden">Archived session templates</h2>
+    <p>
+      <a href="#">View archived templates</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}{% endblock %}

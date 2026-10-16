@@ -19,5 +19,9 @@ module.exports = {
     schedules: [],
     selectedDays: [],
     dayTemplates: {}
-  }
+  },
+  createSessionTemplate: {
+    
+  },
+  sessionTemplates: []
 }

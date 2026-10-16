@@ -6,6 +6,7 @@ const sessionDataDefaults = require('./app/data/session-data-defaults')
 const filters = require('./app/filters')
 const locals = require('./app/locals')
 const routes = require('./app/routes')
+const { clearSessionMapImages } = require('./app/lib/session-map-svg')
 
 const viewsPath = [
   'app/views/'
@@ -17,6 +18,8 @@ const entryPoints = [
 ]
 
 async function init() {
+  clearSessionMapImages()
+
   const prototype = await NHSPrototypeKit.init({
     serviceName: config.serviceName,
     buildOptions: {
