@@ -4,7 +4,7 @@
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
-{{ primaryNavigation("Batches" if participantsPath == "/batches/participants" else "Participants", serviceName) }}
+{{ primaryNavigation("Batches" if participantsPath == "/batches/participants" else "Participants", serviceName, bsoName) }}
 {% endblock %}
 
 {% block content %}
@@ -24,7 +24,7 @@
     <div class="nhsuk-grid-column-full">
 
         <span class="nhsuk-caption-l">Participant details</span>
-        <h1 class="nhsuk-heading-l">{{ participant.full_name }}</h1>
+        <h1 class="nhsuk-heading-l">{{ participant.display_name }}</h1>
     </div>
 
 </div>
