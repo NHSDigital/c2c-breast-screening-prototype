@@ -88,8 +88,6 @@ router.post('/sessions/save-template', function (req, res) {
   const template = req.session.data.createSessionTemplate || {}
   const sessionSlots = buildSessionSlots(template)
   const { bookableSlotCount, nonBookableSlotCount, sessionStartLabel, sessionEndLabel } = sessionSlots
-  const standard = (template.bookableBreakdown || []).find((item) => item.label === 'Standard')
-  const openSlotCount = standard ? standard.count : 0
 
   if (!Array.isArray(req.session.data.sessionTemplates)) {
     req.session.data.sessionTemplates = []
@@ -112,9 +110,7 @@ router.post('/sessions/save-template', function (req, res) {
     sessionEndLabel,
     duration: template.duration,
     totalSlotCount: bookableSlotCount + nonBookableSlotCount,
-    openSlotCount,
-    heldSlotCount: bookableSlotCount - openSlotCount,
-    unavailableSlotCount: nonBookableSlotCount,
+    slots: sessionSlots.slots,
     source: JSON.parse(JSON.stringify(template)),
     ...saveSessionMapImage(sessionSlots)
   })

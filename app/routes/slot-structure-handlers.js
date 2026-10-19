@@ -38,6 +38,8 @@ const buildSessionSlots = (sessionData) => {
         endLabel: formatClock(startMinutes + ((lastIndex + 1) * duration)),
         isCombined: Boolean(range),
         span: lastIndex - i + 1,
+        // One placeholder per absorbed slot, rendered as empty divs to give the stacked card effect
+        mergedChildren: Array.from({ length: lastIndex - i }, (_, n) => n + 1),
         isNonBookable: Boolean(nonBookableSlots[i]),
         nonBookableReason: tagReason(nonBookableSlots[i]),
         isHold: Boolean(heldSlots[i]),

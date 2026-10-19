@@ -88,7 +88,7 @@
           <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes">
 
             {% for slot in slots %}
-            <div class="slot{% if slot.isNonBookable %} is-staff-break{% endif %}">
+            <div class="slot{% if slot.isNonBookable %} is-staff-break{% endif %}{% if slot.isCombined %} is-merged{% endif %}">
               <div class="nhsuk-checkboxes__item">
                 <input class="nhsuk-checkboxes__input" id="computed-slot-{{ slot.index }}" name="computedSlots[]" type="checkbox" value="{{ slot.index }}">
                 <label class="nhsuk-label nhsuk-checkboxes__label" for="computed-slot-{{ slot.index }}">
@@ -109,6 +109,9 @@
                 </label>
               </div>
             </div>
+            {% for position in slot.mergedChildren %}
+            <div class="slot is-merged is-merged-child{% if slot.isNonBookable %} is-staff-break{% endif %}{% if loop.last %} is-merged-last-child{% endif %}" style="--stack-index: {{ position }}" aria-hidden="true"></div>
+            {% endfor %}
             {% endfor %}
 
           </div>

@@ -3,20 +3,15 @@
 
 .app-session-template-card {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .app-session-template-preview-image {
-  min-width: 10%;
+  min-width: 22.5%;
   & > img {
     display: block;
     width: 100%;
     outline: 1px solid $nhsuk-input-border-colour;
-    margin-bottom: nhsuk-spacing(3);
+    margin-bottom: nhsuk-spacing(2);
   }
-}
-
-.app-session-template-controls {
-  flex-shrink: 0;
-  width: max-content;
 }
