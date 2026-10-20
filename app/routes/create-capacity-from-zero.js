@@ -177,13 +177,15 @@ router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
       }
 
       const templateName = dayTemplates[day.dateKey]
-      const savedTemplate = (req.session.data.sessionTemplates || [])
-        .find(saved => !saved.example && saved.name === templateName)
+      const matchedTemplate = (req.session.data.sessionTemplates || [])
+        .find(saved => saved.name === templateName || (saved.slug && exampleTemplateSlugs[saved.slug] === templateName))
+      const savedTemplate = matchedTemplate && !matchedTemplate.example ? matchedTemplate : null
       const template = sessionTemplates[templateName] ||
         (savedTemplate && { totalSlots: savedTemplate.totalSlotCount, heldSlots: 0 }) || {}
 
       return Object.assign({}, day, {
         templateName,
+        templateId: matchedTemplate && matchedTemplate.id,
         totalSlots: template.totalSlots,
         heldSlots: template.heldSlots
       })

@@ -157,7 +157,7 @@ router.get('/sessions/00-template-listing', function (req, res) {
   // Images can be pruned or lost on restart while a template still references them
   const templates = req.session.data.sessionTemplates || []
   templates.forEach((template) => {
-    if (template.imagePath && !sessionMapImageExists(template.imagePath)) {
+    if (!template.example && template.imagePath && !sessionMapImageExists(template.imagePath)) {
       delete template.imagePath
       delete template.imageAlt
     }

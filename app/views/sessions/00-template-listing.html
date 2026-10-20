@@ -26,30 +26,28 @@
 </div>
 {% endif %}
 
-
-{% set secondaryNavItems = [] %}
-
-{% for item in [
-  { href: '/create-capacity-from-zero/', label: 'Active clinics' },
-  { href: '#', label: 'Archived clinics' },
-  { href: '/sessions/00-template-listing', label: 'Manage session templates', selected: 'true' }
-] %}
-  {% set secondaryNavItems = secondaryNavItems | push({
-    text: item.label | safe,
-    href: item.href | trim,
-    current: true if item.selected == 'true'
-  }) %}
-{% endfor %}
-
-{{ appSecondaryNavigation({
-  visuallyHiddenTitle: "Secondary menu",
-  items: secondaryNavItems
-}) }}
-
 <div class="app-card-editable">
-  <h1 class="nhsuk-heading-l">Session templates</h1>
+  <h1 class="nhsuk-heading-l">Clinic session templates</h1>
   <a href="new-template" class="nhsuk-button nhsuk-button--secondary">Create a new session template</a>
 </div>
+
+
+
+<nav class="app-secondary-navigation" aria-label="Secondary menu">
+  <ul class="app-secondary-navigation__list">
+    <li class="app-secondary-navigation__list-item">
+      <a class="app-secondary-navigation__link" href="/create-capacity-from-zero/open-clinics">Clinics with current schedules</a>
+    </li>
+    <li class="app-secondary-navigation__list-item">
+      <a class="app-secondary-navigation__link" href="#" >All clinics</a>
+    </li>
+    <li class="app-secondary-navigation__list-item app-secondary-navigation--aside">
+      <a class="app-secondary-navigation__link" href="/sessions/00-template-listing" aria-current="page">
+        <strong class="app-secondary-navigation__current">Clinic session templates</strong>
+      </a>
+    </li>
+  </ul>
+</nav>
 
 {# Session templates first (newest first), then the examples; a new grid row wraps every two cards #}
 {% set allTemplates = (data.sessionTemplates | reverse) %}
@@ -106,14 +104,14 @@
             </div>
             <div class="nhsuk-summary-list__row">
               <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                {{ template.totalLabel or "Total slots" }}
+                Total slots
               </dt>
               <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
                 {{ template.totalSlotCount }}
               </dd>
             </div>
           </dl>
-          <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--small" popovertarget="{{ 'template-preview-standard' if template.example else 'template-preview-' + template.id }}">Full details</button>
+          <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--small" popovertarget="template-preview-{{ template.id }}">Full details</button>
         </div>
       </div>
     </div>
@@ -166,5 +164,3 @@
 {% endfor %}
 
 {% endblock %}
-
-{% block pageScripts %}{% endblock %}

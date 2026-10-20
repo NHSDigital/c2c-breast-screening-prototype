@@ -11,80 +11,71 @@
 
 {% block content %}
 
-  {% set secondaryNavItems = [] %}
+  <h1 class="nhsuk-heading-l">Clinics</h1>
 
-  {% for item in [
-    { href: '/create-capacity-from-zero/', label: 'Active clinics', selected: 'true' },
-    { href: '#', label: 'Archived clinics' },
-    { href: '/sessions/00-template-listing', label: 'Manage session templates' }
-  ] %}
-    {% set secondaryNavItems = secondaryNavItems | push({
-      text: item.label | safe,
-      href: item.href | trim,
-      current: true if item.selected == 'true'
-    }) %}
-  {% endfor %}
-
-  {{ appSecondaryNavigation({
-    visuallyHiddenTitle: "Secondary menu",
-    items: secondaryNavItems
-  }) }}
-
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-      <div class="app-card-editable">
-        <h1 class="nhsuk-heading-l">Active clinics</h1>
-        {{ button({
-          text: "Create a new clinic",
-          href: "/create-capacity-from-zero/create-clinic",
-          classes: "nhsuk-button--secondary"
-        }) }}
+  <ul class="nhsuk-grid-row nhsuk-card-group">
+    <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+      <div class="nhsuk-card nhsuk-card--feature">
+        <div class="nhsuk-card__content">
+          <h2 class="nhsuk-card__heading nhsuk-heading-m">
+            Run clinic sessions
+          </h2>
+          <div>
+            <a class="nhsuk-action-link" href="/create-capacity-from-zero/">
+              <svg class="nhsuk-icon nhsuk-icon--arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+                <path d="M12 2a10 10 0 0 0-10 9h11.7l-4-4a1 1 0 0 1 1.5-1.4l5.6 5.7a1 1 0 0 1 0 1.4l-5.6 5.7a1 1 0 0 1-1.5 0 1 1 0 0 1 0-1.4l4-4H2A10 10 0 1 0 12 2z" />
+              </svg>
+              <span class="nhsuk-action-link__text">
+                Today’s sessions
+              </span>
+            </a>
+          </div>
+          <p>Do the thing and do it today!</p>
+          <ul class="nhsuk-list">
+            <li>
+              <a href="#">Upcoming sessions</a>
+            </li>
+            <li>
+              <a href="#">Closed sessions</a>
+            </li>
+            <li>
+              <a href="#">All sessions</a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
-
-      <table class="nhsuk-table nhsuk-table-responsive">
-        <thead class="nhsuk-table__head">
-          <tr class="nhsuk-table__row">
-            <th scope="col" class="nhsuk-table__header">
-              Clinic
-            </th>
-            <th scope="col" class="nhsuk-table__header">
-              Unit and location
-            </th>
-            <th scope="col" class="nhsuk-table__header">
-              Current schedules
-            </th>
-            <th scope="col" class="nhsuk-table__header">
-              Current capacity
-            </th>
-          </tr>
-        </thead>
-        <tbody class="nhsuk-table__body">
-          <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell">
-              <a href="#">Existing clinic user defined name<br></a>
-              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">NNN-NNN-systemid-20260501</span>
-            </td>
-            <td class="nhsuk-table__cell">
-              Unit label<br>
-              Location short name
-            </td>
-            <td class="nhsuk-table__cell">
-              31 August 2026 to 9 October 2026
-            </td>
-            <td class="nhsuk-table__cell">
-              1500 slots available<br>
-              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">of which 150 held</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-    </div>
-  </div>
+    </li>
+    <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+      <div class="nhsuk-card nhsuk-card--feature">
+        <div class="nhsuk-card__content">
+          <h2 class="nhsuk-card__heading nhsuk-heading-m">
+            Manage clinics
+          </h2>
+          <div>
+            <a class="nhsuk-action-link" href="/create-capacity-from-zero/open-clinics">
+              <svg class="nhsuk-icon nhsuk-icon--arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+                <path d="M12 2a10 10 0 0 0-10 9h11.7l-4-4a1 1 0 0 1 1.5-1.4l5.6 5.7a1 1 0 0 1 0 1.4l-5.6 5.7a1 1 0 0 1-1.5 0 1 1 0 0 1 0-1.4l4-4H2A10 10 0 1 0 12 2z" />
+              </svg>
+              <span class="nhsuk-action-link__text">
+                Clinics with current schedules
+              </span>
+            </a>
+          </div>
+          <p>Organise the sessions! Make clinics, schedules, timetables etc</p>
+          <ul class="nhsuk-list">
+            <li>
+              <a href="#">All clinics</a>
+            </li>
+            <li>
+              <a href="/create-capacity-from-zero/create-clinic">Create a new clinic</a>
+            </li>
+            <li>
+              <a href="/sessions/00-template-listing">Clinic session templates</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+  </ul>
 
 {% endblock %}
