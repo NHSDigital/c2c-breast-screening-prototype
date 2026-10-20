@@ -107,7 +107,12 @@ a {
 .app-card-editable {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  gap: 1rem;
+  align-items: first baseline;
+
+  // & > .nhsuk-button {
+  //   vertical-align: baseline;
+  // }
 }
 
 .app-link--error,

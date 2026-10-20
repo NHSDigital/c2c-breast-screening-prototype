@@ -51,33 +51,8 @@
   <a href="new-template" class="nhsuk-button nhsuk-button--secondary">Create a new session template</a>
 </div>
 
-{% set exampleTemplates = [
-  {
-    example: true,
-    name: "Standard day with a ludicrous name that's probably really long",
-    note: "Pattern for our static site",
-    imagePath: "/assets/images/session-template-map-standard-day.svg",
-    sessionStartLabel: "09:00",
-    sessionEndLabel: "17:00",
-    duration: 10,
-    totalSlotCount: 42,
-    totalLabel: "Total slots"
-  },
-  {
-    example: true,
-    name: "Special appointments",
-    note: "This is where a short note would go is where a short note would go is where a short note would go",
-    imagePath: "/assets/images/session-template-map-specials-day.svg",
-    sessionStartLabel: "09:00",
-    sessionEndLabel: "17:00",
-    duration: 10,
-    totalSlotCount: 42,
-    totalLabel: "Total slots"
-  }
-] %}
-
 {# Session templates first (newest first), then the examples; a new grid row wraps every two cards #}
-{% set allTemplates = (data.sessionTemplates | reverse).concat(exampleTemplates) %}
+{% set allTemplates = (data.sessionTemplates | reverse) %}
 
 {% for template in allTemplates %}
 {% if loop.index0 % 2 == 0 %}<div class="nhsuk-grid-row">{% endif %}
