@@ -92,15 +92,14 @@
               <div class="nhsuk-checkboxes__item">
                 <input class="nhsuk-checkboxes__input" id="computed-slot-{{ slot.index }}" name="computedSlots[]" type="checkbox" value="{{ slot.index }}">
                 <label class="nhsuk-label nhsuk-checkboxes__label" for="computed-slot-{{ slot.index }}">
-                  <span class="slot-time">{{ slot.startLabel }}</span>
-                  <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
+                  <span class="slot-time">{{ slot.startLabel }}</span><span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
                   <span class="slot-tag">
                     {% if slot.isNonBookable %}
-                      <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.nonBookableReason }}</span>{% endif %}
+                      <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.nonBookableReason }}</span>{% endif %}
                     {% elseif slot.isSpecialAppointment %}
                       <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
                     {% elseif slot.isHold %}
-                      <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.holdReason }}</span>{% endif %}
+                      <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.holdReason }}</span>{% endif %}
                     {% endif %}
                     {% if slot.isCombined %}
                       <span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>

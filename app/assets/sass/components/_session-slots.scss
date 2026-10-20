@@ -22,15 +22,25 @@
   width: 100%;
 }
 
+.slot-time {
+  margin-right: nhsuk-px-to-rem(6px);
+}
 .slot-end {
   @include nhsuk-font-size(16);
   margin-right: 1rem;
 }
 
+// For slots whose time and tags are direct children, rather than inside a checkbox label
+.slot.slot--centred {
+  display: flex;
+  align-items: first baseline;
+  padding-top: nhsuk-px-to-rem(8px);
+}
+
 .slot.is-hold {}
 
 .slot.is-staff-break {
-  background-color: transparent !important;
+  background-color: nhsuk-colour("grey-5") !important;
   background-image: repeating-linear-gradient(130deg, nhsuk-colour("grey-4"), nhsuk-colour("grey-4") 1px, transparent 1px, transparent 10px);
   border-color: $nhsuk-border-colour;
 }
@@ -40,16 +50,16 @@
 }
 .slot.is-merged-child {
   --stack-offset: calc(var(--stack-index, 1) * #{nhsuk-spacing(1)});
-  background-color: nhsuk-colour("grey-5");
+  background-color: nhsuk-colour("white");
   border-top: 0;
-  height: 6px;
+  height: 9px;
   min-height: 0;
   padding: 0;
   margin-left: var(--stack-offset);
   margin-right: var(--stack-offset);
 }
 .slot.is-merged-last-child { 
-  border-bottom: 1px solid #212b32;
+  border-bottom: 1px solid $nhsuk-input-border-colour;
   margin-bottom: 12px;
 }
 
