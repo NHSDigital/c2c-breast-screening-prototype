@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block beforeContent %}
-  <a class="nhsuk-back-link" href="/create-capacity-from-zero/open-clinics">
+  <a class="nhsuk-back-link" href="/create-capacity-from-zero/">
     Back to clinic listing
   </a>
 {% endblock %}
@@ -99,7 +99,18 @@
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
       {% if data.createCapacityFromZero.schedules.length === 0 %}
-        <p>This clinic contains no schedules</p>
+        <div class="nhsuk-card nhsuk-card--warning nhsuk-u-reading-width">
+          <div class="nhsuk-card__content">
+            <h3 class="nhsuk-u-font-size-22 nhsuk-card__heading">
+              <span role="text">
+                <span class="nhsuk-u-visually-hidden">Important: </span>No current schedule
+              </span>
+            </h3>
+            <p class="nhsuk-card__description">
+              A schedule is a block of confirmed time and capacity (usually agreed as a rota). Each schedule has a start date and an end date, for example a 6 week block.
+            </p>
+          </div>
+        </div>
       {% endif %}
       <a href="create-schedule" class="nhsuk-button nhsuk-button--secondary-solid">Add a new schedule</a>
     </div>
