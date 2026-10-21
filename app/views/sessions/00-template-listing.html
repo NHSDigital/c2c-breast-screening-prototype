@@ -7,7 +7,26 @@
   {{ primaryNavigation("Clinics", serviceName, bsoName) }}
 {% endblock %}
 
-{% block beforeContent %}{% endblock %}
+{% block beforeContent %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <ol class="nhsuk-breadcrumb__list">
+    <li class="nhsuk-breadcrumb__list-item">
+      <a class="nhsuk-breadcrumb__link" href="/create-capacity-from-zero/">
+        Home
+      </a>
+    </li>
+    <li class="nhsuk-breadcrumb__list-item">
+      <a class="nhsuk-breadcrumb__link" href="/create-capacity-from-zero/">
+        Clinics
+      </a>
+    </li>
+  </ol>
+  <a class="nhsuk-back-link" href="#">
+    <span class="nhsuk-u-visually-hidden">Back to </span>Clinics
+  </a>
+</nav>
+
+{% endblock %}
 
 {% block content %}
 
@@ -27,27 +46,9 @@
 {% endif %}
 
 <div class="app-card-editable">
-  <h1 class="nhsuk-heading-l">Clinic session templates</h1>
+  <h1 class="nhsuk-heading-l">Session templates</h1>
   <a href="new-template" class="nhsuk-button nhsuk-button--secondary">Create a new session template</a>
 </div>
-
-
-
-<nav class="app-secondary-navigation" aria-label="Secondary menu">
-  <ul class="app-secondary-navigation__list">
-    <li class="app-secondary-navigation__list-item">
-      <a class="app-secondary-navigation__link" href="/create-capacity-from-zero/open-clinics">Clinics with current schedules</a>
-    </li>
-    <li class="app-secondary-navigation__list-item">
-      <a class="app-secondary-navigation__link" href="#" >All clinics</a>
-    </li>
-    <li class="app-secondary-navigation__list-item app-secondary-navigation--aside">
-      <a class="app-secondary-navigation__link" href="/sessions/00-template-listing" aria-current="page">
-        <strong class="app-secondary-navigation__current">Clinic session templates</strong>
-      </a>
-    </li>
-  </ul>
-</nav>
 
 {# Session templates first (newest first), then the examples; a new grid row wraps every two cards #}
 {% set allTemplates = (data.sessionTemplates | reverse) %}
