@@ -13,7 +13,7 @@
     <div class="nhsuk-grid-column-full">
       {% set html %}
         <p class="nhsuk-notification-banner__heading">
-          10 participants booked
+          {{ data.stagedCount }} participant{% if data.stagedCount !== 1 %}s{% endif %} booked
         </p>
       {% endset %}
       {{ notificationBanner({
@@ -47,7 +47,7 @@
     </div>
   </div>
 
-  {% include "mission-1/current-iteration/includes/day-list-hard-coded.html" %}
+  {% include "mission-1/current-iteration/includes/day-list.html" %}
 
 {% endblock %}
 

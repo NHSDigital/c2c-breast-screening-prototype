@@ -53,7 +53,7 @@
                     <td class="nhsuk-table__cell">
                       <span class="nhsuk-u-font-code nhsuk-u-nowrap">{{ participant.nhs_number }}</span>
                     </td>
-                    <td class="nhsuk-table__cell">{{ participant.full_name }}</td>
+                    <td class="nhsuk-table__cell"><a href="/mission-1/participants/{{ participant.participantId }}">{{ participant.display_name }}</a></td>
                     <td class="nhsuk-table__cell">{{ participant.date_of_birth }}</td>
                   </tr>
                 {% endif %}
