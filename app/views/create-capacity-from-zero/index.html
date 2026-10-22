@@ -14,7 +14,74 @@
 </div>
 {% endset %}
 
-{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% macro primaryNavigation(activeItem, serviceName, bsoName) %}
+  {{ header({
+    account: {
+      items: [
+        {
+          text: bsoName
+        },
+        {
+          href: "#",
+          text: "Thomas Pynchon",
+          icon: true
+        },
+        {
+          href: "/",
+          text: "Log out"
+        }
+      ]
+    },
+    service: {
+      text: serviceName,
+      href: "/"
+    },
+    navigation: {
+      items: [
+        {
+          href: "#",
+          text: "Dashboard",
+          active: activeItem === "Dashboard/home"
+        },
+        {
+          href: "/participants/",
+          text: "Participants",
+          active: activeItem === "Participants"
+        },
+        {
+          href: "/create-capacity-from-zero/",
+          text: "Clinics",
+          active: activeItem === "Clinics"
+        },
+        {
+          href: "#",
+          text: "Image reading",
+          active: activeItem === "Image reading"
+        },
+        {
+          href: "#",
+          text: "Reports",
+          active: activeItem === "Reports"
+        },
+        {
+          href: "/bso-objects/",
+          text: "BSO management",
+          active: activeItem === "BSO management"
+        },
+        {
+          href: "#",
+          text: "Messages",
+          active: activeItem === "Messages"
+        },
+        {
+          href: "#",
+          text: "Help and support",
+          active: activeItem === "Help and support"
+        }
+      ]
+    }
+  }) }}
+{% endmacro %}
 {% block header %}
   {{ primaryNavigation("Clinics", serviceName, bsoName) }}
 {% endblock %}
