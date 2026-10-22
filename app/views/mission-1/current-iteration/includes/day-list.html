@@ -1,0 +1,60 @@
+{% set bookedParticipants = [] %}
+{% for participant in data.participants.default %}
+  {% if participant.status === "staged" %}
+    {% set bookedParticipants = (bookedParticipants.push(participant), bookedParticipants) %}
+  {% endif %}
+{% endfor %}
+
+{# Two staff breaks follow the seventh booking (or the last booking if fewer) #}
+{% set breakStart = 7 if bookedParticipants.length >= 7 else bookedParticipants.length %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <table class="nhsuk-table ">
+      <thead class="nhsuk-table__head">
+        <tr class="nhsuk-table__row">
+          <th scope="col" class="nhsuk-table__header app-column-time">
+            Time
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            NHS Number
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Full name
+          </th>
+          <th scope="col" class="nhsuk-table__header">
+            Date of birth
+          </th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body nhsuk-table--striped">
+        {% for slot in range(0, bookedParticipants.length + 2) %}
+          {% set minutes = 540 + slot * 10 %}
+          {% set hour = minutes // 60 %}
+          {% set minute = minutes % 60 %}
+          {% set time = ("0" if hour < 10 else "") + hour + ":" + ("0" if minute < 10 else "") + minute %}
+          {% if slot >= breakStart and slot < breakStart + 2 %}
+            <tr class="nhsuk-table__row slot is-staff-break">
+              <td class="nhsuk-table__cell">{{ time }}</td>
+              <td class="nhsuk-table__cell" colspan="3">
+                <span class="slot-tag">
+                  <span class="nhsuk-tag nhsuk-tag--grey">Staff break</span>
+                </span>
+              </td>
+            </tr>
+          {% else %}
+            {% set participant = bookedParticipants[slot if slot < breakStart else slot - 2] %}
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">{{ time }}</td>
+              <td class="nhsuk-table__cell">
+                <span class="nhsuk-u-font-code nhsuk-u-nowrap">{{ participant.nhs_number }}</span>
+              </td>
+              <td class="nhsuk-table__cell"><a href="/mission-1/participants/{{ participant.participantId }}">{{ participant.display_name }}</a></td>
+              <td class="nhsuk-table__cell">{{ participant.date_of_birth }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
