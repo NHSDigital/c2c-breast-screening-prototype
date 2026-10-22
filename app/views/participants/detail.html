@@ -38,6 +38,7 @@
 </div>
 
 {% set stageText = {
+'not scheduled': 'Not scheduled',
 'scheduled': 'Scheduled',
 'mammograms': 'Mammograms',
 'reading': 'Waiting for reading',
@@ -45,6 +46,7 @@
 'closed': 'Closed'
 }[participant.episode_stage] %}
 {% set stageColour = {
+'not scheduled': 'grey',
 'scheduled': 'blue',
 'mammograms': 'purple',
 'reading': 'yellow',

@@ -204,7 +204,7 @@ const createParticipant = (index, today) => {
     next_test_due_date: formatDate(dueDate),
     next_test_due_date_value: dueDate.getTime(),
     next_test_due_date_relative: formatRelativeDate(dueDate, today, 28),
-    episode_stage: 'scheduled',
+    episode_stage: appointmentDate ? 'scheduled' : 'not scheduled',
     next_appointment_days: nextAppointmentDays,
     next_appointment_date: appointmentDate ? formatDate(appointmentDate) : 'Not known',
     next_appointment_date_value: appointmentDate ? appointmentDate.getTime() : null,

@@ -36,30 +36,39 @@ const parseDateFields = (dateObj) => {
 // simple search
 router.get('/mission-1/current-iteration/04a-example-search-result', function (req, res) {
   const query = (req.query['search-params'] || '').trim()
-  const allParticipants = (req.session.data.participants && req.session.data.participants.default) || []
+  const allParticipants = ((req.session.data.participants && req.session.data.participants.default) || [])
+    .map((participant, index) => Object.assign({}, participant, { participantIndex: index }))
+    .filter(participant => participant.episode_stage === 'not scheduled')
   const normalizedQuery = query.toLowerCase().replace(/\s+/g, ' ')
   const nhsQuery = normalizedQuery.replace(/\s+/g, '')
 
-  const searchResults = (normalizedQuery ? allParticipants.map((participant, index) => {
+  const searchResults = (normalizedQuery ? allParticipants.filter((participant) => {
     const nhs = participant.nhs_number.toLowerCase().replace(/\s+/g, '')
     const name = participant.full_name.toLowerCase()
     const dob = participant.date_of_birth.toLowerCase()
 
-    if (
+    return (
       nhs.includes(nhsQuery) ||
       name.includes(normalizedQuery) ||
       dob.includes(normalizedQuery)
-    ) {
-      return Object.assign({}, participant, { participantIndex: index })
-    }
-
-    return null
-  }).filter(Boolean) : allParticipants.map((participant, index) => Object.assign({}, participant, { participantIndex: index })))
+    )
+  }) : allParticipants)
 
   res.render('mission-1/current-iteration/04a-example-search-result', {
     participants: searchResults,
     searchQuery: query
   })
+})
+
+router.get('/mission-1/participants/:participantId', function (req, res) {
+  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const participant = participants.find(item => item.participantId === req.params.participantId)
+
+  if (!participant) {
+    return res.status(404).send('Participant not found')
+  }
+
+  res.render('mission-1/current-iteration/macros/participant-detail', { participant })
 })
 
 // adding and removing participants from the "group"
