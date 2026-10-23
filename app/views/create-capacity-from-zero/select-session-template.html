@@ -71,12 +71,56 @@
               </dd>
             </div>
           </dl>
-          <button class="nhsuk-link nhsuk-u-font-size-19" popovertarget="{{ 'template-preview-standard' if template.example else 'template-preview-' + template.id }}">Full details</button>
+          <button class="nhsuk-link nhsuk-u-font-size-19" popovertarget="{{ 'template-preview-' + template.id }}">Full details</button>
         </div>
       </div>
     </div>
   </div>
 {% if loop.index0 % 2 == 1 or loop.last %}</div>{% endif %}
+{% endfor %}
+
+{% for template in data.sessionTemplates %}
+<dialog id="template-preview-{{ template.id }}" popover class="app-template-preview-dialog">
+  <div class="app-template-preview-dialog--header">
+    <button type="button" class="app-template-preview-dialog--close" popovertarget="template-preview-{{ template.id }}" popovertargetaction="hide">
+      <span aria-hidden="true">&times;</span>
+      <span class="nhsuk-u-visually-hidden">Close full template details</span>
+    </button>
+    <h1 class="nhsuk-heading-l">
+      {{ template.name }}
+    </h1>
+    {% if template.note %}
+    <p class="nhsuk-u-secondary-text-colour">{{ template.note }}</p>
+    {% endif %}
+    <h2 class="nhsuk-heading-m nhsuk-u-margin-0 nhsuk-u-padding-0">
+      <span class="nhsuk-caption-m">Session times</span>
+      {{ template.sessionStartLabel }} to {{ template.sessionEndLabel }}
+    </h2>
+  </div>
+  <div class="app-template-preview-dialog--content">
+    {% for slot in template.slots %}
+    <div class="slot slot--centred{% if slot.isNonBookable %} is-staff-break{% endif %}{% if slot.isCombined %} is-merged{% endif %}">
+      <span class="slot-time nhsuk-u-font-size-19">{{ slot.startLabel }}</span>
+      <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
+      <span class="slot-tag">
+        {% if slot.isNonBookable %}
+          <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.nonBookableReason }}</span>{% endif %}
+        {% elseif slot.isSpecialAppointment %}
+          <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
+        {% elseif slot.isHold %}
+          <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.holdReason }}</span>{% endif %}
+        {% endif %}
+        {% if slot.isCombined %}
+          <span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>
+        {% endif %}
+      </span>
+    </div>
+    {% for position in slot.mergedChildren %}
+    <div class="slot is-merged is-merged-child{% if slot.isNonBookable %} is-staff-break{% endif %}{% if loop.last %} is-merged-last-child{% endif %}" style="--stack-index: {{ position }}" aria-hidden="true"></div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+</dialog>
 {% endfor %}
 
 {% endblock %}
