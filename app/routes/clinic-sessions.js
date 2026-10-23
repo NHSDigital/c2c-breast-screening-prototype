@@ -171,7 +171,7 @@ router.post('/sessions/mark-staff-break', nonBookableHandler({ reason: 'staff br
 router.post('/sessions/mark-staff-meeting', nonBookableHandler({ reason: 'staff meeting', ...sessionsSlotStructure }))
 router.post('/sessions/clear-slot-type', clearTagsHandler(sessionsSlotStructure))
 router.post('/sessions/mark-hold-rebooking', holdHandler({ reason: 'rebooking', ...sessionsSlotStructure }))
-router.post('/sessions/mark-hold-web-rebooking', holdHandler({ reason: 'web rebooking', ...sessionsSlotStructure }))
+router.post('/sessions/mark-hold-web-rebooking', holdHandler({ reason: 'online booking', ...sessionsSlotStructure }))
 router.post('/sessions/mark-hold-technical-recall', holdHandler({ reason: 'technical recall', ...sessionsSlotStructure }))
 router.post('/sessions/mark-hold-generic', holdHandler(sessionsSlotStructure))
 router.post('/sessions/mark-special-appointment', specialAppointmentHandler(sessionsSlotStructure))

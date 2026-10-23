@@ -79,7 +79,7 @@ const buildSessionSlots = (sessionData) => {
     return (firstIndex === -1 ? order.length : firstIndex) - (secondIndex === -1 ? order.length : secondIndex)
   })
   sessionData.bookableBreakdown = breakdown(slots.filter((slot) => !slot.isNonBookable), [
-    'Held for rebooking', 'Held for web rebooking', 'Held for technical recall',
+    'Held for rebooking', 'Held for online booking', 'Held for technical recall',
     'Special appointment', 'Held', 'Standard'
   ])
   sessionData.nonBookableBreakdown = breakdown(slots.filter((slot) => slot.isNonBookable), [

@@ -33,7 +33,7 @@ const validateSessionTimes = (newSession = {}) => {
   }
 
   if (!isWholeNumber(durationStr) || duration <= 0) {
-    errors.duration = 'Slot length must be entered, in minutes'
+    errors.duration = 'Base slot length must be entered, in minutes'
   }
 
   if (!errors.startTime && !errors.endTime) {

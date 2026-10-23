@@ -160,8 +160,11 @@
 
         <div class="nhsuk-form-group {% if errors and errors.duration %}nhsuk-form-group--error{% endif %}">
           <label class="nhsuk-label nhsuk-label--m" for="duration">
-            Slot length
+            Base slot length
           </label>
+          <div id="slot-length-hint" class="nhsuk-hint">
+            Slots can be individually adjusted in the next step
+          </div>
           {% if errors and errors.duration %}
             <span class="nhsuk-error-message">
               <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.duration }}
@@ -169,7 +172,7 @@
           {% endif %}
           <div class="nhsuk-input-wrapper">
             <input class="nhsuk-input nhsuk-input--width-2 {% if errors and errors.duration %}nhsuk-input--error{% endif %}" id="duration" name="newSession[duration]" type="text"
-              spellcheck="false" value="{{ data.createSessionTemplate.duration }}" aria-describedby="duration-hint" inputmode="numeric">
+              spellcheck="false" value="{{ data.createSessionTemplate.duration }}" aria-describedby="slot-length-hint" inputmode="numeric">
             <div class="nhsuk-input-wrapper__suffix" aria-hidden="true">minutes</div>
           </div>
         </div>

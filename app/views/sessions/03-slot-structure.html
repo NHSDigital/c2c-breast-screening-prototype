@@ -84,26 +84,37 @@
       </div>
 
       <div class="nhsuk-grid-row">
-        <div class="nhsuk-grid-column-two-thirds">
+        <div class="nhsuk-grid-column-one-half">
           <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes">
 
             {% for slot in slots %}
             <div class="slot{% if slot.isNonBookable %} is-staff-break{% endif %}{% if slot.isCombined %} is-merged{% endif %}">
               <div class="nhsuk-checkboxes__item">
                 <input class="nhsuk-checkboxes__input" id="computed-slot-{{ slot.index }}" name="computedSlots[]" type="checkbox" value="{{ slot.index }}">
+                
                 <label class="nhsuk-label nhsuk-checkboxes__label" for="computed-slot-{{ slot.index }}">
-                  <span class="slot-time">{{ slot.startLabel }}</span><span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
-                  <span class="slot-tag">
-                    {% if slot.isNonBookable %}
-                      <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.nonBookableReason }}</span>{% endif %}
-                    {% elseif slot.isSpecialAppointment %}
-                      <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
-                    {% elseif slot.isHold %}
-                      <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.holdReason }}</span>{% endif %}
-                    {% endif %}
-                    {% if slot.isCombined %}
-                      <span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>
-                    {% endif %}
+                  <span class="slot-container">
+                    <!-- time elements -->
+                    <span class="slot-time">
+                      {{ slot.startLabel }} <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
+                      {% if slot.isCombined %}
+                        <br><span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>
+                      {% else %}
+                        <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ data.createSessionTemplate.duration }} minutes</span>
+                      {% endif %}
+                    </span>
+                    <!-- slot metadata elements -->
+                    <span class="slot-metadata">
+                      {% if slot.isNonBookable %}
+                        <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.nonBookableReason }}</span>{% endif %}
+                      {% elseif slot.isSpecialAppointment %}
+                        <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
+                      {% elseif slot.isHold %}
+                        <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.holdReason }}</span>{% endif %}
+                      {% endif %}
+                      {% if slot.isNonBookable or slot.isSpecialAppointment or slot.isHold %}<br>{% endif %}
+                      <a href="#" class="nhsuk-u-font-size-16">Add note</a>
+                    </span>
                   </span>
                 </label>
               </div>
@@ -115,60 +126,69 @@
 
           </div>
         </div>
-        <div class="nhsuk-grid-column-one-third app-side-panel">
 
-          <div class="nhsuk-card nhsuk-card--feature app-card--feature-grey nhsuk-u-margin-top-0">
+        <div class="nhsuk-grid-column-one-quarter app-side-panel">
+          <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-0">
             <div class="nhsuk-card__content">
-              <h3 class="nhsuk-card__heading nhsuk-u-font-size-22">
-                Tag slots
+              <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
+                Set slot types
               </h3>
-              <h4 class="nhsuk-body-m nhsuk-u-font-weight-bold nhsuk-u-margin-bottom-2">Hold:</h4>
+              <h4 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">
+                Held for:
+              </h4>
               <ul class="nhsuk-list">
                 <li>
-                  <button class="nhsuk-link" formaction="mark-hold-rebooking">Rebooking capacity</button>
+                  <button class="nhsuk-link" formaction="mark-hold-rebooking">rebooking</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-hold-web-rebooking">Web rebooking</button>
+                  <button class="nhsuk-link" formaction="mark-hold-web-rebooking">online booking</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-hold-technical-recall">Technical recall</button>
+                  <button class="nhsuk-link" formaction="mark-hold-technical-recall">technical recall</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-special-appointment">Special appointment</button>
+                  <button class="nhsuk-link" formaction="mark-special-appointment">special appointment</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-hold-generic">Generic</button>
+                  <button class="nhsuk-link" formaction="mark-hold-generic">miscellaneous</button>
                 </li>
               </ul>
-              <h4 class="nhsuk-body-m nhsuk-u-font-weight-bold nhsuk-u-margin-bottom-2">Make non-bookable:</h4>
+              <h4 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">
+                Non-bookable as:
+              </h4>
               <ul class="nhsuk-list">
                 <li>
-                  <button class="nhsuk-link" formaction="mark-staff-break">Staff break</button>
+                  <button class="nhsuk-link" formaction="mark-staff-break">staff break</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-staff-meeting">Staff meeting</button>
+                  <button class="nhsuk-link" formaction="mark-staff-meeting">staff meeting</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-non-bookable-generic">Generic</button>
+                  <button class="nhsuk-link" formaction="mark-non-bookable-generic">miscellaneous</button>
                 </li>
               </ul>
-              <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
-              <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="clear-slot-type">Remove tags from selected</button>   
             </div>
+            <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+            <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="clear-slot-type">Reset all selected</button>  
           </div>
-          
-          <div class="nhsuk-card nhsuk-card--feature app-card--feature-grey">
+        </div>
+        
+        <div class="nhsuk-grid-column-one-quarter app-side-panel">
+          <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-0">
             <div class="nhsuk-card__content">
-              <h3 class="nhsuk-card__heading nhsuk-u-font-size-22">
-                Combine slots
+              <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
+                Slot length
               </h3>
-              <button class="nhsuk-link nhsuk-u-font-size-19" formaction="combine-slots">Combine selected</button>
-              <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
-              <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="divide-slots">Divide selected</button>   
+              <ul class="nhsuk-list">
+                <li>
+                  <button class="nhsuk-link nhsuk-u-font-size-19" formaction="combine-slots">Combine selected</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="divide-slots">Divide all selected</button> 
+                </li>
+              </ul> 
             </div>
           </div>
-
-          <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
           <p aria-live="polite">
             <span id="available-slots">{{ bookableSlotCount }}</span> bookable slots
           </p>
