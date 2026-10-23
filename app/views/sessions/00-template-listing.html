@@ -58,7 +58,7 @@
     <div class="nhsuk-card nhsuk-u-padding-4">
       <div class="app-card-editable">
         <div>
-          <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-2">
+          <h2 class="nhsuk-heading-m">
             {{ template.name }}
             {% if templateSaved and loop.first and not template.example %}<span class="nhsuk-tag nhsuk-tag--blue">{{ "Updated" if templateSaved == "updated" else "New" }}</span>{% endif %}
           </h2>
