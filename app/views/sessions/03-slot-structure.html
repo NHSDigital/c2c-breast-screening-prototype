@@ -178,16 +178,62 @@
           <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-0">
             <div class="nhsuk-card__content">
               <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
-                Slot length
+                Set slot duration
               </h3>
               <ul class="nhsuk-list">
                 <li>
                   <button class="nhsuk-link nhsuk-u-font-size-19" formaction="combine-slots">Combine selected</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="divide-slots">Divide all selected</button> 
+                  <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="divide-slots">Divide selected</button> 
                 </li>
-              </ul> 
+              </ul>
+              <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+              <h4 class="nhsuk-u-font-size-19 nhsuk-u-font-weight-normal nhsuk-u-margin-bottom-2">
+                Adjust selected:
+              </h4>
+
+              <div class="app-stepper-input">
+                <div class="app-stepper-input__wrapper">
+
+                  <button 
+                    type="button" 
+                    class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-stepper-input__button app-stepper-input__button--decrease app-js-only" 
+                    data-input-id="slot-duration-stepper"
+                    aria-label="Decrease slot duration by 1 minute"
+                    aria-controls="slot-duration-stepper"
+                    >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </button>
+                  
+                  <input 
+                    class="nhsuk-input nhsuk-input--width-2" 
+                    id="slot-duration-stepper" 
+                    name="slotDurationStepper" 
+                    type="text" 
+                    inputmode="numeric" 
+                    value="{{ inputValue }}"
+                    min="1"
+                    step="1">
+
+                  <button 
+                    type="button" 
+                    class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-stepper-input__button app-stepper-input__button--increase app-js-only" 
+                    data-input-id="slot-duration-stepper"
+                    aria-label="Increase slot duration by 1 minute"
+                    aria-controls="slot-duration-stepper"
+                    >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </button>
+                  
+                  {# Visually hidden live region for announcing value changes #}
+                  <div id="{{ inputId }}-status" class="nhsuk-u-visually-hidden" aria-live="polite" aria-atomic="true"></div>
+                </div>
+              </div>
             </div>
           </div>
           <p aria-live="polite">
@@ -270,4 +316,5 @@
     })
   })()
 </script>
+<script type="text/javascript" src="/assets/javascript/stepper-input.js"></script>
 {% endblock %}
