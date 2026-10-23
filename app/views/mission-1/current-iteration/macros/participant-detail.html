@@ -59,22 +59,22 @@
             <dt class="nhsuk-summary-list__key">NHS Number</dt>
             <dd class="nhsuk-summary-list__value nhsuk-u-font-code nhsuk-u-nowrap">{{ participant.nhs_number }}</dd>
           </div>
-          <div class="nhsuk-summary-list__row">
+          <!--<div class="nhsuk-summary-list__row">
             <dt class="nhsuk-summary-list__key">SX Number</dt>
             <dd class="nhsuk-summary-list__value nhsuk-u-font-code nhsuk-u-nowrap">{{ participant.sx_number }}</dd>
-          </div>
+          </div>-->
           <div class="nhsuk-summary-list__row">
             <dt class="nhsuk-summary-list__key">Date of birth</dt>
             <dd class="nhsuk-summary-list__value">{{ participant.date_of_birth }}<br><span class="nhsuk-hint">({{ participant.age }} years old)</span></dd>
           </div>
-          <div class="nhsuk-summary-list__row">
+          <!--<div class="nhsuk-summary-list__row">
             <dt class="nhsuk-summary-list__key">Gender</dt>
             <dd class="nhsuk-summary-list__value">{{ participant.gender }}</dd>
-          </div>
-          <div class="nhsuk-summary-list__row">
+          </div>-->
+          <!--<div class="nhsuk-summary-list__row">
             <dt class="nhsuk-summary-list__key">Ethnicity</dt>
             <dd class="nhsuk-summary-list__value">{{ participant.ethnicity }}</dd>
-          </div>
+          </div>-->
         </dl>
       </div>
     </section>
@@ -83,14 +83,14 @@
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-card__heading nhsuk-heading-m">Contact details</h2>
         <dl class="nhsuk-summary-list">
-          <div class="nhsuk-summary-list__row">
+          <!--<div class="nhsuk-summary-list__row">
             <dt class="nhsuk-summary-list__key">Address</dt>
             <dd class="nhsuk-summary-list__value">
               {{ participant.address.houseNumber }} {{ participant.address.street }}<br>
               {{ participant.address.town }}<br>
               {{ participant.address.postcode }}
             </dd>
-          </div>
+          </div>-->
           <div class="nhsuk-summary-list__row">
             <dt class="nhsuk-summary-list__key">{% if participant.phone_numbers.mobile and participant.phone_numbers.home %}Phone numbers{% else %}Phone number{% endif %}</dt>
             <dd class="nhsuk-summary-list__value">{% if participant.phone_numbers.mobile %}{{ participant.phone_numbers.mobile }}{% endif %}{% if participant.phone_numbers.mobile and participant.phone_numbers.home %}<br>{% endif %}{% if participant.phone_numbers.home %}{{ participant.phone_numbers.home }}{% endif %}</dd>
@@ -108,6 +108,10 @@
         <h2 class="nhsuk-card__heading nhsuk-heading-m">GP details</h2>
         <dl class="nhsuk-summary-list">
           <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Practice code</dt>
+            <dd class="nhsuk-summary-list__value">{{ participant.gp_practice.practice_code }}</dd>
+          </div>
+          <!--<div class="nhsuk-summary-list__row">
             <dt class="nhsuk-summary-list__key">Name</dt>
             <dd class="nhsuk-summary-list__value">{{ participant.gp_practice.name }}</dd>
           </div>
@@ -123,11 +127,11 @@
               {{ participant.gp_practice.address.postcode }}
             </dd>
           </div>
-        </dl>
+        </dl>--> 
       </div>
     </section>
 
-    <section class="nhsuk-card nhsuk-u-margin-bottom-5">
+    <!--<section class="nhsuk-card nhsuk-u-margin-bottom-5">
       <div class="nhsuk-card__content">
         <h2 class="nhsuk-card__heading nhsuk-heading-m">Screening episodes</h2>
         <h3 class="nhsuk-heading-s">Current episode</h3>
@@ -145,7 +149,7 @@
           </div>
         </dl>
       </div>
-    </section>
+    </section>-->
   </div>
 </div>
 {% endblock %}
