@@ -5,10 +5,10 @@ const router = express.Router()
 
 // Isolated September Test (Mission 1) routes
 router.use(require('./routes/mission-1'));
-// Isolated create capacity from zero routes
-router.use(require('./routes/create-capacity-from-zero'));
-// Isolated BSO management routes
+//
 router.use(require('./routes/bso-management'));
+router.use(require('./routes/create-capacity-from-zero'));
+router.use(require('./routes/clinic-sessions'));
 
 const participantMonths = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -457,7 +457,7 @@ router.get(['/clinics-schedules/06-apply-session', OLDER_VERSIONS_PREFIX + '06-a
 
 const isWholeNumber = str => /^\d+$/.test(str)
 
-router.post('/sessions/01-set-timings', function (req, res) {
+router.post('/sessions/z-older-versions/01-set-timings', function (req, res) {
   const session = (req.body && req.body.newSession) || {}
   const startTime = session.startTime || {}
   const endTime = session.endTime || {}
@@ -512,7 +512,7 @@ router.post('/sessions/01-set-timings', function (req, res) {
       errors
     })
   }
-  res.redirect('/sessions/02-organise-slots')
+  res.redirect('/sessions/z-older-versions/02-organise-slots')
 })
 
 router.post(['/clinics-schedules/04-organise-slots', OLDER_VERSIONS_PREFIX + '04-organise-slots'], function (req, res) {
@@ -821,11 +821,11 @@ router.get(['/clinics-schedules/09-prototype-end', OLDER_VERSIONS_PREFIX + '09-p
   res.render(clinicsScheduleView(req, '09-prototype-end'))
 })
 
-router.post('/sessions/02-organise-slots', function (req, res) {
+router.post('/sessions/z-older-versions/02-organise-slots', function (req, res) {
   if (req.session.data.sessionCreationType === 'new session template') {
-    res.redirect('/sessions/templating-03-name-and-description')
+    res.redirect('/sessions/z-older-versions/templating-03-name-and-description')
   } else {
-    res.redirect('/sessions/03-prototype-end')
+    res.redirect('/sessions/z-older-versions/03-prototype-end')
   }
 })
 

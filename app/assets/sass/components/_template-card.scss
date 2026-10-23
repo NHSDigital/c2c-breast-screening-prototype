@@ -1,12 +1,17 @@
 // Import NHS.UK frontend library
 @use "nhsuk-frontend/dist/nhsuk/core" as *;
 
-.app-template-card {
+.app-session-template-card {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
+}
 
-  .preview-image {
-    width: 100px;
-    outline: 1px solid $nhsuk-border-colour;
+.app-session-template-preview-image {
+  min-width: 22.5%;
+  & > img {
+    display: block;
+    width: 100%;
+    outline: 1px solid $nhsuk-input-border-colour;
+    margin-bottom: nhsuk-spacing(2);
   }
 }

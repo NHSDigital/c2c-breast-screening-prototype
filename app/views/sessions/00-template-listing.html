@@ -1,0 +1,166 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}
+<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <ol class="nhsuk-breadcrumb__list">
+    <li class="nhsuk-breadcrumb__list-item">
+      <a class="nhsuk-breadcrumb__link" href="/">
+        Home
+      </a>
+    </li>
+    <li class="nhsuk-breadcrumb__list-item">
+      <a class="nhsuk-breadcrumb__link" href="/create-capacity-from-zero/">
+        Clinics
+      </a>
+    </li>
+  </ol>
+  <a class="nhsuk-back-link" href="/create-capacity-from-zero/">
+    <span class="nhsuk-u-visually-hidden">Back to </span>Clinics
+  </a>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+{% if templateSaved %}
+<div class="nhsuk-notification-banner nhsuk-notification-banner--success" data-module="nhsuk-notification-banner" role="alert" aria-labelledby="nhsuk-notification-banner-title">
+  <div class="nhsuk-notification-banner__header">
+    <h2 class="nhsuk-notification-banner__title" id="nhsuk-notification-banner-title">
+      Success
+    </h2>
+  </div>
+  <div class="nhsuk-notification-banner__content">
+    <h3 class="nhsuk-notification-banner__heading">
+      Session template {{ templateSaved }}
+    </h3>
+  </div>
+</div>
+{% endif %}
+
+<div class="app-card-editable">
+  <h1 class="nhsuk-heading-l">Session templates</h1>
+  <a href="new-template" class="nhsuk-button nhsuk-button--secondary">Create a new session template</a>
+</div>
+
+{# Session templates first (newest first), then the examples; a new grid row wraps every two cards #}
+{% set allTemplates = (data.sessionTemplates | reverse) %}
+
+{% for template in allTemplates %}
+{% if loop.index0 % 2 == 0 %}<div class="nhsuk-grid-row">{% endif %}
+  <div class="nhsuk-grid-column-one-half">
+    <div class="nhsuk-card nhsuk-u-padding-4">
+      <div class="app-card-editable">
+        <div>
+          <h2 class="nhsuk-heading-m">
+            {{ template.name }}
+            {% if templateSaved and loop.first and not template.example %}<span class="nhsuk-tag nhsuk-tag--blue">{{ "Updated" if templateSaved == "updated" else "New" }}</span>{% endif %}
+          </h2>
+          {% if template.note %}
+          <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">{{ template.note }}</p>
+          {% endif %}
+        </div>
+        {% if template.example %}
+        <button type="submit" class="nhsuk-link nhsuk-u-font-size-19 app-nowrap">
+          Edit template
+        </button>
+        {% elif template.id and template.source %}
+        <a href="edit-template/{{ template.id }}" class="nhsuk-link nhsuk-u-font-size-19 app-nowrap">
+          Edit template
+        </a>
+        {% endif %}
+      </div>
+      <div class="app-session-template-card">
+        <div class="app-session-template-preview-image">
+          {% if template.imagePath %}
+          <img src="{{ template.imagePath }}" alt="{{ template.imageAlt }}">
+          {% else %}
+          <img src="/assets/images/placeholder-session-template.png" alt="">
+          {% endif %}
+        </div>
+        <div>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Session times
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.sessionStartLabel }} to {{ template.sessionEndLabel }}
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Base slot length
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.duration }} minutes
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Total slots
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.totalSlotCount }}
+              </dd>
+            </div>
+          </dl>
+          <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--small" popovertarget="template-preview-{{ template.id }}">Full details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% if loop.index0 % 2 == 1 or loop.last %}</div>{% endif %}
+{% endfor %}
+
+{% for template in data.sessionTemplates %}
+<dialog id="template-preview-{{ template.id }}" popover class="app-template-preview-dialog">
+  <div class="app-template-preview-dialog--header">
+    <button type="button" class="app-template-preview-dialog--close" popovertarget="template-preview-{{ template.id }}" popovertargetaction="hide">
+      <span aria-hidden="true">&times;</span>
+      <span class="nhsuk-u-visually-hidden">Close full template details</span>
+    </button>
+    <h1 class="nhsuk-heading-l">
+      {{ template.name }}
+    </h1>
+    {% if template.note %}
+    <p class="nhsuk-u-secondary-text-colour">{{ template.note }}</p>
+    {% endif %}
+    <h2 class="nhsuk-heading-m nhsuk-u-margin-0 nhsuk-u-padding-0">
+      <span class="nhsuk-caption-m">Session times</span>
+      {{ template.sessionStartLabel }} to {{ template.sessionEndLabel }}
+    </h2>
+  </div>
+  <div class="app-template-preview-dialog--content">
+    {% for slot in template.slots %}
+    <div class="slot slot--centred{% if slot.isNonBookable %} is-staff-break{% endif %}{% if slot.isCombined %} is-merged{% endif %}">
+      <span class="slot-time nhsuk-u-font-size-19">{{ slot.startLabel }}</span>
+      <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
+      <span class="slot-tag">
+        {% if slot.isNonBookable %}
+          <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.nonBookableReason }}</span>{% endif %}
+        {% elseif slot.isSpecialAppointment %}
+          <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
+        {% elseif slot.isHold %}
+          <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.holdReason }}</span>{% endif %}
+        {% endif %}
+        {% if slot.isCombined %}
+          <span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>
+        {% endif %}
+      </span>
+    </div>
+    {% for position in slot.mergedChildren %}
+    <div class="slot is-merged is-merged-child{% if slot.isNonBookable %} is-staff-break{% endif %}{% if loop.last %} is-merged-last-child{% endif %}" style="--stack-index: {{ position }}" aria-hidden="true"></div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+</dialog>
+{% endfor %}
+
+{% endblock %}

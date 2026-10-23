@@ -94,3 +94,10 @@
 .app-secondary-navigation__list-item {
   margin-bottom: 0;
 }
+
+// Pushes a list item to the right-hand end of the row; add alongside .app-secondary-navigation__list-item
+.app-secondary-navigation--aside {
+  @include nhsuk-media-query($from: tablet) {
+    margin-left: auto;
+  }
+}
