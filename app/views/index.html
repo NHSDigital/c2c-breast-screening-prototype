@@ -1,276 +1,54 @@
-<!-- Use this page as the index for your project -->
-
-<!-- ADDING CUSTOM CSS - Add your custom CSS or Sass in /app/assets/sass/main.scss -->
-
-<!-- Extends the layout from /app/views/layout.html -->
 {% extends 'layout.html' %}
-<!--
-  In /app/views/layout.html you can:
-    - change the header and footer
-    - add custom CSS and JavaScript
--->
 
-<!--
-  Use this to set the page name which will appear at the
-  start of the <title> tag, followed by the service name.
-  This is often not needed on the homepage, where only the
-  service name is needed. You can also reuse this variable
-  within the <h1>, where they are the same.
--->
 {% set pageName = "" %}
 
-<!-- For adding a breadcrumb or back link -->
-<!-- Code examples can be found at https://service-manual.nhs.uk/design-system/components/breadcrumbs and https://service-manual.nhs.uk/design-system/components/back-link -->
 {% block beforeContent %}
 {% endblock %}
 
-<!-- For adding page content -->
-<!-- Page layout code can be found at https://service-manual.nhs.uk/design-system/styles/layout -->
 {% block content %}
+<span class="nhsuk-caption-l">{{ serviceName }}</span>
+<h1 class="nhsuk-heading-xl">
+  Cohort to clinic prototypes
+</h1>
+
+<ul class="nhsuk-grid-row nhsuk-card-group">
+  <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+    <div class="nhsuk-card nhsuk-card--clickable nhsuk-card--primary">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="index-ucd">Design prototypes</a>
+        </h2>
+        <p class="nhsuk-card__description">UCD work to be tested</p>
+        <svg class="nhsuk-icon nhsuk-icon--chevron-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+          <path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm-.3 5.8a1 1 0 1 0-1.5 1.4l2.9 2.8-2.9 2.8a1 1 0 0 0 1.5 1.4l3.5-3.5c.4-.4.4-1 0-1.4Z" />
+        </svg>
+      </div>
+    </div>
+  </li>
+  <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+    <div class="nhsuk-card nhsuk-card--clickable nhsuk-card--primary">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          <a class="nhsuk-card__link" href="index-prod">Production snapshots (missions)</a>
+        </h2>
+        <p class="nhsuk-card__description">Design work reviewed and agreed with dev for production</p>
+        <svg class="nhsuk-icon nhsuk-icon--chevron-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+          <path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm-.3 5.8a1 1 0 1 0-1.5 1.4l2.9 2.8-2.9 2.8a1 1 0 0 0 1.5 1.4l3.5-3.5c.4-.4.4-1 0-1.4Z" />
+        </svg>
+      </div>
+    </div>
+  </li>
+</ul>
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-two-thirds">
 
-      <!-- Add your content here -->
-      <!-- Styles and components can be found at https://service-manual.nhs.uk/design-system -->
-
-      <span class="nhsuk-caption-l">{{ serviceName }}</span>
-      <h1 class="nhsuk-heading-xl">
-        Cohort to clinic prototypes
-      </h1>
+      <h2 class="nhsuk-heading-m">Utilities</h2>
 
       {{ button({
         text: "Reset all session data",
         classes: "nhsuk-button--secondary",
         href: "/prototype-admin/reset?returnPage=" + (currentPage | urlencode)
       }) }}
-
-      <h2 class="nhsuk-heading-m">September 2026</h2>
-      <p>Participant view</p>
-
-      <ol>
-        <li>
-          <a href="/participants/">View standalone participant details</a>
-        </li>
-        <li>
-          <a href="/batches/participant-breakdown/standard">View participant details within a batch</a>
-        </li>
-        <li>
-          <a href="/participants/search">Search for a participant</a>
-        </li>
-      </ol>
-
-      <h2 class="nhsuk-heading-l">Clinics and schedules</h2>
-      <h3 class="nhsuk-heading-m">August &ndash; September 2026</h3>
-      <p>Clinics with schedules</p>
-      <ol>
-        <li>
-          <a href="/create-capacity-from-zero/">Create a new clinic (containers)</a>
-          <strong class="nhsuk-tag nhsuk-tag--green">
-            ready to test
-          </strong>
-        </li>
-        <li>
-          <a href="/clinics-schedules/z-older-versions">Create a new clinic (transaction)</a>
-          <strong class="nhsuk-tag nhsuk-tag--red">
-            superceded
-          </strong>
-        </li>
-      </ol>
-      <p>Appointments and active clinics</p>
-      <ol>
-        <li>
-          <a href="/create-capacity-from-zero/clinic-summary-in-progress">Live clinic view</a>
-          <strong class="nhsuk-tag nhsuk-tag--orange">
-            Paused
-          </strong>
-        </li>
-        <li>
-          <a href="/sessions/day-slot-view">Single live (with bookings) clinic session view</a>
-          <strong class="nhsuk-tag nhsuk-tag--orange">
-            Paused
-          </strong>
-        </li>
-      </ol>
-      <h3 class="nhsuk-heading-m">
-        May–June 2026
-        <strong class="nhsuk-tag nhsuk-tag--red">
-          superceded
-        </strong>
-      </h3>
-      <details class="nhsuk-details">
-        <summary class="nhsuk-details__summary">
-          <span class="nhsuk-details__summary-text">
-            Older work (may be broken, not maintained)
-          </span>
-        </summary>
-        <div class="nhsuk-details__text">
-          <p>Clinics: first run</p>
-          <ol>
-            <li>
-              <a href="/clinics/z-older-versions/">Clinic listing</a>
-            </li>
-            <li>
-              <a href="/clinics/z-older-versions/clinic-detail">Clinic detail</a>
-            </li>
-          </ol>
-        </div>
-      </details>
-
-
-      <h2 class="nhsuk-heading-l">Clinic sessions (days)</h2>
-      <h3 class="nhsuk-heading-m">October 2026</h3>
-      <p>Session templates: iteration 2</p>
-      <ol>
-        <li>
-          <a href="/create-capacity-from-zero/">Create a new session template</a>
-        </li>
-        <li>
-          <a href="sessions/00-template-listing">(template listing page)</a>
-        </li>
-      </ol>
-      <h3 class="nhsuk-heading-m">July 2026</h3>
-      <p>
-        Sessions: first run
-        <strong class="nhsuk-tag nhsuk-tag--red">
-          superceded
-        </strong>
-      </p>
-      <ol>
-        <li>
-          <a href="/sessions/z-older-versions/01-set-timings">Set up session</a>
-        </li>
-        <li>
-          <a href="sessions/z-older-versions/templating-01-listing">Template listing</a>
-        </li>
-      </ol>
-
-
-      <h2 class="nhsuk-heading-l">Batches</h2>
-      <h3 class="nhsuk-heading-m">April 2026</h3>
-      <p>
-        Batches: first run
-        <strong class="nhsuk-tag nhsuk-tag--orange">
-          Paused
-        </strong>
-      </p>
-
-      <ol>
-        <li>
-          <a href="/batches/">Batch listing</a>
-        </li>
-        <li>
-          <a href="/batches/batch-detail">Brand new batch</a>
-        </li>
-        <li>
-          <a href="/batches/batch-detail-in-progress">Batch in progress</a>
-        </li>
-      </ol>
-
-
-      <h2 class="nhsuk-heading-l">BSO management</h2>
-      <h2 class="nhsuk-heading-m">March 2026</h2>
-      <p>
-        BSO-level building blocks: units, locations, etc
-        <strong class="nhsuk-tag nhsuk-tag--orange">
-          Paused
-        </strong>
-      </p>
-
-      <ol>
-        <li>
-          <a href="/bso-objects/">Organisation, breast screening units, and locations</a>
-        </li>
-        <li>
-          <a href="/bso-objects/bso/bso-public-details">BSO organisation</a>
-        </li>
-        <li>
-          <a href="/bso-objects/units">Breast screening units</a>
-        </li>
-        <li>
-          <a href="/bso-objects/locations/">Locations</a>
-        </li>
-      </ol>
-
-      <hr>
-
-      <h3 class="nhsuk-heading-l">Mission 1</h3>
-      <div class="nhsuk-inset-text">
-        <p>
-          <b>Mural:</b> <a href="https://app.mural.co/t/nhsdigital8118/m/nhsdigital8118/1779182652812/0015966bbee6d6a0182a2afb7fc482a45756e20d?wid=61-1791292815757">0000-01 C2C September Test</a>
-        </p>
-      </div>
-      <h4 class="nhsuk-heading-s">Create clinic module: live test #2</h4>
-      <p>Enable test BSOs to create a clinic with a schedule lasting one day</p>
-      <ol>
-        <li>
-          <a href="/mission-1/current-iteration/00-clinics">Create a new clinic session</a>
-        </li>
-        <li>
-          <a href="/mission-1/current-iteration/00-batches">Create a new clinic session as part of batch import</a>
-        </li>
-      </ol>
-      
-      <h4 class="nhsuk-heading-s">Older</h4>
-      <details class="nhsuk-details">
-        <summary class="nhsuk-details__summary">
-          <span class="nhsuk-details__summary-text">
-            Older work (may be broken, not maintained)
-          </span>
-        </summary>
-        <div class="nhsuk-details__text">
-        <h4 class="nhsuk-heading-s">Live test #1</h4>
-        <p>Users upload a csv containing the participants they wish to book into a prearranged single day clinic.</p>
-        <p>
-          <a href="/mission-1/current-iteration/00-batches">Click-thru journey</a>
-        </p>
-          <h4 class="nhsuk-heading-s">Iteration 1</h4>
-          <p>Users upload a csv containing the participants they wish to book into a prearranged single day clinic.</p>
-          <ol>
-            <li>
-              <a href="/mission-1/z-september-transactional-journey/upload-a-batch">Upload a batch</a>
-            </li>
-            <li>
-              <a href="/mission-1/z-september-transactional-journey/batch-detail-trimmed-csv">Batch detail for trimmed csv</a>
-            </li>
-            <li>
-              <a href="/mission-1/z-september-transactional-journey/pre-appoint-confirm">Pre-appointment confirmation</a>
-            </li>
-            <li>
-              <a href="/mission-1/z-september-transactional-journey/appointing-complete">Single day of appointments</a>
-            </li>
-          </ol>
-          <p>Defunct work on finding and grouping participants. Components to be reused elsewhere.</p>
-          <ol>
-        <li>
-          <a href="/mission-1/z-september-transactional-journey/batch-detail">Batch detail</a>
-        </li>
-        <li>
-          <a href="/mission-1/z-september-transactional-journey/search">Search participants</a>
-        </li>
-        <li>
-          <a href="/mission-1/z-september-transactional-journey/search-and-results">Search results</a>
-        </li>
-        <li>
-          <a href="/mission-1/z-september-transactional-journey/group">Group</a>
-        </li>
-        <li>
-          <a href="/mission-1/z-september-transactional-journey/spinner">[Utility] "appointing" spinner</a>
-        </li>
-          </ol>
-        </div>
-      </details>
-
-      <hr>
-
-      <h3 class="nhsuk-heading-m">Sketchbook</h3>
-      <ol>
-        <li>
-          <a href="/z-sketching/calc-2">Rough idea: assembling a block of slots</a>
-        </li>
-        <li>
-          <a href="/z-sketching/batch-participant-search-wireframe">Wireframe proto: search participants in a batch</a>
-        </li>
-      </ol>
 
     </div>
   </div>
