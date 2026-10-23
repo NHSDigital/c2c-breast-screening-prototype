@@ -1,0 +1,257 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% set padlockSvg %}
+<div class="--session-locked">
+  <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <path d="M5.5 8V5.75C5.5 3.67893 7.17893 2 9.25 2C11.3211 2 13 3.67893 13 5.75V8" stroke="#4C6272" stroke-width="1.75" stroke-linecap="round"/>
+    <rect x="3" y="7" width="12.5" height="10" rx="1.5" fill="#4C6272"/>
+    <circle cx="9.25" cy="11.75" r="1.25" fill="white"/>
+    <path d="M9.25 13V14.5" stroke="white" stroke-width="1.25" stroke-linecap="round"/>
+  </svg>
+  locked
+</div>
+{% endset %}
+
+{% macro primaryNavigation(activeItem, serviceName, bsoName) %}
+  {{ header({
+    account: {
+      items: [
+        {
+          text: bsoName
+        },
+        {
+          href: "#",
+          text: "Thomas Pynchon",
+          icon: true
+        },
+        {
+          href: "/",
+          text: "Log out"
+        }
+      ]
+    },
+    service: {
+      text: serviceName,
+      href: "/"
+    },
+    navigation: {
+      items: [
+        {
+          href: "#",
+          text: "Dashboard",
+          active: activeItem === "Dashboard/home"
+        },
+        {
+          href: "/participants/",
+          text: "Participants",
+          active: activeItem === "Participants"
+        },
+        {
+          href: "/create-capacity-from-zero/",
+          text: "Clinics",
+          active: activeItem === "Clinics"
+        },
+        {
+          href: "#",
+          text: "Image reading",
+          active: activeItem === "Image reading"
+        },
+        {
+          href: "#",
+          text: "Reports",
+          active: activeItem === "Reports"
+        },
+        {
+          href: "/bso-objects/",
+          text: "BSO management",
+          active: activeItem === "BSO management"
+        },
+        {
+          href: "#",
+          text: "Messages",
+          active: activeItem === "Messages"
+        },
+        {
+          href: "#",
+          text: "Help and support",
+          active: activeItem === "Help and support"
+        }
+      ]
+    }
+  }) }}
+{% endmacro %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}
+<!-- <nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
+  <ol class="nhsuk-breadcrumb__list">
+    <li class="nhsuk-breadcrumb__list-item">
+      <a class="nhsuk-breadcrumb__link" href="/">
+        Home
+      </a>
+    </li>
+  </ol>
+  <a class="nhsuk-back-link" href="/">
+    <span class="nhsuk-u-visually-hidden">Back to </span>Home
+  </a>
+</nav> -->
+{% endblock %}
+
+{% block content %}
+
+<nav class="app-secondary-navigation" aria-label="Secondary menu">
+  <ul class="app-secondary-navigation__list">
+    <li class="app-secondary-navigation__list-item">
+      <a class="app-secondary-navigation__link" href="/create-capacity-from-zero/index-manage">Today’s sessions</a>
+    </li>
+    <li class="app-secondary-navigation__list-item">
+      <a class="app-secondary-navigation__link" href="/create-capacity-from-zero/">Current clinics</a>
+    </li>
+    <li class="app-secondary-navigation__list-item">
+      <a class="app-secondary-navigation__link" href="/create-capacity-from-zero/index-all-clinics" aria-current="page"><strong class="app-secondary-navigation__current">All clinics</strong></a>
+    </li>
+  </ul>
+</nav>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <div class="app-card-editable">
+      <h1 class="nhsuk-heading-l">Current clinics</h1>
+      {{ button({
+        text: "Create a new clinic",
+        href: "/create-capacity-from-zero/create-clinic",
+        classes: "nhsuk-button--secondary"
+      }) }}
+    </div>
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+
+    <table class="nhsuk-table nhsuk-table--striped nhsuk-table--sortable" data-module="nhsuk-table">
+      <thead class="nhsuk-table__head">
+        <tr class="nhsuk-table__row">
+          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="ascending">
+            Clinic
+          </th>
+          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="none">
+            Unit and location
+          </th>
+          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="none">
+            Scheduled timespan
+          </th>
+          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="none">
+            Capacity
+          </th>
+        </tr>
+      </thead>
+      <tbody class="nhsuk-table__body">
+        <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">
+            <a href="new-schedule-empty" class="nhsuk-u-font-weight-bold">New clinic but empty<br></a>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">NNN-NNN-systemid-20260501</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            Drummond<br>
+            East Mereford Community Hub
+          </td>
+          <td class="nhsuk-table__cell">
+            <span class="nhsuk-tag nhsuk-tag--red">No schedules assigned</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            <span class="nhsuk-tag nhsuk-tag--red">No sessions assigned</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <h2>Templates</h2>
+    <p>
+      <a class="nhsuk-action-link" href="/sessions/00-template-listing">
+        <svg class="nhsuk-icon nhsuk-icon--arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+          <path d="M12 2a10 10 0 0 0-10 9h11.7l-4-4a1 1 0 0 1 1.5-1.4l5.6 5.7a1 1 0 0 1 0 1.4l-5.6 5.7a1 1 0 0 1-1.5 0 1 1 0 0 1 0-1.4l4-4H2A10 10 0 1 0 12 2z" />
+        </svg>
+        <span class="nhsuk-action-link__text">
+          Manage clinic session templates
+        </span>
+      </a>
+    </p>
+  </div>
+</div>
+
+<!-- <ul class="nhsuk-grid-row nhsuk-card-group">
+  <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+    <div class="nhsuk-card nhsuk-card--feature">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          Run clinic sessions
+        </h2>
+        <div>
+          <a class="nhsuk-action-link" href="/create-capacity-from-zero/">
+            <svg class="nhsuk-icon nhsuk-icon--arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+              <path d="M12 2a10 10 0 0 0-10 9h11.7l-4-4a1 1 0 0 1 1.5-1.4l5.6 5.7a1 1 0 0 1 0 1.4l-5.6 5.7a1 1 0 0 1-1.5 0 1 1 0 0 1 0-1.4l4-4H2A10 10 0 1 0 12 2z" />
+            </svg>
+            <span class="nhsuk-action-link__text">
+              Today’s sessions
+            </span>
+          </a>
+        </div>
+        <p>Do the thing and do it today!</p>
+        <ul class="nhsuk-list">
+          <li>
+            <a href="#">Upcoming sessions</a>
+          </li>
+          <li>
+            <a href="#">Closed sessions</a>
+          </li>
+          <li>
+            <a href="#">All sessions</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </li>
+  <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+    <div class="nhsuk-card nhsuk-card--feature">
+      <div class="nhsuk-card__content">
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">
+          Manage clinics
+        </h2>
+        <div>
+          <a class="nhsuk-action-link" href="/create-capacity-from-zero/">
+            <svg class="nhsuk-icon nhsuk-icon--arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+              <path d="M12 2a10 10 0 0 0-10 9h11.7l-4-4a1 1 0 0 1 1.5-1.4l5.6 5.7a1 1 0 0 1 0 1.4l-5.6 5.7a1 1 0 0 1-1.5 0 1 1 0 0 1 0-1.4l4-4H2A10 10 0 1 0 12 2z" />
+            </svg>
+            <span class="nhsuk-action-link__text">
+              Clinics with current schedules
+            </span>
+          </a>
+        </div>
+        <p>Organise the sessions! Make clinics, schedules, timetables etc</p>
+        <ul class="nhsuk-list">
+          <li>
+            <a href="#">All clinics</a>
+          </li>
+          <li>
+            <a href="/create-capacity-from-zero/create-clinic">Create a new clinic</a>
+          </li>
+          <li>
+            <a href="/sessions/00-template-listing">Clinic session templates</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </li>
+</ul> -->
+
+{% endblock %}

@@ -112,7 +112,7 @@
       <a class="app-secondary-navigation__link" href="/create-capacity-from-zero/" aria-current="page"><strong class="app-secondary-navigation__current">Current clinics</strong></a>
     </li>
     <li class="app-secondary-navigation__list-item">
-      <a class="app-secondary-navigation__link" href="#" >All clinics</a>
+      <a class="app-secondary-navigation__link" href="/create-capacity-from-zero/index-all-clinics" >All clinics</a>
     </li>
   </ul>
 </nav>
@@ -136,16 +136,16 @@
     <table class="nhsuk-table nhsuk-table--striped nhsuk-table--sortable" data-module="nhsuk-table">
       <thead class="nhsuk-table__head">
         <tr class="nhsuk-table__row">
-          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="descending">
+          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="ascending">
             Clinic
           </th>
-          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="descending">
+          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="none">
             Unit and location
           </th>
-          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="ascending">
+          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="none">
             Scheduled timespan
           </th>
-          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="descending">
+          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="none">
             Capacity
           </th>
         </tr>
@@ -170,24 +170,6 @@
         </tr>
         <tr class="nhsuk-table__row">
           <td class="nhsuk-table__cell">
-            <a href="new-schedule-ready" class="nhsuk-u-font-weight-bold">New schedule ready but not open<br></a>
-            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">NNN-NNN-systemid-20260501</span>
-          </td>
-          <td class="nhsuk-table__cell">
-            Pankhurst<br>
-            Riverside Sports Centre
-          </td>
-          <td class="nhsuk-table__cell">
-            7 Sep 2026 to 17 Oct 2026
-          </td>
-          <td class="nhsuk-table__cell">
-            {{ padlockSvg | safe }}
-            1500 slots<br>
-            <!-- <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">of which 150 held</span> -->
-          </td>
-        </tr>
-        <tr class="nhsuk-table__row">
-          <td class="nhsuk-table__cell">
             <a href="new-schedule-empty" class="nhsuk-u-font-weight-bold">New schedule empty<br></a>
             <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">NNN-NNN-systemid-20260501</span>
           </td>
@@ -196,13 +178,31 @@
             East Mereford Community Hub
           </td>
           <td class="nhsuk-table__cell">
-            7 Sep 2026 to 17 Oct 2026
+            17 Nov 2026 to 24 Dec 2026
           </td>
           <td class="nhsuk-table__cell">
             <span class="nhsuk-tag nhsuk-tag--red">No sessions assigned</span>
           </td>
         </tr>
         <tr class="nhsuk-table__row">
+          <td class="nhsuk-table__cell">
+            <a href="new-schedule-ready" class="nhsuk-u-font-weight-bold">New schedule ready but not open<br></a>
+            <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">NNN-NNN-systemid-20260501</span>
+          </td>
+          <td class="nhsuk-table__cell">
+            Pankhurst<br>
+            Riverside Sports Centre
+          </td>
+          <td class="nhsuk-table__cell">
+            17 Sep 2026 to 27 Oct 2026
+          </td>
+          <td class="nhsuk-table__cell">
+            {{ padlockSvg | safe }}
+            1500 slots<br>
+            <!-- <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">of which 150 held</span> -->
+          </td>
+        </tr>
+        <!-- <tr class="nhsuk-table__row">
           <td class="nhsuk-table__cell">
             <a href="new-schedule-empty" class="nhsuk-u-font-weight-bold">New clinic but empty<br></a>
             <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">NNN-NNN-systemid-20260501</span>
@@ -217,7 +217,7 @@
           <td class="nhsuk-table__cell">
             <span class="nhsuk-tag nhsuk-tag--red">No sessions assigned</span>
           </td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
 
