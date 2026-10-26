@@ -135,7 +135,7 @@
                 Set slot types
               </h3>
               <h4 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">
-                Held for:
+                Hold for:
               </h4>
               <ul class="nhsuk-list">
                 <li>
@@ -175,24 +175,26 @@
         </div>
         
         <div class="nhsuk-grid-column-one-quarter app-side-panel">
-          <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-0">
+          <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
             <div class="nhsuk-card__content">
               <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
-                Edit slot duration
+                Combine slots
               </h3>
               <ul class="nhsuk-list">
                 <li>
                   <button class="nhsuk-link nhsuk-u-font-size-19" formaction="combine-slots">Combine selected</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="divide-slots">Divide selected</button> 
+                  <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="divide-slots">Separate selected</button> 
                 </li>
               </ul>
-              <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
-              <h4 class="nhsuk-u-font-size-19 nhsuk-u-font-weight-normal nhsuk-u-margin-bottom-2">
-                Adjust selected:
-              </h4>
-
+            </div>
+          </div>
+          <!-- <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-0">
+            <div class="nhsuk-card__content">
+              <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
+                Adjust duration:
+              </h3>
               <div class="app-stepper-input">
                 <div class="app-stepper-input__wrapper">
 
@@ -235,7 +237,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <p aria-live="polite">
             <span id="available-slots">{{ bookableSlotCount }}</span> bookable slots
           </p>
