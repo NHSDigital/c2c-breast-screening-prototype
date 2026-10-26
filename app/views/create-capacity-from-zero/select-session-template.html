@@ -14,237 +14,135 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="nhsuk-grid-row">
-
-  <div class="nhsuk-grid-column-three-quarters">
+  <div class="nhsuk-grid-column-full">
     <h1 class="nhsuk-heading-l">Choose session template</h1>
-
-    <div class="nhsuk-card nhsuk-u-padding-4 nhsuk-u-padding-bottom-0">
-      <div class="app-card-editable">
-        <h2 class="nhsuk-heading-s">
-          Standard
-        </h2>
-        <form method="post" action="/create-capacity-from-zero/apply-session-template">
-          <input type="hidden" name="templateName" value="Standard">
-          <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
-            Select this template
-          </button>
-        </form>
-      </div>
-      <div class="app-template-card">
-        <div>
-          <img src="/assets/images/placeholder-session-template.png" class="preview-image">
-        </div>
-        <div>
-          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Total capacity
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                42 slots
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key">
-                Time
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                09:00 to 17:00
-              </dd>
-            </div>
-          </dl>
-          <div>
-            <button type="button" class="nhsuk-link" popovertarget="template-preview-standard">Show full template preview</button>
-          </div>
-        </div>
-        <div>
-          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-0">
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Slot length
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                10 minutes
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key">
-                Total held
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                8 slots
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key">
-                Total cancelled
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                6 slots
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-    </div>
-
-    <div class="nhsuk-card nhsuk-u-padding-4 nhsuk-u-padding-bottom-0">
-      <div class="app-card-editable">
-        <h2 class="nhsuk-heading-s">
-          Special appointments
-        </h2>
-        <form method="post" action="/create-capacity-from-zero/apply-session-template">
-          <input type="hidden" name="templateName" value="Special appointments">
-          <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
-            Select this template
-          </button>
-        </form>
-      </div>
-      <div class="app-template-card">
-        <div>
-          <img src="/assets/images/placeholder-session-template-special-held.png" class="preview-image">
-        </div>
-        <div>
-          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Total capacity
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                42 slots
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key">
-                Time
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                09:00 to 17:00
-              </dd>
-            </div>
-          </dl>
-          <div>
-            <button type="button" class="nhsuk-link" popovertarget="template-preview-standard">Show full template preview</button>
-          </div>
-        </div>
-        <div>
-          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-0">
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Slot length
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                10 minutes
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key">
-                Total held
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                42 slots
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key">
-                Total cancelled
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                6 slots
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-    </div>
-
-    <div class="nhsuk-card nhsuk-u-padding-4 nhsuk-u-padding-bottom-0">
-      <div class="app-card-editable">
-        <h2 class="nhsuk-heading-s">
-          Rubie default
-        </h2>
-        <form method="post" action="/create-capacity-from-zero/apply-session-template">
-          <input type="hidden" name="templateName" value="Rubie default">
-          <button type="submit" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small">
-            Select this template
-          </button>
-        </form>
-      </div>
-      <div class="app-template-card">
-        <div>
-          <img src="/assets/images/placeholder-session-template-default.png" class="preview-image">
-        </div>
-        <div>
-          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Total capacity
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                42 slots
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key">
-                Time
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                09:00 to 17:00
-              </dd>
-            </div>
-          </dl>
-          <div>
-            <button type="button" class="nhsuk-link" popovertarget="template-preview-standard">Show full template preview</button>
-          </div>
-        </div>
-        <div>
-          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-0">
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Slot length
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                10 minutes
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key">
-                Total held
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                0 slots
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key">
-                Total cancelled
-              </dt>
-              <dd class="nhsuk-summary-list__value">
-                6 slots
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-    </div>
-
-
-    <p>
-      <a href="#">Create new session template</a>
-    </p>
-
   </div>
 </div>
 
+{# Session templates first (newest first), then the examples; a new grid row wraps every two cards #}
+{% set allTemplates = (data.sessionTemplates | reverse) %}
 
-<dialog id="template-preview-standard" class="app-template-preview-dialog" popover>
-  <div class="app-template-preview-dialog__content">
-    <button type="button" class="app-template-preview-dialog__close" popovertarget="template-preview-standard" popovertargetaction="hide">
+{% for template in allTemplates %}
+{% if loop.index0 % 2 == 0 %}<div class="nhsuk-grid-row">{% endif %}
+  <div class="nhsuk-grid-column-one-half">
+    <div class="nhsuk-card nhsuk-u-padding-4">
+      <div class="app-card-editable">
+        <div>
+          <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-2">
+            {{ template.name }}
+            {% if templateSaved and loop.first and not template.example %}<span class="nhsuk-tag nhsuk-tag--blue">{{ "Updated" if templateSaved == "updated" else "New" }}</span>{% endif %}
+          </h2>
+          {% if template.note %}
+          <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">{{ template.note }}</p>
+          {% endif %}
+        </div>
+        {% if template.slug or template.id %}
+        <a href="/create-capacity-from-zero/apply-session-template/{{ template.slug or template.id }}" class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-nowrap">Select template</a>
+        {% endif %}
+      </div>
+      <div class="app-session-template-card">
+        <div class="app-session-template-preview-image">
+          {% if template.imagePath %}
+          <img src="{{ template.imagePath }}" alt="{{ template.imageAlt }}">
+          {% else %}
+          <img src="/assets/images/placeholder-session-template.png" alt="">
+          {% endif %}
+        </div>
+        <div>
+          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Session times
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.sessionStartLabel }} to {{ template.sessionEndLabel }}
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                Base slot length
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.duration }} minutes
+              </dd>
+            </div>
+            <div class="nhsuk-summary-list__row">
+              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                {{ template.totalLabel or "Total slots" }}
+              </dt>
+              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                {{ template.totalSlotCount }}
+              </dd>
+            </div>
+          </dl>
+          <button class="nhsuk-link nhsuk-u-font-size-19" popovertarget="{{ 'template-preview-' + template.id }}">Full details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% if loop.index0 % 2 == 1 or loop.last %}</div>{% endif %}
+{% endfor %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <p>
+      <a href="/sessions/00-template-listing">Create a new session template</a>
+      <!-- <a class="nhsuk-action-link" href="/sessions/00-template-listing">
+        <svg class="nhsuk-icon nhsuk-icon--arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+          <path d="M12 2a10 10 0 0 0-10 9h11.7l-4-4a1 1 0 0 1 1.5-1.4l5.6 5.7a1 1 0 0 1 0 1.4l-5.6 5.7a1 1 0 0 1-1.5 0 1 1 0 0 1 0-1.4l4-4H2A10 10 0 1 0 12 2z" />
+        </svg>
+        <span class="nhsuk-action-link__text">
+          Create a new session template
+        </span>
+      </a> -->
+    </p>
+  </div>
+</div>
+
+{% for template in data.sessionTemplates %}
+<dialog id="template-preview-{{ template.id }}" popover class="app-template-preview-dialog">
+  <div class="app-template-preview-dialog--header">
+    <button type="button" class="app-template-preview-dialog--close" popovertarget="template-preview-{{ template.id }}" popovertargetaction="hide">
       <span aria-hidden="true">&times;</span>
-      <span class="nhsuk-u-visually-hidden">Close full template preview</span>
+      <span class="nhsuk-u-visually-hidden">Close full template details</span>
     </button>
-    <iframe class="app-template-preview-dialog__frame" src="select-session-template-full-preview" title="Full template preview"></iframe>
+    <h1 class="nhsuk-heading-l">
+      {{ template.name }}
+    </h1>
+    {% if template.note %}
+    <p class="nhsuk-u-secondary-text-colour">{{ template.note }}</p>
+    {% endif %}
+    <h2 class="nhsuk-heading-m nhsuk-u-margin-0 nhsuk-u-padding-0">
+      <span class="nhsuk-caption-m">Session times</span>
+      {{ template.sessionStartLabel }} to {{ template.sessionEndLabel }}
+    </h2>
+  </div>
+  <div class="app-template-preview-dialog--content">
+    {% for slot in template.slots %}
+    <div class="slot slot--centred{% if slot.isNonBookable %} is-staff-break{% endif %}{% if slot.isCombined %} is-merged{% endif %}">
+      <span class="slot-time nhsuk-u-font-size-19">{{ slot.startLabel }}</span>
+      <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
+      <span class="slot-tag">
+        {% if slot.isNonBookable %}
+          <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.nonBookableReason }}</span>{% endif %}
+        {% elseif slot.isSpecialAppointment %}
+          <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
+        {% elseif slot.isHold %}
+          <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.holdReason }}</span>{% endif %}
+        {% endif %}
+        {% if slot.isCombined %}
+          <span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>
+        {% endif %}
+      </span>
+    </div>
+    {% for position in slot.mergedChildren %}
+    <div class="slot is-merged is-merged-child{% if slot.isNonBookable %} is-staff-break{% endif %}{% if loop.last %} is-merged-last-child{% endif %}" style="--stack-index: {{ position }}" aria-hidden="true"></div>
+    {% endfor %}
+    {% endfor %}
   </div>
 </dialog>
+{% endfor %}
+
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% set pageName = "Clinics" %}
+{% set pageName = "" %}
 
 {% from "_includes/primary-navigation.html" import primaryNavigation %}
 {% block header %}
@@ -11,116 +11,65 @@
 
 {% block content %}
 
-  {% set secondaryNavItems = [] %}
-
-  {% for item in [
-    { href: '/clinics/', label: 'Active clinics', selected: 'true' },
-    { href: '#', label: 'Archived clinics' },
-    { href: '/sessions/templating-01-listing', label: 'Manage session templates' }
-  ] %}
-    {% set secondaryNavItems = secondaryNavItems | push({
-      text: item.label | safe,
-      href: item.href | trim,
-      current: true if item.selected == 'true'
-    }) %}
-  {% endfor %}
-
-  {{ appSecondaryNavigation({
-    visuallyHiddenTitle: "Secondary menu",
-    items: secondaryNavItems
-  }) }}
-
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-      <div class="app-card-editable">
-        <h1 class="nhsuk-heading-l">Active clinics</h1>
-        {{ button({
-          text: "Create a new clinic",
-          href: "00-create-day-clinic",
-          classes: "nhsuk-button--secondary"
-        }) }}
-      </div>
+      <h1 class="nhsuk-heading-l">Clinics</h1>
     </div>
   </div>
 
-  <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-full">
+  <div class="nhsuk-grid-row nhsuk-card-group">
+    <div class="nhsuk-grid-column-one-half nhsuk-card-group__item">
 
-      <table class="nhsuk-table nhsuk-table-responsive">
-        <thead class="nhsuk-table__head">
-          <tr class="nhsuk-table__row">
-            <th scope="col" class="nhsuk-table__header">
-              Clinic
-            </th>
-            <th scope="col" class="nhsuk-table__header">
-              Unit and location
-            </th>
-            <th scope="col" class="nhsuk-table__header">
-              Current schedules
-            </th>
-            <th scope="col" class="nhsuk-table__header">
-              Current capacity
-            </th>
-          </tr>
-        </thead>
-        <tbody class="nhsuk-table__body">
-          <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell">
-              <a href="clinic-detail">Chichester - St Richards<br></a>
-              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-standard-20260501</span>
-            </td>
-            <td class="nhsuk-table__cell">
-              Alpha van<br>
-              St Richard’s Hospital, Chichester
-            </td>
-            <td class="nhsuk-table__cell">
-              31 August 2026 to 9 October 2026
-            </td>
-            <td class="nhsuk-table__cell">
-              1500 slots available<br>
-              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">of which 150 held</span>
-            </td>
-          </tr>
+      <div class="nhsuk-card nhsuk-card--clickable nhsuk-card--primary">
+        <div class="nhsuk-card__content">
+          <h2 class="nhsuk-card__heading nhsuk-heading-m">
+            <a class="nhsuk-card__link" href="#">Run clinics</a>
+          </h2>
+          <p class="nhsuk-card__description">
+            Run screening sessions
+          </p>
+          <svg class="nhsuk-icon nhsuk-icon--chevron-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+            <path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm-.3 5.8a1 1 0 1 0-1.5 1.4l2.9 2.8-2.9 2.8a1 1 0 0 0 1.5 1.4l3.5-3.5c.4-.4.4-1 0-1.4Z" />
+          </svg>
+        </div>
+      </div>
 
-          <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell">
-              <a href="#">Chichester - St Richards<br></a>
-              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-standard-20260501</span>
-            </td>
-            <td class="nhsuk-table__cell">
-              Alpha van<br>
-              St Richard’s Hospital, Chichester
-            </td>
-            <td class="nhsuk-table__cell">
-              <span class="nhsuk-u-secondary-text-colour">No active schedules</span>
-            </td>
-            <td class="nhsuk-table__cell">
-              1500 slots available<br>
-              <span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">of which 150 held</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    
-        
-<!-- 
-    [
-      {
-        html: '<a href="#">Worthing - special slots May 2026<br></a><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-NNN-special-20260501</span>'
-      },
-      {
-        html: 'Worthing<br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">Worthing Hospital</span>'
-      },
-      {
-        html: 'Home base<br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">HWO-static-1</span> '
-      },
-      {
-        html: '<progress class="app-progress-bar --generic" value="60" max="100">60%</progress><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">40 slots available of 100</div>'
-      }
-    ]
-  ]
-}) }} -->
+    </div>
 
+
+    <div class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+
+      <div class="nhsuk-card nhsuk-card--clickable nhsuk-card--primary">
+        <div class="nhsuk-card__content">
+          <h2 class="nhsuk-card__heading nhsuk-heading-m">
+            <a class="nhsuk-card__link" href="#">Organise clinics</a>
+          </h2>
+          <p class="nhsuk-card__description">
+            Set up clinics, book participants
+          </p>
+          <svg class="nhsuk-icon nhsuk-icon--chevron-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+            <path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm-.3 5.8a1 1 0 1 0-1.5 1.4l2.9 2.8-2.9 2.8a1 1 0 0 0 1.5 1.4l3.5-3.5c.4-.4.4-1 0-1.4Z" />
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="nhsuk-grid-row nhsuk-card-group">
+    <div class="nhsuk-grid-column-one-half  nhsuk-card-group__item">
+      ?
+    </div>
+    <div class="nhsuk-grid-column-one-half  nhsuk-card-group__item">
+
+      <div class="nhsuk-card nhsuk-card--clickable nhsuk-card--secondary">
+        <div class="nhsuk-card__content">
+          <h2 class="nhsuk-card__heading nhsuk-heading-m">
+            <a class="nhsuk-card__link" href="#">Manage session templates</a>
+          </h2>
+          <p class="nhsuk-card__description">Do stuff to days</p>
+        </div>
+      </div>
 
     </div>
   </div>

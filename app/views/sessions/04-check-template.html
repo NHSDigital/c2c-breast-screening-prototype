@@ -1,0 +1,158 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
+{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-fifth">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          {{ "Edit" if data.editingTemplateId else "Create" }} session template
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-template-name">
+              <span class="app-workflow-side-nav__number">1</span>
+              <span class="app-workflow-side-nav__label">Template name</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="02-session-times">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Session times</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="03-slot-structure">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Slot structure</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">Check and confirm</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-four-fifths">
+
+      <h1 class="nhsuk-heading-l">Check and confirm</h1>
+
+      <dl class="nhsuk-summary-list">
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Template name
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            {{ data.createSessionTemplate.sessionTemplateName }}
+            {% if data.createSessionTemplate.sessionTemplateNote !== '' %}
+              <br>{{ data.createSessionTemplate.sessionTemplateNote }}
+            {% endif %}
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="01-template-name">Change<span class="nhsuk-u-visually-hidden"> clinic name</span></a>
+          </dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Session times
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            {{ data.createSessionTemplate.startTime.hour | zeroPad }}:{{ data.createSessionTemplate.startTime.minute | zeroPad }} to {{ data.createSessionTemplate.endTime.hour | zeroPad }}:{{ data.createSessionTemplate.endTime.minute | zeroPad }}<br>
+            {{ data.createSessionTemplate.duration }} minute slot length
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="02-session-times">Change<span class="nhsuk-u-visually-hidden"> session times</span></a>
+          </dd>
+        </div>
+        <div class="nhsuk-summary-list__row">
+          <dt class="nhsuk-summary-list__key">
+            Slot structure
+          </dt>
+          <dd class="nhsuk-summary-list__value">
+            {% if data.createSessionTemplate.bookableBreakdown | length %}
+              <details class="nhsuk-details nhsuk-u-margin-bottom-1">
+                <summary class="nhsuk-details__summary">
+                  <span class="nhsuk-details__summary-text">
+                    {{ data.createSessionTemplate.bookableSlotCount }} bookable slots
+                  </span>
+                </summary>
+                <div class="nhsuk-details__text">
+                  <dl class="nhsuk-summary-list">
+                    {% for item in data.createSessionTemplate.bookableBreakdown %}
+                      <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half app-nowrap">{{ item.label }}</dt>
+                        <dd class="nhsuk-summary-list__value">{{ item.count }}</dd>
+                      </div>
+                    {% endfor %}
+                  </dl>
+                </div>
+              </details>
+            {% else %}
+              <p>{{ data.createSessionTemplate.bookableSlotCount }} bookable slots</p>
+            {% endif %}
+            {% if data.createSessionTemplate.nonBookableBreakdown | length %}
+              <details class="nhsuk-details">
+                <summary class="nhsuk-details__summary nhsuk-u-margin-bottom-1">
+                  <span class="nhsuk-details__summary-text">
+                    {{ data.createSessionTemplate.nonBookableSlotCount }} non-bookable slots
+                  </span>
+                </summary>
+                <div class="nhsuk-details__text">
+                  <dl class="nhsuk-summary-list">
+                    {% for item in data.createSessionTemplate.nonBookableBreakdown %}
+                      <div class="nhsuk-summary-list__row">
+                        <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half app-nowrap">{{ item.label }}</dt>
+                        <dd class="nhsuk-summary-list__value">{{ item.count }}</dd>
+                      </div>
+                    {% endfor %}
+                  </dl>
+                </div>
+              </details>
+            {% else %}
+              <p>{{ data.createSessionTemplate.nonBookableSlotCount }} non-bookable slots</p>
+            {% endif %}
+          </dd>
+          <dd class="nhsuk-summary-list__actions">
+            <a class="nhsuk-link" href="03-slot-structure">Change<span class="nhsuk-u-visually-hidden"> slot structure</span></a>
+          </dd>
+        </div>
+      </dl>
+
+      <form method="post" action="save-template" class="nhsuk-u-margin-top-4">
+        {% if data.editingTemplateId %}
+        <div class="nhsuk-button-group">
+          <button class="nhsuk-button" type="submit">Save changes</button>
+          <a class="nhsuk-link" href="cancel-edit">Cancel</a>
+        </div>
+        {% else %}
+        <button class="nhsuk-button" type="submit">Save session template</button>
+        {% endif %}
+      </form>
+
+  </div>
+</div>
+
+{% endblock %}

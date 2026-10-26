@@ -9,19 +9,26 @@
   height: 90vh;
   margin: 5vh auto;
   padding: 0;
-  border: none;
+  border: 2px solid nhsuk-colour("black");
+  background-color: nhsuk-colour("grey-5");
 
   &::backdrop {
     background: rgba(0, 0, 0, 0.5);
   }
+}
 
-  &__content {
-    position: relative;
-  }
+.app-template-preview-dialog--header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: nhsuk-spacing(5);
+  padding-bottom: nhsuk-spacing(3);
+  background-color: nhsuk-colour("grey-5");
+  border-bottom: 1px solid $nhsuk-border-colour;
+}
 
-  &__close {
+.app-template-preview-dialog--close {
     position: absolute;
-    z-index: 1;
     right: 0;
     top: 0;
     width: nhsuk-spacing(7);
@@ -43,11 +50,8 @@
       outline: $nhsuk-border-width solid $nhsuk-focus-text-colour;
       outline-offset: 0;
     }
-  }
+}
 
-  &__frame {
-    width: 100%;
-    height: 90vh;
-    border: none;
-  }
+.app-template-preview-dialog--content {
+  padding: nhsuk-spacing(5);
 }

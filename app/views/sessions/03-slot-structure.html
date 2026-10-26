@@ -1,0 +1,322 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+{% set errorState = "true" if errors else "false" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-fifth">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          {{ "Edit" if data.editingTemplateId else "Create" }} session template
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="01-template-name">
+              <span class="app-workflow-side-nav__number">1</span>
+              <span class="app-workflow-side-nav__label">Template name</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--completed">
+            <a class="app-workflow-side-nav__link app-workflow-side-nav__link--clickable" href="02-session-times">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Session times</span>
+            </a>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Slot structure</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">Check and confirm</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+
+  <div class="nhsuk-grid-column-four-fifths">
+    <form method="post">
+
+      <div class="nhsuk-u-reading-width">
+        <div id="slot-errors">
+        {% if errorState === "true" %}
+          {% set errorList = [] %}
+          {% if errors.slots %}
+            {% set errorList = errorList.concat([{ text: errors.slots, href: "#computed-slot-0" }]) %}
+          {% endif %}
+          {{ errorSummary({
+            titleText: "There is a problem",
+            errorList: errorList
+          }) }}
+        {% endif %}
+        </div>
+        <h1 class="nhsuk-heading-l">Slot structure</h1>
+        <h2 class="nhsuk-heading-m">
+          <span class="nhsuk-caption-m">Session time</span>
+          {{ sessionStartLabel }} to {{ sessionEndLabel }}
+        </h2>
+      </div>
+
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-one-half">
+          <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes">
+
+            {% for slot in slots %}
+            <div class="slot{% if slot.isNonBookable %} is-staff-break{% endif %}{% if slot.isCombined %} is-merged{% endif %}">
+              <div class="nhsuk-checkboxes__item">
+                <input class="nhsuk-checkboxes__input" id="computed-slot-{{ slot.index }}" name="computedSlots[]" type="checkbox" value="{{ slot.index }}">
+                
+                <label class="nhsuk-label nhsuk-checkboxes__label" for="computed-slot-{{ slot.index }}">
+                  <span class="slot-container">
+                    <!-- time elements -->
+                    <span class="slot-time">
+                      {{ slot.startLabel }} <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
+                      {% if slot.isCombined %}
+                        <br><span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>
+                        <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ data.createSessionTemplate.duration * slot.span }} minutes</span>
+                      {% else %}
+                        <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ data.createSessionTemplate.duration }} minutes</span>
+                      {% endif %}
+                    </span>
+                    <!-- slot metadata elements -->
+                    <span class="slot-metadata">
+                      {% if slot.isNonBookable %}
+                        <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.nonBookableReason }}</span>{% endif %}
+                      {% elseif slot.isSpecialAppointment %}
+                        <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
+                      {% elseif slot.isHold %}
+                        <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.holdReason }}</span>{% endif %}
+                      {% endif %}
+                      {% if slot.isNonBookable or slot.isSpecialAppointment or slot.isHold %}<br>{% endif %}
+                      <a href="#" class="nhsuk-u-font-size-16">Add note</a>
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div>
+            {% for position in slot.mergedChildren %}
+            <div class="slot is-merged is-merged-child{% if slot.isNonBookable %} is-staff-break{% endif %}{% if loop.last %} is-merged-last-child{% endif %}" style="--stack-index: {{ position }}" aria-hidden="true"></div>
+            {% endfor %}
+            {% endfor %}
+
+          </div>
+        </div>
+
+        <div class="nhsuk-grid-column-one-quarter app-side-panel">
+          <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-0">
+            <div class="nhsuk-card__content">
+              <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
+                Set slot types
+              </h3>
+              <h4 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">
+                Hold for:
+              </h4>
+              <ul class="nhsuk-list">
+                <li>
+                  <button class="nhsuk-link" formaction="mark-hold-rebooking">rebooking</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-hold-web-rebooking">online booking</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-hold-technical-recall">technical recall</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-special-appointment">special appointment</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-hold-generic">miscellaneous</button>
+                </li>
+              </ul>
+              <h4 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">
+                Non-bookable as:
+              </h4>
+              <ul class="nhsuk-list">
+                <li>
+                  <button class="nhsuk-link" formaction="mark-staff-break">staff break</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-staff-meeting">staff meeting</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-non-bookable-generic">miscellaneous</button>
+                </li>
+              </ul>
+            </div>
+            <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+            <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="clear-slot-type">Reset all selected</button>  
+          </div>
+        </div>
+        
+        <div class="nhsuk-grid-column-one-quarter app-side-panel">
+          <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
+            <div class="nhsuk-card__content">
+              <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
+                Combine slots
+              </h3>
+              <ul class="nhsuk-list">
+                <li>
+                  <button class="nhsuk-link nhsuk-u-font-size-19" formaction="combine-slots">Combine selected</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="divide-slots">Separate selected</button> 
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-0">
+            <div class="nhsuk-card__content">
+              <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
+                Adjust duration:
+              </h3>
+              <div class="app-stepper-input">
+                <div class="app-stepper-input__wrapper">
+
+                  <button 
+                    type="button" 
+                    class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-stepper-input__button app-stepper-input__button--decrease app-js-only" 
+                    data-input-id="slot-duration-stepper"
+                    aria-label="Decrease slot duration by 1 minute"
+                    aria-controls="slot-duration-stepper"
+                    >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </button>
+                  
+                  <input 
+                    class="nhsuk-input nhsuk-input--width-2" 
+                    id="slot-duration-stepper" 
+                    name="slotDurationStepper" 
+                    type="text" 
+                    inputmode="numeric" 
+                    value="{{ inputValue }}"
+                    min="1"
+                    step="1">
+
+                  <button 
+                    type="button" 
+                    class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-stepper-input__button app-stepper-input__button--increase app-js-only" 
+                    data-input-id="slot-duration-stepper"
+                    aria-label="Increase slot duration by 1 minute"
+                    aria-controls="slot-duration-stepper"
+                    >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </button>
+                  
+                  {# Visually hidden live region for announcing value changes #}
+                  <div id="{{ inputId }}-status" class="nhsuk-u-visually-hidden" aria-live="polite" aria-atomic="true"></div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <p aria-live="polite">
+            <span id="available-slots">{{ bookableSlotCount }}</span> bookable slots
+          </p>
+          <p>
+            <button class="nhsuk-button" type="submit">Continue</button>
+          </p>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+<script>
+  // Submits slot actions in the background and swaps in the server-rendered result; falls back to a normal submit on failure
+  (function () {
+    var form = document.querySelector('#slots-container').closest('form')
+    var enhancedActions = [
+      'mark-staff-break',
+      'mark-staff-meeting',
+      'mark-non-bookable-generic',
+      'clear-slot-type',
+      'mark-hold-rebooking',
+      'mark-hold-web-rebooking',
+      'mark-hold-technical-recall',
+      'mark-hold-generic',
+      'mark-special-appointment',
+      'combine-slots',
+      'divide-slots'
+    ]
+    var bypass = false
+
+    var swap = function (doc, id) {
+      var current = document.getElementById(id)
+      var updated = doc.getElementById(id)
+      if (current && updated) {
+        current.innerHTML = updated.innerHTML
+      }
+    }
+
+    form.addEventListener('submit', function (event) {
+      var submitter = event.submitter
+      var action = submitter && submitter.getAttribute('formaction')
+      if (bypass || enhancedActions.indexOf(action) === -1) {
+        return
+      }
+      event.preventDefault()
+
+      fetch(submitter.formAction, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(form)),
+        credentials: 'same-origin'
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error('Request failed: ' + response.status)
+          }
+          return response.text()
+        })
+        .then(function (html) {
+          var doc = new DOMParser().parseFromString(html, 'text/html')
+          swap(doc, 'slots-container')
+          swap(doc, 'available-slots')
+          swap(doc, 'slot-errors')
+
+          var errorSummary = document.querySelector('#slot-errors .nhsuk-error-summary')
+          if (errorSummary) {
+            errorSummary.setAttribute('tabindex', '-1')
+            errorSummary.focus()
+          }
+        })
+        .catch(function () {
+          bypass = true
+          form.requestSubmit(submitter)
+        })
+    })
+  })()
+</script>
+<script type="text/javascript" src="/assets/javascript/stepper-input.js"></script>
+{% endblock %}

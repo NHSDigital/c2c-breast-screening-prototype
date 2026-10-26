@@ -1,0 +1,111 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+{% set errorState = "true" if errors else "false" %}
+
+{% from "_includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+{% set tickSvg %}
+  <svg class="app-icon app-icon--tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+    <path stroke-linecap="round" d="M18.4 7.8l-8.5 8.4L5.6 12"></path>
+  </svg>
+{% endset %}
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-one-fifth">
+
+    <div class="app-workflow-side-nav-wrapper">
+      <nav class="app-workflow-side-nav">
+        <h2 class="nhsuk-heading-m app-workflow-side-nav__heading">
+          <span class="nhsuk-caption-m">
+            Workflow steps
+          </span>
+          {{ "Edit" if data.editingTemplateId else "Create" }} session template
+        </h2>
+        <ol class="app-workflow-side-nav__list">
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--current">
+            <span class="app-workflow-side-nav__link" aria-current="page">
+              <span class="app-workflow-side-nav__number">1</span>
+              <span class="app-workflow-side-nav__label">Template name</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">2</span>
+              <span class="app-workflow-side-nav__label">Session times</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">3</span>
+              <span class="app-workflow-side-nav__label">Slot structure</span>
+            </span>
+          </li>
+          <li class="app-workflow-side-nav__item app-workflow-side-nav__item--disabled">
+            <span class="app-workflow-side-nav__link app-workflow-side-nav__link--disabled">
+              <span class="app-workflow-side-nav__number">4</span>
+              <span class="app-workflow-side-nav__label">Check and confirm</span>
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+  <div class="nhsuk-grid-column-four-fifths">
+    <div class="nhsuk-u-reading-width">
+
+      {% if errorState === "true" %}
+        {% set errorList = [] %}
+        {% if errors.sessionTemplateName %}
+          {% set errorList = errorList.concat([{ text: errors.sessionTemplateName, href: "#session-template-name" }]) %}
+        {% endif %}
+        {{ errorSummary({
+          titleText: "There is a problem",
+          errorList: errorList
+        }) }}
+      {% endif %}
+
+      <form method="post">
+
+        <div class="nhsuk-form-group {% if errorState === 'true' %}nhsuk-form-group--error{% endif %}">
+            <h1 class="nhsuk-label-wrapper">
+            <label class="nhsuk-label nhsuk-label--l" for="session-template-name">
+              Template name
+            </label>
+          </h1>
+          {% if errorState === "true" %}
+            <span class="nhsuk-error-message">
+              <span class="nhsuk-u-visually-hidden">Error:</span> {{ errors.sessionTemplateName }}
+            </span>
+          {% endif %}
+          <input class="nhsuk-input nhsuk-u-width-three-quarters {% if errorState === 'true' %}nhsuk-input--error{% endif %}" id="session-template-name" name="sessionTemplateName" type="text" value="{{ data.createSessionTemplate.sessionTemplateName }}">
+        </div>
+
+        <div class="nhsuk-form-group">
+          <label class="nhsuk-label nhsuk-label--s" for="session-template-description">
+            Note (optional)
+          </label>
+          <div class="nhsuk-hint" id="description-hint-text">
+            Put in a short note so you can remember stuff
+          </div>
+          <input class="nhsuk-input nhsuk-u-width-three-quarters" id="session-template-description" name="sessionTemplateNote" type="text" aria-describedby="description-hint-text" value="{{ data.createSessionTemplate.sessionTemplateNote }}">
+        </div>
+
+        <button class="nhsuk-button" type="submit">Continue</button>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}{% endblock %}
