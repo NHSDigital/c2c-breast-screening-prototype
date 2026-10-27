@@ -10,7 +10,7 @@ const router = express.Router()
 
 // Slot/held totals per session template, matching select-session-template.html
 const sessionTemplates = {
-  'Standard': { totalSlots: 42, heldSlots: 8 },
+  'Standard day': { totalSlots: 42, heldSlots: 8 },
   'Special appointments': { totalSlots: 42, heldSlots: 42 }
 }
 
@@ -187,7 +187,9 @@ router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
         templateName,
         templateId: matchedTemplate && matchedTemplate.id,
         totalSlots: template.totalSlots,
-        heldSlots: template.heldSlots
+        heldSlots: template.heldSlots,
+        startTime: matchedTemplate && matchedTemplate.sessionStartLabel,
+        endTime: matchedTemplate && matchedTemplate.sessionEndLabel
       })
     }))
 
@@ -214,7 +216,7 @@ router.post('/create-capacity-from-zero/select-days', function (req, res) {
 })
 
 const exampleTemplateSlugs = {
-  'standard': 'Standard',
+  'standard': 'Standard day',
   'special-appointments': 'Special appointments'
 }
 
