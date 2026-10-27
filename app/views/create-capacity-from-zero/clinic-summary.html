@@ -87,6 +87,23 @@
         <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-8">
           <div class="nhsuk-card__content">
             <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
+              Availability
+            </h3>
+            <ul class="nhsuk-list">
+              <li>
+                <button type="submit" class="nhsuk-link">Unlock selected</button>
+              </li>
+              <li>
+                <button type="submit" class="nhsuk-link">Lock selected</button>
+              </li>
+            </ul>
+            <!-- <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
+            <button type="submit" class="nhsuk-link nhsuk-u-font-size-19">Release held slots</button> -->
+          </div>
+        </div>
+        <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey">
+          <div class="nhsuk-card__content">
+            <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
               Clinic sessions
             </h3>
             <form method="post" id="select-days-form">
@@ -95,7 +112,7 @@
                   <button type="submit" class="nhsuk-link" formaction="/create-capacity-from-zero/select-days">Assign template</button>
                 </li>
                 <li>
-                  <button type="submit" class="nhsuk-link app-link--error" formaction="/create-capacity-from-zero/remove-template">Remove template</button>
+                  <button type="submit" class="nhsuk-link" formaction="/create-capacity-from-zero/remove-template">Remove template</button>
                 </li>
               </ul>
               <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
@@ -103,21 +120,18 @@
             </form>
           </div>
         </div>
-        <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-8">
+        <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey">
           <div class="nhsuk-card__content">
             <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
-              Control availability
+              Schedule
             </h3>
             <ul class="nhsuk-list">
               <li>
-                <button type="submit" class="nhsuk-link">Unlock</button>
+                <button type="submit" class="nhsuk-link">Edit</button>
               </li>
               <li>
-                <button type="submit" class="nhsuk-link">Lock</button>
+                <button type="submit" class="nhsuk-link">Add new</button>
               </li>
-            </ul>
-            <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
-            <button type="submit" class="nhsuk-link nhsuk-u-font-size-19">Release held slots</button>
           </div>
         </div>
       </div>
