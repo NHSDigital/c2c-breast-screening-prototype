@@ -215,6 +215,23 @@ router.post('/create-capacity-from-zero/select-days', function (req, res) {
   res.redirect('/create-capacity-from-zero/select-session-template')
 })
 
+// Starts the session template flow, returning to the template picker once saved or cancelled
+router.get('/create-capacity-from-zero/new-session-template', function (req, res) {
+  req.session.data.createSessionTemplate = {}
+  delete req.session.data.editingTemplateId
+  req.session.data.sessionTemplateReturnTo = '/create-capacity-from-zero/select-session-template'
+
+  res.redirect('/sessions/01-template-name')
+})
+
+// Shows the success banner and "New" tag once, straight after a template is saved
+router.get('/create-capacity-from-zero/select-session-template', function (req, res) {
+  const templateSaved = req.session.data.sessionTemplateSaved
+  delete req.session.data.sessionTemplateSaved
+
+  res.render('create-capacity-from-zero/select-session-template', { templateSaved })
+})
+
 const exampleTemplateSlugs = {
   'standard': 'Standard day',
   'special-appointments': 'Special appointments'
