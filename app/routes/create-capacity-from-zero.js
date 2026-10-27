@@ -383,4 +383,13 @@ router.post('/create-capacity-from-zero/create-schedule', function (req, res) {
 })
 
 
+router.get('/create-capacity-from-zero/index-manage', function (req, res) {
+  const today = new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(new Date())
+  res.render('create-capacity-from-zero/index-manage', { today })
+});
+
 module.exports = router
