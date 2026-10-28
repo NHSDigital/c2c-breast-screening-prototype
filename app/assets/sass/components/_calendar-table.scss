@@ -38,6 +38,11 @@
     background-color: nhsuk-colour("pale-yellow");
   }
 
+  .calendar-table-td-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
   // the number that is the date
   .calendar-table-date {
     display: flex;
@@ -47,7 +52,7 @@
     height: 2rem;
     border-radius: 50%;
     background-color: nhsuk-colour("grey-5");
-    margin-bottom: nhsuk-spacing(3);
+    margin-bottom: nhsuk-spacing(2);
   }
 
   .--date-selected .calendar-table-date {
@@ -74,11 +79,11 @@
     .--schedule-name {
       display: block;
       border-radius: 4px;
-      background-color: nhsuk-colour("grey-2");
-      color: nhsuk-colour("white");
+      border: 2px solid $nhsuk-input-border-colour;
       padding: nhsuk-spacing(1);
       margin-top: nhsuk-spacing(2);
       font-size: nhsuk-px-to-rem(14);
+      color: $nhsuk-input-border-colour;
       text-wrap: nowrap;
     }
   }
@@ -106,7 +111,7 @@
   display: flex;
   align-items: center;
   @include nhsuk-font-size(16);
-  color: nhsuk-colour("grey-2");
+  color: $nhsuk-secondary-text-colour;
   margin-bottom: nhsuk-spacing(2);
 }
 

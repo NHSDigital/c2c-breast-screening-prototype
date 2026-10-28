@@ -10,7 +10,7 @@ const router = express.Router()
 
 // Slot/held totals per session template, matching select-session-template.html
 const sessionTemplates = {
-  'Standard': { totalSlots: 42, heldSlots: 8 },
+  'Standard day': { totalSlots: 42, heldSlots: 8 },
   'Special appointments': { totalSlots: 42, heldSlots: 42 }
 }
 
@@ -187,7 +187,9 @@ router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
         templateName,
         templateId: matchedTemplate && matchedTemplate.id,
         totalSlots: template.totalSlots,
-        heldSlots: template.heldSlots
+        heldSlots: template.heldSlots,
+        startTime: matchedTemplate && matchedTemplate.sessionStartLabel,
+        endTime: matchedTemplate && matchedTemplate.sessionEndLabel
       })
     }))
 
@@ -213,8 +215,25 @@ router.post('/create-capacity-from-zero/select-days', function (req, res) {
   res.redirect('/create-capacity-from-zero/select-session-template')
 })
 
+// Starts the session template flow, returning to the template picker once saved or cancelled
+router.get('/create-capacity-from-zero/new-session-template', function (req, res) {
+  req.session.data.createSessionTemplate = {}
+  delete req.session.data.editingTemplateId
+  req.session.data.sessionTemplateReturnTo = '/create-capacity-from-zero/select-session-template'
+
+  res.redirect('/sessions/01-template-name')
+})
+
+// Shows the success banner and "New" tag once, straight after a template is saved
+router.get('/create-capacity-from-zero/select-session-template', function (req, res) {
+  const templateSaved = req.session.data.sessionTemplateSaved
+  delete req.session.data.sessionTemplateSaved
+
+  res.render('create-capacity-from-zero/select-session-template', { templateSaved })
+})
+
 const exampleTemplateSlugs = {
-  'standard': 'Standard',
+  'standard': 'Standard day',
   'special-appointments': 'Special appointments'
 }
 
@@ -363,5 +382,14 @@ router.post('/create-capacity-from-zero/create-schedule', function (req, res) {
   res.redirect('/create-capacity-from-zero/clinic-summary')
 })
 
+
+router.get('/create-capacity-from-zero/index-manage', function (req, res) {
+  const today = new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(new Date())
+  res.render('create-capacity-from-zero/index-manage', { today })
+});
 
 module.exports = router

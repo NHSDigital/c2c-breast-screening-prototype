@@ -119,12 +119,20 @@ router.post('/sessions/save-template', function (req, res) {
   delete req.session.data.editingTemplateId
   req.session.data.sessionTemplateSaved = existing ? 'updated' : 'created'
 
-  res.redirect('/sessions/00-template-listing')
+  res.redirect(takeTemplateReturnPath(req))
 })
+
+// Where to go after saving or cancelling, set when the flow is started from another journey
+const takeTemplateReturnPath = (req) => {
+  const returnPath = req.session.data.sessionTemplateReturnTo || '/sessions/00-template-listing'
+  delete req.session.data.sessionTemplateReturnTo
+  return returnPath
+}
 
 router.get('/sessions/new-template', function (req, res) {
   req.session.data.createSessionTemplate = {}
   delete req.session.data.editingTemplateId
+  delete req.session.data.sessionTemplateReturnTo
 
   res.redirect('/sessions/01-template-name')
 })
@@ -138,6 +146,7 @@ router.get('/sessions/edit-template/:id', function (req, res) {
 
   req.session.data.createSessionTemplate = JSON.parse(JSON.stringify(template.source))
   req.session.data.editingTemplateId = template.id
+  delete req.session.data.sessionTemplateReturnTo
 
   res.redirect('/sessions/04-check-template')
 })
@@ -146,7 +155,7 @@ router.get('/sessions/cancel-edit', function (req, res) {
   req.session.data.createSessionTemplate = {}
   delete req.session.data.editingTemplateId
 
-  res.redirect('/sessions/00-template-listing')
+  res.redirect(takeTemplateReturnPath(req))
 })
 
 // Shows the success banner once, straight after a template is saved
