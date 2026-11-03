@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      {% set html %}
+        <p class="nhsuk-notification-banner__heading">
+          10 participants booked
+        </p>
+      {% endset %}
+      {{ notificationBanner({
+        html: html,
+        type: "success"
+      }) }}
+      <div class="nhsuk-u-reading-width">
+        <h1 class="nhsuk-heading-m">
+          <span class="nhsuk-caption-m">{{ data.clinicId }}</span>
+          {{ data.clinicName }}
+        </h1>
+        <div class="nhsuk-caption-m nhsuk-u-margin-bottom-3">
+          {{ data.unitName }} at {{ data.locationName }}
+        </div>
+        {{ actionLink({
+          text: "Download .csv",
+          href: "#"
+        }) }}
+      </div>
+    </div>
+  </div>
+
+  <hr class="nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4">
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h2 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-l">Tuesday</span>
+        {{ data.clinicTimespan }}
+      </h2>
+    </div>
+  </div>
+
+  {% include "mission-1/current-iteration/includes/day-list-hard-coded.html" %}
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}
