@@ -107,11 +107,11 @@
                     <!-- slot metadata elements -->
                     <span class="slot-metadata">
                       {% if slot.isNonBookable %}
-                        <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.nonBookableReason }}</span>{% endif %}
+                        <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.nonBookableReason | capitalize }}</span>{% endif %}
                       {% elseif slot.isSpecialAppointment %}
-                        <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
+                        <span class="nhsuk-tag nhsuk-tag--orange">Hold</span><span class="nhsuk-tag nhsuk-tag--yellow app-tag--stacked">Special appointment</span>
                       {% elseif slot.isHold %}
-                        <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.holdReason }}</span>{% endif %}
+                        <span class="nhsuk-tag nhsuk-tag--orange">Hold</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.holdReason | capitalize }}</span>{% endif %}
                       {% endif %}
                       {% if slot.isNonBookable or slot.isSpecialAppointment or slot.isHold %}<br>{% endif %}
                       <a href="#" class="nhsuk-u-font-size-16">Add note</a>
@@ -135,42 +135,48 @@
                 Set slot types
               </h3>
               <h4 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">
-                Hold for:
+                Held
               </h4>
               <ul class="nhsuk-list">
                 <li>
-                  <button class="nhsuk-link" formaction="mark-hold-rebooking">rebooking</button>
+                  <button class="nhsuk-link" formaction="mark-special-appointment">Special appointment</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-hold-web-rebooking">online booking</button>
+                  <button class="nhsuk-link" formaction="mark-hold-rebooking">Rebooking</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-hold-technical-recall">technical recall</button>
+                  <button class="nhsuk-link" formaction="mark-hold-web-rebooking">Online booking</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-special-appointment">special appointment</button>
+                  <button class="nhsuk-link" formaction="mark-hold-technical-recall">Technical recall</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-hold-generic">miscellaneous</button>
+                  <button class="nhsuk-link" formaction="mark-hold-generic">Other</button>
                 </li>
               </ul>
               <h4 class="nhsuk-heading-xs nhsuk-u-margin-bottom-2">
-                Non-bookable as:
+                Non-bookable
               </h4>
               <ul class="nhsuk-list">
                 <li>
-                  <button class="nhsuk-link" formaction="mark-staff-break">staff break</button>
+                  <button class="nhsuk-link" formaction="mark-staff-break">Staff break</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-staff-meeting">staff meeting</button>
+                  <button class="nhsuk-link" formaction="mark-staff-meeting">Staff meeting</button>
                 </li>
                 <li>
-                  <button class="nhsuk-link" formaction="mark-non-bookable-generic">miscellaneous</button>
+                  <button class="nhsuk-link" formaction="mark-admin">Admin</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-downtime">Downtime</button>
+                </li>
+                <li>
+                  <button class="nhsuk-link" formaction="mark-non-bookable-generic">Other</button>
                 </li>
               </ul>
             </div>
             <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
-            <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="clear-slot-type">Reset all selected</button>  
+            <button class="nhsuk-link nhsuk-u-font-size-19 app-link--error" formaction="clear-slot-type">Reset selected</button>  
           </div>
         </div>
         
@@ -190,54 +196,6 @@
               </ul>
             </div>
           </div>
-          <!-- <div class="nhsuk-card nhsuk-card--feature app-card--feature-light-grey nhsuk-u-margin-top-0">
-            <div class="nhsuk-card__content">
-              <h3 class="nhsuk-card__heading nhsuk-u-font-size-19">
-                Adjust duration:
-              </h3>
-              <div class="app-stepper-input">
-                <div class="app-stepper-input__wrapper">
-
-                  <button 
-                    type="button" 
-                    class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-stepper-input__button app-stepper-input__button--decrease app-js-only" 
-                    data-input-id="slot-duration-stepper"
-                    aria-label="Decrease slot duration by 1 minute"
-                    aria-controls="slot-duration-stepper"
-                    >
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                      <path d="M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                  </button>
-                  
-                  <input 
-                    class="nhsuk-input nhsuk-input--width-2" 
-                    id="slot-duration-stepper" 
-                    name="slotDurationStepper" 
-                    type="text" 
-                    inputmode="numeric" 
-                    value="{{ inputValue }}"
-                    min="1"
-                    step="1">
-
-                  <button 
-                    type="button" 
-                    class="nhsuk-button nhsuk-button--secondary nhsuk-button--small app-stepper-input__button app-stepper-input__button--increase app-js-only" 
-                    data-input-id="slot-duration-stepper"
-                    aria-label="Increase slot duration by 1 minute"
-                    aria-controls="slot-duration-stepper"
-                    >
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                      <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                  </button>
-                  
-                  {# Visually hidden live region for announcing value changes #}
-                  <div id="{{ inputId }}-status" class="nhsuk-u-visually-hidden" aria-live="polite" aria-atomic="true"></div>
-                </div>
-              </div>
-            </div>
-          </div> -->
           <p aria-live="polite">
             <span id="available-slots">{{ bookableSlotCount }}</span> bookable slots
           </p>
@@ -260,6 +218,8 @@
     var enhancedActions = [
       'mark-staff-break',
       'mark-staff-meeting',
+      'mark-admin',
+      'mark-downtime',
       'mark-non-bookable-generic',
       'clear-slot-type',
       'mark-hold-rebooking',

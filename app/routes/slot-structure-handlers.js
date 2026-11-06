@@ -56,11 +56,12 @@ const buildSessionSlots = (sessionData) => {
   const nonBookableSlotCount = sumSpans(slots.filter((slot) => slot.isNonBookable))
   sessionData.bookableSlotCount = bookableSlotCount
   sessionData.nonBookableSlotCount = nonBookableSlotCount
+  sessionData.heldSlotCount = sumSpans(slots.filter((slot) => (slot.isHold || slot.isSpecialAppointment) && !slot.isNonBookable))
 
   const capitalise = (text) => text.charAt(0).toUpperCase() + text.slice(1)
   const slotTypeLabel = (slot) => {
-    if (slot.isNonBookable) return slot.nonBookableReason ? capitalise(slot.nonBookableReason) : 'Non-bookable'
-    if (slot.isHold) return slot.holdReason ? `Held for ${slot.holdReason}` : 'Held'
+    if (slot.isNonBookable) return slot.nonBookableReason ? capitalise(slot.nonBookableReason) : 'Other non-bookable'
+    if (slot.isHold) return slot.holdReason ? `${slot.holdReason}` : 'Other hold'
     if (slot.isSpecialAppointment) return 'Special appointment'
     return 'Standard'
   }
@@ -78,12 +79,14 @@ const buildSessionSlots = (sessionData) => {
     const secondIndex = order.indexOf(second.label)
     return (firstIndex === -1 ? order.length : firstIndex) - (secondIndex === -1 ? order.length : secondIndex)
   })
-  sessionData.bookableBreakdown = breakdown(slots.filter((slot) => !slot.isNonBookable), [
-    'Held for rebooking', 'Held for online booking', 'Held for technical recall',
-    'Special appointment', 'Held', 'Standard'
+  const bookableItems = breakdown(slots.filter((slot) => !slot.isNonBookable), [
+    'Standard', 'Special appointment', 'Rebooking', 'Online booking', 'Technical recall', 'Held'
   ])
+  const standardItem = bookableItems.find((item) => item.label === 'Standard')
+  sessionData.standardSlotCount = standardItem ? standardItem.count : 0
+  sessionData.bookableBreakdown = bookableItems.filter((item) => item.label !== 'Standard')
   sessionData.nonBookableBreakdown = breakdown(slots.filter((slot) => slot.isNonBookable), [
-    'Staff break', 'Staff meeting', 'Non-bookable'
+    'Staff break', 'Staff meeting', 'Admin', 'Downtime', 'Non-bookable'
   ])
 
   return {

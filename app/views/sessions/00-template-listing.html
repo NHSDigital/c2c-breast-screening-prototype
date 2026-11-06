@@ -52,72 +52,94 @@
 {# Session templates first (newest first), then the examples; a new grid row wraps every two cards #}
 {% set allTemplates = (data.sessionTemplates | reverse) %}
 
+{% set realTemplates = [] %}
 {% for template in allTemplates %}
-{% if loop.index0 % 2 == 0 %}<div class="nhsuk-grid-row">{% endif %}
-  <div class="nhsuk-grid-column-one-half">
-    <div class="nhsuk-card nhsuk-u-padding-4">
-      <div class="app-card-editable">
-        <div>
-          <h2 class="nhsuk-heading-m">
-            {{ template.name }}
-            {% if templateSaved and loop.first and not template.example %}<span class="nhsuk-tag nhsuk-tag--blue">{{ "Updated" if templateSaved == "updated" else "New" }}</span>{% endif %}
-          </h2>
-          {% if template.note %}
-          <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">{{ template.note }}</p>
-          {% endif %}
-        </div>
-        {% if template.example %}
-        <button type="submit" class="nhsuk-link nhsuk-u-font-size-19 app-nowrap">
-          Edit template
-        </button>
-        {% elif template.id and template.source %}
-        <a href="edit-template/{{ template.id }}" class="nhsuk-link nhsuk-u-font-size-19 app-nowrap">
-          Edit template
-        </a>
-        {% endif %}
-      </div>
-      <div class="app-session-template-card">
-        <div class="app-session-template-preview-image">
-          {% if template.imagePath %}
-          <img src="{{ template.imagePath }}" alt="{{ template.imageAlt }}">
-          {% else %}
-          <img src="/assets/images/placeholder-session-template.png" alt="">
-          {% endif %}
-        </div>
-        <div>
-          <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Session times
-              </dt>
-              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
-                {{ template.sessionStartLabel }} to {{ template.sessionEndLabel }}
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Base slot length
-              </dt>
-              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
-                {{ template.duration }} minutes
-              </dd>
-            </div>
-            <div class="nhsuk-summary-list__row">
-              <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
-                Total slots
-              </dt>
-              <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
-                {{ template.totalSlotCount }}
-              </dd>
-            </div>
-          </dl>
-          <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--small" popovertarget="template-preview-{{ template.id }}">Full details</button>
-        </div>
-      </div>
+  {% if not template.example %}
+    {% set realTemplates = (realTemplates.push(template), realTemplates) %}
+  {% endif %}
+{% endfor %}
+
+{% if realTemplates | length == 0 %}
+  <div class="nhsuk-card nhsuk-card--warning nhsuk-u-reading-width">
+    <div class="nhsuk-card__content">
+      <h3 class="nhsuk-u-font-size-22 nhsuk-card__heading">
+        <span role="text">
+          <span class="nhsuk-u-visually-hidden">Important: </span>No session templates
+        </span>
+      </h3>
+      <p class="nhsuk-card__description">
+        A session represents one “clinic day” of slots. Common slot patterns can be captured in session templates for easy reuse.
+      </p>
     </div>
   </div>
-{% if loop.index0 % 2 == 1 or loop.last %}</div>{% endif %}
-{% endfor %}
+{% else %}
+  {% for template in realTemplates %}
+    {% if loop.index0 % 2 == 0 %}<div class="nhsuk-grid-row">{% endif %}
+      <div class="nhsuk-grid-column-one-half">
+        <div class="nhsuk-card nhsuk-u-padding-4">
+          <div class="app-card-editable">
+            <div>
+              <h2 class="nhsuk-heading-m">
+                {{ template.name }}
+                {% if templateSaved and loop.first and not template.example %}<span class="nhsuk-tag nhsuk-tag--blue">{{ "Updated" if templateSaved == "updated" else "New" }}</span>{% endif %}
+              </h2>
+              {% if template.note %}
+              <p class="nhsuk-body-s nhsuk-u-secondary-text-colour">{{ template.note }}</p>
+              {% endif %}
+            </div>
+            {% if template.example %}
+            <button type="submit" class="nhsuk-link nhsuk-u-font-size-19 app-nowrap">
+              Edit template
+            </button>
+            {% elif template.id and template.source %}
+            <a href="edit-template/{{ template.id }}" class="nhsuk-link nhsuk-u-font-size-19 app-nowrap">
+              Edit template
+            </a>
+            {% endif %}
+          </div>
+          <div class="app-session-template-card">
+            <div class="app-session-template-preview-image">
+              {% if template.imagePath %}
+              <img src="{{ template.imagePath }}" alt="{{ template.imageAlt }}">
+              {% else %}
+              <img src="/assets/images/placeholder-session-template.png" alt="">
+              {% endif %}
+            </div>
+            <div>
+              <dl class="nhsuk-summary-list nhsuk-u-margin-bottom-3">
+                <div class="nhsuk-summary-list__row">
+                  <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                    Session times
+                  </dt>
+                  <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                    {{ template.sessionStartLabel }} to {{ template.sessionEndLabel }}
+                  </dd>
+                </div>
+                <div class="nhsuk-summary-list__row">
+                  <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                    Base slot length
+                  </dt>
+                  <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                    {{ template.duration }} minutes
+                  </dd>
+                </div>
+                <div class="nhsuk-summary-list__row">
+                  <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half">
+                    Total slots
+                  </dt>
+                  <dd class="nhsuk-summary-list__value nhsuk-u-width-one-half">
+                    {{ template.totalSlotCount }}
+                  </dd>
+                </div>
+              </dl>
+              <button class="nhsuk-button nhsuk-button--secondary nhsuk-button--small" popovertarget="template-preview-{{ template.id }}">Full details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% if loop.index0 % 2 == 1 or loop.last %}</div>{% endif %}
+  {% endfor %}
+{% endif %}
 
 {% for template in data.sessionTemplates %}
 <dialog id="template-preview-{{ template.id }}" popover class="app-template-preview-dialog">
