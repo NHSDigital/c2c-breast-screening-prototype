@@ -8,23 +8,9 @@
 {% endblock %}
 
 {% block beforeContent %}
-<nav class="nhsuk-breadcrumb" aria-label="Breadcrumb">
-  <ol class="nhsuk-breadcrumb__list">
-    <li class="nhsuk-breadcrumb__list-item">
-      <a class="nhsuk-breadcrumb__link" href="/">
-        Home
-      </a>
-    </li>
-    <li class="nhsuk-breadcrumb__list-item">
-      <a class="nhsuk-breadcrumb__link" href="/create-capacity-from-zero/">
-        Clinics
-      </a>
-    </li>
-  </ol>
   <a class="nhsuk-back-link" href="/create-capacity-from-zero/">
-    <span class="nhsuk-u-visually-hidden">Back to </span>Clinics
+    Back to clinics
   </a>
-</nav>
 {% endblock %}
 
 {% block content %}
@@ -45,8 +31,8 @@
 {% endif %}
 
 <div class="app-card-editable">
-  <h1 class="nhsuk-heading-l">Session templates</h1>
-  <a href="new-template" class="nhsuk-button nhsuk-button--secondary">Create a new session template</a>
+  <h1 class="nhsuk-heading-l">Clinic session templates</h1>
+  <a href="new-template" class="nhsuk-button nhsuk-button--secondary-solid">Create a new session template</a>
 </div>
 
 {# Session templates first (newest first), then the examples; a new grid row wraps every two cards #}
@@ -67,9 +53,19 @@
           <span class="nhsuk-u-visually-hidden">Important: </span>No session templates
         </span>
       </h3>
-      <p class="nhsuk-card__description">
-        A session represents one “clinic day” of slots. Common slot patterns can be captured in session templates for easy reuse.
-      </p>
+      <div class="nhsuk-card__description">
+        <p>
+          There are no session templates at the moment. Templates will appear here when you have created them.
+        </p>
+        <a class="nhsuk-action-link" href="new-template">
+          <svg class="nhsuk-icon nhsuk-icon--arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+            <path d="M12 2a10 10 0 0 0-10 9h11.7l-4-4a1 1 0 0 1 1.5-1.4l5.6 5.7a1 1 0 0 1 0 1.4l-5.6 5.7a1 1 0 0 1-1.5 0 1 1 0 0 1 0-1.4l4-4H2A10 10 0 1 0 12 2z" />
+          </svg>
+          <span class="nhsuk-action-link__text">
+            Create a session template
+          </span>
+        </a>
+      </div>
     </div>
   </div>
 {% else %}
@@ -161,25 +157,33 @@
   </div>
   <div class="app-template-preview-dialog--content">
     {% for slot in template.slots %}
-    <div class="slot slot--centred{% if slot.isNonBookable %} is-staff-break{% endif %}{% if slot.isCombined %} is-merged{% endif %}">
-      <span class="slot-time nhsuk-u-font-size-19">{{ slot.startLabel }}</span>
-      <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
-      <span class="slot-tag">
-        {% if slot.isNonBookable %}
-          <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.nonBookableReason }}</span>{% endif %}
-        {% elseif slot.isSpecialAppointment %}
-          <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
-        {% elseif slot.isHold %}
-          <span class="nhsuk-tag nhsuk-tag--orange">Held</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white">{{ slot.holdReason }}</span>{% endif %}
-        {% endif %}
-        {% if slot.isCombined %}
-          <span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>
-        {% endif %}
-      </span>
-    </div>
-    {% for position in slot.mergedChildren %}
-    <div class="slot is-merged is-merged-child{% if slot.isNonBookable %} is-staff-break{% endif %}{% if loop.last %} is-merged-last-child{% endif %}" style="--stack-index: {{ position }}" aria-hidden="true"></div>
-    {% endfor %}
+      <div class="slot slot--centred {% if slot.isNonBookable %} is-staff-break{% endif %}{% if slot.isCombined %} is-merged{% endif %}">
+        <span class="slot-container">
+          <!-- time elements -->
+          <span class="slot-time">
+            {{ slot.startLabel }} <span class="slot-end nhsuk-u-secondary-text-colour">to {{ slot.endLabel }}</span>
+            {% if slot.isCombined %}
+              <br><span class="nhsuk-tag nhsuk-tag--white">{{ slot.span }} slots</span>
+              <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ data.createSessionTemplate.duration * slot.span }} minutes</span>
+            {% else %}
+              <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ data.createSessionTemplate.duration }} minutes</span>
+            {% endif %}
+          </span>
+          <!-- slot metadata elements -->
+          <span class="slot-metadata">
+            {% if slot.isNonBookable %}
+              <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.nonBookableReason | capitalize }}</span>{% endif %}
+            {% elseif slot.isSpecialAppointment %}
+              <span class="nhsuk-tag nhsuk-tag--orange">Hold</span><span class="nhsuk-tag nhsuk-tag--yellow app-tag--stacked">Special appointment</span>
+            {% elseif slot.isHold %}
+              <span class="nhsuk-tag nhsuk-tag--orange">Hold</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.holdReason | capitalize }}</span>{% endif %}
+            {% endif %}
+          </span>
+        </span>
+      </div>
+      {% for position in slot.mergedChildren %}
+      <div class="slot is-merged is-merged-child{% if slot.isNonBookable %} is-staff-break{% endif %}{% if loop.last %} is-merged-last-child{% endif %}" style="--stack-index: {{ position }}" aria-hidden="true"></div>
+      {% endfor %}
     {% endfor %}
   </div>
 </dialog>

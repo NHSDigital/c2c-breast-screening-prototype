@@ -107,14 +107,12 @@
                     <!-- slot metadata elements -->
                     <span class="slot-metadata">
                       {% if slot.isNonBookable %}
-                        <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.nonBookableReason | capitalize }}</span>{% endif %}
+                        <span class="nhsuk-tag nhsuk-tag--grey">Non-bookable</span>{% if slot.nonBookableReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.nonBookableReason | capitalize }}</span>{% else %}<br><a href="#" class="nhsuk-u-font-size-16">Add note</a>{% endif %}
                       {% elseif slot.isSpecialAppointment %}
                         <span class="nhsuk-tag nhsuk-tag--orange">Hold</span><span class="nhsuk-tag nhsuk-tag--yellow app-tag--stacked">Special appointment</span>
                       {% elseif slot.isHold %}
-                        <span class="nhsuk-tag nhsuk-tag--orange">Hold</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.holdReason | capitalize }}</span>{% endif %}
+                        <span class="nhsuk-tag nhsuk-tag--orange">Hold</span>{% if slot.holdReason %}<span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">{{ slot.holdReason | capitalize }}</span>{% else %}<br><a href="#" class="nhsuk-u-font-size-16">Add note</a>{% endif %}
                       {% endif %}
-                      {% if slot.isNonBookable or slot.isSpecialAppointment or slot.isHold %}<br>{% endif %}
-                      <a href="#" class="nhsuk-u-font-size-16">Add note</a>
                     </span>
                   </span>
                 </label>
