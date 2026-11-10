@@ -12,6 +12,33 @@ const { buildSessionSlots, nonBookableHandler, clearTagsHandler } = require('./s
 
 const isWholeNumber = str => /^\d+$/.test(str)
 
+router.get('/mission-1/current-iteration/06-booked', function (req, res) {
+  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+
+  const data = req.session.data
+
+  // Mirrors the day-list include: 10 minute slots from 09:00, with two staff breaks after the seventh booking
+  const staged = participants.filter(participant => participant.status === 'staged')
+  const breakStart = Math.min(7, staged.length)
+  staged.forEach((participant, index) => {
+    const slot = index < breakStart ? index : index + 2
+    const minutes = 540 + slot * 10
+    const time = `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`
+
+    participant.episode_stage = 'scheduled'
+    participant.booked_appointment = {
+      day: 'Tuesday',
+      date: data.clinicTimespan,
+      time,
+      clinicName: data.clinicName,
+      unitName: data.unitName,
+      locationName: data.locationName
+    }
+  })
+
+  res.render('mission-1/current-iteration/06-booked')
+})
+
 // Checks a { day, month, year } object has numeric values for each field, regardless of whether they form a real date
 const hasDateFields = (dateObj) =>
   Boolean(dateObj) && isWholeNumber(dateObj.day) && isWholeNumber(dateObj.month) && isWholeNumber(dateObj.year)
