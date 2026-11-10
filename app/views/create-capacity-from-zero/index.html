@@ -132,55 +132,72 @@
       </div>
     </div>
 
-    <table class="nhsuk-table nhsuk-table--striped nhsuk-table--sortable" data-module="nhsuk-table">
-      <thead class="nhsuk-table__head">
-        <tr class="nhsuk-table__row">
-          <th scope="col" class="nhsuk-table__header">
-            Clinic
-          </th>
-          <th scope="col" class="nhsuk-table__header">
-            Unit and location
-          </th>
-          <th scope="col" class="nhsuk-table__header" data-sort aria-sort="ascending">
-            Current end date
-          </th>
-          <th scope="col" class="nhsuk-table__header">
-            Capacity
-          </th>
-        </tr>
-      </thead>
-      <tbody class="nhsuk-table__body">
-        {% if clinics.length > 0 %}
-          {% for clinic in clinics %}
-            <tr class="nhsuk-table__row">
-              <td class="nhsuk-table__cell">
-                <a href="/create-capacity-from-zero/clinic-summary?clinicId={{ clinic.id }}" class="nhsuk-u-font-weight-bold">{{ clinic.name }}</a>
-              </td>
-              <td class="nhsuk-table__cell">
-                {{ clinic.unit }}<br>
-                {{ clinic.location }}
-              </td>
-              <td class="nhsuk-table__cell">
-                {{ clinic.endDate }}
-              </td>
-              <td class="nhsuk-table__cell">
-                {% if clinic.capacity == 'No sessions assigned' %}
-                  <span class="nhsuk-tag nhsuk-tag--red">No sessions assigned</span>
-                {% else %}
-                  {{ clinic.capacity }}
-                {% endif %}
-              </td>
-            </tr>
-          {% endfor %}
-        {% else %}
+    {% if clinics.length > 0 %}
+      <table class="nhsuk-table nhsuk-table--striped nhsuk-table--sortable" data-module="nhsuk-table">
+        <thead class="nhsuk-table__head">
           <tr class="nhsuk-table__row">
-            <td class="nhsuk-table__cell" colspan="4">
-              <p class="nhsuk-u-margin-bottom-0">No clinics created yet. <a href="/create-capacity-from-zero/create-clinic">Create your first clinic</a>.</p>
-            </td>
+            <th scope="col" class="nhsuk-table__header">
+              Clinic
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Unit and location
+            </th>
+            <th scope="col" class="nhsuk-table__header" data-sort aria-sort="ascending">
+              Current end date
+            </th>
+            <th scope="col" class="nhsuk-table__header">
+              Capacity
+            </th>
           </tr>
-        {% endif %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="nhsuk-table__body">
+            {% for clinic in clinics %}
+              <tr class="nhsuk-table__row">
+                <td class="nhsuk-table__cell">
+                  <a href="/create-capacity-from-zero/clinic-summary?clinicId={{ clinic.id }}" class="nhsuk-u-font-weight-bold">{{ clinic.name }}</a>
+                </td>
+                <td class="nhsuk-table__cell">
+                  {{ clinic.unit }}<br>
+                  {{ clinic.location }}
+                </td>
+                <td class="nhsuk-table__cell">
+                  {{ clinic.endDate }}
+                </td>
+                <td class="nhsuk-table__cell">
+                  {% if clinic.capacity == 'No sessions assigned' %}
+                    <span class="nhsuk-tag nhsuk-tag--red">No sessions assigned</span>
+                  {% else %}
+                    {{ clinic.capacity }}
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="nhsuk-card nhsuk-card--warning nhsuk-u-reading-width">
+        <div class="nhsuk-card__content">
+          <h3 class="nhsuk-u-font-size-22 nhsuk-card__heading">
+            <span role="text">
+              <span class="nhsuk-u-visually-hidden">Important: </span>No clinics
+            </span>
+          </h3>
+          <div class="nhsuk-card__description">
+            <p>
+              There are no clinics at the moment. Clinics will appear here when you have created them.
+            </p>
+            <a class="nhsuk-action-link" href="/create-capacity-from-zero/create-clinic">
+              <svg class="nhsuk-icon nhsuk-icon--arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
+                <path d="M12 2a10 10 0 0 0-10 9h11.7l-4-4a1 1 0 0 1 1.5-1.4l5.6 5.7a1 1 0 0 1 0 1.4l-5.6 5.7a1 1 0 0 1-1.5 0 1 1 0 0 1 0-1.4l4-4H2A10 10 0 1 0 12 2z" />
+              </svg>
+              <span class="nhsuk-action-link__text">
+                Create a clinic.
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
 
   </div>
 </div>

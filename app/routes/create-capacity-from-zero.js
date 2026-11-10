@@ -200,6 +200,14 @@ router.get('/create-capacity-from-zero/', function (req, res) {
 })
 
 router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
+  const clinicId = req.query.clinicId
+  const clinics = req.session.data.createCapacityFromZero.clinics || []
+  
+  let currentClinic = null
+  if (clinicId) {
+    currentClinic = clinics.find(clinic => clinic.id === clinicId)
+  }
+
   const schedules = (req.session.data.createCapacityFromZero.schedules || [])
     .map(schedule => ({
       startDate: parseDateFields(schedule.scheduleStartDate),
@@ -242,7 +250,8 @@ router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
 
   res.render('create-capacity-from-zero/clinic-summary', {
     calendars,
-    totalLockedSlots
+    totalLockedSlots,
+    currentClinic: currentClinic || {}
   })
 })
 
