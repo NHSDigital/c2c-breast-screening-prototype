@@ -16,6 +16,15 @@ const sessionTemplates = {
 
 const isWholeNumber = str => /^\d+$/.test(str)
 
+// Generates a unique clinic ID from name
+const generateClinicId = (clinicName) => {
+  return clinicName
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
 // Checks a { day, month, year } object has numeric values for each field, regardless of whether they form a real date
 const hasDateFields = (dateObj) =>
   Boolean(dateObj) && isWholeNumber(dateObj.day) && isWholeNumber(dateObj.month) && isWholeNumber(dateObj.year)
@@ -160,6 +169,36 @@ const generateScheduleCalendars = (schedules) => {
   return calendars
 }
 
+router.get('/create-capacity-from-zero/', function (req, res) {
+  const clinics = req.session.data.createCapacityFromZero.clinics || []
+  
+  const clinicsWithEndDates = clinics.map(clinic => {
+    const scheduleEndDates = clinic.schedules
+      .map(schedule => parseDateFields(schedule.scheduleEndDate))
+      .filter(date => date !== null)
+    
+    const endDate = scheduleEndDates.length > 0
+      ? new Date(Math.max(...scheduleEndDates.map(d => d.getTime())))
+      : null
+
+    const formattedEndDate = endDate ? formatDateLabel(endDate) : 'No end date set'
+    
+    const capacity = clinic.schedules.length > 0 
+      ? clinic.schedules.reduce((total, schedule) => total + (schedule.totalSlots || 0), 0) + ' slots available'
+      : 'No sessions assigned'
+
+    return {
+      ...clinic,
+      endDate: formattedEndDate,
+      capacity: capacity
+    }
+  })
+
+  res.render('create-capacity-from-zero/index', {
+    clinics: clinicsWithEndDates
+  })
+})
+
 router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
   const schedules = (req.session.data.createCapacityFromZero.schedules || [])
     .map(schedule => ({
@@ -276,10 +315,6 @@ router.post('/create-capacity-from-zero/create-clinic', function (req, res) {
   const unit = req.body.unit || ''
   const location = req.body.location || ''
 
-  req.session.data.createCapacityFromZero['clinicName'] = clinicName
-  req.session.data.createCapacityFromZero['unit'] = unit
-  req.session.data.createCapacityFromZero['location'] = location
-
   const errors = {}
 
   if (!clinicName) {
@@ -300,7 +335,24 @@ router.post('/create-capacity-from-zero/create-clinic', function (req, res) {
     })
   }
 
-  res.redirect('/create-capacity-from-zero/clinic-summary')
+  const clinicId = generateClinicId(clinicName)
+  const newClinic = {
+    id: clinicId,
+    name: clinicName,
+    unit: unit,
+    location: location,
+    createdDate: new Date(),
+    schedules: []
+  }
+
+  if (!req.session.data.createCapacityFromZero.clinics) {
+    req.session.data.createCapacityFromZero.clinics = []
+  }
+
+  req.session.data.createCapacityFromZero.clinics.push(newClinic)
+  req.session.data.createCapacityFromZero.currentClinicId = clinicId
+
+  res.redirect('/create-capacity-from-zero/clinic-summary?clinicId=' + clinicId)
 })
 
 

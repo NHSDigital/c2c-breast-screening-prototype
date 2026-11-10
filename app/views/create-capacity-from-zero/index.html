@@ -106,7 +106,7 @@
 <nav class="app-secondary-navigation" aria-label="Secondary menu">
   <ul class="app-secondary-navigation__list">
     <li class="app-secondary-navigation__list-item">
-      <a class="app-secondary-navigation__link" href="/create-capacity-from-zero/index-manage">Today’s clinic sessions</a>
+      <a class="app-secondary-navigation__link" href="/create-capacity-from-zero/index-manage">Today's clinic sessions</a>
     </li>
     <li class="app-secondary-navigation__list-item">
       <a class="app-secondary-navigation__link" href="/create-capacity-from-zero/" aria-current="page"><strong class="app-secondary-navigation__current">Active clinics</strong></a>
@@ -150,51 +150,35 @@
         </tr>
       </thead>
       <tbody class="nhsuk-table__body">
-        <tr class="nhsuk-table__row">
-          <td class="nhsuk-table__cell">
-            <a href="clinic-summary-in-progress" class="nhsuk-u-font-weight-bold">Mereford central ongoing</a>
-          </td>
-          <td class="nhsuk-table__cell">
-            Mereford and Wensley Screening Centre<br>
-            Mereford and Wensley District Hospital
-          </td>
-          <td class="nhsuk-table__cell">
-            15 Dec 2026
-          </td>
-          <td class="nhsuk-table__cell">
-            1500 slots available
-          </td>
-        </tr>
-        <tr class="nhsuk-table__row">
-          <td class="nhsuk-table__cell">
-            <a href="new-schedule-empty" class="nhsuk-u-font-weight-bold">Drummond van visits</a>
-          </td>
-          <td class="nhsuk-table__cell">
-            Drummond<br>
-            East Mereford Community Hub
-          </td>
-          <td class="nhsuk-table__cell">
-            24 Dec 2026
-          </td>
-          <td class="nhsuk-table__cell">
-            <span class="nhsuk-tag nhsuk-tag--red">No sessions assigned</span>
-          </td>
-        </tr>
-        <tr class="nhsuk-table__row">
-          <td class="nhsuk-table__cell">
-            <a href="new-schedule-ready" class="nhsuk-u-font-weight-bold">Pankhurst van visits</a>
-          </td>
-          <td class="nhsuk-table__cell">
-            Pankhurst<br>
-            Riverside Sports Centre
-          </td>
-          <td class="nhsuk-table__cell">
-            27 Dec 2026
-          </td>
-          <td class="nhsuk-table__cell">
-            1500 slots available
-          </td>
-        </tr>
+        {% if clinics.length > 0 %}
+          {% for clinic in clinics %}
+            <tr class="nhsuk-table__row">
+              <td class="nhsuk-table__cell">
+                <a href="/create-capacity-from-zero/clinic-summary?clinicId={{ clinic.id }}" class="nhsuk-u-font-weight-bold">{{ clinic.name }}</a>
+              </td>
+              <td class="nhsuk-table__cell">
+                {{ clinic.unit }}<br>
+                {{ clinic.location }}
+              </td>
+              <td class="nhsuk-table__cell">
+                {{ clinic.endDate }}
+              </td>
+              <td class="nhsuk-table__cell">
+                {% if clinic.capacity == 'No sessions assigned' %}
+                  <span class="nhsuk-tag nhsuk-tag--red">No sessions assigned</span>
+                {% else %}
+                  {{ clinic.capacity }}
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr class="nhsuk-table__row">
+            <td class="nhsuk-table__cell" colspan="4">
+              <p class="nhsuk-u-margin-bottom-0">No clinics created yet. <a href="/create-capacity-from-zero/create-clinic">Create your first clinic</a>.</p>
+            </td>
+          </tr>
+        {% endif %}
       </tbody>
     </table>
 
