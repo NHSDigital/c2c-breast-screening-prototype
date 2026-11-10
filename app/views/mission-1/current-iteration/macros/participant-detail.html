@@ -133,23 +133,26 @@
 
     <section class="nhsuk-card nhsuk-u-margin-bottom-5">
       <div class="nhsuk-card__content">
-        <h2 class="nhsuk-card__heading nhsuk-heading-m">Screening episodes</h2>
-        <h3 class="nhsuk-heading-s">Current episode</h3>
+        <h2 class="nhsuk-card__heading nhsuk-heading-m">Appointment details</h2>
         <dl class="nhsuk-summary-list">
           <div class="nhsuk-summary-list__row">
             <dt class="nhsuk-summary-list__key">Stage</dt>
             <dd class="nhsuk-summary-list__value"><strong class="nhsuk-tag nhsuk-tag--{{ stageColour }}">{{ stageText }}</strong></dd>
           </div>
-        </dl>
-        <!--<h3 class="nhsuk-heading-s">Previous episodes</h3>
-        <dl class="nhsuk-summary-list">
+          {% if participant.episode_stage === 'scheduled' and participant.booked_appointment %}
+          {% set appointment = participant.booked_appointment %}
           <div class="nhsuk-summary-list__row">
-            <dt class="nhsuk-summary-list__key">Last screened</dt>
-            <dd class="nhsuk-summary-list__value">{{ participant.last_screened_date or '-' }}</dd>
+            <dt class="nhsuk-summary-list__key">Date</dt>
+            <dd class="nhsuk-summary-list__value">{{ appointment.day }} {{ appointment.date }}</dd>
           </div>
+          <div class="nhsuk-summary-list__row">
+            <dt class="nhsuk-summary-list__key">Time</dt>
+            <dd class="nhsuk-summary-list__value">{{ appointment.time }}</dd>
+          </div>
+          {% endif %}
         </dl>
       </div>
-    </section>-->
+    </section>
   </div>
 </div>
 {% endblock %}
