@@ -1,6 +1,6 @@
 {% set stageText = {
-'not scheduled': 'Not scheduled',
-'scheduled': 'Scheduled',
+'not scheduled': 'Not booked',
+'scheduled': 'Booked',
 'mammograms': 'Mammograms',
 'reading': 'Waiting for reading',
 'assessment': 'At assessment',
@@ -38,10 +38,10 @@
             <dt class="nhsuk-summary-list__key">NHS Number</dt>
             <dd class="nhsuk-summary-list__value nhsuk-u-font-code nhsuk-u-nowrap">{{ participant.nhs_number }}</dd>
           </div>
-          <!--<div class="nhsuk-summary-list__row">
+          <div class="nhsuk-summary-list__row">
             <dt class="nhsuk-summary-list__key">SX Number</dt>
             <dd class="nhsuk-summary-list__value nhsuk-u-font-code nhsuk-u-nowrap">{{ participant.sx_number }}</dd>
-          </div>-->
+          </div>
           <div class="nhsuk-summary-list__row">
             <dt class="nhsuk-summary-list__key">Date of birth</dt>
             <dd class="nhsuk-summary-list__value">{{ participant.date_of_birth }}<br><span class="nhsuk-hint">({{ participant.age }} years old)</span></dd>
