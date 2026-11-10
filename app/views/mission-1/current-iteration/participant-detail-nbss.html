@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% from "mission-1/current-iteration/includes/primary-navigation.html" import primaryNavigation %}
+{% block header %}
+  {{ primaryNavigation("Batches", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+  {# Static participant so the page doesn't depend on session data #}
+  {% set participant = {
+    display_name: "RAHMAN, Amina",
+    full_name: "Amina  Anne Rahman",
+    nhs_number: "999 000 0001",
+    date_of_birth: "01 January 1976",
+    age: 50,
+    gender: "Female",
+    ethnicity: "Not known",
+    is_breaching: false,
+    episode_stage: "scheduled",
+    address: {
+      houseNumber: "1",
+      street: "Ash Grove",
+      town: "Brightmere",
+      postcode: "BM1 1AA"
+    },
+    phone_numbers: {
+      mobile: "07700 900000",
+      home: "01632 960000"
+    },
+    email: "amina.rahman1@example.com",
+    gp_practice: {
+      practice_code: "DEMO001"
+    },
+    booked_appointment: {
+      day: "Friday",
+      date: "13 November 2026",
+      time: "09:00"
+    },
+    last_screened_date: "01 December 2023"
+  } %}
+
+  {% include "mission-1/current-iteration/includes/participant-detail-content-nbss.html" %}
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}
