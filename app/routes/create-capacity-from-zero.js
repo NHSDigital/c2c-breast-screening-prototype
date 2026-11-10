@@ -169,10 +169,48 @@ const generateScheduleCalendars = (schedules) => {
   return calendars
 }
 
+// Returns the active clinic, backfilling nested fields that stale sessions may lack
+const getCurrentClinic = (req) => {
+  const data = req.session.data.createCapacityFromZero
+  const clinic = (data.clinics || []).find(clinic => clinic.id === data.currentClinicId)
+
+  if (!clinic) {
+    return null
+  }
+
+  if (!Array.isArray(clinic.schedules)) clinic.schedules = []
+  if (!Array.isArray(clinic.selectedDays)) clinic.selectedDays = []
+  if (!clinic.dayTemplates) clinic.dayTemplates = {}
+
+  return clinic
+}
+
+router.use('/create-capacity-from-zero', function (req, res, next) {
+  if (!req.session.data.createCapacityFromZero) {
+    req.session.data.createCapacityFromZero = { clinics: [] }
+  }
+
+  if (req.query.clinicId) {
+    req.session.data.createCapacityFromZero.currentClinicId = req.query.clinicId
+  }
+
+  res.locals.currentClinic = getCurrentClinic(req)
+  next()
+})
+
+// Clinic-scoped routes need an active clinic, otherwise send the user back to the listing
+const requireClinic = (req, res, next) => {
+  if (!res.locals.currentClinic) {
+    return res.redirect('/create-capacity-from-zero/')
+  }
+  next()
+}
+
 router.get('/create-capacity-from-zero/', function (req, res) {
   const clinics = req.session.data.createCapacityFromZero.clinics || []
   
   const clinicsWithEndDates = clinics.map(clinic => {
+    clinic.schedules = clinic.schedules || []
     const scheduleEndDates = clinic.schedules
       .map(schedule => parseDateFields(schedule.scheduleEndDate))
       .filter(date => date !== null)
@@ -199,23 +237,17 @@ router.get('/create-capacity-from-zero/', function (req, res) {
   })
 })
 
-router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
-  const clinicId = req.query.clinicId
-  const clinics = req.session.data.createCapacityFromZero.clinics || []
-  
-  let currentClinic = null
-  if (clinicId) {
-    currentClinic = clinics.find(clinic => clinic.id === clinicId)
-  }
+router.get('/create-capacity-from-zero/clinic-summary', requireClinic, function (req, res) {
+  const currentClinic = res.locals.currentClinic
 
-  const schedules = (req.session.data.createCapacityFromZero.schedules || [])
+  const schedules = currentClinic.schedules
     .map(schedule => ({
       startDate: parseDateFields(schedule.scheduleStartDate),
       endDate: parseDateFields(schedule.scheduleEndDate)
     }))
     .filter(schedule => schedule.startDate && schedule.endDate)
 
-  const dayTemplates = req.session.data.createCapacityFromZero.dayTemplates || {}
+  const dayTemplates = currentClinic.dayTemplates
 
   const calendars = generateScheduleCalendars(schedules).map(calendar => {
     calendar.weeks = calendar.weeks.map(week => week.map(day => {
@@ -250,15 +282,12 @@ router.get('/create-capacity-from-zero/clinic-summary', function (req, res) {
 
   res.render('create-capacity-from-zero/clinic-summary', {
     calendars,
-    totalLockedSlots,
-    currentClinic: currentClinic || {}
+    totalLockedSlots
   })
 })
 
-router.post('/create-capacity-from-zero/select-days', function (req, res) {
-  const selectedDays = [].concat(req.body.selectedDays || [])
-
-  req.session.data.createCapacityFromZero.selectedDays = selectedDays
+router.post('/create-capacity-from-zero/select-days', requireClinic, function (req, res) {
+  res.locals.currentClinic.selectedDays = [].concat(req.body.selectedDays || [])
 
   res.redirect('/create-capacity-from-zero/select-session-template')
 })
@@ -273,7 +302,7 @@ router.get('/create-capacity-from-zero/new-session-template', function (req, res
 })
 
 // Shows the success banner and "New" tag once, straight after a template is saved
-router.get('/create-capacity-from-zero/select-session-template', function (req, res) {
+router.get('/create-capacity-from-zero/select-session-template', requireClinic, function (req, res) {
   const templateSaved = req.session.data.sessionTemplateSaved
   delete req.session.data.sessionTemplateSaved
 
@@ -286,35 +315,29 @@ const exampleTemplateSlugs = {
 }
 
 // Accepts an example template's slug or a user-created template's id
-router.get('/create-capacity-from-zero/apply-session-template/:templateKey', function (req, res) {
+router.get('/create-capacity-from-zero/apply-session-template/:templateKey', requireClinic, function (req, res) {
   const { templateKey } = req.params
+  const currentClinic = res.locals.currentClinic
   const savedTemplate = (req.session.data.sessionTemplates || [])
     .find(saved => !saved.example && saved.id === templateKey)
   const templateName = exampleTemplateSlugs[templateKey] || (savedTemplate && savedTemplate.name)
-  const selectedDays = req.session.data.createCapacityFromZero.selectedDays || []
-
-  if (!req.session.data.createCapacityFromZero.dayTemplates) {
-    req.session.data.createCapacityFromZero.dayTemplates = {}
-  }
 
   if (templateName) {
-    selectedDays.forEach(dateKey => {
-      req.session.data.createCapacityFromZero.dayTemplates[dateKey] = templateName
+    currentClinic.selectedDays.forEach(dateKey => {
+      currentClinic.dayTemplates[dateKey] = templateName
     })
   }
 
   res.redirect('/create-capacity-from-zero/clinic-summary')
 })
 
-router.post('/create-capacity-from-zero/remove-template', function (req, res) {
+router.post('/create-capacity-from-zero/remove-template', requireClinic, function (req, res) {
   const selectedDays = [].concat(req.body.selectedDays || [])
-  const dayTemplates = req.session.data.createCapacityFromZero.dayTemplates || {}
+  const dayTemplates = res.locals.currentClinic.dayTemplates
 
   selectedDays.forEach(dateKey => {
     delete dayTemplates[dateKey]
   })
-
-  req.session.data.createCapacityFromZero.dayTemplates = dayTemplates
 
   res.redirect('/create-capacity-from-zero/clinic-summary')
 })
@@ -351,7 +374,9 @@ router.post('/create-capacity-from-zero/create-clinic', function (req, res) {
     unit: unit,
     location: location,
     createdDate: new Date(),
-    schedules: []
+    schedules: [],
+    selectedDays: [],
+    dayTemplates: {}
   }
 
   if (!req.session.data.createCapacityFromZero.clinics) {
@@ -365,7 +390,12 @@ router.post('/create-capacity-from-zero/create-clinic', function (req, res) {
 })
 
 
-router.post('/create-capacity-from-zero/create-schedule', function (req, res) {
+router.get('/create-capacity-from-zero/create-schedule', requireClinic, function (req, res) {
+  res.render('create-capacity-from-zero/create-schedule')
+})
+
+router.post('/create-capacity-from-zero/create-schedule', requireClinic, function (req, res) {
+  const currentClinic = res.locals.currentClinic
   // const scheduleName = (req.body.scheduleName || '').trim()
   const scheduleStartDate = req.body.scheduleStartDate || {}
   const scheduleEndDate = req.body.scheduleEndDate || {}
@@ -403,7 +433,7 @@ router.post('/create-capacity-from-zero/create-schedule', function (req, res) {
     errors.scheduleEndDate = 'Schedule end date must be the same as or after the schedule start date'
   }
 
-  const existingSchedules = (req.session.data.createCapacityFromZero.schedules || [])
+  const existingSchedules = currentClinic.schedules
     .map(schedule => ({
       startDate: parseDateFields(schedule.scheduleStartDate),
       endDate: parseDateFields(schedule.scheduleEndDate)
@@ -425,11 +455,7 @@ router.post('/create-capacity-from-zero/create-schedule', function (req, res) {
     })
   }
 
-  if (!Array.isArray(req.session.data.createCapacityFromZero.schedules)) {
-    req.session.data.createCapacityFromZero.schedules = []
-  }
-
-  req.session.data.createCapacityFromZero.schedules.push({
+  currentClinic.schedules.push({
     // scheduleName,
     scheduleStartDate,
     scheduleEndDate

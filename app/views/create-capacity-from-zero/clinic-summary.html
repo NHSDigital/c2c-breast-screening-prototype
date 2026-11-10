@@ -29,7 +29,7 @@
 
   {% include "create-capacity-from-zero/_local-includes/clinic-summary.html" %}
   
-  {% if data.createCapacityFromZero.schedules.length > 0 %}
+  {% if currentClinic.schedules.length > 0 %}
     <div class="nhsuk-grid-row">
       <div class="nhsuk-grid-column-four-fifths">
         {% for calendar in calendars %}
@@ -141,7 +141,7 @@
 
   <div class="nhsuk-grid-row">
     <div class="nhsuk-grid-column-full">
-      {% if data.createCapacityFromZero.schedules.length === 0 %}
+      {% if currentClinic.schedules.length === 0 %}
         <div class="nhsuk-card nhsuk-card--warning nhsuk-u-reading-width">
           <div class="nhsuk-card__content">
             <h3 class="nhsuk-u-font-size-22 nhsuk-card__heading">

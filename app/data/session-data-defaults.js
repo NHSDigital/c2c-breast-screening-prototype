@@ -42,10 +42,7 @@ module.exports = {
   clinicCapacityTotal: "10",
   missionOne: {},
   createCapacityFromZero: {
-    clinics: [],
-    schedules: [],
-    selectedDays: [],
-    dayTemplates: {}
+    clinics: []
   },
   createSessionTemplate: {
     
