@@ -145,9 +145,9 @@
             <th scope="col" class="nhsuk-table__header" data-sort aria-sort="ascending">
               Current end date
             </th>
-            <th scope="col" class="nhsuk-table__header">
+            <!-- <th scope="col" class="nhsuk-table__header">
               Capacity
-            </th>
+            </th> -->
           </tr>
         </thead>
         <tbody class="nhsuk-table__body">
@@ -163,13 +163,13 @@
                 <td class="nhsuk-table__cell">
                   {{ clinic.endDate }}
                 </td>
-                <td class="nhsuk-table__cell">
+                <!-- <td class="nhsuk-table__cell">
                   {% if clinic.capacity == 'No sessions assigned' %}
                     <span class="nhsuk-tag nhsuk-tag--red">No sessions assigned</span>
                   {% else %}
                     {{ clinic.capacity }}
                   {% endif %}
-                </td>
+                </td> -->
               </tr>
             {% endfor %}
         </tbody>
