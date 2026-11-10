@@ -11,7 +11,7 @@
 
 {% block beforeContent %}
   <a class="nhsuk-back-link" href="clinic-summary">
-    Back to clinic: {{ data.createCapacityFromZero.clinicName }}
+    Back to clinic
   </a>
 {% endblock %}
 
@@ -37,16 +37,15 @@
         }) }}
       {% endif %}
 
-      <h1 class="nhsuk-heading-l">Create schedule</h1>
-
-      <!-- <p>
-        Enter start and end dates for your new schedule in clinic "{{ data.createCapacityFromZero.clinicName | lower }}"
-      </p> -->
+      <h1 class="nhsuk-heading-l">
+        <span class="nhsuk-caption-l">{{ currentClinic.name }}</span>
+        Create schedule
+      </h1>
 
       <form method="post">
 
         <div class="nhsuk-form-group {% if errors and errors.scheduleStartDate %}nhsuk-form-group--error{% endif %}">
-          <fieldset class="nhsuk-fieldset nhsuk-u-margin-bottom-4" role="group" aria-describedby="schedule-start-date-hint">
+          <fieldset class="nhsuk-fieldset" role="group" aria-describedby="schedule-start-date-hint">
             <legend class="nhsuk-fieldset__legend nhsuk-label--m">
                 Start date
             </legend>
@@ -130,8 +129,9 @@
           </fieldset>
         </div>
         
-        
-        <button class="nhsuk-button" type="submit">Create schedule</button>
+        <div class="nhsuk-form-group">
+          <button class="nhsuk-button" type="submit">Create schedule</button>
+        </div>
 
       </form>
     </div>

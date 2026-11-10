@@ -57,6 +57,7 @@
 
   .--date-selected .calendar-table-date {
     background-color: $nhsuk-focus-colour;
+    outline: 2px solid $nhsuk-input-border-colour;
   }
 
   .--schedule-start {

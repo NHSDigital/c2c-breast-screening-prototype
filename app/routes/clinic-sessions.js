@@ -11,7 +11,7 @@ const {
   combineSlotsHandler,
   divideSlotsHandler
 } = require('./slot-structure-handlers')
-const { deleteSessionMapImage, saveSessionMapImage, sessionMapImageExists } = require('../lib/session-map-svg')
+const { buildSessionMapSvg, deleteSessionMapImage, saveSessionMapImage, sessionMapImageExists } = require('../lib/session-map-svg')
 /*
 
 /app/views/sessions/
@@ -81,6 +81,20 @@ router.post('/sessions/03-slot-structure', function (req, res) {
   buildSessionSlots(req.session.data.createSessionTemplate)
 
   res.redirect('/sessions/04-check-template')
+})
+
+router.get('/sessions/04-check-template', function (req, res) {
+  if (!req.session.data.createSessionTemplate) {
+    req.session.data.createSessionTemplate = {}
+  }
+
+  const { svg, description } = buildSessionMapSvg(buildSessionSlots(req.session.data.createSessionTemplate))
+
+  // A data URI keeps the preview out of the image directory, so nothing is left to clean up
+  res.render('sessions/04-check-template', {
+    mapImageSrc: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
+    mapImageAlt: description
+  })
 })
 
 // Saves the draft as a template, overwriting the template being edited if there is one
@@ -184,6 +198,8 @@ router.post('/sessions/mark-hold-web-rebooking', holdHandler({ reason: 'online b
 router.post('/sessions/mark-hold-technical-recall', holdHandler({ reason: 'technical recall', ...sessionsSlotStructure }))
 router.post('/sessions/mark-hold-generic', holdHandler(sessionsSlotStructure))
 router.post('/sessions/mark-special-appointment', specialAppointmentHandler(sessionsSlotStructure))
+router.post('/sessions/mark-admin', nonBookableHandler({ reason: 'admin', ...sessionsSlotStructure }))
+router.post('/sessions/mark-downtime', nonBookableHandler({ reason: 'downtime', ...sessionsSlotStructure }))
 router.post('/sessions/mark-non-bookable-generic', nonBookableHandler(sessionsSlotStructure))
 router.post('/sessions/combine-slots', combineSlotsHandler(sessionsSlotStructure))
 router.post('/sessions/divide-slots', divideSlotsHandler(sessionsSlotStructure))

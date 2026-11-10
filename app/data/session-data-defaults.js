@@ -42,9 +42,7 @@ module.exports = {
   clinicCapacityTotal: "10",
   missionOne: {},
   createCapacityFromZero: {
-    schedules: [],
-    selectedDays: [],
-    dayTemplates: {}
+    clinics: []
   },
   createSessionTemplate: {
     
@@ -77,6 +75,8 @@ module.exports = {
         duration: '10',
         bookableSlotCount: 36,
         nonBookableSlotCount: 6,
+        standardSlotCount: 0,
+        heldSlotCount: 36,
         bookableBreakdown: [
           {
             label: 'Special appointment',
@@ -175,18 +175,16 @@ module.exports = {
         duration: '10',
         bookableSlotCount: 36,
         nonBookableSlotCount: 6,
+        standardSlotCount: 28,
+        heldSlotCount: 8,
         bookableBreakdown: [
           {
-            label: 'Held for rebooking',
+            label: 'Rebooking',
             count: 4
           },
           {
             label: 'Special appointment',
             count: 4
-          },
-          {
-            label: 'Standard',
-            count: 28
           }
         ],
         nonBookableBreakdown: [

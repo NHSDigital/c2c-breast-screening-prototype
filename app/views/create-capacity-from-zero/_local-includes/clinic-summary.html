@@ -2,16 +2,16 @@
   <div class="nhsuk-grid-column-four-fifths">
     <h1 class="nhsuk-heading-l">
       <span class="nhsuk-caption-l">Clinic</span>
-      {{ data.createCapacityFromZero.clinicName or pageVarClinicName }}
+      {{ currentClinic.name or data.createCapacityFromZero.clinicName or pageVarClinicName }}
     </h1>
     <p>
-      <a href="#">{{ data.createCapacityFromZero.unit or pageVarUnit }}</a> at <a href="#">{{ data.createCapacityFromZero.location or pageVarLocation }}</a>
+      <a href="#">{{ currentClinic.unit or data.createCapacityFromZero.unit or pageVarUnit }}</a> at <a href="#">{{ currentClinic.location or data.createCapacityFromZero.location or pageVarLocation }}</a>
     </p>
   </div>
   <div class="nhsuk-grid-column-one-fifth">
     <ul class="nhsuk-list">
       <li>
-        <a href="create-clinic">Edit clinic properties</a>
+        <a href="#">Edit clinic properties</a>
       </li>
     </ul>
   </div>

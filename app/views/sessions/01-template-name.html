@@ -8,7 +8,11 @@
   {{ primaryNavigation("Clinics", serviceName, bsoName) }}
 {% endblock %}
 
-{% block beforeContent %}{% endblock %}
+{% block beforeContent %}
+  <a class="nhsuk-back-link" href="/sessions/00-template-listing">
+    Back to clinic session templates
+  </a>
+{% endblock %}
 
 {% block content %}
 
@@ -91,11 +95,11 @@
 
         <div class="nhsuk-form-group">
           <label class="nhsuk-label nhsuk-label--s" for="session-template-description">
-            Note (optional)
+            Description (optional)
           </label>
-          <div class="nhsuk-hint" id="description-hint-text">
+          <!-- <div class="nhsuk-hint" id="description-hint-text">
             Put in a short note so you can remember stuff
-          </div>
+          </div> -->
           <input class="nhsuk-input nhsuk-u-width-three-quarters" id="session-template-description" name="sessionTemplateNote" type="text" aria-describedby="description-hint-text" value="{{ data.createSessionTemplate.sessionTemplateNote }}">
         </div>
 

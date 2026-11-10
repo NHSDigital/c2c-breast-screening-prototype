@@ -92,48 +92,58 @@
             Slot structure
           </dt>
           <dd class="nhsuk-summary-list__value">
-            {% if data.createSessionTemplate.bookableBreakdown | length %}
-              <details class="nhsuk-details nhsuk-u-margin-bottom-1">
-                <summary class="nhsuk-details__summary">
-                  <span class="nhsuk-details__summary-text">
-                    {{ data.createSessionTemplate.bookableSlotCount }} bookable slots
-                  </span>
-                </summary>
-                <div class="nhsuk-details__text">
-                  <dl class="nhsuk-summary-list">
-                    {% for item in data.createSessionTemplate.bookableBreakdown %}
-                      <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half app-nowrap">{{ item.label }}</dt>
-                        <dd class="nhsuk-summary-list__value">{{ item.count }}</dd>
-                      </div>
-                    {% endfor %}
-                  </dl>
-                </div>
-              </details>
-            {% else %}
-              <p>{{ data.createSessionTemplate.bookableSlotCount }} bookable slots</p>
-            {% endif %}
-            {% if data.createSessionTemplate.nonBookableBreakdown | length %}
-              <details class="nhsuk-details">
-                <summary class="nhsuk-details__summary nhsuk-u-margin-bottom-1">
-                  <span class="nhsuk-details__summary-text">
-                    {{ data.createSessionTemplate.nonBookableSlotCount }} non-bookable slots
-                  </span>
-                </summary>
-                <div class="nhsuk-details__text">
-                  <dl class="nhsuk-summary-list">
-                    {% for item in data.createSessionTemplate.nonBookableBreakdown %}
-                      <div class="nhsuk-summary-list__row">
-                        <dt class="nhsuk-summary-list__key nhsuk-u-width-one-half app-nowrap">{{ item.label }}</dt>
-                        <dd class="nhsuk-summary-list__value">{{ item.count }}</dd>
-                      </div>
-                    {% endfor %}
-                  </dl>
-                </div>
-              </details>
-            {% else %}
-              <p>{{ data.createSessionTemplate.nonBookableSlotCount }} non-bookable slots</p>
-            {% endif %}
+
+            <div style="display: flex; gap: 1rem;">
+              <div class="app-session-template-preview-image" style="flex: 0 0 132px;">
+                <img src="{{ mapImageSrc }}" alt="{{ mapImageAlt }}">
+              </div>
+              <div>
+
+                <p>{{ data.createSessionTemplate.standardSlotCount }} standard slots</p>
+
+                {% if data.createSessionTemplate.bookableBreakdown | length %}
+                  <details class="nhsuk-details nhsuk-u-margin-bottom-1">
+                    <summary class="nhsuk-details__summary">
+                      <span class="nhsuk-details__summary-text">
+                        {{ data.createSessionTemplate.heldSlotCount }} held slots
+                      </span>
+                    </summary>
+                    <div class="nhsuk-details__text">
+                      <dl class="nhsuk-summary-list">
+                        {% for item in data.createSessionTemplate.bookableBreakdown %}
+                          <div class="nhsuk-summary-list__row">
+                            <dt class="nhsuk-summary-list__key nhsuk-u-width-two-thirds">{{ item.label | capitalize }}</dt>
+                            <dd class="nhsuk-summary-list__value">{{ item.count }}</dd>
+                          </div>
+                        {% endfor %}
+                      </dl>
+                    </div>
+                  </details>
+                {% else %}
+                  <!-- <p>0 held slots</p> -->
+                {% endif %}
+                {% if data.createSessionTemplate.nonBookableBreakdown | length %}
+                  <details class="nhsuk-details">
+                    <summary class="nhsuk-details__summary nhsuk-u-margin-bottom-1">
+                      <span class="nhsuk-details__summary-text">
+                        {{ data.createSessionTemplate.nonBookableSlotCount }} non-bookable slots
+                      </span>
+                    </summary>
+                    <div class="nhsuk-details__text">
+                      <dl class="nhsuk-summary-list">
+                        {% for item in data.createSessionTemplate.nonBookableBreakdown %}
+                          <div class="nhsuk-summary-list__row">
+                            <dt class="nhsuk-summary-list__key nhsuk-u-width-two-thirds">{{ item.label | capitalize }}</dt>
+                            <dd class="nhsuk-summary-list__value">{{ item.count }}</dd>
+                          </div>
+                        {% endfor %}
+                      </dl>
+                    </div>
+                  </details>
+                {% else %}
+                  <!-- <p>0 non-bookable slots</p> -->
+                {% endif %}
+              </div>
           </dd>
           <dd class="nhsuk-summary-list__actions">
             <a class="nhsuk-link" href="03-slot-structure">Change<span class="nhsuk-u-visually-hidden"> slot structure</span></a>
