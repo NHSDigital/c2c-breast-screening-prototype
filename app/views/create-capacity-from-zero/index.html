@@ -142,9 +142,9 @@
             <th scope="col" class="nhsuk-table__header">
               Unit and location
             </th>
-            <th scope="col" class="nhsuk-table__header" data-sort aria-sort="ascending">
+            <!-- <th scope="col" class="nhsuk-table__header" data-sort aria-sort="ascending">
               Current end date
-            </th>
+            </th> -->
             <!-- <th scope="col" class="nhsuk-table__header">
               Capacity
             </th> -->
@@ -160,9 +160,9 @@
                   {{ clinic.unit }}<br>
                   {{ clinic.location }}
                 </td>
-                <td class="nhsuk-table__cell">
+                <!-- <td class="nhsuk-table__cell">
                   {{ clinic.endDate }}
-                </td>
+                </td> -->
                 <!-- <td class="nhsuk-table__cell">
                   {% if clinic.capacity == 'No sessions assigned' %}
                     <span class="nhsuk-tag nhsuk-tag--red">No sessions assigned</span>
@@ -179,12 +179,12 @@
         <div class="nhsuk-card__content">
           <h3 class="nhsuk-u-font-size-22 nhsuk-card__heading">
             <span role="text">
-              <span class="nhsuk-u-visually-hidden">Important: </span>No clinics
+              <span class="nhsuk-u-visually-hidden">Important: </span>No active clinics
             </span>
           </h3>
           <div class="nhsuk-card__description">
             <p>
-              There are no clinics at the moment. Clinics will appear here when you have created them.
+              There are no active clinics at the moment. Clinics will appear here when you have created them.
             </p>
             <a class="nhsuk-action-link" href="/create-capacity-from-zero/create-clinic">
               <svg class="nhsuk-icon nhsuk-icon--arrow-right-circle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" focusable="false" aria-hidden="true">
