@@ -23,10 +23,16 @@
 
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-full">
+    {% set notScheduledParticipants = [] %}
+    {% for participant in data.participants.default %}
+      {% if participant.episode_stage == 'not scheduled' %}
+        {% set notScheduledParticipants = (notScheduledParticipants.push(participant), notScheduledParticipants) %}
+      {% endif %}
+    {% endfor %}
     {% from "mission-1/current-iteration/macros/participant-listing.html" import participant_listing %}
     {{ participant_listing({
       mode: "browse",
-      participants: data.participants.default
+      participants: notScheduledParticipants
     }) }}
   </div>
 </div>

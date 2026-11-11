@@ -12,6 +12,33 @@ const { buildSessionSlots, nonBookableHandler, clearTagsHandler } = require('./s
 
 const isWholeNumber = str => /^\d+$/.test(str)
 
+router.get('/mission-1/current-iteration/06-booked', function (req, res) {
+  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+
+  const data = req.session.data
+
+  // Mirrors the day-list include: 10 minute slots from 09:00, with two staff breaks after the seventh booking
+  const staged = participants.filter(participant => participant.status === 'staged')
+  const breakStart = Math.min(7, staged.length)
+  staged.forEach((participant, index) => {
+    const slot = index < breakStart ? index : index + 2
+    const minutes = 540 + slot * 10
+    const time = `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`
+
+    participant.episode_stage = 'scheduled'
+    participant.booked_appointment = {
+      day: 'Tuesday',
+      date: data.clinicTimespan,
+      time,
+      clinicName: data.clinicName,
+      unitName: data.unitName,
+      locationName: data.locationName
+    }
+  })
+
+  res.render('mission-1/current-iteration/06-booked')
+})
+
 // Checks a { day, month, year } object has numeric values for each field, regardless of whether they form a real date
 const hasDateFields = (dateObj) =>
   Boolean(dateObj) && isWholeNumber(dateObj.day) && isWholeNumber(dateObj.month) && isWholeNumber(dateObj.year)
@@ -38,30 +65,39 @@ const parseDateFields = (dateObj) => {
 // simple search
 router.get('/mission-1/current-iteration/04a-example-search-result', function (req, res) {
   const query = (req.query['search-params'] || '').trim()
-  const allParticipants = (req.session.data.participants && req.session.data.participants.default) || []
+  const allParticipants = ((req.session.data.participants && req.session.data.participants.default) || [])
+    .map((participant, index) => Object.assign({}, participant, { participantIndex: index }))
+    .filter(participant => participant.episode_stage === 'not scheduled')
   const normalizedQuery = query.toLowerCase().replace(/\s+/g, ' ')
   const nhsQuery = normalizedQuery.replace(/\s+/g, '')
 
-  const searchResults = (normalizedQuery ? allParticipants.map((participant, index) => {
+  const searchResults = (normalizedQuery ? allParticipants.filter((participant) => {
     const nhs = participant.nhs_number.toLowerCase().replace(/\s+/g, '')
     const name = participant.full_name.toLowerCase()
     const dob = participant.date_of_birth.toLowerCase()
 
-    if (
+    return (
       nhs.includes(nhsQuery) ||
       name.includes(normalizedQuery) ||
       dob.includes(normalizedQuery)
-    ) {
-      return Object.assign({}, participant, { participantIndex: index })
-    }
-
-    return null
-  }).filter(Boolean) : allParticipants.map((participant, index) => Object.assign({}, participant, { participantIndex: index })))
+    )
+  }) : allParticipants)
 
   res.render('mission-1/current-iteration/04a-example-search-result', {
     participants: searchResults,
     searchQuery: query
   })
+})
+
+router.get('/mission-1/participants/:participantId', function (req, res) {
+  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const participant = participants.find(item => item.participantId === req.params.participantId)
+
+  if (!participant) {
+    return res.status(404).send('Participant not found')
+  }
+
+  res.render('mission-1/current-iteration/macros/participant-detail', { participant })
 })
 
 // adding and removing participants from the "group"

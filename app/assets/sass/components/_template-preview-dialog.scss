@@ -55,3 +55,15 @@
 .app-template-preview-dialog--content {
   padding: nhsuk-spacing(5);
 }
+
+.app-link-button {
+  @include nhsuk-link-style-default;
+  @include nhsuk-link-style-no-visited-state;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  text-decoration: underline;
+  cursor: pointer;
+}
