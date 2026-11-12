@@ -17,6 +17,9 @@ const entryPoints = [
   'app/assets/javascript/*.js'
 ]
 
+const environmentMiddleware = require('./app/lib/middleware/environment')
+
+
 async function init() {
   clearSessionMapImages()
 
@@ -27,7 +30,8 @@ async function init() {
     },
     viewsPath,
     routes,
-    locals,
+    locals: (req, res, next) =>
+      environmentMiddleware(req, res, () => locals(req, res, next)),
     filters,
     sessionDataDefaults
   })

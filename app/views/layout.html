@@ -11,6 +11,8 @@
   Stolen Manage prototype components :P
   https://github.com/NHSDigital/manage-breast-screening-prototype
 -->
+{%- from "environment-banner/macro.njk" import environmentBanner -%}
+
 {%- from '_components/secondary-navigation/macro.njk' import appSecondaryNavigation %}
 
 {% block head %}
@@ -21,6 +23,17 @@
 
 <!-- Edit the header -->
 <!-- Header code examples can be found at https://service-manual.nhs.uk/design-system/components/header -->
+<!-- Environment banner, kept outside the header block as many pages override it -->
+{% block skipLink %}
+  {{ super() }}
+  {{ environmentBanner({
+    tag: environment.tag,
+    colour: environment.colour,
+    text: environment.text,
+    html: environment.html
+  }) }}
+{% endblock %}
+
 {% block header %}
   {{ header({
     service: {
