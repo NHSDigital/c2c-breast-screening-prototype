@@ -24,7 +24,7 @@
 <div class="nhsuk-grid-row">
   <div class="nhsuk-grid-column-full">
     {% set notScheduledParticipants = [] %}
-    {% for participant in data.participants.default %}
+    {% for participant in data.participants %}
       {% if participant.episode_stage == 'not scheduled' %}
         {% set notScheduledParticipants = (notScheduledParticipants.push(participant), notScheduledParticipants) %}
       {% endif %}

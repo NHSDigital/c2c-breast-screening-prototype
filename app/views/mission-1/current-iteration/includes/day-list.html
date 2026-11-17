@@ -1,5 +1,5 @@
 {% set bookedParticipants = [] %}
-{% for participant in data.participants.default %}
+{% for participant in data.participants %}
   {% if participant.status === "staged" %}
     {% set bookedParticipants = (bookedParticipants.push(participant), bookedParticipants) %}
   {% endif %}

@@ -839,7 +839,7 @@ router.get(['/participants', '/batches/participants'], function (req, res) {
   const breachRisk = queryValues(req.query.breachRisk)
   const today = new Date()
   today.setHours(0, 0, 0, 0)
-  let allParticipants = ((req.session.data.participants && req.session.data.participants.default) || [])
+  let allParticipants = (Array.isArray(req.session.data.participants) ? req.session.data.participants : [])
     .map(participant => refreshParticipantDates(participant, today))
 
   if (search) {
@@ -955,7 +955,7 @@ router.get('/participants/search-results', function (req, res) {
   const criteria = participantSearchCriteria(req.query)
   const today = new Date()
   today.setHours(0, 0, 0, 0)
-  const participants = ((req.session.data.participants && req.session.data.participants.default) || [])
+  const participants = (Array.isArray(req.session.data.participants) ? req.session.data.participants : [])
     .filter(participant => matchesParticipantSearch(participant, criteria))
     .map(participant => refreshParticipantDates(participant, today))
     .sort((a, b) => a.full_name.localeCompare(b.full_name))
@@ -977,7 +977,7 @@ router.get(['/participants/:participantId', '/batches/participants/:participantI
   }
 
   const participantsPath = req.path.startsWith('/batches/') ? '/batches/participants' : '/participants'
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const participants = Array.isArray(req.session.data.participants) ? req.session.data.participants : []
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const participant = participants.find(item => item.participantId === req.params.participantId)
