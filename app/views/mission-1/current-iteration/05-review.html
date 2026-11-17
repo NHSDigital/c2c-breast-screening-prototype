@@ -47,7 +47,7 @@
               </tr>
             </thead>
             <tbody class="nhsuk-table__body">
-              {% for participant in data.participants.default %}
+              {% for participant in data.participants %}
                 {% if participant.status === "staged" %}
                   <tr class="nhsuk-table__row">
                     <td class="nhsuk-table__cell">

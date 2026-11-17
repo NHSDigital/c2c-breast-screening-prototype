@@ -23,7 +23,7 @@
 
   {% from "mission-1/current-iteration/macros/batch-detail.html" import batch_detail %}
   {{ batch_detail({
-    participant_count: data.participants.default.length,
+    participant_count: data.participants.length,
     button_url:"03-select-clinic"
   }) }}
 

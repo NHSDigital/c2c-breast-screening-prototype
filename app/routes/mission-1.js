@@ -13,7 +13,7 @@ const { buildSessionSlots, nonBookableHandler, clearTagsHandler } = require('./s
 const isWholeNumber = str => /^\d+$/.test(str)
 
 router.get('/mission-1/current-iteration/06-booked', function (req, res) {
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const participants = Array.isArray(req.session.data.participants) ? req.session.data.participants : []
 
   const data = req.session.data
 
@@ -65,7 +65,7 @@ const parseDateFields = (dateObj) => {
 // simple search
 router.get('/mission-1/current-iteration/04a-example-search-result', function (req, res) {
   const query = (req.query['search-params'] || '').trim()
-  const allParticipants = ((req.session.data.participants && req.session.data.participants.default) || [])
+  const allParticipants = (Array.isArray(req.session.data.participants) ? req.session.data.participants : [])
     .map((participant, index) => Object.assign({}, participant, { participantIndex: index }))
     .filter(participant => participant.episode_stage === 'not scheduled')
   const normalizedQuery = query.toLowerCase().replace(/\s+/g, ' ')
@@ -90,7 +90,7 @@ router.get('/mission-1/current-iteration/04a-example-search-result', function (r
 })
 
 router.get('/mission-1/participants/:participantId', function (req, res) {
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const participants = Array.isArray(req.session.data.participants) ? req.session.data.participants : []
   const participant = participants.find(item => item.participantId === req.params.participantId)
 
   if (!participant) {
@@ -102,7 +102,7 @@ router.get('/mission-1/participants/:participantId', function (req, res) {
 
 // adding and removing participants from the "group"
 router.get('/action/stage/:participantId', function (req, res) {
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const participants = Array.isArray(req.session.data.participants) ? req.session.data.participants : []
   const participantIndex = participants.findIndex((participant) => participant.participantId === req.params.participantId)
 
   if (participantIndex !== -1) {
@@ -113,7 +113,7 @@ router.get('/action/stage/:participantId', function (req, res) {
   res.redirect(req.get('referer') || '/mission-1/current-iteration/04-choose-participants')
 });
 router.get('/action/unstage/:participantId', function (req, res) {
-  const participants = (req.session.data.participants && req.session.data.participants.default) || []
+  const participants = Array.isArray(req.session.data.participants) ? req.session.data.participants : []
   const participantIndex = participants.findIndex((participant) => participant.participantId === req.params.participantId)
 
   if (participantIndex !== -1) {
