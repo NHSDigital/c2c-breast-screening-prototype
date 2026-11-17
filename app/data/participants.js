@@ -221,4 +221,4 @@ const createParticipant = (index, today) => {
 
 const today = new Date()
 
-export default Array.from({ length: 150 }, (_, index) => createParticipant(index, today))
+module.exports = Array.from({ length: 150 }, (_, index) => createParticipant(index, today))
