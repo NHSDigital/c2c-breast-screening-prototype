@@ -222,3 +222,8 @@ a {
 .app-nowrap {
   white-space: nowrap;
 }
+
+// to fix or change markup in production - /sessions/04-check-template has a _nested_ summary list _without_ actions - it's .app-child-summary-list
+.nhsuk-summary-list:has(.nhsuk-summary-list__actions) .nhsuk-summary-list__row:not(:has(.nhsuk-summary-list__actions))::after {
+  width: 1%;
+}
