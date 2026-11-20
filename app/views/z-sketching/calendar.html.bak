@@ -1,0 +1,341 @@
+{% extends 'layout.html' %}
+
+{% set pageName = "" %}
+
+{% macro primaryNavigation(activeItem, serviceName, bsoName) %}
+  {{ header({
+    account: {
+      items: [
+        {
+          text: bsoName
+        },
+        {
+          href: "#",
+          text: "Thomas Pynchon",
+          icon: true
+        },
+        {
+          href: "/",
+          text: "Log out"
+        }
+      ]
+    },
+    service: {
+      text: serviceName,
+      href: "/"
+    },
+    navigation: {
+      items: [
+        {
+          href: "#",
+          text: "Dashboard",
+          active: activeItem === "Dashboard/home"
+        },
+        {
+          href: "/participants/",
+          text: "Participants",
+          active: activeItem === "Participants"
+        },
+        {
+          href: "/create-capacity-from-zero/",
+          text: "Clinics",
+          active: activeItem === "Clinics"
+        },
+        {
+          href: "#",
+          text: "Image reading",
+          active: activeItem === "Image reading"
+        },
+        {
+          href: "#",
+          text: "Reports",
+          active: activeItem === "Reports"
+        },
+        {
+          href: "/bso-objects/",
+          text: "BSO management",
+          active: activeItem === "BSO management"
+        },
+        {
+          href: "#",
+          text: "Messages",
+          active: activeItem === "Messages"
+        },
+        {
+          href: "#",
+          text: "Help and support",
+          active: activeItem === "Help and support"
+        }
+      ]
+    }
+  }) }}
+{% endmacro %}
+{% block header %}
+  {{ primaryNavigation("Clinics", serviceName, bsoName) }}
+{% endblock %}
+
+{% block beforeContent %}
+<style type="text/css">
+.app-calendar {
+  container-type: inline-size;
+}
+
+.app-calendar ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.app-calendar li {
+  background-color: white;
+  border: 1px solid black;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container query for tabular layout */
+@container (min-width: 768px) {
+  .app-calendar > ol {
+    display: grid;
+    grid-template-columns: 1;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .app-calendar > ol > li {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  .app-calendar > ol > li h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .app-calendar > ol > li > ol {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    padding-top: 2.5rem;
+    position: relative;
+  }
+
+  .app-calendar > ol > li > ol > li:nth-child(-n+7) {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .app-calendar > ol > li > ol > li:nth-child(1)::before { content: "Monday"; position: absolute; top: -2.25rem; left: 0; right: 0; font-weight: bold; font-size: 0.85rem; color: #333; padding-bottom: 0.25rem; }
+  .app-calendar > ol > li > ol > li:nth-child(2)::before { content: "Tuesday"; position: absolute; top: -2.25rem; left: 0; right: 0; font-weight: bold; font-size: 0.85rem; color: #333; padding-bottom: 0.25rem; }
+  .app-calendar > ol > li > ol > li:nth-child(3)::before { content: "Wednesday"; position: absolute; top: -2.25rem; left: 0; right: 0; font-weight: bold; font-size: 0.85rem; color: #333; padding-bottom: 0.25rem; }
+  .app-calendar > ol > li > ol > li:nth-child(4)::before { content: "Thursday"; position: absolute; top: -2.25rem; left: 0; right: 0; font-weight: bold; font-size: 0.85rem; color: #333; padding-bottom: 0.25rem; }
+  .app-calendar > ol > li > ol > li:nth-child(5)::before { content: "Friday"; position: absolute; top: -2.25rem; left: 0; right: 0; font-weight: bold; font-size: 0.85rem; color: #333; padding-bottom: 0.25rem; }
+  .app-calendar > ol > li > ol > li:nth-child(6)::before { content: "Saturday"; position: absolute; top: -2.25rem; left: 0; right: 0; font-weight: bold; font-size: 0.85rem; color: #333; padding-bottom: 0.25rem; }
+  .app-calendar > ol > li > ol > li:nth-child(7)::before { content: "Sunday"; position: absolute; top: -2.25rem; left: 0; right: 0; font-weight: bold; font-size: 0.85rem; color: #333; padding-bottom: 0.25rem; }
+
+  .app-calendar > ol > li > ol > li {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border: 1px solid #999;
+    padding: 0.5rem;
+    text-align: left;
+    font-size: 0.9rem;
+    background-color: #fafafa;
+  }
+
+  .app-calendar > ol > li > ol > li:hover {
+    background-color: #e8e8e8;
+  }
+
+  .app-calendar > ol > li > ol > li.app-calendar-empty {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+  }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <h1 class="nhsuk-heading-m">
+      Calendar
+    </h1>
+    <span class="nhsuk-caption-m nhsuk-caption--bottom">Attempting a useful markup</span>
+  </div>
+</div>
+<hr>
+    
+
+<div class="nhsuk-grid-row">
+  <div class="nhsuk-grid-column-full">
+    <div class="app-calendar">
+      <ol>
+        <li>
+          <h2 class="nhsuk-heading-m">September 2026</h2>
+          <ol>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li aria-label="1 Tuesday"><span class="day-number">1</span> <span class="day-name">Tuesday</span></li>
+            <li aria-label="2 Wednesday"><span class="day-number">2</span> <span class="day-name">Wednesday</span></li>
+            <li aria-label="3 Thursday"><span class="day-number">3</span> <span class="day-name">Thursday</span></li>
+            <li aria-label="4 Friday"><span class="day-number">4</span> <span class="day-name">Friday</span></li>
+            <li aria-label="5 Saturday"><span class="day-number">5</span> <span class="day-name">Saturday</span></li>
+            <li aria-label="6 Sunday"><span class="day-number">6</span> <span class="day-name">Sunday</span></li>
+            <li aria-label="7 Monday"><span class="day-number">7</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">8</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">9</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">10</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">11</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">12</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">13</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">14</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">15</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">16</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">17</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">18</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">19</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">20</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">21</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">22</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">23</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">24</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">25</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">26</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">27</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">28</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">29</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">30</span> <span class="day-name">Wednesday</span></li>
+          </ol>
+        </li>
+        <li>
+          <h2 class="nhsuk-heading-m">October 2026</h2>
+          <ol>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li aria-label="1 Thursday"><span class="day-number">1</span> <span class="day-name">Thursday</span></li>
+            <li aria-label="2 Friday"><span class="day-number">2</span> <span class="day-name">Friday</span></li>
+            <li aria-label="3 Saturday"><span class="day-number">3</span> <span class="day-name">Saturday</span></li>
+            <li aria-label="4 Sunday"><span class="day-number">4</span> <span class="day-name">Sunday</span></li>
+            <li aria-label="5 Monday"><span class="day-number">5</span> <span class="day-name">Monday</span></li>
+            <li aria-label="6 Tuesday"><span class="day-number">6</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">7</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">8</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">9</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">10</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">11</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">12</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">13</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">14</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">15</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">16</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">17</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">18</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">19</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">20</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">21</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">22</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">23</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">24</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">25</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">26</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">27</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">28</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">29</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">30</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">31</span> <span class="day-name">Saturday</span></li>
+          </ol>
+        </li>
+        <li>
+          <h2 class="nhsuk-heading-m">November 2026</h2>
+          <ol>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li aria-label="1 Sunday"><span class="day-number">1</span> <span class="day-name">Sunday</span></li>
+            <li aria-label="2 Monday"><span class="day-number">2</span> <span class="day-name">Monday</span></li>
+            <li aria-label="3 Tuesday"><span class="day-number">3</span> <span class="day-name">Tuesday</span></li>
+            <li aria-label="4 Wednesday"><span class="day-number">4</span> <span class="day-name">Wednesday</span></li>
+            <li aria-label="5 Thursday"><span class="day-number">5</span> <span class="day-name">Thursday</span></li>
+            <li aria-label="6 Friday"><span class="day-number">6</span> <span class="day-name">Friday</span></li>
+            <li aria-label="7 Saturday"><span class="day-number">7</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">8</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">9</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">10</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">11</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">12</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">13</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">14</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">15</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">16</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">17</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">18</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">19</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">20</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">21</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">22</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">23</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">24</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">25</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">26</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">27</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">28</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">29</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">30</span> <span class="day-name">Monday</span></li>
+          </ol>
+        </li>
+        <li>
+          <h2 class="nhsuk-heading-m">December 2026</h2>
+          <ol>
+            <li class="app-calendar-empty" aria-hidden="true"></li>
+            <li aria-label="1 Tuesday"><span class="day-number">1</span> <span class="day-name">Tuesday</span></li>
+            <li aria-label="2 Wednesday"><span class="day-number">2</span> <span class="day-name">Wednesday</span></li>
+            <li aria-label="3 Thursday"><span class="day-number">3</span> <span class="day-name">Thursday</span></li>
+            <li aria-label="4 Friday"><span class="day-number">4</span> <span class="day-name">Friday</span></li>
+            <li aria-label="5 Saturday"><span class="day-number">5</span> <span class="day-name">Saturday</span></li>
+            <li aria-label="6 Sunday"><span class="day-number">6</span> <span class="day-name">Sunday</span></li>
+            <li aria-label="7 Monday"><span class="day-number">7</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">8</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">9</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">10</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">11</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">12</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">13</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">14</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">15</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">16</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">17</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">18</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">19</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">20</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">21</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">22</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">23</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">24</span> <span class="day-name">Thursday</span></li>
+            <li><span class="day-number">25</span> <span class="day-name">Friday</span></li>
+            <li><span class="day-number">26</span> <span class="day-name">Saturday</span></li>
+            <li><span class="day-number">27</span> <span class="day-name">Sunday</span></li>
+            <li><span class="day-number">28</span> <span class="day-name">Monday</span></li>
+            <li><span class="day-number">29</span> <span class="day-name">Tuesday</span></li>
+            <li><span class="day-number">30</span> <span class="day-name">Wednesday</span></li>
+            <li><span class="day-number">31</span> <span class="day-name">Thursday</span></li>
+          </ol>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+  
+
+{% endblock %}
+
+{% block footer %}
+  {{ footer() }}
+{% endblock %}
