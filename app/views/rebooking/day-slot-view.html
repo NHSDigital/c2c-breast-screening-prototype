@@ -24,25 +24,11 @@
 
 {% block content %}
   
-  {# Rebook success notification #}
-  <div id="rebook-success-banner" class="app-rebook-notification" style="display: none;">
-    <div class="nhsuk-notification-banner nhsuk-notification-banner--success" data-module="nhsuk-notification-banner" role="alert" aria-labelledby="rebook-notification-banner-title" tabindex="0">
-      <div class="nhsuk-notification-banner__header">
-        <h2 class="nhsuk-notification-banner__title" id="rebook-notification-banner-title">
-          Success
-        </h2>
-      </div>
-      <div class="nhsuk-notification-banner__content">
-        <h3 class="nhsuk-notification-banner__heading" id="rebook-notification-message"></h3>
-      </div>
-    </div>
-  </div>
-
   <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-four-fifths">
+    <div class="nhsuk-grid-column-full">
       <h1 class="nhsuk-heading-l">
         <span class="nhsuk-caption-l">Tuesday</span>
-        1 September 2026
+        <time id="clinic-date" datetime="2026-09-01">1 September 2026</time>
         <!-- <span class="nhsuk-caption-l">Based on [template name] session template</span> -->
       </h1>
       <!-- <ul class="nhsuk-list">
@@ -50,34 +36,12 @@
         <li>00 held slots</li>
       </ul> -->
     </div>
-    <div class="nhsuk-grid-column-one-fifth">
-      <!-- <h2 class="nhsuk-heading-s">Session actions:</h2>
-      <ul class="nhsuk-list">
-        <li>
-          <a href="#">Open all held slots</a>
-        </li>
-        <li>
-          <a href="#">Open held slots by type</a>
-        </li>
-        <li>
-          <a href="#">Append or prepend new slots</a>
-        </li>
-        <li>
-          <a href="#">Cancel this session</a>
-        </li>
-      </ul> -->
-      <p>
-        <a href="#" class="app-link--warning">Cancel this session</a>
-      </p>
-    </div>
   </div>
 
   <!-- <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible"> -->
 
   <div class="nhsuk-grid-row">
-    <div class="nhsuk-grid-column-four-fifths">
-
-      <p><a href="#">Prepend a new slot</a></p>
+    <div class="nhsuk-grid-column-full">
 
       <table class="nhsuk-table app-participant-table nhsuk-table-responsive">
         <thead class="nhsuk-table__head">
@@ -91,12 +55,11 @@
             <th scope="col" class="nhsuk-table__header">
               Date of birth
             </th>
-            <th scope="col"class="nhsuk-table__header">
-              <span class="nhsuk-u-visually-hidden">Primary action</span>
+            <th scope="col"class="nhsuk-table__header">Action
             </th>
           </tr>
         </thead>
-        <tbody class="nhsuk-table__body nhsuk-checkboxes nhsuk-checkboxes--small">
+        <tbody class="nhsuk-table__body">
           <tr class="nhsuk-table__row">
             <td class="nhsuk-table__cell">
               08:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 08:40</span>
@@ -114,17 +77,12 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(66 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId1}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId1}">
-                  08:40 <span class="slot-end nhsuk-u-secondary-text-colour  nhsuk-u-font-size-16">to 08:50</span>
-                </label>
-              </div>
+              08:40 <span class="slot-end nhsuk-u-secondary-text-colour  nhsuk-u-font-size-16">to 08:50</span>
             </td>
             <td colspan="2" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--orange">
@@ -155,7 +113,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(67 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -171,7 +129,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(55 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
 
@@ -189,7 +147,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(58 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -205,7 +163,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(51 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -221,7 +179,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(64 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -237,7 +195,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(66 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -253,7 +211,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(52 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -269,7 +227,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(58 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
 
@@ -286,7 +244,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(61 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -302,7 +260,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(50 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -318,7 +276,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(62 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -334,7 +292,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(69 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -350,7 +308,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(55 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -366,7 +324,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(61 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -382,7 +340,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(65 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -398,7 +356,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(51 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -414,7 +372,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(57 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -430,18 +388,13 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(70 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
 
           <tr class="nhsuk-table__row app-container-staff-break">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId2}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId2}">
-                  12:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:10</span>
-                </label>
-              </div>
+              12:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:10</span>
             </td>
             <td colspan="3" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--grey">
@@ -451,12 +404,7 @@
           </tr>
           <tr class="nhsuk-table__row app-container-staff-break">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId3}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId3}">
-                  12:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:20</span>
-                </label>
-              </div>
+              12:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:20</span>
             </td>
             <td colspan="3" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--grey">
@@ -466,12 +414,7 @@
           </tr>
           <tr class="nhsuk-table__row app-container-staff-break">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId4}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId4}">
-                  12:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:30</span>
-                </label>
-              </div>
+              12:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:30</span>
             </td>
             <td colspan="3" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--grey">
@@ -481,12 +424,7 @@
           </tr>
           <tr class="nhsuk-table__row app-container-staff-break">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId5}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId5}">
-                  12:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:40</span>
-                </label>
-              </div>
+              12:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:40</span>
             </td>
             <td colspan="3" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--grey">
@@ -496,12 +434,7 @@
           </tr>
           <tr class="nhsuk-table__row app-container-staff-break">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId6}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId6}">
-                  12:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:50</span>
-                </label>
-              </div>
+              12:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 12:50</span>
             </td>
             <td colspan="3" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--grey">
@@ -511,12 +444,7 @@
           </tr>
           <tr class="nhsuk-table__row app-container-staff-break">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId7}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId7}">
-                  12:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 13:00</span>
-                </label>
-              </div>
+              12:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 13:00</span>
             </td>
             <td colspan="3" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--grey">
@@ -538,7 +466,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(59 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -554,7 +482,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(53 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -570,7 +498,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(66 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -586,7 +514,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(64 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -602,7 +530,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(51 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -620,7 +548,7 @@
               <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a non-standard hold</span>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -636,17 +564,12 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(54 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId8}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId8}">
-                  14:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 14:20</span>
-                </label>
-              </div>
+              14:10 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 14:20</span>
             </td>
             <td colspan="2" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--orange">
@@ -657,7 +580,7 @@
               <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a non-standard hold</span>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -673,7 +596,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(66 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -689,17 +612,12 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(51 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId9}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId9}">
-                  14:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 14:50</span>
-                </label>
-              </div>
+              14:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 14:50</span>
             </td>
             <td colspan="2" class="nhsuk-table__cell">
               <span class="nhsuk-tag nhsuk-tag--orange">
@@ -710,7 +628,7 @@
               <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">Tiny note for a non-standard hold</span>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -726,7 +644,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(63 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -742,7 +660,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(56 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -758,7 +676,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(69 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -774,7 +692,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(51 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -790,7 +708,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(59 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -806,7 +724,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(66 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -822,7 +740,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(53 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -838,7 +756,7 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(62 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
           <tr class="nhsuk-table__row">
@@ -854,17 +772,27 @@
               <div class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">(68 years)</div>
             </td>
             <td class="nhsuk-table__cell">
-              <button type="button" class="app-link-button rebook-btn">Rebook participant</button>
+              <a href="rebook-participant.html">Rebook participant</a>
             </td>
           </tr>
 
           <tr class="nhsuk-table__row app-container-available">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId10}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId10}">
-                  16:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:30</span>
-                </label>
+              16:20 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:30</span>
+            </td>
+            <td colspan="2" class="nhsuk-table__cell">
+              <strong class="nhsuk-tag nhsuk-tag--green">
+                Available
+              </strong>
+            </td>
+            <td class="nhsuk-table__cell">
+              <a href="#">Book appointment</a>
+            </td>
+          </tr>
+
+          <tr class="nhsuk-table__row app-container-available">
+            <td class="nhsuk-table__cell">
+              16:30 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:40</span>
               </div>
             </td>
             <td colspan="2" class="nhsuk-table__cell">
@@ -879,12 +807,7 @@
 
           <tr class="nhsuk-table__row app-container-available">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId11}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId11}">
-                  16:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:40</span>
-                </label>
-              </div>
+              16:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:50</span>
             </td>
             <td colspan="2" class="nhsuk-table__cell">
               <strong class="nhsuk-tag nhsuk-tag--green">
@@ -898,31 +821,7 @@
 
           <tr class="nhsuk-table__row app-container-available">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId12}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId12}">
-                  16:40 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 16:50</span>
-                </label>
-              </div>
-            </td>
-            <td colspan="2" class="nhsuk-table__cell">
-              <strong class="nhsuk-tag nhsuk-tag--green">
-                Available
-              </strong>
-            </td>
-            <td class="nhsuk-table__cell">
-              <a href="#">Book appointment</a>
-            </td>
-          </tr>
-
-          <tr class="nhsuk-table__row app-container-available">
-            <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId13}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId13}">
-                  16:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 17:00</span>
-                </label>
-              </div>
+              16:50 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 17:00</span>
             </td>
             <td colspan="2" class="nhsuk-table__cell">
               <strong class="nhsuk-tag nhsuk-tag--green">
@@ -936,17 +835,9 @@
 
           <tr class="nhsuk-table__row --triple app-container-available">
             <td class="nhsuk-table__cell">
-              <div class="nhsuk-checkboxes__item">
-                <input class="nhsuk-checkboxes__input" id="${slotId14}" name="slots[]" type="checkbox" value="${i}">
-                <label class="nhsuk-label nhsuk-checkboxes__label" for="${slotId14}">
-                  17:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 17:30</span>
-                </label>
-              </div>
+              17:00 <span class="nhsuk-u-secondary-text-colour nhsuk-u-font-size-16">to 17:30</span>
             </td>
             <td colspan="2" class="nhsuk-table__cell">
-              <span class="nhsuk-tag nhsuk-tag--green">
-                Available
-              </span>
               <span class="nhsuk-tag nhsuk-tag--yellow">
                 Special appointment
               </span><span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">
@@ -959,64 +850,36 @@
           </tr>
         </tbody>
       </table>
-
-      <p><a href="#">Append a new slot</a></p>
       
     </div>
 
-    <div class="nhsuk-grid-column-one-fifth" style="position: sticky; top: 0;">
-      <div class="app-side-panel" id="side-panel">
-        <h3 class="nhsuk-heading-s">Change slots</h3>
-        <div class="nhsuk-body-s nhsuk-u-secondary-text-colour nhsuk-u-margin-bottom-2">With selected:</div>
-        <ul class="nhsuk-list">
-          <li><a class="panel-item">Hold slots</a></li>
-          <li><a class="panel-item">Remove slots</a></li>
-          <li><a class="panel-item">Combine slots</a></li>
-        </ul>
-        <hr class="nhsuk-section-break nhsuk-section-break--m nhsuk-section-break--visible">
-        <ul class="nhsuk-list">
-          <li><a class="panel-item">Release held slots</a></li>
-          <li><a class="panel-item">Restore removed slots</a></li>
-          <li><a class="panel-item">Separate combined slots</a></li>
-        </ul>
-      </div>
-    </div>
-
   </div>
-
-  {# Rebook participant modal #}
-  <dialog id="rebook-participant-modal" class="app-rebook-modal" popover>
-    <div class="app-rebook-modal__header">
-      <h2 class="nhsuk-heading-m nhsuk-u-margin-bottom-2" id="rebook-modal-title">Rebook participant to available slot</h2>
-      <button type="button" class="app-rebook-modal__close" popovertarget="rebook-participant-modal" popovertargetaction="hide">
-        <span aria-hidden="true">&times;</span>
-        <span class="nhsuk-u-visually-hidden">Close</span>
-      </button>
-    </div>
-    <div class="app-rebook-modal__content">
-      <table class="nhsuk-table app-rebook-slots-table">
-        <thead class="nhsuk-table__head">
-          <tr class="nhsuk-table__row">
-            <th scope="col" class="nhsuk-table__header app-column-time">
-              Time
-            </th>
-            <th scope="col" class="nhsuk-table__header">
-              Status
-            </th>
-            <th scope="col" class="nhsuk-table__header">
-              <span class="nhsuk-u-visually-hidden">Action</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody class="nhsuk-table__body" id="rebook-slots-tbody">
-          {# Slots will be populated by JavaScript #}
-        </tbody>
-      </table>
-    </div>
-  </dialog>
-
 {% endblock %}
 
 {% block pageScripts %}
-  <script src="/assets/javascript/rebook-modal.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const rebookLinks = document.querySelectorAll('a[href="rebook-participant.html"]');
+
+  rebookLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const row = this.closest('tr');
+      if (row) {
+        const participantCell = row.querySelector('td:nth-child(2) a[href="#"]');
+        if (participantCell) {
+          const participantName = participantCell.textContent.trim();
+          const isSpecialAppointment = Array.from(row.querySelectorAll('.nhsuk-tag'))
+            .some(tag => tag.textContent.trim() === 'Special appointment');
+          sessionStorage.setItem('rebookParticipantName', participantName);
+          sessionStorage.setItem('rebookParticipantSlotType', isSpecialAppointment ? 'special' : 'standard');
+          sessionStorage.setItem('rebookParticipantAppointmentDate', document.getElementById('clinic-date').dateTime);
+          sessionStorage.setItem('rebookParticipantAppointmentTime', row.cells[0].textContent.trim().replace(/\s+/g, ' '));
+          window.location.href = 'rebook-participant.html';
+        }
+      }
+    });
+  });
+});
+</script>
 {% endblock %}
