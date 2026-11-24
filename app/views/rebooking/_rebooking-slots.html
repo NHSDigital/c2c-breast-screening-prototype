@@ -1,0 +1,41 @@
+<div class="nhsuk-grid-column-one-half">
+  <p id="slot-results-count" class="nhsuk-body-s" role="status">12 matching slots</p>
+  <p id="no-matching-slots" hidden>No slots match your filters. Change or clear your filters to see more slots.</p>
+  <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes"
+    data-nhsuk-checkboxes-init="" data-appointment-date="{{ appointmentDate }}">
+    {% for index in range(54) %}
+    {% set start = 510 + index * 10 %}
+    {% set end = start + 10 %}
+    {% set isStaffBreak = index >= 21 and index <= 26 %}
+    {% set isAvailable = index in [1, 3, 32, 34, 37] or index >= 47 %}
+    <div data-slot-type="standard" data-slot-start="{{ slotTime(start) }}"
+      data-slot-end="{{ slotTime(end) }}" data-slot-availability="{{ 'available' if isAvailable else 'unavailable' }}"
+      data-slot-hold="not-held" {{ ' hidden' if not isAvailable }}>
+      <div class="slot{{ ' is-staff-break' if isStaffBreak }}">
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="computed-slot-{{ index }}" name="computedSlots[]" type="checkbox"
+            value="{{ index }}" {{ ' disabled' if not isAvailable }}>
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="computed-slot-{{ index }}">
+            <span class="slot-container">
+              <span class="slot-time">
+                {{ slotTime(start) }} <span class="slot-end nhsuk-u-secondary-text-colour">to
+                  {{ slotTime(end) }}</span>
+                <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">10 minutes</span>
+              </span>
+              <span class="slot-metadata">
+                {% if isStaffBreak %}
+                <span class="nhsuk-tag nhsuk-tag--grey">Staff break</span>
+                {% elif isAvailable %}
+                <span class="nhsuk-tag nhsuk-tag--green">Available</span>
+                {% else %}
+                <span class="nhsuk-tag nhsuk-tag--grey">Unavailable</span>
+                {% endif %}
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>

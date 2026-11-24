@@ -35,6 +35,8 @@
       <span class="nhsuk-caption-l">Rebook participant</span>
       <span id="participant-name">RAHMAN, Amina</span>
     </h1>
+    <p class="nhsuk-body nhsuk-u-font-weight-bold nhsuk-u-visually-hidden">Current appointment:</p>
+    <div id="current-appointment-date" class="nhsuk-body-s">Tuesday 01 Sep 2026, 08:30 (10 minutes)</div>
     <p id="participant-special-appointment" hidden>
       <span class="nhsuk-tag nhsuk-tag--yellow">Special appointment</span>
     </p>
@@ -54,7 +56,7 @@
           </label>
           <div class="nhsuk-input-wrapper nhsuk-search-input__wrapper">
             <span>
-              <p class="nhsuk-body-s nhsuk-u-margin-bottom-0">Tuesday, 1 September 2026</p>
+              <p class="nhsuk-body-s nhsuk-u-margin-bottom-0">Tuesday 1 September 2026</p>
             </span>
           </div>
         </div>
@@ -133,93 +135,23 @@
     </div>
   </div>
 
-  <div class="nhsuk-grid-column-one-half">
-    <p id="slot-results-count" class="nhsuk-body-s" role="status">5 matching slots</p>
-    <p id="no-matching-slots" hidden>No slots match your filters. Change or clear your filters to see more slots.</p>
-    <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes"
-      data-nhsuk-checkboxes-init="" data-appointment-date="{{ appointmentDate }}">
-      {% for index in range(54) %}
-      {# Combined appointments occupy the following base slots too. #}
-      {% if index not in [3, 52, 53] %}
-      {% set duration = 20 if index == 2 else (30 if index == 51 else 10) %}
-      {% set start = 510 + index * 10 %}
-      {% set end = start + duration %}
-      {% set isHeld = index in [1, 32, 34, 37] %}
-      {% set isStaffBreak = index >= 21 and index <= 26 %}
-      {% set isAvailable = index >= 47 %}
-      {% set isSpecial = index in [0, 2, 51] %}
-      <div data-slot-type="{{ 'special' if isSpecial else 'standard' }}" data-slot-start="{{ slotTime(start) }}"
-        data-slot-end="{{ slotTime(end) }}" data-slot-availability="{{ 'available' if isAvailable else 'unavailable' }}"
-        data-slot-hold="{{ 'held' if isHeld else 'not-held' }}" {{ ' hidden' if not isAvailable or isHeld }}>
-        <div
-          class="slot{{ ' is-hold' if isHeld }}{{ ' is-staff-break' if isStaffBreak }}{{ ' is-merged' if duration > 10 }}">
-          <div class="nhsuk-checkboxes__item">
-            <input class="nhsuk-checkboxes__input" id="computed-slot-{{ index }}" name="computedSlots[]" type="checkbox"
-              value="{{ index }}" {{ ' disabled' if not isAvailable }}>
-            <label class="nhsuk-label nhsuk-checkboxes__label" for="computed-slot-{{ index }}">
-              <span class="slot-container">
-                <span class="slot-time">
-                  {{ slotTime(start) }} <span class="slot-end nhsuk-u-secondary-text-colour">to
-                    {{ slotTime(end) }}</span>
-                  <br><span class="nhsuk-u-font-size-16 nhsuk-u-secondary-text-colour">{{ duration }} minutes</span>
-                </span>
-                <span class="slot-metadata">
-                  {% if isHeld %}
-                  <span class="nhsuk-tag nhsuk-tag--orange">Held</span>
-                  {%- if index != 1 -%}
-                  <span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">hold type</span>
-                  {%- endif -%}
-                  {%- if index == 32 -%}
-                  <span class="nhsuk-tag nhsuk-tag--white app-tag--stacked">x slots</span>
-                  {%- endif %}
-                  {% elif isStaffBreak %}
-                  <span class="nhsuk-tag nhsuk-tag--grey">Staff break</span>
-                  {% elif isAvailable %}
-                  <span class="nhsuk-tag nhsuk-tag--green">Available</span>
-                  {% else %}
-                  <span class="nhsuk-tag nhsuk-tag--grey">Unavailable</span>
-                  {% endif %}
-                  {% if isSpecial %}
-                  <span class="nhsuk-tag nhsuk-tag--yellow{{ ' app-tag--stacked' if isHeld }}">Special
-                    appointment</span>
-                  {%- endif %}
-                  {%- if duration > 10 -%}
-                  <span
-                    class="nhsuk-tag nhsuk-tag--white{{ ' app-tag--stacked' if isSpecial or isHeld }}">{{ duration / 10 }}
-                    slots</span>
-                  {% endif %}
-                </span>
-              </span>
-            </label>
-          </div>
-        </div>
-        {% for position in range(1, duration / 10) %}
-        <div class="slot is-merged is-merged-child{{ ' is-merged-last-child' if loop.last }}"
-          style="--stack-index: {{ position }}" aria-hidden="true"></div>
-        {% endfor %}
-      </div>
-      {% endif %}
-      {% endfor %}
-    </div>
-  </div>
+  {% include 'rebooking/_rebooking-slots.html' %}
 
   <div class="nhsuk-grid-column-one-quarter">
-    <p class="nhsuk-body nhsuk-u-font-weight-bold nhsuk-u-margin-bottom-2">Current appointment:</p>
-    <div id="current-appointment-date" class="nhsuk-body-s">No current appointment selected</div>
     <div id="new-appointment" hidden aria-live="polite">
       <p class="nhsuk-body nhsuk-u-font-weight-bold nhsuk-u-margin-bottom-0">New appointment:</p>
       <div id="new-appointment-date" class="nhsuk-body-s"></div>
+      <p>
+        <a class="nhsuk-button nhsuk-button--primary nhsuk-button--small nhsuk-u-margin-bottom-0" href="day-slot-view" type="button">
+          Confirm rebooking
+        </a>
+      </p>
+      <p class="nhsuk-body-s">
+        <a href="day-slot-view">
+          Cancel
+        </a>
+      </p>
     </div>
-    <p>
-      <a class="nhsuk-button nhsuk-button--primary nhsuk-button--small nhsuk-u-margin-bottom-0" href="day-slot-view" type="button">
-        Confirm rebooking
-      </a>
-    </p>
-    <p class="nhsuk-body-s">
-      <a href="day-slot-view">
-        Cancel
-      </a>
-    </p>
   </div>
 
 </div>
@@ -227,31 +159,5 @@
 {% endblock %}
 
 {% block pageScripts %}
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const participantName = sessionStorage.getItem('rebookParticipantName');
-    if (participantName) {
-      document.getElementById('participant-name').textContent = participantName;
-      sessionStorage.removeItem('rebookParticipantName');
-    }
-    const isSpecialAppointment = sessionStorage.getItem('rebookParticipantSlotType') === 'special';
-    sessionStorage.removeItem('rebookParticipantSlotType');
-    document.getElementById('participant-special-appointment').hidden = !isSpecialAppointment;
-    const currentAppointmentDate = sessionStorage.getItem('rebookParticipantAppointmentDate');
-    const currentAppointmentTime = sessionStorage.getItem('rebookParticipantAppointmentTime');
-    if (currentAppointmentDate && currentAppointmentTime) {
-      renderAppointmentDate(document.getElementById('current-appointment-date'), currentAppointmentDate, currentAppointmentTime);
-    }
-    sessionStorage.removeItem('rebookParticipantAppointmentDate');
-    sessionStorage.removeItem('rebookParticipantAppointmentTime');
-    if (isSpecialAppointment) {
-      document.getElementById('standard-appt').checked = false;
-      document.getElementById('special-appt').checked = true;
-      document.getElementById('available-appt').checked = true;
-      document.getElementById('unavailable-appt').checked = false;
-      document.getElementById('slot-filters').dispatchEvent(new Event('change'));
-    }
-  });
-</script>
-<script src="/assets/javascript/rebooking-slot-filters.js"></script>
+{% include 'rebooking/_rebook-participant-scripts.html' %}
 {% endblock %}

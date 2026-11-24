@@ -6,7 +6,7 @@ const slotsContainer = document.getElementById('slots-container')
 const newAppointment = document.getElementById('new-appointment')
 const newAppointmentDate = document.getElementById('new-appointment-date')
 
-function renderAppointmentDate(element, date, time) {
+function renderAppointmentDate(element, date, time, inline = false) {
   const appointmentDate = new Date(`${date}T12:00:00`)
   const weekday = new Intl.DateTimeFormat('en-GB', { weekday: 'long' }).format(appointmentDate)
   const formattedDate = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
@@ -14,8 +14,8 @@ function renderAppointmentDate(element, date, time) {
     .map(part => part.type === 'month' ? part.value.slice(0, 3) : part.value)
     .join('')
   element.replaceChildren(
-    document.createTextNode(`${weekday}, ${formattedDate}`),
-    document.createElement('br'),
+    document.createTextNode(`${weekday} ${formattedDate}`),
+    inline ? document.createTextNode(', ') : document.createElement('br'),
     document.createTextNode(time)
   )
 }
@@ -25,7 +25,8 @@ function updateNewAppointment() {
   newAppointment.hidden = !selectedSlot
   if (selectedSlot) {
     const slot = selectedSlot.closest('[data-slot-type]')
-    renderAppointmentDate(newAppointmentDate, slotsContainer.dataset.appointmentDate, `${slot.dataset.slotStart} to ${slot.dataset.slotEnd}`)
+    const time = `${slot.dataset.slotStart} to ${slot.dataset.slotEnd}`
+    renderAppointmentDate(newAppointmentDate, slotsContainer.dataset.appointmentDate, formatAppointmentTime(time))
   } else {
     newAppointmentDate.replaceChildren()
   }

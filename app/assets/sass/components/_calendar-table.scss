@@ -164,3 +164,50 @@
 .calendar-table--apply-session td.calendar-table-cell--selected .calendar-table-date {
   color: #fff;
 }
+
+.app-rebooking-calendar-scroll {
+  overflow-x: auto;
+}
+
+.calendar-table--rebooking {
+  min-width: 52.5rem;
+
+  td {
+    height: 5rem;
+    padding: nhsuk-spacing(2);
+    background-color: nhsuk-colour("white");
+  }
+
+  .nhsuk-tag {
+    max-width: 100%;
+  }
+
+  .app-rebooking-calendar-date-link {
+    display: block;
+  }
+
+  .nhsuk-tag--red {
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent 0,
+      transparent 5px,
+      rgba(nhsuk-colour("dark-red"), 0.18) 5px,
+      rgba(nhsuk-colour("dark-red"), 0.18) 6px
+    );
+  }
+
+  .calendar-table-cell--past,
+  .calendar-table-cell--weekend {
+    background-color: nhsuk-colour("grey-4");
+    color: $nhsuk-secondary-text-colour;
+
+    .calendar-table-date {
+      background-color: transparent;
+    }
+  }
+
+  .calendar-table-cell--current .calendar-table-date {
+    background-color: nhsuk-colour("blue");
+    color: nhsuk-colour("white");
+  }
+}
