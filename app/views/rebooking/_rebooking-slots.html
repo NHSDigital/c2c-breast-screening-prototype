@@ -2,7 +2,7 @@
   <p id="slot-results-count" class="nhsuk-body-s" role="status">12 matching slots</p>
   <p id="no-matching-slots" hidden>No slots match your filters. Change or clear your filters to see more slots.</p>
   <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes"
-    data-nhsuk-checkboxes-init="" data-appointment-date="{{ appointmentDate }}">
+    data-appointment-date="{{ appointmentDate }}">
     {% for index in range(54) %}
     {% set start = 510 + index * 10 %}
     {% set end = start + 10 %}

@@ -98,8 +98,7 @@ function renderRebookingCalendar(selectedDate) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  const calendar = document.getElementById('change-date-calendar')
+export function initRebookingCalendar(calendar, slotsContainer, updateNewAppointment) {
   renderRebookingCalendar(calendar.dataset.selectedDate)
 
   calendar.addEventListener('click', event => {
@@ -124,4 +123,4 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('change-date-dialog').hidePopover()
     document.querySelector('#slot-filters [popovertarget="change-date-dialog"]').focus()
   })
-})
+}

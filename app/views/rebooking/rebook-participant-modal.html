@@ -143,7 +143,7 @@
     <p id="slot-results-count" class="nhsuk-body-s" role="status">5 matching slots</p>
     <p id="no-matching-slots" hidden>No slots match your filters. Change or clear your filters to see more slots.</p>
     <div id="slots-container" class="nhsuk-checkboxes nhsuk-checkboxes--small" data-module="nhsuk-checkboxes"
-      data-nhsuk-checkboxes-init="" data-appointment-date="{{ appointmentDate }}">
+      data-appointment-date="{{ appointmentDate }}">
       {% for index in range(54) %}
       {# Combined appointments occupy the following base slots too. #}
       {% if index not in [3, 52, 53] %}
@@ -305,5 +305,4 @@
 
 {% block pageScripts %}
 {% include 'rebooking/_rebook-participant-scripts.html' %}
-<script src="/assets/javascript/rebooking-date-calendar.js"></script>
 {% endblock %}
